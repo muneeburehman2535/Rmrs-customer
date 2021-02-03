@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="img_width">200dp</dimen>
+    <dimen name="img_height">58dp</dimen>
+    <dimen name="img_size_avg">30dp</dimen>
+    <dimen name="img_size_l">130dp</dimen>
+
+    <dimen name="margin_avg_login">30dp</dimen>
+    <dimen name="margin_l_login">130dp</dimen>
+    <dimen name="margin_xl_login">180dp</dimen>
+
+    <dimen name="margin_small">5dp</dimen>
+    <dimen name="margin_avg">10dp</dimen>
+    <dimen name="margin_l">15dp</dimen>
+    <dimen name="margin_xl">20dp</dimen>
+    <dimen name="margin_xxl">25dp</dimen>
+    <dimen name="margin_xxxl">30dp</dimen>
+
+    <dimen name="padding_small">5dp</dimen>
+    <dimen name="padding_avg">10dp</dimen>
+</resources>
