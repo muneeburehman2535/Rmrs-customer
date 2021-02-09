@@ -6,7 +6,7 @@
     <dimen name="img_size_l">150dp</dimen>
 
     <dimen name="margin_avg_login">50dp</dimen>
-    <dimen name="margin_l_login">200dp</dimen>
+    <dimen name="margin_l_login">50dp</dimen>
     <dimen name="margin_xl_login">250dp</dimen>
 
     <dimen name="margin_small">5dp</dimen>

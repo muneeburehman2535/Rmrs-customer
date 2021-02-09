@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.activities.LoginActivity">
+    <data>
+        <variable
+            name="login_view_model"
+            type="com.teletaleem.rmrs_customer.ui.view_models.LoginViewModel" />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include layout="@layout/layout_toolbar"
+            android:id="@+id/toolbar_login"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="10dp"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar_login"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginStart="@dimen/margin_l_login"
+            android:layout_marginEnd="@dimen/margin_l_login"
+            >
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <EditText
+                    android:id="@+id/ed_txt_username_login"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/hint_username"
+                    android:background="@drawable/edit_text_background"
+                    android:paddingTop="@dimen/padding_avg"
+                    android:paddingBottom="@dimen/padding_avg"
+                    android:paddingStart="@dimen/padding_avg"
+                    android:paddingEnd="@dimen/padding_small"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginTop="@dimen/margin_xl"
+                    android:layout_marginStart="@dimen/margin_avg"
+                    android:layout_marginEnd="@dimen/margin_avg"
+                    android:inputType="text"/>
+                <EditText
+                    android:id="@+id/ed_txt_password_login"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/hint_password"
+                    android:background="@drawable/edit_text_background"
+                    android:paddingTop="@dimen/padding_avg"
+                    android:paddingBottom="@dimen/padding_avg"
+                    android:paddingStart="@dimen/padding_avg"
+                    android:paddingEnd="@dimen/padding_small"
+                    app:layout_constraintTop_toBottomOf="@+id/ed_txt_username_login"
+                    android:layout_marginTop="@dimen/margin_l"
+                    android:layout_marginStart="@dimen/margin_avg"
+                    android:layout_marginEnd="@dimen/margin_avg"
+                    android:inputType="textPassword" />
+
+                <Button
+                    android:id="@+id/btn_signin_login"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_xxxl"
+                    android:layout_marginTop="@dimen/margin_avg"
+                    android:layout_marginEnd="@dimen/margin_xxxl"
+                    android:background="@drawable/button_background"
+                    android:text="@string/title_login"
+                    android:textAllCaps="false"
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:textColor="@color/white"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/ed_txt_password_login" />
+
+                <TextView
+                    android:id="@+id/txt_forgot_pass_login"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_avg"
+                    android:text="@string/title_forgot_password"
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:textColor="@color/button_background_color"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/btn_signin_login" />
+
+                <!---->
+                <TextView
+                    android:id="@+id/txt_no_account_login"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_avg"
+                    android:text="@string/title_no_account"
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:textColor="@color/button_background_color"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_forgot_pass_login"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginBottom="@dimen/margin_xl"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
