@@ -66,5 +66,8 @@ dependencies {
     // https://github.com/square/leakcanary
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5'
     releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
+
+    //TestFairy Crashlytics
+    implementation 'testfairy:testfairy-android-sdk:1.+@aar'
 }
 apply plugin: 'kotlin-android'
