@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">Rmrs-customer</string>
 
+    //Splash
+    <string name="title_delivery_food">Get The Fastest Delivery Food For You</string>
+    <string name="title_order_food">Order food and get delivery in the fastest time in the town</string>
+
     //Signin
     <string name="hint_username">Username or email address</string>
     <string name="hint_password">Password</string>
