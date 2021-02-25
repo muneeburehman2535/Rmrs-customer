@@ -18,8 +18,11 @@
 
     <dimen name="padding_small">10dp</dimen>
     <dimen name="padding_avg">15dp</dimen>
+    <dimen name="padding_l">20dp</dimen>
+    <dimen name="padding_xl">25dp</dimen>
 
 
     <dimen name="text_size_avg">28sp</dimen>
-    <dimen name="text_size_l">60sp</dimen>
+    <dimen name="text_size_l">34sp</dimen>
+    <dimen name="text_size_xl">60sp</dimen>
 </resources>
