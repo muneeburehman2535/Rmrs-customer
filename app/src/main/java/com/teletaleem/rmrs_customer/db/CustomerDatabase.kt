@@ -4,11 +4,10 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.teletaleem.rmrs_customer.db.data_class.Cart
-import com.teletaleem.rmrs_customer.db.data_class.Login
-import javax.inject.Inject
+import com.teletaleem.rmrs_customer.data_class.Cart
+import com.teletaleem.rmrs_customer.data_class.login.LoginResponse
 
-@Database(entities = [Login::class,Cart::class], version = 1,exportSchema = false)
+@Database(entities = [LoginResponse::class,Cart::class], version = 1,exportSchema = false)
 abstract class CustomerDatabase:RoomDatabase(){
 
     companion object {

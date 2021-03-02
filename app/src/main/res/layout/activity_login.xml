@@ -9,42 +9,46 @@
             name="login_view_model"
             type="com.teletaleem.rmrs_customer.ui.view_models.LoginViewModel" />
     </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/white">
 
         <TextView
             android:id="@+id/txt_title_signin_al"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_xxxl"
             android:text="@string/title_signin"
-            android:textSize="@dimen/text_size_l"
             android:textColor="@color/black"
+            android:textSize="@dimen/text_size_l"
             android:textStyle="bold"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="@dimen/margin_xl" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
 
         <ImageView
             android:id="@+id/img_login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/txt_title_signin_al"
-            app:layout_constraintStart_toStartOf="parent"
+            android:src="@drawable/group_199"
+            android:layout_marginTop="@dimen/margin_xxxl"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="@dimen/margin_l"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_title_signin_al" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_email_al"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/img_login"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="@dimen/margin_xl"
             android:layout_marginStart="@dimen/margin_xxl"
+            android:layout_marginTop="@dimen/margin_xl"
             android:layout_marginEnd="@dimen/margin_xxl"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/img_login"
             tools:ignore="MissingConstraints">
 
             <EditText
@@ -53,10 +57,9 @@
                 android:layout_height="match_parent"
                 android:drawablePadding="16dp"
                 android:hint="@string/hint_email"
-                android:textAppearance="?android:textAppearanceMedium"
                 android:inputType="textEmailAddress"
                 android:maxLines="1"
-                android:textColor="@android:color/white"
+                android:textAppearance="?android:textAppearanceMedium"
                 android:textSize="16sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -64,12 +67,12 @@
             android:id="@+id/til_password_al"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/til_email_al"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="@dimen/margin_xl"
             android:layout_marginStart="@dimen/margin_xxl"
+            android:layout_marginTop="@dimen/margin_xl"
             android:layout_marginEnd="@dimen/margin_xxl"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/til_email_al"
             tools:ignore="MissingConstraints">
 
             <EditText
@@ -78,68 +81,63 @@
                 android:layout_height="match_parent"
                 android:drawablePadding="16dp"
                 android:hint="@string/hint_password"
-                android:textAppearance="?android:textAppearanceMedium"
                 android:inputType="textPassword"
                 android:maxLines="1"
-                android:textColor="@android:color/white"
+                android:textAppearance="?android:textAppearanceMedium"
                 android:textSize="16sp" />
         </com.google.android.material.textfield.TextInputLayout>
+
         <TextView
             android:id="@+id/txt_forgot_pass_al"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_l"
+            android:layout_marginEnd="@dimen/margin_xxl"
             android:text="@string/title_forgot_password"
             android:textAppearance="?android:textAppearanceMedium"
-            android:textStyle="bold"
             android:textColor="@color/color_text_blue"
-            app:layout_constraintTop_toBottomOf="@+id/til_password_al"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="@dimen/margin_l"
-            android:layout_marginEnd="@dimen/margin_xxl"/>
+            app:layout_constraintTop_toBottomOf="@+id/til_password_al" />
 
         <Button
             android:id="@+id/btn_login_al"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/title_login"
-            android:textAppearance="?android:textAppearanceMedium"
-            android:textColor="@color/white"
+            android:layout_marginStart="@dimen/margin_xxxl"
+            android:layout_marginTop="@dimen/margin_xxl"
+            android:layout_marginEnd="@dimen/margin_xxxl"
             android:background="@drawable/button_background"
             android:paddingTop="@dimen/padding_xl"
             android:paddingBottom="@dimen/padding_xl"
-            app:layout_constraintTop_toBottomOf="@+id/txt_forgot_pass_al"
-            app:layout_constraintStart_toStartOf="parent"
+            android:text="@string/title_login"
+            android:textAppearance="?android:textAppearanceMedium"
+            android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="@dimen/margin_xxl"
-            android:layout_marginStart="@dimen/margin_xxxl"
-            android:layout_marginEnd="@dimen/margin_xxxl"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_forgot_pass_al" />
 
         <TextView
             android:id="@+id/txt_no_account_al"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_xxxl"
             android:text="@string/title_no_account"
-            app:layout_constraintTop_toBottomOf="@+id/btn_login_al"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="@dimen/margin_xxxl"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_login_al" />
 
         <TextView
             android:id="@+id/txt_signup_al"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/title_sign_up"
-            android:textStyle="bold"
-            android:textColor="@color/color_text_blue"
-            app:layout_constraintTop_toBottomOf="@+id/btn_login_al"
-            app:layout_constraintStart_toEndOf="@+id/txt_no_account_al"
+            android:layout_marginStart="@dimen/margin_small"
             android:layout_marginTop="@dimen/margin_xxxl"
-            android:layout_marginStart="@dimen/margin_small"/>
-
-
-
-
-
+            android:text="@string/title_sign_up"
+            android:textColor="@color/color_text_blue"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/txt_no_account_al"
+            app:layout_constraintTop_toBottomOf="@+id/btn_login_al" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

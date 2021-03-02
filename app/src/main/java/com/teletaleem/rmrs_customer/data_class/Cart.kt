@@ -1,4 +1,4 @@
-package com.teletaleem.rmrs_customer.db.data_class
+package com.teletaleem.rmrs_customer.data_class
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

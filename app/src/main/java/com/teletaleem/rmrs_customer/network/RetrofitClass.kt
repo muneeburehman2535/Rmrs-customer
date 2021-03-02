@@ -7,19 +7,19 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
-class LoginRetrofitClass {
+class RetrofitClass {
 
-    private var geoInstance: LoginRetrofitClass? = null
-    private var homeInstance: LoginRetrofitClass? = null
+    private var geoInstance: RetrofitClass? = null
+    private var homeInstance: RetrofitClass? = null
 
     private var geoService: WebRequestGeo? = null
     private var homeService: WebRequestGeo? = null
 
 
 
-    fun getGeoInstance(): LoginRetrofitClass? {
+    fun getGeoInstance(): RetrofitClass? {
         if (geoInstance == null) {
-            geoInstance = LoginRetrofitClass()
+            geoInstance = RetrofitClass()
             val client = OkHttpClient.Builder().connectTimeout(5, TimeUnit.MINUTES).readTimeout(5, TimeUnit.MINUTES).writeTimeout(5, TimeUnit.MINUTES).build().newBuilder()
             val loggingInterceptor = HttpLoggingInterceptor()
             loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
@@ -31,9 +31,9 @@ class LoginRetrofitClass {
         return geoInstance
     }
 
-    fun getHomeInstance(): LoginRetrofitClass? {
+    fun getHomeInstance(): RetrofitClass? {
         if (homeInstance == null) {
-            homeInstance = LoginRetrofitClass()
+            homeInstance = RetrofitClass()
             val client = OkHttpClient.Builder().connectTimeout(5, TimeUnit.MINUTES).readTimeout(5, TimeUnit.MINUTES).writeTimeout(5, TimeUnit.MINUTES).build().newBuilder()
             val loggingInterceptor = HttpLoggingInterceptor()
             loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY

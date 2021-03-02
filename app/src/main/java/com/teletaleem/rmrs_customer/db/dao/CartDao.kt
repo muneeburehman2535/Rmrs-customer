@@ -2,7 +2,7 @@ package com.teletaleem.rmrs_customer.db.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.teletaleem.rmrs_customer.db.data_class.Cart
+import com.teletaleem.rmrs_customer.data_class.Cart
 
 @Dao
 interface CartDao {
