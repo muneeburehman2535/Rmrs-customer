@@ -6,7 +6,7 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class EmailMobileVerificationResponse(
     @ColumnInfo(name = "Message")
-    val message:String,
+    val Message:String,
     @ColumnInfo(name = "data")
-    val date:Data
+    val data:Data
 )

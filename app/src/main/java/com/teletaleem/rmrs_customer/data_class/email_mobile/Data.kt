@@ -6,8 +6,10 @@ import com.squareup.moshi.JsonQualifier
 
 @JsonClass(generateAdapter = true)
 data class Data(
-    @ColumnInfo(name = "Email")
-    val email:Boolean,
-    @ColumnInfo(name = "PhoneNumber")
-    val phoneNumber:Boolean
+        @ColumnInfo(name = "description")
+        val description:String,
+        @ColumnInfo(name = "Email")
+        val Email:Boolean,
+        @ColumnInfo(name = "MobileNumber")
+        val MobileNumber:Boolean,
 )

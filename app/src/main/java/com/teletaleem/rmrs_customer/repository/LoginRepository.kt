@@ -13,10 +13,10 @@ import retrofit2.Response
 class LoginRepository {
 
     private lateinit var loginResponseLiveData: MutableLiveData<LoginResponse>
-    private val retrofitClass:RetrofitClass= RetrofitClass().getHomeInstance()!!
+    //private val retrofitClass:RetrofitClass= RetrofitClass().getHomeRequestsInstance()!!
 
     fun getLoginResponseLiveData(login: Login):LiveData<LoginResponse> {
-        retrofitClass.getHomeRequestsInstance()?.login(login)?.enqueue(object : Callback<LoginResponse?> {
+        RetrofitClass.getHomeInstance()?.getHomeRequestsInstance()?.login(login)?.enqueue(object : Callback<LoginResponse?> {
             override fun onResponse(call: Call<LoginResponse?>, response: Response<LoginResponse?>) {
                 loginResponseLiveData.postValue(response.body())
             }
