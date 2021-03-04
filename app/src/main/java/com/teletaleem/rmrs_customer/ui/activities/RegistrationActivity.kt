@@ -1,5 +1,6 @@
 package com.teletaleem.rmrs_customer.ui.activities
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Patterns
@@ -14,8 +15,11 @@ import com.teletaleem.rmrs_customer.R
 import com.teletaleem.rmrs_customer.data_class.send_otp.SendOTP
 import com.teletaleem.rmrs_customer.data_class.email_mobile.Data
 import com.teletaleem.rmrs_customer.data_class.email_mobile.EmailMobileVerification
+import com.teletaleem.rmrs_customer.data_class.registration.Registration
 import com.teletaleem.rmrs_customer.databinding.ActivityRegistrationBinding
+import com.teletaleem.rmrs_customer.shared_view_models.RegistrationSharedViewModel
 import com.teletaleem.rmrs_customer.ui.view_models.RegistrationViewModel
+import com.teletaleem.rmrs_customer.utilities.AppGlobal
 import timber.log.Timber
 
 class RegistrationActivity : AppCompatActivity(),View.OnClickListener {
@@ -86,7 +90,7 @@ class RegistrationActivity : AppCompatActivity(),View.OnClickListener {
             sendOTP()
         }
         else {
-
+            AppGlobal.showDialog(getString(R.string.title_alert),data.description,this)
         }
     }
 
@@ -95,9 +99,19 @@ class RegistrationActivity : AppCompatActivity(),View.OnClickListener {
         val sendOtp=SendOTP(mBinding.edtxtEmailAr.text.trim().toString(), mBinding.edtxtMobileAl.text.trim().toString())
         Timber.d(Gson().toJson(sendOtp))
         mViewModel.getOTPResponse(sendOtp).observe(this, {
-            if (it!=null)
+            if (it?.data?.status == true)
             {
-
+                startActivity(Intent(this,ConfirmOtpActivity::class.java).putExtra("registration",Registration(mBinding.edtxtNameAr.text.toString().trim(),
+                    mBinding.edtxtEmailAr.text.toString().trim(),
+                    mBinding.edtxtCnicAr.text.toString().trim(),
+                    mBinding.edtxtMobileAl.text.toString().trim(),
+                    mBinding.edtxtPhnAl.text.toString().trim(),
+                    mBinding.edtxtPasswordAl.text.toString().trim(),
+                    mBinding.edtxtAddressAl.text.toString().trim())))
+            }
+            else
+            {
+                AppGlobal.showDialog(getString(R.string.title_alert), it?.data?.description.toString(),this)
             }
 
         })

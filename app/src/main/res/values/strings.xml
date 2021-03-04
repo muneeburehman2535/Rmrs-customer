@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Rmrs-customer</string>
+    <string name="title_alert">Alert!</string>
 
     //Splash
     <string name="title_delivery_food">Get The Fastest Delivery Food For You</string>

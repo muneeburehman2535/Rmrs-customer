@@ -10,7 +10,10 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import com.google.android.material.snackbar.Snackbar
+import com.kaopiz.kprogresshud.KProgressHUD
+import com.teletaleem.rmrs_customer.R
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -89,6 +92,14 @@ class AppGlobal {
         fun dateToTimeStamp(date: Date, pattern: String?): String? {
             val sdf = SimpleDateFormat(pattern,Locale.ENGLISH)
             return sdf.format(date.time)
+        }
+
+        fun setProgressDialog(context: Context):KProgressHUD
+        {
+           return KProgressHUD.create(context)
+                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                .setBackgroundColor(ContextCompat.getColor(context,R.color.colorAccent))
+                .setAnimationSpeed(2)
         }
 
         @Suppress("DEPRECATION")

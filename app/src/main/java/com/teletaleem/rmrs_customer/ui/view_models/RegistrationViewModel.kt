@@ -18,14 +18,12 @@ class RegistrationViewModel(activity: Application) :AndroidViewModel(activity) {
 
 
     fun getEmailMobileResponse(emailMobileVerification: EmailMobileVerification): LiveData<EmailMobileVerificationResponse?> {
-        return registrationRepository.getEmailMobileVerificationLiveData(emailMobileVerification)
+        return registrationRepository.sendEmailMobileVerificationRequest(emailMobileVerification)
     }
 
-    fun getSignUpResponse(registration: Registration): LiveData<RegistrationResponse?> {
-        return registrationRepository.getSignUpResponseLiveData(registration)
-    }
+
 
     fun getOTPResponse(sendOTP: SendOTP): LiveData<SendOTPResponse?> {
-        return registrationRepository.getOtpLiveData(sendOTP)
+        return registrationRepository.sendOtpRequest(sendOTP)
     }
 }

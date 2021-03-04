@@ -30,29 +30,28 @@ class RegistrationRepository {
     /*
     * Email and Mobile Number Verification API Call Method
     * */
-    fun getEmailMobileVerificationLiveData(emailMobileVerification: EmailMobileVerification): LiveData<EmailMobileVerificationResponse?> {
+    fun sendEmailMobileVerificationRequest(emailMobileVerification: EmailMobileVerification): LiveData<EmailMobileVerificationResponse?> {
 
         Timber.d(Gson().toJson(emailMobileVerification))
 
         emailMobileResponseLiveData= MutableLiveData<EmailMobileVerificationResponse>()
         RetrofitClass.getHomeInstance()?.getHomeRequestsInstance()?.verifyEmailMobile(emailMobileVerification)?.enqueue(object : Callback<ResponseBody?> {
             override fun onResponse(call: Call<ResponseBody?>, response: Response<ResponseBody?>) {
-                    if (response.body()==null)
-                    {
-                        var errorResponse: EmailMobileVerificationResponse? = Gson().fromJson(response.errorBody()?.string(),EmailMobileVerificationResponse::class.java)
-                        emailMobileResponseLiveData.postValue(errorResponse)
-                    }
-                else{
-                        var jsonResult = ConvertResponseToString.getString(response)
-                        var emailMobileResponse: EmailMobileVerificationResponse? = Gson().fromJson(jsonResult,EmailMobileVerificationResponse::class.java)
-                        emailMobileResponseLiveData.postValue(emailMobileResponse)
+                var emailMobileResponse:EmailMobileVerificationResponse?=null
+
+                emailMobileResponse = if (response.body()==null) {
+                    Gson().fromJson(response.errorBody()?.string(),EmailMobileVerificationResponse::class.java)
+
+                } else{
+                    Gson().fromJson(ConvertResponseToString.getString(response),EmailMobileVerificationResponse::class.java)
                 }
 
-
+                Timber.d(Gson().toJson(emailMobileResponse).toString())
+                emailMobileResponseLiveData.postValue(emailMobileResponse)
             }
 
             override fun onFailure(call: Call<ResponseBody?>, t: Throwable) {
-               Log.d("api_error",t.message.toString())
+               Timber.e(t.message.toString())
             }
         })
         return emailMobileResponseLiveData
@@ -61,47 +60,32 @@ class RegistrationRepository {
     /*
     * Send OTP API Call Method
     * */
-    fun getOtpLiveData(sendOTP: SendOTP): LiveData<SendOTPResponse?> {
+    fun sendOtpRequest(sendOTP: SendOTP): LiveData<SendOTPResponse?> {
 
         Timber.d(Gson().toJson(sendOTP))
 
         otpResponseLiveData= MutableLiveData<SendOTPResponse>()
         RetrofitClass.getHomeInstance()?.getHomeRequestsInstance()?.sendOTP(sendOTP)?.enqueue(object : Callback<ResponseBody?> {
             override fun onResponse(call: Call<ResponseBody?>, response: Response<ResponseBody?>) {
-                if (response.body()==null)
-                {
-                    var errorResponse: SendOTPResponse? = Gson().fromJson(response.errorBody()?.string(),SendOTPResponse::class.java)
-                    otpResponseLiveData.postValue(errorResponse)
-                }
-                else{
-                    var jsonResult = ConvertResponseToString.getString(response)
-                    var otpResponse: SendOTPResponse? = Gson().fromJson(jsonResult,SendOTPResponse::class.java)
-                    otpResponseLiveData.postValue(otpResponse)
-                }
+                var otpResponse: SendOTPResponse?=null
 
+                otpResponse = if (response.body()==null) {
+                    Gson().fromJson(response.errorBody()?.string(),SendOTPResponse::class.java)
 
+                } else{
+                    Gson().fromJson(ConvertResponseToString.getString(response),SendOTPResponse::class.java)
+
+                }
+                Timber.d(Gson().toJson(otpResponse).toString())
+                otpResponseLiveData.postValue(otpResponse)
             }
 
             override fun onFailure(call: Call<ResponseBody?>, t: Throwable) {
-                Log.d("api_error",t.message.toString())
+                Timber.e(t.message.toString())
             }
         })
         return otpResponseLiveData
     }
 
-    /*
-    * Registration API Call Method
-    * */
-    fun getSignUpResponseLiveData(registration:Registration): LiveData<RegistrationResponse?> {
-        retrofitClass?.signUpUser(registration)?.enqueue(object : Callback<RegistrationResponse?> {
-            override fun onResponse(call: Call<RegistrationResponse?>, response: Response<RegistrationResponse?>) {
-                registrationResponseLiveData.postValue(response.body())
-            }
 
-            override fun onFailure(call: Call<RegistrationResponse?>, t: Throwable) {
-                //loginResponseLiveData.postValue()
-            }
-        })
-        return registrationResponseLiveData
-    }
 }

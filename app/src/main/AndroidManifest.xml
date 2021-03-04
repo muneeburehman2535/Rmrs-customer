@@ -24,7 +24,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Rmrscustomer"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.activities.ForgotPasswordActivity"></activity>
+        <activity android:name=".ui.activities.ConfirmOtpActivity"></activity>
+        <activity android:name=".ui.activities.ForgotPasswordActivity" />
         <activity android:name=".ui.activities.RegistrationActivity" />
         <activity
             android:name=".ui.activities.LoginActivity"

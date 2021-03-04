@@ -97,5 +97,7 @@ dependencies {
     //Timber for Logs
     //Timber For Logs
     implementation 'com.jakewharton.timber:timber:4.7.1'
+
+    implementation 'com.kaopiz:kprogresshud:1.2.0'
 }
 apply plugin: 'kotlin-android'

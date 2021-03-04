@@ -1,5 +1,6 @@
 package com.teletaleem.rmrs_customer.network;
 
+import com.teletaleem.rmrs_customer.data_class.confirm_otp.ConfirmOtp;
 import com.teletaleem.rmrs_customer.data_class.email_mobile.EmailMobileVerification;
 import com.teletaleem.rmrs_customer.data_class.email_mobile.EmailMobileVerificationResponse;
 import com.teletaleem.rmrs_customer.data_class.login.Login;
@@ -19,14 +20,18 @@ public interface WebRequestGeo {
     @POST("/customer/login")
     Call<LoginResponse> login(@Body Login login);
 
-    @POST
-    Call<RegistrationResponse> signUpUser(@Body Registration registration);
-
     @POST("/customer/verify-email")
     Call<ResponseBody> verifyEmailMobile(@Body EmailMobileVerification emailMobileVerification);
 
     @POST("/customer/send-otp")
     Call<ResponseBody> sendOTP(@Body SendOTP sendOTP);
+
+    @POST("/customer/verify-otp")
+    Call<ResponseBody> verifyOtp(@Body ConfirmOtp confirmOtp);
+
+    @POST
+    Call<ResponseBody> signUpUser(@Body Registration registration);
+
 
 
 
