@@ -18,7 +18,7 @@ import retrofit2.http.POST;
 public interface WebRequestGeo {
 
     @POST("/customer/login")
-    Call<LoginResponse> login(@Body Login login);
+    Call<ResponseBody> login(@Body Login login);
 
     @POST("/customer/verify-email")
     Call<ResponseBody> verifyEmailMobile(@Body EmailMobileVerification emailMobileVerification);

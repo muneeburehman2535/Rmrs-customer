@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.basgeekball.awesomevalidation.AwesomeValidation
 import com.basgeekball.awesomevalidation.ValidationStyle
 import com.google.gson.Gson
+import com.kaopiz.kprogresshud.KProgressHUD
 import com.teletaleem.rmrs_customer.R
 import com.teletaleem.rmrs_customer.data_class.send_otp.SendOTP
 import com.teletaleem.rmrs_customer.data_class.email_mobile.Data
@@ -27,6 +28,7 @@ class RegistrationActivity : AppCompatActivity(),View.OnClickListener {
     private lateinit var mBinding:ActivityRegistrationBinding
     private lateinit var mViewModel:RegistrationViewModel
     private val mAwesomeValidation = AwesomeValidation(ValidationStyle.BASIC)
+    private lateinit var progressDialog: KProgressHUD
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,6 +36,7 @@ class RegistrationActivity : AppCompatActivity(),View.OnClickListener {
         mViewModel=ViewModelProvider(this).get(RegistrationViewModel::class.java)
         mBinding.registrationViewmodel=mViewModel
 
+        progressDialog=AppGlobal.setProgressDialog(this)
         setClickListeners()
 
     }
@@ -42,6 +45,15 @@ class RegistrationActivity : AppCompatActivity(),View.OnClickListener {
         mBinding.btnSignupAl.setOnClickListener(this)
     }
 
+    /*
+    * Check following credentials:
+    * 1:- Full name.
+    * 2:- Email Address
+    * 3:- CNIC
+    * 4:- Password
+    * 5:- Confirm Password
+    * 6:- Postal Address
+    * */
     private fun checkCredentials(){
        // mAwesomeValidation.addValidation(mBinding.edtxtNameAr,"^[a-zA-Z\\\\s]*\$\"",getString(R.string.err_full_name))
         mAwesomeValidation.addValidation(mBinding.edtxtEmailAr,Patterns.EMAIL_ADDRESS,getString(R.string.err_email))
@@ -66,42 +78,45 @@ class RegistrationActivity : AppCompatActivity(),View.OnClickListener {
         }
     }
 
-    /****************************************************************************API Calls*********************************************************************/
+    //*************************************************************************************************************************************************/
+    //                                                                API Calls Section:
+    //************************************************************************************************************************************************/
 
     /*
-    * Login API Method
+    * Verify email and mobile number API method
     * */
     private fun verifyEmailMobile(){
-        Toast.makeText(this,"Success", Toast.LENGTH_LONG).show()
+        progressDialog.setLabel("Please Wait").show()
         val emailMobileVerification=EmailMobileVerification(mBinding.edtxtEmailAr.text.trim().toString(), mBinding.edtxtMobileAl.text.trim().toString())
         Timber.d(Gson().toJson(emailMobileVerification))
         mViewModel.getEmailMobileResponse(emailMobileVerification).observe(this, {
             if (it!=null)
             {
-                checkEmailMobileValidation(it.data)
+                if (!it.data.Email&&!it.data.MobileNumber)
+                {
+                    sendOTP()
+                }
+                else {
+                    progressDialog.dismiss()
+                    AppGlobal.showDialog(getString(R.string.title_alert),it.data.description,this)
+                }
             }
 
         })
     }
 
-    private fun checkEmailMobileValidation(data: Data) {
-        if (!data.Email&&!data.MobileNumber)
-        {
-            sendOTP()
-        }
-        else {
-            AppGlobal.showDialog(getString(R.string.title_alert),data.description,this)
-        }
-    }
-
+    /*
+    * Send OTP Method
+    * */
     private fun sendOTP(){
-        Toast.makeText(this,"Success", Toast.LENGTH_LONG).show()
         val sendOtp=SendOTP(mBinding.edtxtEmailAr.text.trim().toString(), mBinding.edtxtMobileAl.text.trim().toString())
         Timber.d(Gson().toJson(sendOtp))
         mViewModel.getOTPResponse(sendOtp).observe(this, {
+            progressDialog.dismiss()
             if (it?.data?.status == true)
             {
-                startActivity(Intent(this,ConfirmOtpActivity::class.java).putExtra("registration",Registration(mBinding.edtxtNameAr.text.toString().trim(),
+                startActivity(Intent(this,ConfirmOtpActivity::class.java).putExtra("registration",Registration(
+                    mBinding.edtxtNameAr.text.toString().trim(),
                     mBinding.edtxtEmailAr.text.toString().trim(),
                     mBinding.edtxtCnicAr.text.toString().trim(),
                     mBinding.edtxtMobileAl.text.toString().trim(),

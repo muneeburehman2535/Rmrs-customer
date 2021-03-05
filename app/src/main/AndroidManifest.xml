@@ -24,9 +24,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Rmrscustomer"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.activities.ConfirmOtpActivity"></activity>
-        <activity android:name=".ui.activities.ForgotPasswordActivity" />
-        <activity android:name=".ui.activities.RegistrationActivity" />
+        <activity
+            android:name=".ui.activities.HomeActivity"
+            android:label="@string/title_activity_home"
+            android:theme="@style/Theme.Rmrscustomer.NoActionBar"/>
+        <activity android:name=".ui.activities.ConfirmOtpActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.activities.ForgotPasswordActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.activities.RegistrationActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.activities.LoginActivity"
             android:screenOrientation="portrait" />

@@ -99,7 +99,8 @@ class AppGlobal {
            return KProgressHUD.create(context)
                 .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                 .setBackgroundColor(ContextCompat.getColor(context,R.color.colorAccent))
-                .setAnimationSpeed(2)
+               .setCancellable(false)
+                .setAnimationSpeed(1)
         }
 
         @Suppress("DEPRECATION")

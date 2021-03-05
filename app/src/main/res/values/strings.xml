@@ -24,6 +24,13 @@
     <string name="hint_mobile">Mobile Number</string>
     <string name="hint_phn_number">Phone Number (Optional)</string>
     <string name="hint_confirm_password">Confirm Password</string>
+    
+    //Verify OTP
+    <string name="title_verify_account">Verify Account</string>
+    <string name="title_send_code">We have sent you an email with a code to </string>
+    <string name="title_no_code">Don"'"t you received any code? </string>
+    <string name="title_resend_code">Resend Code</string>
+    <string name="title_verify">Verify</string>
 
 
     //Error Strings
@@ -34,4 +41,15 @@
     <string name="err_mobile">Enter valid mobile number</string>
     <string name="err_cnic">Enter CNIC</string>
     <string name="err_address">Enter Address</string>
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
 </resources>

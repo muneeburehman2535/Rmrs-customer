@@ -29,11 +29,9 @@ class LoginActivity : AppCompatActivity(),View.OnClickListener {
     var mAwesomeValidation = AwesomeValidation(ValidationStyle.BASIC)
     private lateinit var progressDialog: KProgressHUD
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        //Bind Layout with data binding
         mBinding=DataBindingUtil.setContentView(this, R.layout.activity_login)
         mViewModel=ViewModelProvider(this).get(LoginViewModel::class.java)
         mBinding.loginViewModel=mViewModel
@@ -41,16 +39,27 @@ class LoginActivity : AppCompatActivity(),View.OnClickListener {
         progressDialog=AppGlobal.setProgressDialog(this)
         setClickListeners()
 
-
-
     }
 
+    /*
+    * Set click listeners on views
+    * */
     private fun setClickListeners() {
         mBinding.btnLoginAl.setOnClickListener(this)
         mBinding.txtSignupAl.setOnClickListener(this)
     }
 
+    /*
+    * Check Email & Password Validation
+    * */
+    private fun checkCredentials() {
 
+        mAwesomeValidation.addValidation(this, R.id.edtxt_email_al, Patterns.EMAIL_ADDRESS, R.string.err_email)
+        mAwesomeValidation.addValidation(this, R.id.edtxt_password_al, "(?=.*[a-z])(?=.*[A-Z])(?=.*[\\d])(?=.*[~`!@#\\$%\\^&\\*\\(\\)\\-_\\+=\\{\\}\\[\\]\\|\\;:\"<>,./\\?]).{8,}", R.string.err_password)
+
+
+
+    }
 
     override fun onClick(v: View?) {
         when(v?.id){
@@ -69,17 +78,10 @@ class LoginActivity : AppCompatActivity(),View.OnClickListener {
         }
     }
 
-    private fun checkCredentials() {
 
-        mAwesomeValidation.addValidation(this, R.id.edtxt_email_al, Patterns.EMAIL_ADDRESS, R.string.err_email)
-        mAwesomeValidation.addValidation(this, R.id.edtxt_password_al, "(?=.*[a-z])(?=.*[A-Z])(?=.*[\\d])(?=.*[~`!@#\\$%\\^&\\*\\(\\)\\-_\\+=\\{\\}\\[\\]\\|\\;:\"<>,./\\?]).{8,}", R.string.err_password)
-
-
-
-    }
-
-
-    /****************************************************************************API Calls*********************************************************************/
+    //*************************************************************************************************************************************************/
+    //                                                                API Calls Section:
+    //************************************************************************************************************************************************/
 
     /*
     * Login API Method
@@ -87,10 +89,18 @@ class LoginActivity : AppCompatActivity(),View.OnClickListener {
     private fun loginUser(){
         progressDialog.setLabel("Please Wait")
         progressDialog.show()
-        Toast.makeText(this,"Success",Toast.LENGTH_LONG).show()
         val login=Login(mBinding.edtxtEmailAl.text.trim().toString(), mBinding.edtxtPasswordAl.text.trim().toString())
-//        mViewModel.getLoginResponse(login).observe(this, {
-//        })
+        mViewModel.getLoginResponse(login).observe(this, {
+            progressDialog.dismiss()
+            if (it.Message=="Success")
+            {
+                AppGlobal.saveToken(this,it.data.Token)
+                AppGlobal.startNewActivity(this,HomeActivity::class.java)
+            }
+            else{
+                AppGlobal.showDialog(getString(R.string.title_alert),it.data.description,this)
+            }
+        })
     }
 
 }

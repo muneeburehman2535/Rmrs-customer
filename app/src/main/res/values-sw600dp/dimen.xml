@@ -15,6 +15,7 @@
     <dimen name="margin_xl">25dp</dimen>
     <dimen name="margin_xxl">30dp</dimen>
     <dimen name="margin_xxxl">35dp</dimen>
+    <dimen name="margin_xxxxl">90dp</dimen>
 
     <dimen name="padding_small">10dp</dimen>
     <dimen name="padding_avg">15dp</dimen>

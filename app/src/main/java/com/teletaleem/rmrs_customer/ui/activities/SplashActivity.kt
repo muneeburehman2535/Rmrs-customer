@@ -45,13 +45,17 @@ class SplashActivity : AppCompatActivity() {
 
         Handler(Looper.getMainLooper()).postDelayed(
                 {
-                    if (!AppGlobal.getToken(this).equals("")&&!AppGlobal.getToken(this).equals("null")&&!AppGlobal.getToken(this).equals("0"))
-                    {}
-                    else
-                    {
-                        AppGlobal.startNewActivity(this,LoginActivity::class.java)
-                        finish()
-                    }
+//                    if (!AppGlobal.getToken(this).equals("")&&!AppGlobal.getToken(this).equals("null")&&!AppGlobal.getToken(this).equals("0"))
+//                    {
+//                        AppGlobal.startNewActivity(this,HomeActivity::class.java)
+//                    }
+//                    else
+//                    {
+//                        AppGlobal.startNewActivity(this,LoginActivity::class.java)
+//
+//                    }
+                    AppGlobal.startNewActivity(this,LoginActivity::class.java)
+                    finish()
                 }, SPLASH_TIME_OUT)
     }
 
