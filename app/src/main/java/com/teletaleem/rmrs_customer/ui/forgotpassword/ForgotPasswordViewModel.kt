@@ -1,4 +1,4 @@
-package com.teletaleem.rmrs_customer.ui.view_models
+package com.teletaleem.rmrs_customer.ui.forgotpassword
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel

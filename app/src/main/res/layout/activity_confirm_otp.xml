@@ -3,14 +3,15 @@
 <layout  xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".ui.activities.ConfirmOtpActivity">
+    tools:context=".ui.otpverification.ConfirmOtpActivity">
     <data>
         <variable
             name="confirm_otp_view_model"
-            type="com.teletaleem.rmrs_customer.ui.view_models.ConfirmOTPViewModel" />
+            type="com.teletaleem.rmrs_customer.ui.otpverification.ConfirmOTPViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_parent_acotp"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -41,11 +42,25 @@
             android:layout_marginStart="@dimen/margin_xl"
             android:layout_marginEnd="@dimen/margin_xl"/>
 
+        <TextView
+            android:id="@+id/txt_timer_aco"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:textAppearanceMedium"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            app:layout_constraintTop_toBottomOf="@+id/txt_code_aco"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="@dimen/margin_xxxl"
+            android:layout_marginStart="@dimen/margin_xl"
+            android:layout_marginEnd="@dimen/margin_xl"/>
+
         <in.aabhasjindal.otptextview.OtpTextView
             android:id="@+id/ed_txt_otp_aco"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             app:bar_active_color="@color/white"
             app:bar_error_color="@color/red"
             app:bar_inactive_color="@color/black"
@@ -57,7 +72,7 @@
             app:otp_box_background_inactive="@drawable/bg_otp_box_inactive"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txt_code_aco"
+            app:layout_constraintTop_toBottomOf="@+id/txt_timer_aco"
             android:layout_marginTop="@dimen/margin_xxxl"
             android:layout_marginStart="@dimen/margin_xl"
             android:layout_marginEnd="@dimen/margin_xl"/>

@@ -38,7 +38,7 @@ class LoginRepository {
             }
 
             override fun onFailure(call: Call<ResponseBody?>, t: Throwable) {
-               Timber.e(t.message.toString())
+               Timber.e("Error: ${t.message.toString()}")
             }
         })
         return loginResponseLiveData

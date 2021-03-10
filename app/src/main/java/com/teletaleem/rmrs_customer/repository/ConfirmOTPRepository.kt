@@ -20,8 +20,9 @@ import timber.log.Timber
 
 class ConfirmOTPRepository {
 
-    private lateinit var otpResponseLiveData: MutableLiveData<OTPVerificationResponse>
+    private lateinit var otpVerificationResponseLiveData: MutableLiveData<OTPVerificationResponse>
     private lateinit var registrationResponseLiveData: MutableLiveData<RegistrationResponse>
+    private lateinit var otpResponseLiveData: MutableLiveData<SendOTPResponse>
 
 
 
@@ -32,7 +33,7 @@ class ConfirmOTPRepository {
 
         Timber.d(Gson().toJson(confirmOtp))
 
-        otpResponseLiveData= MutableLiveData<OTPVerificationResponse>()
+        otpVerificationResponseLiveData= MutableLiveData<OTPVerificationResponse>()
         RetrofitClass.getHomeInstance()?.getHomeRequestsInstance()?.verifyOtp(confirmOtp)?.enqueue(object : Callback<ResponseBody?> {
             override fun onResponse(call: Call<ResponseBody?>, response: Response<ResponseBody?>) {
                 var otpResponse: OTPVerificationResponse?=null
@@ -44,15 +45,15 @@ class ConfirmOTPRepository {
                     Gson().fromJson(ConvertResponseToString.getString(response), OTPVerificationResponse::class.java)
 
                 }
-                Timber.d(Gson().toJson(otpResponse).toString())
-                otpResponseLiveData.postValue(otpResponse)
+                Timber.d("OTP Verification: ${Gson().toJson(otpResponse)}")
+                otpVerificationResponseLiveData.postValue(otpResponse)
             }
 
             override fun onFailure(call: Call<ResponseBody?>, t: Throwable) {
                 Timber.e(t.message.toString())
             }
         })
-        return otpResponseLiveData
+        return otpVerificationResponseLiveData
     }
 
 
@@ -60,6 +61,7 @@ class ConfirmOTPRepository {
     * Registration API Call Method
     * */
     fun sendSignUpResponseLiveData(registration: Registration): LiveData<RegistrationResponse?> {
+        registrationResponseLiveData= MutableLiveData<RegistrationResponse>()
         RetrofitClass.getHomeInstance()?.getHomeRequestsInstance()?.signUpUser(registration)?.enqueue(object : Callback<ResponseBody?> {
             override fun onResponse(call: Call<ResponseBody?>, response: Response<ResponseBody?>) {
                 var signUpResponse: RegistrationResponse?=null
@@ -71,7 +73,7 @@ class ConfirmOTPRepository {
                     Gson().fromJson(ConvertResponseToString.getString(response), RegistrationResponse::class.java)
 
                 }
-                Timber.d(Gson().toJson(signUpResponse).toString())
+                Timber.d("Registration: ${Gson().toJson(signUpResponse)}")
                 registrationResponseLiveData.postValue(signUpResponse)
             }
 
@@ -80,5 +82,35 @@ class ConfirmOTPRepository {
             }
         })
         return registrationResponseLiveData
+    }
+
+    /*
+   * Send OTP API Call Method
+   * */
+    fun sendOtpRequest(sendOTP: SendOTP): LiveData<SendOTPResponse?> {
+
+        Timber.d(Gson().toJson(sendOTP))
+
+        otpResponseLiveData= MutableLiveData<SendOTPResponse>()
+        RetrofitClass.getHomeInstance()?.getHomeRequestsInstance()?.sendOTP(sendOTP)?.enqueue(object : Callback<ResponseBody?> {
+            override fun onResponse(call: Call<ResponseBody?>, response: Response<ResponseBody?>) {
+                var otpResponse: SendOTPResponse?=null
+
+                otpResponse = if (response.body()==null) {
+                    Gson().fromJson(response.errorBody()?.string(),SendOTPResponse::class.java)
+
+                } else{
+                    Gson().fromJson(ConvertResponseToString.getString(response),SendOTPResponse::class.java)
+
+                }
+                Timber.d("Send OTP Response: ${Gson().toJson(otpResponse).toString()}")
+                otpResponseLiveData.postValue(otpResponse)
+            }
+
+            override fun onFailure(call: Call<ResponseBody?>, t: Throwable) {
+                Timber.e(t.message.toString())
+            }
+        })
+        return otpResponseLiveData
     }
 }

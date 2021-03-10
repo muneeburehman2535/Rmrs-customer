@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.teletaleem.rmrs_customer">
+    package="com.teletaleem.rmrs_customer" >
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -23,23 +23,32 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Rmrscustomer"
-        android:usesCleartextTraffic="true">
+        android:usesCleartextTraffic="true" >
         <activity
-            android:name=".ui.activities.HomeActivity"
+            android:name=".ui.home.HomeActivity"
             android:label="@string/title_activity_home"
-            android:theme="@style/Theme.Rmrscustomer.NoActionBar"/>
-        <activity android:name=".ui.activities.ConfirmOtpActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".ui.activities.ForgotPasswordActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".ui.activities.RegistrationActivity"
-            android:screenOrientation="portrait"/>
+            android:theme="@style/Theme.Rmrscustomer.NoActionBar" >
+        </activity>
         <activity
-            android:name=".ui.activities.LoginActivity"
+            android:name=".ui.home.bottomnavigation.HomeActivity"
+            android:label="@string/title_activity_home"
+            android:theme="@style/Theme.Rmrscustomer.NoActionBar" >
+        </activity>
+        <activity
+            android:name=".ui.otpverification.ConfirmOtpActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activities.SplashActivity"
-            android:screenOrientation="portrait">
+            android:name=".ui.forgotpassword.ForgotPasswordActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.registration.RegistrationActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.login.LoginActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.splash.SplashActivity"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

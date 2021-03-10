@@ -3,16 +3,17 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".ui.activities.RegistrationActivity">
+    tools:context=".ui.registration.RegistrationActivity">
     <data>
         <variable
             name="registration_viewmodel"
-            type="com.teletaleem.rmrs_customer.ui.view_models.RegistrationViewModel" />
+            type="com.teletaleem.rmrs_customer.ui.registration.RegistrationViewModel" />
     </data>
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_parent_reg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white">
@@ -59,7 +60,7 @@
                     android:layout_height="match_parent"
                     android:drawablePadding="16dp"
                     android:hint="@string/hint_full_name"
-                    android:inputType="textEmailAddress"
+                    android:inputType="text"
                     android:maxLines="1"
                     android:textAppearance="?android:textAppearanceMedium"
                     android:textSize="16sp" />
@@ -107,8 +108,9 @@
                     android:layout_height="match_parent"
                     android:drawablePadding="16dp"
                     android:hint="@string/hint_cnic"
-                    android:inputType="textEmailAddress"
+                    android:inputType="number"
                     android:maxLines="1"
+                    android:maxLength="13"
                     android:textAppearance="?android:textAppearanceMedium"
                     android:textSize="16sp" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -165,6 +167,7 @@
                 android:id="@+id/til_password_ar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:passwordToggleEnabled="true"
                 android:layout_marginStart="@dimen/margin_xxl"
                 android:layout_marginTop="@dimen/margin_xl"
                 android:layout_marginEnd="@dimen/margin_xxl"
@@ -173,7 +176,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/til_phn_ar"
                 tools:ignore="MissingConstraints">
 
-                <EditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edtxt_password_al"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -189,6 +192,7 @@
                 android:id="@+id/til_confirm_password_ar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:passwordToggleEnabled="true"
                 android:layout_marginStart="@dimen/margin_xxl"
                 android:layout_marginTop="@dimen/margin_xl"
                 android:layout_marginEnd="@dimen/margin_xxl"
@@ -197,7 +201,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/til_password_ar"
                 tools:ignore="MissingConstraints">
 
-                <EditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edtxt_confirm_password_al"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"

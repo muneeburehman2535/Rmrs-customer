@@ -46,7 +46,7 @@ class RegistrationRepository {
                     Gson().fromJson(ConvertResponseToString.getString(response),EmailMobileVerificationResponse::class.java)
                 }
 
-                Timber.d(Gson().toJson(emailMobileResponse).toString())
+                Timber.d("Email : ${Gson().toJson(emailMobileResponse).toString()}")
                 emailMobileResponseLiveData.postValue(emailMobileResponse)
             }
 
@@ -76,7 +76,7 @@ class RegistrationRepository {
                     Gson().fromJson(ConvertResponseToString.getString(response),SendOTPResponse::class.java)
 
                 }
-                Timber.d(Gson().toJson(otpResponse).toString())
+                Timber.d("Send OTP Response: ${Gson().toJson(otpResponse).toString()}")
                 otpResponseLiveData.postValue(otpResponse)
             }
 

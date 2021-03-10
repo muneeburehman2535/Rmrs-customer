@@ -29,7 +29,7 @@ public interface WebRequestGeo {
     @POST("/customer/verify-otp")
     Call<ResponseBody> verifyOtp(@Body ConfirmOtp confirmOtp);
 
-    @POST
+    @POST("/customer/signup")
     Call<ResponseBody> signUpUser(@Body Registration registration);
 
 

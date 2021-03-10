@@ -1,13 +1,8 @@
-package com.teletaleem.rmrs_customer.ui.activities
+package com.teletaleem.rmrs_customer.ui.login
 
-import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.util.Patterns
 import android.view.View
-import android.view.WindowInsets
-import android.view.WindowManager
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
@@ -18,14 +13,14 @@ import com.kaopiz.kprogresshud.KProgressHUD
 import com.teletaleem.rmrs_customer.R
 import com.teletaleem.rmrs_customer.data_class.login.Login
 import com.teletaleem.rmrs_customer.databinding.ActivityLoginBinding
-import com.teletaleem.rmrs_customer.ui.view_models.LoginViewModel
+import com.teletaleem.rmrs_customer.ui.forgotpassword.ForgotPasswordActivity
+import com.teletaleem.rmrs_customer.ui.registration.RegistrationActivity
 import com.teletaleem.rmrs_customer.utilities.AppGlobal
-import java.util.regex.Pattern
 
 
 class LoginActivity : AppCompatActivity(),View.OnClickListener {
     private lateinit var mBinding:ActivityLoginBinding
-    private lateinit var mViewModel:LoginViewModel
+    private lateinit var mViewModel: LoginViewModel
     var mAwesomeValidation = AwesomeValidation(ValidationStyle.BASIC)
     private lateinit var progressDialog: KProgressHUD
 
@@ -47,6 +42,7 @@ class LoginActivity : AppCompatActivity(),View.OnClickListener {
     private fun setClickListeners() {
         mBinding.btnLoginAl.setOnClickListener(this)
         mBinding.txtSignupAl.setOnClickListener(this)
+        mBinding.txtForgotPassAl.setOnClickListener(this)
     }
 
     /*
@@ -64,16 +60,26 @@ class LoginActivity : AppCompatActivity(),View.OnClickListener {
     override fun onClick(v: View?) {
         when(v?.id){
             R.id.btn_login_al -> {
-                checkCredentials()
-                if (mAwesomeValidation.validate())
-                {
-                    loginUser()
-                }
+//                checkCredentials()
+//                if (mAwesomeValidation.validate())
+//                {
+//                    if (AppGlobal.isInternetAvailable(this))
+//                    {
+//                        loginUser()
+//                    }
+//                    else{
+//                        AppGlobal.snackBar(mBinding.layoutParentLogin,getString(R.string.err_no_internet),AppGlobal.LONG)
+//                    }
+//                }
+                AppGlobal.startNewActivity(this, HomeActivity::class.java)
             }
             R.id.txt_signup_al->
             {
-                val intent=Intent(this,RegistrationActivity::class.java)
-                startActivity(intent)
+                AppGlobal.startNewActivity(this, RegistrationActivity::class.java)
+            }
+            R.id.txt_forgot_pass_al->
+            {
+                AppGlobal.startNewActivity(this, ForgotPasswordActivity::class.java)
             }
         }
     }
@@ -89,13 +95,15 @@ class LoginActivity : AppCompatActivity(),View.OnClickListener {
     private fun loginUser(){
         progressDialog.setLabel("Please Wait")
         progressDialog.show()
-        val login=Login(mBinding.edtxtEmailAl.text.trim().toString(), mBinding.edtxtPasswordAl.text.trim().toString())
+        val login=Login(mBinding.edtxtEmailAl.text.trim().toString(), mBinding.edtxtPasswordAl.text?.trim().toString())
         mViewModel.getLoginResponse(login).observe(this, {
             progressDialog.dismiss()
             if (it.Message=="Success")
             {
-                AppGlobal.saveToken(this,it.data.Token)
-                AppGlobal.startNewActivity(this,HomeActivity::class.java)
+                AppGlobal.writeString(this,AppGlobal.tokenId, it.data.Token)
+                AppGlobal.writeString(this,AppGlobal.customerId,it.data.CustomerID)
+                AppGlobal.startNewActivity(this, HomeActivity::class.java)
+                finishAffinity()
             }
             else{
                 AppGlobal.showDialog(getString(R.string.title_alert),it.data.description,this)

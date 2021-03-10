@@ -1,4 +1,4 @@
-package com.teletaleem.rmrs_customer.ui.activities
+package com.teletaleem.rmrs_customer.ui.splash
 
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -12,6 +12,7 @@ import android.view.animation.AnimationUtils
 import androidx.databinding.DataBindingUtil
 import com.teletaleem.rmrs_customer.R
 import com.teletaleem.rmrs_customer.databinding.ActivitySplashBinding
+import com.teletaleem.rmrs_customer.ui.login.LoginActivity
 import com.teletaleem.rmrs_customer.utilities.AppGlobal
 
 class SplashActivity : AppCompatActivity() {
@@ -54,7 +55,7 @@ class SplashActivity : AppCompatActivity() {
 //                        AppGlobal.startNewActivity(this,LoginActivity::class.java)
 //
 //                    }
-                    AppGlobal.startNewActivity(this,LoginActivity::class.java)
+                    AppGlobal.startNewActivity(this, LoginActivity::class.java)
                     finish()
                 }, SPLASH_TIME_OUT)
     }

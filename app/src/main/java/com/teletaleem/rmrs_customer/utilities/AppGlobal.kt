@@ -3,6 +3,7 @@ package com.teletaleem.rmrs_customer.utilities
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
@@ -22,8 +23,9 @@ class AppGlobal {
         var BUILD = "STAGE"
         val LONG=3500
         val SHORT=2000
-        private val prefsTokenId = "prefstoken"
-        private val tokenId = "tokenId"
+
+        const val tokenId = "token_id"
+        const val customerId = "customer_id"
 
         /*****************************************************Base URLs********************************************************/
         var HOME_BASE_URL = if ("PRODUCTION" == BUILD) "live-url" else "https://Customer.teletaleem.com"
@@ -35,15 +37,48 @@ class AppGlobal {
 
 
         /*****************************************************Shared Preferences**************************************************/
-        fun saveToken(context: Context, token: String?) {
-            val sp = context.getSharedPreferences(prefsTokenId, Context.MODE_PRIVATE)
-            sp.edit().putString(tokenId, token).apply()
+        private fun getPreferences(context: Context): SharedPreferences {
+            return context.getSharedPreferences("CUSTOMERPREFERENCES",
+                    Context.MODE_PRIVATE)
         }
 
-        fun getToken(context: Context): String? {
-            val sp = context.getSharedPreferences(prefsTokenId, Context.MODE_PRIVATE)
-            return sp.getString(tokenId, "0")
+        private fun getEditor(appContext: Context): SharedPreferences.Editor {
+            return getPreferences(appContext).edit()
         }
+
+        fun writeInteger(context: Context, key: String, value: Int) {
+            getEditor(context).putInt(key, value).commit()
+        }
+
+        fun readInteger(context: Context, key: String, defValue: Int): Int {
+            return getPreferences(context).getInt(key, defValue)
+        }
+
+        fun writeLong(context: Context, key: String, value: Long) {
+            getEditor(context).putLong(key, value).commit()
+        }
+
+        fun readLong(context: Context, key: String, defValue: Long): Long {
+            return getPreferences(context).getLong(key, defValue)
+        }
+
+        fun writeString(context: Context, key: String, value: String) {
+            getEditor(context).putString(key, value).commit()
+        }
+
+        fun readString(context: Context, key: String, defValue: String): String {
+            return getPreferences(context).getString(key, defValue)!!
+        }
+
+        fun writeBoolean(context: Context, key: String, value: Boolean?) {
+            getEditor(context).putBoolean(key, value!!).commit()
+        }
+
+        fun readBoolean(context: Context, key: String,
+                        defValue: Boolean?): Boolean {
+            return getPreferences(context).getBoolean(key, defValue!!)
+        }
+
 
         /***************************************************Global Methods********************************************************/
 

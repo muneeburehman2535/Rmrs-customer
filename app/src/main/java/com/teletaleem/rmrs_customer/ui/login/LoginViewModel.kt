@@ -1,4 +1,4 @@
-package com.teletaleem.rmrs_customer.ui.view_models
+package com.teletaleem.rmrs_customer.ui.login
 
 import android.annotation.SuppressLint
 import android.app.Application

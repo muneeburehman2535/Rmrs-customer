@@ -1,11 +1,10 @@
-package com.teletaleem.rmrs_customer.ui.activities
+package com.teletaleem.rmrs_customer.ui.registration
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Patterns
 import android.view.View
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.basgeekball.awesomevalidation.AwesomeValidation
@@ -14,19 +13,17 @@ import com.google.gson.Gson
 import com.kaopiz.kprogresshud.KProgressHUD
 import com.teletaleem.rmrs_customer.R
 import com.teletaleem.rmrs_customer.data_class.send_otp.SendOTP
-import com.teletaleem.rmrs_customer.data_class.email_mobile.Data
 import com.teletaleem.rmrs_customer.data_class.email_mobile.EmailMobileVerification
 import com.teletaleem.rmrs_customer.data_class.registration.Registration
 import com.teletaleem.rmrs_customer.databinding.ActivityRegistrationBinding
-import com.teletaleem.rmrs_customer.shared_view_models.RegistrationSharedViewModel
-import com.teletaleem.rmrs_customer.ui.view_models.RegistrationViewModel
+import com.teletaleem.rmrs_customer.ui.otpverification.ConfirmOtpActivity
 import com.teletaleem.rmrs_customer.utilities.AppGlobal
 import timber.log.Timber
 
 class RegistrationActivity : AppCompatActivity(),View.OnClickListener {
 
     private lateinit var mBinding:ActivityRegistrationBinding
-    private lateinit var mViewModel:RegistrationViewModel
+    private lateinit var mViewModel: RegistrationViewModel
     private val mAwesomeValidation = AwesomeValidation(ValidationStyle.BASIC)
     private lateinit var progressDialog: KProgressHUD
 
@@ -55,13 +52,13 @@ class RegistrationActivity : AppCompatActivity(),View.OnClickListener {
     * 6:- Postal Address
     * */
     private fun checkCredentials(){
-       // mAwesomeValidation.addValidation(mBinding.edtxtNameAr,"^[a-zA-Z\\\\s]*\$\"",getString(R.string.err_full_name))
+        mAwesomeValidation.addValidation(mBinding.edtxtNameAr,"[a-zA-Z ]+",getString(R.string.err_full_name))
         mAwesomeValidation.addValidation(mBinding.edtxtEmailAr,Patterns.EMAIL_ADDRESS,getString(R.string.err_email))
         mAwesomeValidation.addValidation(mBinding.edtxtMobileAl,Patterns.PHONE,getString(R.string.err_mobile))
-        mAwesomeValidation.addValidation(mBinding.edtxtCnicAr, "^[0-9]{5}-[0-9]{7}-[0-9]{1}$",getString(R.string.err_cnic))
+        mAwesomeValidation.addValidation(mBinding.edtxtCnicAr, "^[0-9]{13}$",getString(R.string.err_cnic))
         mAwesomeValidation.addValidation(mBinding.edtxtPasswordAl,"(?=.*[a-z])(?=.*[A-Z])(?=.*[\\d])(?=.*[~`!@#\\$%\\^&\\*\\(\\)\\-_\\+=\\{\\}\\[\\]\\|\\;:\"<>,./\\?]).{8,}",getString(R.string.err_password))
         mAwesomeValidation.addValidation(mBinding.edtxtConfirmPasswordAl,mBinding.edtxtPasswordAl,getString(R.string.err_password_confirmation))
-        //mAwesomeValidation.addValidation(mBinding.edtxtAddressAl,"\\d{1,5}\\s\\w.\\s(\\b\\w*\\b\\s){1,2}\\w*\\.",getString(R.string.err_address))
+        mAwesomeValidation.addValidation(mBinding.edtxtAddressAl, "[a-zA-Z0-9 ]+",getString(R.string.err_address))
     }
 
     override fun onClick(v: View?) {
@@ -94,7 +91,13 @@ class RegistrationActivity : AppCompatActivity(),View.OnClickListener {
             {
                 if (!it.data.Email&&!it.data.MobileNumber)
                 {
-                    sendOTP()
+                    if (AppGlobal.isInternetAvailable(this))
+                    {
+                        sendOTP()
+                    }
+                    else{
+                        AppGlobal.snackBar(mBinding.layoutParentReg,getString(R.string.err_no_internet),AppGlobal.LONG)
+                    }
                 }
                 else {
                     progressDialog.dismiss()
@@ -115,7 +118,7 @@ class RegistrationActivity : AppCompatActivity(),View.OnClickListener {
             progressDialog.dismiss()
             if (it?.data?.status == true)
             {
-                startActivity(Intent(this,ConfirmOtpActivity::class.java).putExtra("registration",Registration(
+                startActivity(Intent(this, ConfirmOtpActivity::class.java).putExtra("registration",Registration(
                     mBinding.edtxtNameAr.text.toString().trim(),
                     mBinding.edtxtEmailAr.text.toString().trim(),
                     mBinding.edtxtCnicAr.text.toString().trim(),
