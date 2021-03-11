@@ -14,6 +14,7 @@ import com.teletaleem.rmrs_customer.R
 import com.teletaleem.rmrs_customer.data_class.login.Login
 import com.teletaleem.rmrs_customer.databinding.ActivityLoginBinding
 import com.teletaleem.rmrs_customer.ui.forgotpassword.ForgotPasswordActivity
+import com.teletaleem.rmrs_customer.ui.home.CustomerHomeActivity
 import com.teletaleem.rmrs_customer.ui.registration.RegistrationActivity
 import com.teletaleem.rmrs_customer.utilities.AppGlobal
 
@@ -71,7 +72,7 @@ class LoginActivity : AppCompatActivity(),View.OnClickListener {
 //                        AppGlobal.snackBar(mBinding.layoutParentLogin,getString(R.string.err_no_internet),AppGlobal.LONG)
 //                    }
 //                }
-                AppGlobal.startNewActivity(this, HomeActivity::class.java)
+                AppGlobal.startNewActivity(this, CustomerHomeActivity::class.java)
             }
             R.id.txt_signup_al->
             {
@@ -102,7 +103,7 @@ class LoginActivity : AppCompatActivity(),View.OnClickListener {
             {
                 AppGlobal.writeString(this,AppGlobal.tokenId, it.data.Token)
                 AppGlobal.writeString(this,AppGlobal.customerId,it.data.CustomerID)
-                AppGlobal.startNewActivity(this, HomeActivity::class.java)
+                AppGlobal.startNewActivity(this, CustomerHomeActivity::class.java)
                 finishAffinity()
             }
             else{

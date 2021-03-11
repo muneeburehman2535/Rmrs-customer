@@ -15,6 +15,7 @@ import com.teletaleem.rmrs_customer.data_class.confirm_otp.ConfirmOtp
 import com.teletaleem.rmrs_customer.data_class.registration.Registration
 import com.teletaleem.rmrs_customer.data_class.send_otp.SendOTP
 import com.teletaleem.rmrs_customer.databinding.ActivityConfirmOtpBinding
+import com.teletaleem.rmrs_customer.ui.home.CustomerHomeActivity
 import com.teletaleem.rmrs_customer.utilities.AppGlobal
 import timber.log.Timber
 
@@ -150,7 +151,7 @@ class ConfirmOtpActivity : AppCompatActivity() ,View.OnClickListener{
 
                 AppGlobal.writeString(this, AppGlobal.tokenId, it.data.Token)
                 AppGlobal.writeString(this, AppGlobal.customerId, it.data.CustomerID)
-                AppGlobal.startNewActivity(this, HomeActivity::class.java)
+                AppGlobal.startNewActivity(this, CustomerHomeActivity::class.java)
                 finishAffinity()
             } else {
                 AppGlobal.showDialog(
