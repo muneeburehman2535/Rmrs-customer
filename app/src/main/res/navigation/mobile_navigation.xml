@@ -7,26 +7,26 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="com.teletaleem.rmrs_customer.ui.ui.home.HomeFragment"
-        android:label="@string/menu_home"
+        android:name="com.teletaleem.rmrs_customer.ui.home.HomeFragment"
+        android:label="@string/menu_dashboard"
         tools:layout="@layout/fragment_home" >
-        <action
-            android:id="@+id/action_nav_home_to_nav_gallery"
-            app:destination="@id/nav_bottom_nav" />
-        <action
-            android:id="@+id/action_nav_home_to_nav_slideshow"
-            app:destination="@id/nav_slideshow" />
     </fragment>
 
     <fragment
-        android:id="@+id/nav_bottom_nav"
-        android:name="com.teletaleem.rmrs_customer.ui.ui.gallery.BottomNavigationFragment"
-        android:label="@string/menu_bottom_nav"
-        tools:layout="@layout/fragment_bottomnavigation" />
+        android:id="@+id/nav_cart"
+        android:name="com.teletaleem.rmrs_customer.ui.home.cart.CartFragment"
+        android:label="@string/menu_cart"
+        tools:layout="@layout/cart_fragment"/>
 
     <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="com.teletaleem.rmrs_customer.ui.ui.slideshow.SlideshowFragment"
+        android:id="@+id/nav_favourite"
+        android:name="com.teletaleem.rmrs_customer.ui.home.favourite.FavouriteFragment"
         android:label="@string/menu_slideshow"
         tools:layout="@layout/fragment_slideshow" />
+
+    <fragment
+        android:id="@+id/nav_profile"
+        android:name="com.teletaleem.rmrs_customer.ui.home.profile.ProfileFragment"
+        tools:layout="@layout/profile_fragment"
+        android:label="@string/menu_profile"/>
 </navigation>

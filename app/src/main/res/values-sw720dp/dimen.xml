@@ -5,6 +5,7 @@
 
     <dimen name="img_size_avg">70dp</dimen>
     <dimen name="img_size_l">200dp</dimen>
+    <dimen name="img_size_xl">350dp</dimen>
 
     <dimen name="margin_avg_login">70dp</dimen>
     <dimen name="margin_l_login">290dp</dimen>
@@ -27,4 +28,5 @@
     <dimen name="text_size_avg">34sp</dimen>
     <dimen name="text_size_l">44sp</dimen>
     <dimen name="text_size_xl">80sp</dimen>
+    <dimen name="text_size">40sp</dimen>
 </resources>

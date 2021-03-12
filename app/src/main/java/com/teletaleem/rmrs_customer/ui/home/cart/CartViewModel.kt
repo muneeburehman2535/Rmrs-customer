@@ -1,4 +1,4 @@
-package com.teletaleem.rmrs_customer.ui.home.bottomnavigation.cart
+package com.teletaleem.rmrs_customer.ui.home.cart
 
 import androidx.lifecycle.ViewModel
 

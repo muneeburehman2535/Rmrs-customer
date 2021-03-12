@@ -1,4 +1,4 @@
-package com.teletaleem.rmrs_customer.ui.home.bottomnavigation.dashboard
+package com.teletaleem.rmrs_customer.ui.home.profile
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
@@ -8,24 +8,24 @@ import android.view.View
 import android.view.ViewGroup
 import com.teletaleem.rmrs_customer.R
 
-class DashboardFragment : Fragment() {
+class ProfileFragment : Fragment() {
 
     companion object {
-        fun newInstance() = DashboardFragment()
+        fun newInstance() = ProfileFragment()
     }
 
-    private lateinit var viewModel: DashboardViewModel
+    private lateinit var viewModel: ProfileViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.dashboard_fragment, container, false)
+        return inflater.inflate(R.layout.profile_fragment, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(DashboardViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(ProfileViewModel::class.java)
         // TODO: Use the ViewModel
     }
 

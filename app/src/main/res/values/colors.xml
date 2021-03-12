@@ -15,4 +15,6 @@
     <color name="button_background_color">#3A7B22</color>
     <color name="color_text_blue">#3292B9</color>
     <color name="text_color">#141414</color>
+    <color name="text_color_restaurant">#32b99d</color>
+    <color name="text_color_deals">#b9324e</color>
 </resources>

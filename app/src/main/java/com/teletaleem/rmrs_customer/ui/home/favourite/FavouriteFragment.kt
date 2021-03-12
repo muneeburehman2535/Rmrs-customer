@@ -1,4 +1,4 @@
-package com.teletaleem.rmrs_customer.ui.home.bottomnavigation.cart
+package com.teletaleem.rmrs_customer.ui.home.favourite
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
@@ -8,24 +8,24 @@ import android.view.View
 import android.view.ViewGroup
 import com.teletaleem.rmrs_customer.R
 
-class CartFragment : Fragment() {
+class FavouriteFragment : Fragment() {
 
     companion object {
-        fun newInstance() = CartFragment()
+        fun newInstance() = FavouriteFragment()
     }
 
-    private lateinit var viewModel: CartViewModel
+    private lateinit var viewModel: FavouriteViewModel
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?,
     ): View? {
-        return inflater.inflate(R.layout.cart_fragment, container, false)
+        return inflater.inflate(R.layout.favourite_fragment, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(CartViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(FavouriteViewModel::class.java)
         // TODO: Use the ViewModel
     }
 

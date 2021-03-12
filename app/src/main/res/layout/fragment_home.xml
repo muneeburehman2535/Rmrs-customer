@@ -1,22 +1,135 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.ui.home.HomeFragment">
-
-    <TextView
-        android:id="@+id/text_home"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="home_view_model"
+            type="com.teletaleem.rmrs_customer.ui.home.HomeViewModel" />
+    </data>
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_height="match_parent">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".ui.home.HomeFragment">
+
+            <TextView
+                android:id="@+id/txt_title_home"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/title_eat"
+                android:textSize="@dimen/text_size"
+                android:textStyle="bold"
+                android:textColor="@color/text_color"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="@dimen/margin_xl"
+                android:layout_marginStart="@dimen/margin_xl"/>
+
+            <LinearLayout
+                android:id="@+id/layout_search_home"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@+id/txt_title_home"
+                android:layout_marginTop="@dimen/margin_xl"
+                android:weightSum="2">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.6"
+                    android:layout_marginStart="@dimen/margin_xl"
+
+                    app:cardCornerRadius="@dimen/margin_avg"
+                    android:layout_marginBottom="@dimen/margin_small">
+                    <androidx.appcompat.widget.SearchView
+                        android:id="@+id/search_bar_home"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:queryHint="@string/hint_search_food"
+                        app:iconifiedByDefault="false"
+                        app:queryBackground="@color/transparent"
+                        />
+                </androidx.cardview.widget.CardView>
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.4"
+                    android:layout_gravity="center"
+                    android:paddingTop="@dimen/padding_small"
+                    android:paddingBottom="@dimen/padding_small"
+                    android:src="@drawable/component_23_1"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/txt_title_category"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/title_categories"
+                android:textColor="@color/text_color"
+                android:textSize="@dimen/text_size_avg"
+                app:layout_constraintTop_toBottomOf="@+id/layout_search_home"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="@dimen/margin_avg"
+                android:layout_marginStart="@dimen/margin_xl"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_categories"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/txt_title_category"
+                android:layout_marginStart="@dimen/margin_l"
+                android:layout_marginTop="@dimen/margin_avg"/>
+
+            <!--Restaurants Listing-->
+            <TextView
+                android:id="@+id/txt_title_restaurants"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/title_restaurants"
+                android:textColor="@color/text_color"
+                android:textSize="@dimen/text_size_avg"
+                app:layout_constraintTop_toBottomOf="@+id/rv_categories"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="@dimen/margin_xl"
+                android:layout_marginStart="@dimen/margin_xl"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_restaurants"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/txt_title_restaurants"
+                android:layout_marginStart="@dimen/margin_l" />
+
+            <!--Deals Listing-->
+            <TextView
+                android:id="@+id/txt_title_deals"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/title_deals"
+                android:textColor="@color/text_color"
+                android:textSize="@dimen/text_size_avg"
+                app:layout_constraintTop_toBottomOf="@+id/rv_restaurants"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="@dimen/margin_xl"
+                android:layout_marginStart="@dimen/margin_l"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_deals"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/txt_title_deals"
+                android:layout_marginStart="@dimen/margin_l" />
+
+
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</layout>
