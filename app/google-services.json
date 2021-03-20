@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "519994687640",
+    "project_id": "rmrs-customer",
+    "storage_bucket": "rmrs-customer.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:519994687640:android:f9b9c49d7c4727bc1050ed",
+        "android_client_info": {
+          "package_name": "com.teletaleem.rmrs_customer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "519994687640-1gobrtbkgac66jmns09kp2h7jei5lt68.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDuvFY98SoqVE13WehzpevmD6bZVgBcspo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "519994687640-1gobrtbkgac66jmns09kp2h7jei5lt68.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

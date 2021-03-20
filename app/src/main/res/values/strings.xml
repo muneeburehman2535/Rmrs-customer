@@ -1,10 +1,12 @@
 <resources>
     <string name="app_name">Rmrs-customer</string>
     <string name="title_alert">Alert!</string>
+    <string name="google_maps_api">AIzaSyDuvFY98SoqVE13WehzpevmD6bZVgBcspo</string>
 
     //Splash
     <string name="title_delivery_food">Get The Fastest Delivery Food For You</string>
     <string name="title_order_food">Order food and get delivery in the fastest time in the town</string>
+    <string name="title_by">The Project of KPK Government</string>
 
     //Signin
     <string name="hint_email">Email Address</string>
@@ -45,6 +47,18 @@
     <string name="title_deals">Deals</string>
     <string name="title_restaurants">Restaurants</string>
 
+    //Profile Screen
+    <string name="title_name">Name</string>
+    <string name="title_email">Email</string>
+    <string name="title_phn_number">Phone Number</string>
+    <string name="title_password">Password</string>
+
+    //Toolbar Strings
+    <string name="title_toolbar_favourite">Favourite</string>
+    <string name="title_toolbar_cart">My Cart</string>
+    <string name="title_toolbar_profile">My Profile</string>
+    <string name="title_toolbar_restaurants">Restaurants</string>
+
 
     //Error Strings
     <string name="err_email">Enter valid email address</string>
@@ -71,8 +85,10 @@
     <string name="menu_profile">Profile</string>
     <string name="menu_favourite">Favourite</string>
     <string name="menu_bottom_nav">Bottom Navigation</string>
-    <string name="open_drawer">Open Drawer</string>
-    <string name="close_drawer">Close Drawer</string>
+    <string name="open_drawer">Open navigation drawer</string>
+    <string name="close_drawer">Close navigation drawer</string>
+
+
 
 
 </resources>

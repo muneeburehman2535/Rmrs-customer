@@ -3,6 +3,7 @@
     <dimen name="img_width">300dp</dimen>
     <dimen name="img_height">65dp</dimen>
     <dimen name="img_size_avg">40dp</dimen>
+    <dimen name="img_size_nrml">220dp</dimen>
     <dimen name="img_size_l">150dp</dimen>
     <dimen name="img_size_xl">310dp</dimen>
 
@@ -17,6 +18,7 @@
     <dimen name="margin_xxl">30dp</dimen>
     <dimen name="margin_xxxl">35dp</dimen>
     <dimen name="margin_xxxxl">90dp</dimen>
+    <dimen name="margin_normal">70dp</dimen>
 
     <dimen name="padding_small">10dp</dimen>
     <dimen name="padding_avg">15dp</dimen>

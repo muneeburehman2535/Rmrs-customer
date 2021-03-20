@@ -17,4 +17,6 @@
     <color name="text_color">#141414</color>
     <color name="text_color_restaurant">#32b99d</color>
     <color name="text_color_deals">#b9324e</color>
+    <color name="color_background">#FAFAFA</color>
+    <color name="color_rating">#FFA500</color>
 </resources>

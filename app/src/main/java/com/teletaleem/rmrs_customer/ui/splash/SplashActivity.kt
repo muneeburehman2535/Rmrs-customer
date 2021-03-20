@@ -43,6 +43,7 @@ class SplashActivity : AppCompatActivity() {
         mBinding.imageView.animation=topAnim
         mBinding.textView.animation=bottomAnim
         mBinding.textView2.animation=bottomAnim
+        mBinding.textView3.animation=bottomAnim
 
         Handler(Looper.getMainLooper()).postDelayed(
                 {
