@@ -4,7 +4,8 @@
     android:layout_height="wrap_content"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_marginTop="@dimen/margin_avg">
+    android:layout_marginTop="@dimen/margin_avg"
+    android:layout_marginBottom="@dimen/margin_small">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -32,7 +33,7 @@
                 android:text="Hattric Deal 2"
                 android:textSize="@dimen/text_size"
                 android:textColor="@color/text_color"
-                android:layout_marginTop="@dimen/margin_xl"
+                android:layout_marginTop="@dimen/margin_l"
                 android:layout_marginEnd="@dimen/margin_xl"
                 android:layout_marginStart="@dimen/margin_xxl"/>
 
@@ -59,7 +60,7 @@
                 android:layout_marginTop="@dimen/margin_xl"
                 android:layout_marginStart="@dimen/margin_xxl"
                 android:layout_marginEnd="@dimen/margin_l"
-                android:layout_marginBottom="@dimen/margin_xxl"/>
+                android:layout_marginBottom="@dimen/margin_xl"/>
             <TextView
                 android:id="@+id/txt_old_price_crd"
                 android:layout_width="wrap_content"
@@ -71,7 +72,7 @@
                 android:layout_marginTop="@dimen/margin_xl"
                 android:layout_marginStart="@dimen/margin_small"
                 android:layout_marginEnd="@dimen/margin_small"
-                android:layout_marginBottom="@dimen/margin_xxl"/>
+                android:layout_marginBottom="@dimen/margin_xl"/>
         </RelativeLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

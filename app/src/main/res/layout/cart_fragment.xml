@@ -1,13 +1,222 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.home.cart.CartFragment">
-
-    <TextView
+<layout>
+    <data>
+        <variable
+            name="cart_view_model"
+            type="com.teletaleem.rmrs_customer.ui.home.cart.CartViewModel" />
+    </data>
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Cart" />
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        tools:context=".ui.home.cart.CartFragment">
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <!--Delivery Location View-->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/card_delivery_loc_cf"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginTop="@dimen/margin_xl">
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                        <ImageView
+                            android:id="@+id/img_location_cf"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_location_large"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:layout_marginTop="@dimen/margin_xl"
+                            android:layout_marginStart="@dimen/margin_xxl"
+                            android:layout_marginBottom="@dimen/margin_xl"/>
 
-</FrameLayout>
+                        <TextView
+                            android:id="@+id/txt_title_delivery_loc_cf"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/title_delivery_location"
+                            android:textSize="@dimen/text_size_small"
+                            android:textStyle="bold"
+                            android:textColor="@color/colorAccent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/img_location_cf"
+                            android:layout_marginTop="@dimen/margin_xl"
+                            android:layout_marginStart="@dimen/margin_l"/>
+                        <TextView
+                            android:id="@+id/txt_delivery_loc_cf"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="House 21, St 66, F-7/2, Islamabad, Pakistan"
+                            android:textSize="@dimen/text_size_xsmall"
+                            android:textStyle="bold"
+                            app:layout_constraintTop_toBottomOf="@+id/txt_title_delivery_loc_cf"
+                            app:layout_constraintStart_toEndOf="@+id/img_location_cf"
+                            android:layout_marginStart="@dimen/margin_l"
+                            android:layout_marginBottom="@dimen/margin_xl"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.cardview.widget.CardView>
+                <!--Items View-->
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_delivery_loc_cf"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/card_delivery_loc_cf"/>
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@+id/rv_delivery_loc_cf"
+                    android:layout_marginTop="@dimen/margin_l">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <!--Item Total View-->
+                        <TextView
+                            android:id="@+id/txt_title_item_total_cf"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/title_item_total"
+                            android:textColor="@color/text_color"
+                            android:textStyle="bold"
+                            android:textSize="@dimen/text_size_small"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            android:layout_marginTop="@dimen/margin_xl"
+                            android:layout_marginStart="@dimen/margin_xxxl"/>
+                        <TextView
+                            android:id="@+id/txt_item_total_cf"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Rs. 950/-"
+                            android:textColor="@color/text_color"
+                            android:textStyle="bold"
+                            android:textSize="@dimen/text_size_small"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:layout_marginTop="@dimen/margin_xl"
+                            android:layout_marginEnd="@dimen/margin_xxxl"/>
+
+                        <!--Delivery charges View-->
+                        <TextView
+                            android:id="@+id/txt_title_delivery_chrg_cf"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/title_item_total"
+                            android:textSize="@dimen/text_size_small"
+                            app:layout_constraintTop_toBottomOf="@+id/txt_title_item_total_cf"
+                            app:layout_constraintStart_toStartOf="parent"
+                            android:layout_marginTop="@dimen/margin_small"
+                            android:layout_marginStart="@dimen/margin_xxxl"/>
+                        <TextView
+                            android:id="@+id/txt_delivery_chrg_cf"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/title_no_charges"
+                            android:textSize="@dimen/text_size_small"
+                            app:layout_constraintTop_toBottomOf="@+id/txt_item_total_cf"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:layout_marginTop="@dimen/margin_small"
+                            android:layout_marginEnd="@dimen/margin_xxxl"/>
+
+                        <!--Tax charges View-->
+                        <TextView
+                            android:id="@+id/txt_title_tax_chrg_cf"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/title_tax_charges"
+                            android:textSize="@dimen/text_size_small"
+                            app:layout_constraintTop_toBottomOf="@+id/txt_title_delivery_chrg_cf"
+                            app:layout_constraintStart_toStartOf="parent"
+                            android:layout_marginTop="@dimen/margin_small"
+                            android:layout_marginStart="@dimen/margin_xxxl"/>
+                        <TextView
+                            android:id="@+id/txt_tax_chrg_cf"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Rs. 100/-"
+                            android:textSize="@dimen/text_size_small"
+                            app:layout_constraintTop_toBottomOf="@+id/txt_delivery_chrg_cf"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:layout_marginTop="@dimen/margin_small"
+                            android:layout_marginEnd="@dimen/margin_xxxl"/>
+
+                        <!--Line separator View-->
+                        <View
+                            android:id="@+id/line_separator_cf"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/grey"
+                            app:layout_constraintTop_toBottomOf="@+id/txt_title_tax_chrg_cf"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:layout_marginTop="@dimen/margin_xl"
+                            android:layout_marginStart="@dimen/margin_xxxl"
+                            android:layout_marginEnd="@dimen/margin_xxxl"/>
+
+                        <!--Total Pay View-->
+                        <TextView
+                            android:id="@+id/txt_title_total_pay_cf"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/title_total_pay"
+                            android:textSize="@dimen/text_size_small"
+                            android:textColor="@color/text_color"
+                            android:textStyle="bold"
+                            app:layout_constraintTop_toBottomOf="@+id/line_separator_cf"
+                            app:layout_constraintStart_toStartOf="parent"
+                            android:layout_marginTop="@dimen/margin_avg"
+                            android:layout_marginStart="@dimen/margin_xxxl"/>
+                        <TextView
+                            android:id="@+id/txt_total_pay_cf"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Rs. 1050/-"
+                            android:textSize="@dimen/text_size_small"
+                            android:textColor="@color/text_color"
+                            android:textStyle="bold"
+                            app:layout_constraintTop_toBottomOf="@+id/line_separator_cf"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:layout_marginTop="@dimen/margin_avg"
+                            android:layout_marginEnd="@dimen/margin_xxxl"/>
+
+                        <Button
+                            android:id="@+id/btn_pay_to_proceed"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/button_background"
+                            android:text="@string/title_proceed_to_pay"
+                            android:textAllCaps="false"
+                            android:textColor="@color/white"
+                            android:paddingTop="@dimen/padding_avg"
+                            android:paddingBottom="@dimen/padding_avg"
+                            app:layout_constraintTop_toBottomOf="@id/txt_title_total_pay_cf"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:layout_marginTop="@dimen/margin_xxl"
+                            android:layout_marginBottom="@dimen/margin_xxl"
+                            android:layout_marginStart="@dimen/margin_xxxxl"
+                            android:layout_marginEnd="@dimen/margin_xxxxl"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                </androidx.cardview.widget.CardView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+
+
+
+    </FrameLayout>
+</layout>

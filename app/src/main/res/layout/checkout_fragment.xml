@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.checkout.CheckoutFragment">
+    <data>
+        <variable
+            name="checkout_view_model"
+            type="com.teletaleem.rmrs_customer.ui.checkout.CheckoutViewModel" />
+    </data>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <!--Delivery Location View-->
+            <androidx.cardview.widget.CardView
+            android:id="@+id/card_delivery_loc_fc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="@dimen/margin_xl">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <ImageView
+                    android:id="@+id/img_location_fc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_location_large"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginTop="@dimen/margin_xl"
+                    android:layout_marginStart="@dimen/margin_xxl"
+                    android:layout_marginBottom="@dimen/margin_xl"/>
+
+                <TextView
+                    android:id="@+id/txt_title_delivery_loc_fc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/title_delivery_location"
+                    android:textSize="@dimen/text_size_small"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorAccent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/img_location_fc"
+                    android:layout_marginTop="@dimen/margin_xl"
+                    android:layout_marginStart="@dimen/margin_l"/>
+                <TextView
+                    android:id="@+id/txt_delivery_loc_cf"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="House 21, St 66, F-7/2, Islamabad, Pakistan"
+                    android:textSize="@dimen/text_size_xsmall"
+                    android:textStyle="bold"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_title_delivery_loc_fc"
+                    app:layout_constraintStart_toEndOf="@+id/img_location_fc"
+                    android:layout_marginStart="@dimen/margin_l"
+                    android:layout_marginBottom="@dimen/margin_xl"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_payment_method_fc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/card_delivery_loc_fc"
+                android:layout_marginTop="@dimen/margin_xl">
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/txt_title_payment_method_fc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/title_payment_method"
+                        android:textSize="@dimen/text_size_small"
+                        android:textStyle="bold"
+                        android:textColor="@color/text_color"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_marginTop="@dimen/margin_xl"
+                        android:layout_marginStart="@dimen/margin_l"/>
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@+id/txt_title_payment_method_fc"
+                        android:layout_marginTop="@dimen/margin_small">
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+                            <ImageView
+                                android:id="@+id/img_cod_fc"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/ic_cash_on_delivery"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                android:layout_marginTop="@dimen/margin_xl"
+                                android:layout_marginStart="@dimen/margin_xxxl"
+                                android:layout_marginBottom="@dimen/margin_xl"/>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/title_cod"
+                                android:textSize="@dimen/text_size_small"
+                                android:textColor="@color/text_color"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintStart_toEndOf="@+id/img_cod_fc"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                android:layout_marginStart="@dimen/margin_xl"/>
+
+                                <RadioButton
+                                    android:id="@+id/rb_checkout_fc"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    android:layout_marginEnd="@dimen/margin_xl"/>
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+            <Button
+                android:id="@+id/btn_checkout_fc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/title_checkout"
+                android:textColor="@color/white"
+                android:paddingTop="@dimen/padding_xl"
+                android:paddingBottom="@dimen/padding_xl"
+                android:background="@drawable/button_background"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginBottom="@dimen/margin_xxxl"
+                android:layout_marginStart="@dimen/margin_xxxl"
+                android:layout_marginEnd="@dimen/margin_xxxl"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </FrameLayout>
+</layout>

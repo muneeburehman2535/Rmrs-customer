@@ -59,6 +59,19 @@
     <string name="title_toolbar_profile">My Profile</string>
     <string name="title_toolbar_restaurants">Restaurants</string>
 
+    //Cart Strings
+    <string name="title_delivery_location">Delivery Location</string>
+    <string name="title_proceed_to_pay">Proceed to pay</string>
+    <string name="title_item_total">Item Total</string>
+    <string name="title_delivery_charges">Delivery charges</string>
+    <string name="title_tax_charges">Tax &amp; Charges</string>
+    <string name="title_no_charges">No charges</string>
+    <string name="title_total_pay">Total to pay</string>
+
+    //Checkout Strings
+    <string name="title_payment_method">Payment Method</string>
+    <string name="title_cod">Cash on delivery</string>
+    <string name="title_checkout">Checkout</string>
 
     //Error Strings
     <string name="err_email">Enter valid email address</string>
