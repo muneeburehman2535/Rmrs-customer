@@ -33,4 +33,5 @@
     <dimen name="text_size_l">44sp</dimen>
     <dimen name="text_size_xl">80sp</dimen>
     <dimen name="text_size">40sp</dimen>
+    <dimen name="text_size_average">26sp</dimen>
 </resources>

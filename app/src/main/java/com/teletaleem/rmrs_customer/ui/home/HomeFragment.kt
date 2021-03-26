@@ -94,6 +94,7 @@ class HomeFragment : Fragment() {
                     }
 
                     override fun onItemClick(view: View, position: Int) {
+                        (context as CustomerHomeActivity?)?.changeToolbarName(getString(R.string.title_restaurants))
                         (context as CustomerHomeActivity?)?.loadNewFragment(
                             RestaurantDetailFragment(),
                             "restaurant_detail"

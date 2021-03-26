@@ -12,6 +12,7 @@
         android:id="@+id/cart"
         android:title=""
         android:icon="@drawable/ic_shopping_cart"/>
+
     <item
         android:id="@+id/profile"
         android:title=""

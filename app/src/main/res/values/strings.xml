@@ -52,6 +52,7 @@
     <string name="title_email">Email</string>
     <string name="title_phn_number">Phone Number</string>
     <string name="title_password">Password</string>
+    <string name="title_edit_profile">Edit Profile</string>
 
     //Toolbar Strings
     <string name="title_toolbar_favourite">Favourite</string>
@@ -60,6 +61,7 @@
     <string name="title_toolbar_restaurants">Restaurants</string>
 
     //Cart Strings
+    <string name="title_cart">Your Cart</string>
     <string name="title_delivery_location">Delivery Location</string>
     <string name="title_proceed_to_pay">Proceed to pay</string>
     <string name="title_item_total">Item Total</string>
@@ -72,6 +74,11 @@
     <string name="title_payment_method">Payment Method</string>
     <string name="title_cod">Cash on delivery</string>
     <string name="title_checkout">Checkout</string>
+
+    //My Orders Strings
+    <string name="title_my_orders">My Orders</string>
+    <string name="title_past_orders">Past Orders</string>
+    <string name="title_edit">Edit</string>
 
     //Error Strings
     <string name="err_email">Enter valid email address</string>
@@ -95,6 +102,7 @@
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
     <string name="menu_cart">Cart</string>
+    <string name="menu_my_orders">My Orders</string>
     <string name="menu_profile">Profile</string>
     <string name="menu_favourite">Favourite</string>
     <string name="menu_bottom_nav">Bottom Navigation</string>

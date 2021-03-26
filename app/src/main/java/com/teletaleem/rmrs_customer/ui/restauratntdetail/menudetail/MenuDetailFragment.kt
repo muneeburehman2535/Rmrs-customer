@@ -71,6 +71,7 @@ class MenuDetailFragment : Fragment() {
                     }
 
                     override fun onItemClick(view: View, position: Int) {
+                        (context as CustomerHomeActivity?)?.changeToolbarName(getString(R.string.title_cart))
                         (context as CustomerHomeActivity?)?.loadNewFragment(
                                 CartFragment(),
                                 "cart"

@@ -1,0 +1,89 @@
+<androidx.cardview.widget.CardView xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginTop="@dimen/margin_avg"
+    android:layout_marginBottom="@dimen/margin_small"
+    android:layout_marginStart="@dimen/margin_avg"
+    android:layout_marginEnd="@dimen/margin_avg"
+    app:cardCornerRadius="@dimen/margin_avg">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/txt_order_price_cco"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Rs. 720.00"
+            android:textColor="@color/text_color"
+            android:textSize="@dimen/text_size_average"
+            android:textStyle="bold"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="@dimen/margin_xl"
+            android:layout_marginTop="@dimen/margin_l"/>
+        <TextView
+            android:id="@+id/txt_order_status_cco"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="In Process"
+            android:textColor="@color/colorAccent"
+            android:textSize="@dimen/text_size_small"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="@dimen/margin_xl"
+            android:layout_marginBottom="@dimen/margin_xl"/>
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toStartOf="@+id/txt_order_price_cco"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintHorizontal_weight="10">
+            <TextView
+                android:id="@+id/txt_restaurant_name_cco"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Savour Foods - Blue Area"
+                android:textStyle="bold"
+                android:textSize="@dimen/text_size_avg"
+                android:textColor="@color/text_color"
+                android:layout_marginTop="@dimen/margin_l"
+                android:layout_marginEnd="@dimen/margin_xl"
+                android:layout_marginStart="@dimen/margin_xxl"/>
+
+            <TextView
+                android:id="@+id/txt_menu_cco"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Jalapeno Chicken and Regular Fries"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:textColor="@color/text_color"
+                android:lines="1"
+                android:ellipsize="end"
+                android:layout_below="@+id/txt_restaurant_name_cco"
+                android:layout_marginTop="@dimen/margin_xl"
+                android:layout_marginStart="@dimen/margin_xxl"
+                android:layout_marginEnd="@dimen/margin_xl"/>
+
+            <TextView
+                android:id="@+id/txt_time_cco"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Rs. 444.00"
+                android:textSize="@dimen/text_size_xsmall"
+                android:drawablePadding="@dimen/padding_l"
+                android:layout_below="@+id/txt_menu_cco"
+                android:layout_marginTop="@dimen/margin_small"
+                android:layout_marginStart="@dimen/margin_xxl"
+                android:layout_marginEnd="@dimen/margin_l"
+                android:layout_marginBottom="@dimen/margin_xl"
+                app:drawableStartCompat="@drawable/ic_clock" />
+        </RelativeLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

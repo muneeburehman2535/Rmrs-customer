@@ -64,6 +64,7 @@ class CartFragment : Fragment(),View.OnClickListener {
         {
             R.id.btn_pay_to_proceed->
             {
+                (context as CustomerHomeActivity?)?.changeToolbarName(getString(R.string.title_checkout))
                 (context as CustomerHomeActivity?)?.loadNewFragment(
                     CheckoutFragment(),
                     "checkout"

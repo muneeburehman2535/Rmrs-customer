@@ -18,6 +18,7 @@ class TabsAdapter(manager: FragmentManager,var context: Context,var totalTabs:In
         return when(position)
         {
             0->{
+
                 MenuDetailFragment()
             }
             1->{

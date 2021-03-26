@@ -3,12 +3,16 @@ package com.teletaleem.rmrs_customer.ui.home
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
@@ -17,6 +21,7 @@ import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
@@ -24,11 +29,12 @@ import com.shivtechs.maplocationpicker.LocationPickerActivity
 import com.shivtechs.maplocationpicker.MapUtility
 import com.teletaleem.rmrs_customer.R
 import com.teletaleem.rmrs_customer.databinding.ActivityCustomerHomeBinding
+import com.teletaleem.rmrs_customer.shared_view_models.EditProfileSharedViewModel
 import com.teletaleem.rmrs_customer.ui.home.cart.CartFragment
 import com.teletaleem.rmrs_customer.ui.home.favourite.FavouriteFragment
 import com.teletaleem.rmrs_customer.ui.home.profile.ProfileFragment
+import com.teletaleem.rmrs_customer.ui.myorders.MyOrdersFragment
 import com.teletaleem.rmrs_customer.utilities.AppGlobal
-import timber.log.Timber
 import java.util.*
 
 
@@ -41,13 +47,17 @@ class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItem
     private lateinit var mToolbarLayout:LinearLayout
     private lateinit var mToolbar:Toolbar
     private lateinit var locationMenu:MenuItem
+    private lateinit var editProfileMenu:MenuItem
     private var mCurrentLocation:String=""
     private val pLACE_PICKER_REQUEST = 4
     private lateinit var fields:List<Place.Field>
+    lateinit var mModel:EditProfileSharedViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mBinding=DataBindingUtil.setContentView(this, R.layout.activity_customer_home)
+        mModel = ViewModelProvider(this).get(EditProfileSharedViewModel::class.java)
+
 
         setBottomNavigationView()
         setDrawableLayout()
@@ -74,6 +84,7 @@ class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItem
         val actionBar = supportActionBar
         actionBar!!.setDisplayHomeAsUpEnabled(true)
         actionBar.setHomeAsUpIndicator(R.drawable.ic_menu)
+        mBinding.navView.setNavigationItemSelectedListener(this)
 
     }
 
@@ -88,6 +99,7 @@ class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItem
                     mToolbarLayout.visibility = View.VISIBLE
                     txtToolbarName.text = mCurrentLocation
                     mToolbar.title = ""
+                    editProfileMenu.isVisible = false
                     replaceNewFragment(HomeFragment())
                     return@OnNavigationItemSelectedListener true
                 }
@@ -95,6 +107,7 @@ class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItem
                     locationMenu.isVisible = false
                     mToolbarLayout.visibility = View.GONE
                     mToolbar.title = getString(R.string.title_toolbar_favourite)
+                    editProfileMenu.isVisible = false
                     replaceNewFragment(FavouriteFragment())
                     return@OnNavigationItemSelectedListener true
                 }
@@ -102,6 +115,7 @@ class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItem
                     locationMenu.isVisible = false
                     mToolbarLayout.visibility = View.GONE
                     mToolbar.title = getString(R.string.title_toolbar_cart)
+                    editProfileMenu.isVisible = false
                     replaceNewFragment(CartFragment())
                     return@OnNavigationItemSelectedListener true
                 }
@@ -110,6 +124,7 @@ class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItem
                     mToolbarLayout.visibility = View.GONE
                     mToolbar.title = getString(R.string.title_toolbar_profile)
                     replaceNewFragment(ProfileFragment())
+                    editProfileMenu.isVisible = true
                     return@OnNavigationItemSelectedListener true
                 }
                 else -> true
@@ -117,11 +132,16 @@ class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItem
         })
     }
 
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         val inflater = menuInflater
         inflater.inflate(R.menu.customer_home, menu)
         locationMenu=menu.findItem(R.id.action_location)
+        editProfileMenu=menu.findItem(R.id.action_edit)
+        val spanString = SpannableString(editProfileMenu.title.toString())
+        spanString.setSpan( ForegroundColorSpan(getColor(R.color.colorAccent)), 0,     spanString.length, 0)
+        editProfileMenu.title = spanString
         return true
     }
 
@@ -132,8 +152,18 @@ class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItem
             R.id.action_location -> {
                 checkPermissionForLocation(Manifest.permission.ACCESS_FINE_LOCATION)
             }
+            R.id.action_edit -> {
+
+                mModel.updateEditProfileData(true)
+            }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    fun changeToolbarName(toolbarName:String)
+    {
+       //Toolbar.title=""
+        mToolbar.title = toolbarName
     }
 
     /*******************************************************************************************************************/
@@ -143,7 +173,11 @@ class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItem
     private fun checkPermissionForLocation(accessFineLocation: String) {
         try {
             if (ContextCompat.checkSelfPermission(this, accessFineLocation) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(this, arrayOf(accessFineLocation), pLACE_PICKER_REQUEST)
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(accessFineLocation),
+                    pLACE_PICKER_REQUEST
+                )
             } else {
                 pickLocation()
             }
@@ -152,7 +186,11 @@ class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItem
         }
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
         when (requestCode) {
             pLACE_PICKER_REQUEST -> {
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -206,15 +244,17 @@ class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItem
 
     private fun replaceNewFragment(fragment: Fragment?) {
         val transaction = supportFragmentManager.beginTransaction()
-        transaction.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+        transaction.setCustomAnimations(
+            android.R.anim.slide_in_left,
+            android.R.anim.slide_out_right
+        );
         transaction.replace(R.id.nav_host_fragment, fragment!!)
         transaction.commit()
     }
 
-    fun loadNewFragment(fragment: Fragment?,name:String) {
+    fun loadNewFragment(fragment: Fragment?, name: String) {
         locationMenu.isVisible = false
         mToolbarLayout.visibility = View.GONE
-        mToolbar.title = getString(R.string.title_toolbar_restaurants)
         supportFragmentManager.beginTransaction()
             .setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right)
             .replace(R.id.nav_host_fragment, fragment!!)
@@ -222,7 +262,47 @@ class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItem
             .commit()
     }
 
+
+
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        TODO("Not yet implemented")
+        return when(item.itemId) {
+            R.id.nav_home -> {
+                locationMenu.isVisible = true
+                mToolbarLayout.visibility = View.VISIBLE
+                txtToolbarName.text = mCurrentLocation
+                mToolbar.title = ""
+                replaceNewFragment(HomeFragment())
+                editProfileMenu.isVisible = false
+                mBinding.drawerLayout.closeDrawers()
+                return true
+            }
+            R.id.nav_cart -> {
+                locationMenu.isVisible = false
+                mToolbarLayout.visibility = View.GONE
+                mToolbar.title = getString(R.string.title_toolbar_cart)
+                editProfileMenu.isVisible = false
+                replaceNewFragment(CartFragment())
+                return true
+            }
+            R.id.nav_my_orders -> {
+                locationMenu.isVisible = false
+                mToolbarLayout.visibility = View.GONE
+                mToolbar.title = getString(R.string.title_my_orders)
+                editProfileMenu.isVisible = false
+                replaceNewFragment(MyOrdersFragment())
+                mBinding.drawerLayout.closeDrawers()
+                return true
+            }
+            R.id.nav_profile -> {
+                locationMenu.isVisible = false
+                mToolbarLayout.visibility = View.GONE
+                mToolbar.title = getString(R.string.title_toolbar_profile)
+                editProfileMenu.isVisible = true
+                replaceNewFragment(ProfileFragment())
+                mBinding.drawerLayout.closeDrawers()
+                return true
+            }
+            else-> false
+        }
     }
 }
