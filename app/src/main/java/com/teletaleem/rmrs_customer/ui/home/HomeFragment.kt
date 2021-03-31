@@ -15,10 +15,11 @@ import com.teletaleem.rmrs_customer.adapters.DealsAdapter
 import com.teletaleem.rmrs_customer.adapters.RestaurantAdapter
 import com.teletaleem.rmrs_customer.databinding.FragmentHomeBinding
 import com.teletaleem.rmrs_customer.ui.restauratntdetail.RestaurantDetailFragment
+import com.teletaleem.rmrs_customer.ui.search.filter_search.FilterSearchFragment
 import com.teletaleem.rmrs_customer.utilities.RecyclerItemClickListener
 import java.util.*
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment() ,View.OnClickListener{
 
     private lateinit var homeViewModel: HomeViewModel
     private lateinit var mBinding: FragmentHomeBinding
@@ -39,7 +40,12 @@ class HomeFragment : Fragment() {
         setCategoryAdapter()
         setRestaurantAdapter()
         setDealsAdapter()
+        setClickListeners()
 
+    }
+
+    private fun setClickListeners() {
+        mBinding.imgFilterHome.setOnClickListener(this)
     }
 
     /**************************************************************************************************************************/
@@ -103,5 +109,19 @@ class HomeFragment : Fragment() {
 
                 })
         )
+    }
+
+    override fun onClick(v: View?) {
+        when(v?.id)
+        {
+            R.id.img_filter_home->
+            {
+                (context as CustomerHomeActivity?)?.changeToolbarName(getString(R.string.title_restaurants))
+                (context as CustomerHomeActivity?)?.loadNewFragment(
+                    FilterSearchFragment(),
+                    "filter_search"
+                )
+            }
+        }
     }
 }

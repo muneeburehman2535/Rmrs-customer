@@ -15,7 +15,7 @@ import com.teletaleem.rmrs_customer.ui.home.CustomerHomeActivity
 import com.teletaleem.rmrs_customer.ui.restauratntdetail.RestaurantDetailFragment
 import com.teletaleem.rmrs_customer.utilities.RecyclerItemClickListener
 
-class OrderDetailActivity : AppCompatActivity() {
+class OrderDetailActivity : AppCompatActivity(),View.OnClickListener {
     private lateinit var mBinding:ActivityOrderDetailBinding
     private lateinit var mViewModel: OrderDetailViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,7 +24,12 @@ class OrderDetailActivity : AppCompatActivity() {
         mViewModel=ViewModelProvider(this).get(OrderDetailViewModel::class.java)
         mBinding.orderDetailViewModel=mViewModel
         setRestaurantAdapter()
+        setClickListeners()
         //setContentView(R.layout.activity_order_detail)
+    }
+
+    private fun setClickListeners() {
+        mBinding.imgBackOrderDetail.setOnClickListener(this)
     }
 
     private fun setRestaurantAdapter() {
@@ -36,6 +41,16 @@ class OrderDetailActivity : AppCompatActivity() {
         )
         mBinding.rvItemsOrderDetail.adapter = orderDetailIItemsAdapter
         //setRecyclerViewListener(mBinding.rvItemsOrderDetail)
+    }
+
+    override fun onClick(v: View?) {
+        when(v?.id)
+        {
+            R.id.img_back_order_detail->
+            {
+                this.finish()
+            }
+        }
     }
 
 

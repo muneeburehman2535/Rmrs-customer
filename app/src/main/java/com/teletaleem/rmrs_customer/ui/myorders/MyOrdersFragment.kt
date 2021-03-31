@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.teletaleem.rmrs_customer.R
 import com.teletaleem.rmrs_customer.adapters.*
+import com.teletaleem.rmrs_customer.data_class.myorders.currentorders.CurrentOrderDataClass
+import com.teletaleem.rmrs_customer.data_class.myorders.pastorders.PastOrdersDataClass
 import com.teletaleem.rmrs_customer.databinding.MyOrdersFragmentBinding
 import com.teletaleem.rmrs_customer.ui.orderdetail.OrderDetailActivity
 import com.teletaleem.rmrs_customer.utilities.RecyclerItemClickListener
@@ -19,6 +21,8 @@ import com.teletaleem.rmrs_customer.utilities.RecyclerItemClickListener
 class MyOrdersFragment : Fragment() {
 
     private lateinit var mBinding:MyOrdersFragmentBinding
+    private lateinit var currentOrderList:ArrayList<CurrentOrderDataClass>
+    private lateinit var pastOrderList:ArrayList<PastOrdersDataClass>
 
     companion object {
         fun newInstance() = MyOrdersFragment()
@@ -43,13 +47,34 @@ class MyOrdersFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setCurrentOrderList()
+        setPastOrderList()
         setCurrentOrdersAdapter()
         setPastOrdersAdapter()
     }
 
+    private fun setCurrentOrderList() {
+        currentOrderList= arrayListOf()
+
+        val currentOrderDataClass=CurrentOrderDataClass("Savour Foods - Blue Area","Zarda, Special Chicken Pulao, Coke","30 Min","720")
+        currentOrderList.add(currentOrderDataClass)
+
+    }
+
+    private fun setPastOrderList() {
+        pastOrderList= arrayListOf()
+
+        val pastOrdersDataClass=PastOrdersDataClass("La Terrazza - Centaurus","Jalapeno Grilled Chicken Burger, Coke","30-03-2021","15:30","560")
+        pastOrderList.add(pastOrdersDataClass)
+
+        val pastOrdersDataClass1=PastOrdersDataClass("Habibi Restaurant - Peshawar","Beef Chappal Kabab, Chicken Karai, Coke","15-02-2021","13:15","1020")
+        pastOrderList.add(pastOrdersDataClass1)
+
+    }
+
 
     private fun setCurrentOrdersAdapter() {
-        val currentOrderAdapter = CurrentOrdersAdapter(requireContext())
+        val currentOrderAdapter = CurrentOrdersAdapter(requireContext(),currentOrderList)
         mBinding.rvCurrentOrdersFmo.layoutManager = LinearLayoutManager(
             context,
             LinearLayoutManager.VERTICAL,
@@ -63,7 +88,7 @@ class MyOrdersFragment : Fragment() {
 
 
     private fun setPastOrdersAdapter() {
-        val pastOrderAdapter = PastOrdersAdapter(requireContext())
+        val pastOrderAdapter = PastOrdersAdapter(requireContext(),pastOrderList)
         mBinding.rvPastOrdersFmo.layoutManager = LinearLayoutManager(
             context,
             LinearLayoutManager.VERTICAL,

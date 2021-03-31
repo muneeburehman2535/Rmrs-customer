@@ -15,6 +15,7 @@ import androidx.core.content.ContextCompat
 import com.google.android.material.snackbar.Snackbar
 import com.kaopiz.kprogresshud.KProgressHUD
 import com.teletaleem.rmrs_customer.R
+import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -23,9 +24,11 @@ class AppGlobal {
         var BUILD = "STAGE"
         val LONG=3500
         val SHORT=2000
+        var mCurrency="Rs. "
 
         const val tokenId = "token_id"
         const val customerId = "customer_id"
+
 
         /*****************************************************Base URLs********************************************************/
         var HOME_BASE_URL = if ("PRODUCTION" == BUILD) "live-url" else "https://Customer.teletaleem.com"
@@ -165,6 +168,11 @@ class AppGlobal {
                 }
             }
             return result
+        }
+
+        fun roundTwoPlaces(value: Double?): String? {
+            val df = DecimalFormat("0.00")
+            return df.format(value)
         }
     }
 }

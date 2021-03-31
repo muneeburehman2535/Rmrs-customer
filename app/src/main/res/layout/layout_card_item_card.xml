@@ -8,49 +8,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <ImageView
-            android:id="@+id/img_restaurant_lcic"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/mask_group_2"
-            android:scaleType="fitXY"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="@dimen/margin_xl"
-            android:layout_marginStart="@dimen/margin_xxxl"/>
-        <TextView
-            android:id="@+id/txt_restaurant_name_lcic"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Burger King"
-            android:textColor="@color/text_color"
-            android:textStyle="bold"
-            android:textSize="@dimen/text_size_small"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/img_restaurant_lcic"
-            android:layout_marginTop="@dimen/margin_xl"
-            android:layout_marginStart="@dimen/margin_xl"/>
 
-        <TextView
-            android:id="@+id/txt_restaurant_loc_lcic"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="F-7 Markaz, Islamabad"
-            android:textSize="@dimen/text_size_xsmall"
-            app:layout_constraintTop_toBottomOf="@+id/txt_restaurant_name_lcic"
-            app:layout_constraintStart_toEndOf="@+id/img_restaurant_lcic"
-            android:layout_marginStart="@dimen/margin_xl"/>
-        <TextView
-            android:id="@+id/txt_delivery_time_lcic"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="30 Min"
-            android:textSize="@dimen/text_size_xsmall"
-            android:drawableStart="@drawable/ic_clock"
-            android:drawablePadding="@dimen/padding_small"
-            app:layout_constraintTop_toBottomOf="@+id/txt_restaurant_loc_lcic"
-            app:layout_constraintStart_toEndOf="@+id/img_restaurant_lcic"
-            android:layout_marginStart="@dimen/margin_xl"/>
 
 
         <TextView
@@ -61,9 +19,9 @@
             android:textColor="@color/text_color"
             android:textStyle="bold"
             android:textSize="@dimen/text_size_small"
-            app:layout_constraintTop_toBottomOf="@+id/txt_delivery_time_lcic"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="@dimen/margin_xxxl"
+            android:layout_marginTop="@dimen/margin_avg"
             android:layout_marginStart="@dimen/margin_xxxl"/>
 
         <TextView
@@ -93,11 +51,13 @@
             android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintTop_toBottomOf="@+id/txt_delivery_time_lcic"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             android:weightSum="3"
             android:background="@drawable/layout_background_lite"
-            android:layout_marginEnd="@dimen/margin_xl" >
+            android:layout_marginEnd="@dimen/margin_xl"
+            >
             <TextView
                 android:id="@+id/txt_minus_lcic"
                 android:layout_width="0dp"
@@ -114,9 +74,9 @@
                 android:layout_height="match_parent"
                 android:background="@color/grey"/>
             <TextView
-                android:id="@+id/txt_quanatity_lcic"
+                android:id="@+id/txt_quantity_lcic"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:text="01"
                 android:textAlignment="center"

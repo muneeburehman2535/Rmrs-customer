@@ -65,13 +65,58 @@
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </androidx.cardview.widget.CardView>
+
+                <ImageView
+                    android:id="@+id/img_restaurant_lcic"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/mask_group_2"
+                    android:scaleType="fitXY"
+                    app:layout_constraintTop_toBottomOf="@+id/card_delivery_loc_cf"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginTop="@dimen/margin_xl"
+                    android:layout_marginStart="@dimen/margin_xxxl"/>
+                <TextView
+                    android:id="@+id/txt_restaurant_name_lcic"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Burger King"
+                    android:textColor="@color/text_color"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/text_size_small"
+                    app:layout_constraintTop_toBottomOf="@+id/card_delivery_loc_cf"
+                    app:layout_constraintStart_toEndOf="@+id/img_restaurant_lcic"
+                    android:layout_marginTop="@dimen/margin_xl"
+                    android:layout_marginStart="@dimen/margin_xl"/>
+
+                <TextView
+                    android:id="@+id/txt_restaurant_loc_lcic"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="F-7 Markaz, Islamabad"
+                    android:textSize="@dimen/text_size_xsmall"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_restaurant_name_lcic"
+                    app:layout_constraintStart_toEndOf="@+id/img_restaurant_lcic"
+                    android:layout_marginStart="@dimen/margin_xl"/>
+                <TextView
+                    android:id="@+id/txt_delivery_time_lcic"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="30 Min"
+                    android:textSize="@dimen/text_size_xsmall"
+                    android:drawableStart="@drawable/ic_clock"
+                    android:drawablePadding="@dimen/padding_small"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_restaurant_loc_lcic"
+                    app:layout_constraintStart_toEndOf="@+id/img_restaurant_lcic"
+                    android:layout_marginStart="@dimen/margin_xl"/>
                 <!--Items View-->
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_delivery_loc_cf"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/card_delivery_loc_cf"/>
+                    app:layout_constraintTop_toBottomOf="@+id/txt_delivery_time_lcic"
+                    android:layout_marginTop="@dimen/margin_l"/>
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -109,17 +154,17 @@
 
                         <!--Delivery charges View-->
                         <TextView
-                            android:id="@+id/txt_title_delivery_chrg_cf"
+                            android:id="@+id/txt_title_discount_cf"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/title_item_total"
+                            android:text="@string/title_discount_total"
                             android:textSize="@dimen/text_size_small"
                             app:layout_constraintTop_toBottomOf="@+id/txt_title_item_total_cf"
                             app:layout_constraintStart_toStartOf="parent"
                             android:layout_marginTop="@dimen/margin_small"
                             android:layout_marginStart="@dimen/margin_xxxl"/>
                         <TextView
-                            android:id="@+id/txt_delivery_chrg_cf"
+                            android:id="@+id/txt_discount_cf"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/title_no_charges"
@@ -134,9 +179,9 @@
                             android:id="@+id/txt_title_tax_chrg_cf"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/title_tax_charges"
+                            android:text="@string/title_tax"
                             android:textSize="@dimen/text_size_small"
-                            app:layout_constraintTop_toBottomOf="@+id/txt_title_delivery_chrg_cf"
+                            app:layout_constraintTop_toBottomOf="@+id/txt_title_discount_cf"
                             app:layout_constraintStart_toStartOf="parent"
                             android:layout_marginTop="@dimen/margin_small"
                             android:layout_marginStart="@dimen/margin_xxxl"/>
@@ -146,7 +191,30 @@
                             android:layout_height="wrap_content"
                             android:text="Rs. 100/-"
                             android:textSize="@dimen/text_size_small"
-                            app:layout_constraintTop_toBottomOf="@+id/txt_delivery_chrg_cf"
+                            app:layout_constraintTop_toBottomOf="@+id/txt_discount_cf"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:layout_marginTop="@dimen/margin_small"
+                            android:layout_marginEnd="@dimen/margin_xxxl"/>
+
+
+                        <!--Tax charges View-->
+                        <TextView
+                            android:id="@+id/txt_title_service_chrg_cf"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/title_service_charges"
+                            android:textSize="@dimen/text_size_small"
+                            app:layout_constraintTop_toBottomOf="@+id/txt_title_tax_chrg_cf"
+                            app:layout_constraintStart_toStartOf="parent"
+                            android:layout_marginTop="@dimen/margin_small"
+                            android:layout_marginStart="@dimen/margin_xxxl"/>
+                        <TextView
+                            android:id="@+id/txt_service_chrg_cf"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Rs. 100/-"
+                            android:textSize="@dimen/text_size_small"
+                            app:layout_constraintTop_toBottomOf="@+id/txt_tax_chrg_cf"
                             app:layout_constraintEnd_toEndOf="parent"
                             android:layout_marginTop="@dimen/margin_small"
                             android:layout_marginEnd="@dimen/margin_xxxl"/>
@@ -157,7 +225,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
                             android:background="@color/grey"
-                            app:layout_constraintTop_toBottomOf="@+id/txt_title_tax_chrg_cf"
+                            app:layout_constraintTop_toBottomOf="@+id/txt_title_service_chrg_cf"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             android:layout_marginTop="@dimen/margin_xl"

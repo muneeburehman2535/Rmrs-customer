@@ -46,6 +46,7 @@
     <string name="title_categories">Categories</string>
     <string name="title_deals">Deals</string>
     <string name="title_restaurants">Restaurants</string>
+    <string name="title_filter">Filters</string>
 
     //Profile Screen
     <string name="title_name">Name</string>
@@ -65,8 +66,10 @@
     <string name="title_delivery_location">Delivery Location</string>
     <string name="title_proceed_to_pay">Proceed to pay</string>
     <string name="title_item_total">Item Total</string>
+    <string name="title_discount_total">Discount Total</string>
     <string name="title_delivery_charges">Delivery charges</string>
-    <string name="title_tax_charges">Tax &amp; Charges</string>
+    <string name="title_tax">Sales Tax</string>
+    <string name="title_service_charges">Service Charges</string>
     <string name="title_no_charges">No charges</string>
     <string name="title_total_pay">Total to pay</string>
 
@@ -89,6 +92,11 @@
     <string name="title_delivery_fee">Delivery fee</string>
     <string name="title_total">Total (incl. GST)</string>
     <string name="title_reorder">Reorder</string>
+
+    //Filter Search
+    <string name="title_select_category">Select Categories:</string>
+    <string name="title_select_price_range">Select Price Range:</string>
+    <string name="title_search">Search</string>
 
 
     //Error Strings
