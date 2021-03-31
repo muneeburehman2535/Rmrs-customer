@@ -26,17 +26,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Rmrscustomer"
         android:usesCleartextTraffic="true">
+        <activity android:name=".ui.orderdetail.OrderDetailActivity"></activity>
+
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_api" />
+
         <activity
             android:name=".ui.home.CustomerHomeActivity"
             android:label="@string/title_activity_customer_home"
-            android:theme="@style/Theme.Rmrscustomer.NoActionBar"/>
-
+            android:theme="@style/Theme.Rmrscustomer.NoActionBar" />
         <activity
             android:name=".ui.otpverification.ConfirmOtpActivity"
             android:screenOrientation="portrait" />

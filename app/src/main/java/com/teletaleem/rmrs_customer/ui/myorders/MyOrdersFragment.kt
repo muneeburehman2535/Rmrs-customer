@@ -1,5 +1,6 @@
 package com.teletaleem.rmrs_customer.ui.myorders
 
+import android.content.Intent
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,12 +9,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.teletaleem.rmrs_customer.R
-import com.teletaleem.rmrs_customer.adapters.CategoriesAdapter
-import com.teletaleem.rmrs_customer.adapters.CurrentOrdersAdapter
-import com.teletaleem.rmrs_customer.adapters.PastOrdersAdapter
-import com.teletaleem.rmrs_customer.adapters.RestaurantAdapter
+import com.teletaleem.rmrs_customer.adapters.*
 import com.teletaleem.rmrs_customer.databinding.MyOrdersFragmentBinding
+import com.teletaleem.rmrs_customer.ui.orderdetail.OrderDetailActivity
+import com.teletaleem.rmrs_customer.utilities.RecyclerItemClickListener
 
 class MyOrdersFragment : Fragment() {
 
@@ -55,9 +56,11 @@ class MyOrdersFragment : Fragment() {
             false
         )
         mBinding.rvCurrentOrdersFmo.adapter = currentOrderAdapter
-        //setRecyclerViewListener(mBinding.rvCategories)
+        setRecyclerViewListener(mBinding.rvCurrentOrdersFmo)
 
     }
+
+
 
     private fun setPastOrdersAdapter() {
         val pastOrderAdapter = PastOrdersAdapter(requireContext())
@@ -67,7 +70,28 @@ class MyOrdersFragment : Fragment() {
             false
         )
         mBinding.rvPastOrdersFmo.adapter = pastOrderAdapter
-        //setRecyclerViewListener(mBinding.rvRestaurants)
+        setRecyclerViewListener(mBinding.rvPastOrdersFmo)
+    }
+
+    /*
+  * Set Click listener on Recycler view
+  * */
+    private fun setRecyclerViewListener(recyclerView: RecyclerView)
+    {
+        recyclerView.addOnItemTouchListener(
+            RecyclerItemClickListener(
+                requireContext(),
+                recyclerView, object : RecyclerItemClickListener.OnItemClickListener {
+                    override fun onLongItemClick(view: View?, position: Int) {
+
+                    }
+
+                    override fun onItemClick(view: View, position: Int) {
+                        startActivity(Intent(requireContext(),OrderDetailActivity::class.java))
+                    }
+
+                })
+        )
     }
 
 }

@@ -125,6 +125,9 @@ dependencies {
     //Rating Start Library
     implementation 'me.zhanghai.android.materialratingbar:library:1.4.0'
 
+    //Range bar
+    implementation 'com.github.stfalcon:StfalconPriceRangeBar:0.1.0'
+
 
 }
 apply plugin: 'kotlin-android'

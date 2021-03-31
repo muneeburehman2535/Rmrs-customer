@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/txt_item_quantity_ciod"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1x"
+        android:textSize="@dimen/text_size_small"
+        android:textColor="@color/text_color"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="@dimen/margin_avg"
+        android:layout_marginTop="@dimen/margin_xl"/>
+
+    <TextView
+        android:id="@+id/txt_item_name_ciod"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Zabardast Deal 3"
+        android:textSize="@dimen/text_size_small"
+        android:textColor="@color/text_color"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/txt_item_quantity_ciod"
+        android:layout_marginStart="@dimen/margin_xl"
+        android:layout_marginTop="@dimen/margin_xl"/>
+    <TextView
+        android:id="@+id/txt_item_price_ciod"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Rs. 180.00"
+        android:textSize="@dimen/text_size_small"
+        android:textColor="@color/text_color"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="@dimen/margin_xl"
+        android:layout_marginTop="@dimen/margin_xl"/>
+
+    <TextView
+        android:id="@+id/txt_other_item_name_ciod"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Coke"
+        android:textSize="@dimen/text_size_xsmall"
+        android:textColor="@color/text_color"
+        app:layout_constraintTop_toBottomOf="@+id/txt_item_name_ciod"
+        app:layout_constraintStart_toEndOf="@+id/txt_item_quantity_ciod"
+        android:layout_marginStart="@dimen/margin_xl"
+        android:layout_marginTop="@dimen/margin_avg"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/grey"
+        app:layout_constraintTop_toBottomOf="@+id/txt_other_item_name_ciod"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="@dimen/margin_xl"
+        android:layout_marginStart="@dimen/margin_xxxl"
+        android:layout_marginEnd="@dimen/margin_xxxl"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

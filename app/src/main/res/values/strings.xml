@@ -80,6 +80,17 @@
     <string name="title_past_orders">Past Orders</string>
     <string name="title_edit">Edit</string>
 
+    //Order Detail
+    <string name="title_order_detail">Order Details</string>
+    <string name="title_order_number">Your order number:</string>
+    <string name="title_order_from">Your order from:</string>
+    <string name="title_delivery_address">Delivery address</string>
+    <string name="title_sub_total">Subtotal</string>
+    <string name="title_delivery_fee">Delivery fee</string>
+    <string name="title_total">Total (incl. GST)</string>
+    <string name="title_reorder">Reorder</string>
+
+
     //Error Strings
     <string name="err_email">Enter valid email address</string>
     <string name="err_password">The password should contain at least 8 characters, including at least one lower case letter, one upper case letter, one number and one punctuation mark</string>
@@ -108,8 +119,6 @@
     <string name="menu_bottom_nav">Bottom Navigation</string>
     <string name="open_drawer">Open navigation drawer</string>
     <string name="close_drawer">Close navigation drawer</string>
-
-
 
 
 </resources>

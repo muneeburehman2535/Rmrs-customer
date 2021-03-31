@@ -19,4 +19,5 @@
     <color name="text_color_deals">#b9324e</color>
     <color name="color_background">#FAFAFA</color>
     <color name="color_rating">#FFA500</color>
+    <color name="color_layout_background">#F5F5F5</color>
 </resources>
