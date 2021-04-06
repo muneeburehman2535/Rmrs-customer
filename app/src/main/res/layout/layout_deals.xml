@@ -14,13 +14,14 @@
         android:orientation="vertical">
 
         <ImageView
-            android:id="@+id/img_profile"
+            android:id="@+id/img_profile_deals"
             android:layout_width="match_parent"
             android:layout_height="120dp"
             android:src="@drawable/background"
             android:scaleType="fitXY"
             app:layout_constraintTop_toTopOf="parent" />
         <TextView
+            android:id="@+id/txt_discount_deals"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="Flat 50% OFF"
@@ -34,23 +35,23 @@
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginTop="@dimen/margin_l"/>
         <TextView
-            android:id="@+id/txt_name_lrestaurant"
+            android:id="@+id/txt_name_ldeals"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Arizona Grills"
             android:textStyle="bold"
             android:textColor="@color/text_color_deals"
             android:textAppearance="?android:textAppearanceMedium"
-            app:layout_constraintTop_toBottomOf="@+id/img_profile"
+            app:layout_constraintTop_toBottomOf="@+id/img_profile_deals"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="@dimen/margin_avg"
             android:layout_marginTop="@dimen/margin_avg"/>
         <TextView
-            android:id="@+id/txt_address_lrestaurant"
+            android:id="@+id/txt_address_ldeals"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Ring Road, Cant Area Peshawar"
-            app:layout_constraintTop_toBottomOf="@+id/txt_name_lrestaurant"
+            app:layout_constraintTop_toBottomOf="@+id/txt_name_ldeals"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginTop="@dimen/margin_small"
@@ -58,7 +59,7 @@
             android:layout_marginBottom="@dimen/margin_xl"/>
 
         <TextView
-            android:id="@+id/txt_points_lrestaurant"
+            android:id="@+id/txt_points_ldeals"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
@@ -68,7 +69,7 @@
             app:layout_constraintEnd_toEndOf="parent" />
 
         <TextView
-            android:id="@+id/txt_rating_lrestaurant"
+            android:id="@+id/txt_rating_ldeals"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/margin_small"
@@ -76,14 +77,14 @@
             android:text="4.9"
             android:textColor="@color/text_color"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/txt_points_lrestaurant" />
+            app:layout_constraintEnd_toStartOf="@+id/txt_points_ldeals" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_star"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/txt_rating_lrestaurant"
+            app:layout_constraintEnd_toStartOf="@+id/txt_rating_ldeals"
             android:layout_marginBottom="36dp"
             android:layout_marginEnd="@dimen/margin_small"/>
 

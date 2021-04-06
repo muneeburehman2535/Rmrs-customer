@@ -4,9 +4,11 @@ import com.teletaleem.rmrs_customer.db.dao.CartDao
 import com.teletaleem.rmrs_customer.db.dao.LoginDao
 import com.teletaleem.rmrs_customer.data_class.Cart
 import com.teletaleem.rmrs_customer.data_class.login.LoginResponse
+import com.teletaleem.rmrs_customer.db.dao.FavouriteDao
+import com.teletaleem.rmrs_customer.db.dataclass.Favourite
 import javax.inject.Inject
 
-class RoomDBRepository @Inject constructor(private val loginDao: LoginDao,private val cartDao: CartDao) {
+class RoomDBRepository @Inject constructor(private val loginDao: LoginDao,private val cartDao: CartDao,private val favouriteDao: FavouriteDao) {
 
     /*********************************************Login Methods***************************************/
     suspend fun insertLoginData(loginResponse: LoginResponse)=loginDao.insert(loginResponse)
@@ -20,6 +22,10 @@ class RoomDBRepository @Inject constructor(private val loginDao: LoginDao,privat
     suspend fun updateItem(cart: Cart)=cartDao.updateItemRecord(cart)
     suspend fun deleteRecord(cart: Cart)=cartDao.deleteItem(cart)
     fun emptyCart()=cartDao.emptyCart()
+
+    /*******************************************Favourite Methods**************************************/
+    suspend fun insertFavouriteItem(favourite: Favourite)=favouriteDao.insert(favourite)
+    fun searchRestaurantById(restaurantID:String)=favouriteDao.findRestaurantByID(restaurantID)
 
 
 }

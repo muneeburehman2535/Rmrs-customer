@@ -9,9 +9,11 @@ import android.net.NetworkCapabilities
 import android.os.Build
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
+import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import com.kaopiz.kprogresshud.KProgressHUD
 import com.teletaleem.rmrs_customer.R
@@ -173,6 +175,17 @@ class AppGlobal {
         fun roundTwoPlaces(value: Double?): String? {
             val df = DecimalFormat("0.00")
             return df.format(value)
+        }
+
+        fun loadImageIntoGlide(imageURL:String?,imageView: ImageView,context: Context)
+        {
+            Glide
+                .with(context)
+                .load(imageURL)
+                .placeholder(R.drawable.placeholder)
+                .error(R.drawable.placeholder)
+                .fitCenter()
+                .into(imageView)
         }
     }
 }

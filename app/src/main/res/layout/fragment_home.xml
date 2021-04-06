@@ -38,11 +38,11 @@
                 android:weightSum="2">
 
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/card_search_home"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1.6"
                     android:layout_marginStart="@dimen/margin_xl"
-
                     app:cardCornerRadius="@dimen/margin_avg"
                     android:layout_marginBottom="@dimen/margin_small">
                     <androidx.appcompat.widget.SearchView
@@ -51,7 +51,9 @@
                         android:layout_height="wrap_content"
                         app:queryHint="@string/hint_search_food"
                         app:iconifiedByDefault="false"
+                        android:focusable="false"
                         app:queryBackground="@color/transparent"
+                        android:clickable="false"
                         />
                 </androidx.cardview.widget.CardView>
                 <ImageView

@@ -25,6 +25,14 @@
             android:id="@+id/nav_profile"
             android:icon="@drawable/ic_user"
             android:title="@string/menu_profile"/>
+        <item
+            android:id="@+id/nav_update_password"
+            android:icon="@drawable/ic_iconfinder_change_password_7023958"
+            android:title="@string/title_update_password"/>
+        <item
+            android:id="@+id/nav_logout"
+            android:icon="@drawable/ic_logout_svgrepo_com"
+            android:title="@string/title_logout"/>
 
     </group>
 </menu>

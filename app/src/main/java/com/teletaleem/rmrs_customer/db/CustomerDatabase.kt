@@ -4,13 +4,17 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.teletaleem.rmrs_customer.data_class.Cart
-import com.teletaleem.rmrs_customer.data_class.login.LoginResponse
+import com.teletaleem.rmrs_customer.db.dao.FavouriteDao
+import com.teletaleem.rmrs_customer.db.dataclass.Favourite
 
-//@Database(entities = [LoginResponse::class,Cart::class], version = 1,exportSchema = false)
+@Database(entities = [Favourite::class], version = 1,exportSchema = false)
 abstract class CustomerDatabase:RoomDatabase(){
 
+
+    abstract val favouriteDao:FavouriteDao
     companion object {
+
+
 
         @Volatile
         private var INSTANCE: CustomerDatabase? = null

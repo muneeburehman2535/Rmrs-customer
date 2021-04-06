@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="review_view_model"
+            type="com.teletaleem.rmrs_customer.ui.review.ReviewViewModel" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_xxxxl"
+        android:layout_marginStart="@dimen/margin_l"
+        android:layout_marginEnd="@dimen/margin_l"
+        app:cardCornerRadius="@dimen/margin_avg">
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/txt_review"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/title_give_review"
+                    android:textSize="@dimen/text_size_average"
+                    android:textColor="@color/text_color"
+                    android:textAlignment="center"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginTop="@dimen/margin_xxxxl"
+                    android:layout_marginStart="@dimen/margin_l"
+                    android:layout_marginEnd="@dimen/margin_l"/>
+
+                <RatingBar
+                    android:id="@+id/rb_rating_fr"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_small"
+                    android:layout_marginTop="@dimen/margin_xxxxl"
+                    android:progressTint="@color/color_rating"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_review" />
+
+                <EditText
+                    android:id="@+id/edtxt_review"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/img_size_l"
+                    android:background="@drawable/edit_text_background"
+                    app:layout_constraintTop_toBottomOf="@+id/rb_rating_fr"
+                    android:hint="@string/title_review"
+                    android:textSize="@dimen/text_size_average"
+                    android:paddingTop="@dimen/padding_l"
+                    android:paddingStart="@dimen/padding_l"
+                    android:paddingEnd="@dimen/padding_avg"
+                    android:gravity="top|start"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginTop="@dimen/margin_xxxl"
+                    android:layout_marginStart="@dimen/margin_l"
+                    android:layout_marginEnd="@dimen/margin_l"/>
+
+                <Button
+                    android:id="@+id/btn_submit_review"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/title_submit"
+                    android:textColor="@color/white"
+                    android:background="@drawable/button_background_avg"
+                    app:layout_constraintTop_toBottomOf="@+id/edtxt_review"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginTop="@dimen/margin_xxxl"
+                    android:layout_marginStart="@dimen/margin_xxxxl"
+                    android:layout_marginEnd="@dimen/margin_xxxxl"
+                    android:layout_marginBottom="@dimen/margin_xxxl"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+
+    </androidx.cardview.widget.CardView>
+
+</layout>

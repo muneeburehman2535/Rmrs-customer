@@ -17,6 +17,7 @@
     <string name="title_no_account">Don"'"t have an account?</string>
     <string name="title_sign_up">Sign Up</string>
     <string name="title_login">Login</string>
+    <string name="title_send_email">Send Email</string>
 
     //Registration
     <string name="hint_sign_up">Sign up</string>
@@ -60,6 +61,7 @@
     <string name="title_toolbar_cart">My Cart</string>
     <string name="title_toolbar_profile">My Profile</string>
     <string name="title_toolbar_restaurants">Restaurants</string>
+    <string name="title_toolbar_update_password">Update Password</string>
 
     //Cart Strings
     <string name="title_cart">Your Cart</string>
@@ -98,6 +100,13 @@
     <string name="title_select_price_range">Select Price Range:</string>
     <string name="title_search">Search</string>
 
+    //Update Password
+    <string name="title_update_password">Change Password</string>
+    <string name="hint_new_password">New Password</string>
+    <string name="title_update">Update</string>
+    <string name="title_change_password">You must update your password now.</string>
+    <string name="title_logout">Logout</string>
+
 
     //Error Strings
     <string name="err_email">Enter valid email address</string>
@@ -127,6 +136,10 @@
     <string name="menu_bottom_nav">Bottom Navigation</string>
     <string name="open_drawer">Open navigation drawer</string>
     <string name="close_drawer">Close navigation drawer</string>
+
+    <string name="title_give_review">LEAVE US A REVIEW AND LET US KNOW HOW WE DID</string>
+    <string name="title_review">Review</string>
+    <string name="title_submit">Submit</string>
 
 
 </resources>

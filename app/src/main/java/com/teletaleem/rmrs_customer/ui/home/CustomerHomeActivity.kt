@@ -34,6 +34,7 @@ import com.teletaleem.rmrs_customer.ui.home.cart.CartFragment
 import com.teletaleem.rmrs_customer.ui.home.favourite.FavouriteFragment
 import com.teletaleem.rmrs_customer.ui.home.profile.ProfileFragment
 import com.teletaleem.rmrs_customer.ui.myorders.MyOrdersFragment
+import com.teletaleem.rmrs_customer.ui.updatepassword.UpdatePasswordFragment
 import com.teletaleem.rmrs_customer.utilities.AppGlobal
 import java.util.*
 
@@ -124,7 +125,6 @@ class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItem
                     mToolbarLayout.visibility = View.GONE
                     mToolbar.title = getString(R.string.title_toolbar_profile)
                     replaceNewFragment(ProfileFragment())
-                    editProfileMenu.isVisible = true
                     return@OnNavigationItemSelectedListener true
                 }
                 else -> true
@@ -300,6 +300,22 @@ class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItem
                 editProfileMenu.isVisible = true
                 replaceNewFragment(ProfileFragment())
                 mBinding.drawerLayout.closeDrawers()
+                return true
+            }
+            R.id.nav_update_password->
+            {
+                locationMenu.isVisible = false
+                mToolbarLayout.visibility = View.GONE
+                mToolbar.title = getString(R.string.title_toolbar_update_password)
+                editProfileMenu.isVisible = false
+                replaceNewFragment(UpdatePasswordFragment())
+                mBinding.drawerLayout.closeDrawers()
+                return true
+            }
+
+            R.id.nav_logout->
+            {
+                this.finish()
                 return true
             }
             else-> false

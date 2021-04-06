@@ -14,6 +14,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 
 public interface WebRequestGeo {
 
@@ -32,7 +33,9 @@ public interface WebRequestGeo {
     @POST("/customer/signup")
     Call<ResponseBody> signUpUser(@Body Registration registration);
 
+    @GET("/customer/categories")
+    Call<ResponseBody> getCategoriesList();
 
-
-
+    @GET("/customer/home/?")
+    Call<ResponseBody> getHomeData(@Query("categoryID") String categoryID);
 }

@@ -1,6 +1,6 @@
 package com.teletaleem.rmrs_customer.adapters
 
-import `in`.aabhasjindal.otptextview.ItemView
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
 import android.view.LayoutInflater
@@ -11,8 +11,9 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.teletaleem.rmrs_customer.R
+import com.teletaleem.rmrs_customer.data_class.home.category.Categories
 
-class CategoriesAdapter(context: Context): RecyclerView.Adapter<CategoriesAdapter.ViewHolder>() {
+class CategoriesAdapter(context: Context,private var categoriesList: ArrayList<Categories>): RecyclerView.Adapter<CategoriesAdapter.ViewHolder>() {
     private val mContext=context
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -20,21 +21,31 @@ class CategoriesAdapter(context: Context): RecyclerView.Adapter<CategoriesAdapte
         return ViewHolder(contactView )
     }
 
+    @SuppressLint("ResourceAsColor")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        if (position==0)
+        holder.layoutParent.background=ContextCompat.getDrawable(mContext,R.drawable.curved_rectengle_layout_background_light)
+        holder.txtCategory.setTextColor(R.color.text_color)
+        if (categoriesList[position].isClicked)
         {
             holder.layoutParent.background=ContextCompat.getDrawable(mContext,R.drawable.curved_rectengle_layout_background)
             holder.txtCategory.setTextColor(Color.WHITE)
         }
+        holder.txtCategory.text=categoriesList[position].CategoryName
+
     }
 
     override fun getItemCount(): Int {
-        return 7
+        return categoriesList.size
     }
 
     class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         var layoutParent:ConstraintLayout = itemView.findViewById(R.id.layout_category)
         var txtCategory:TextView=itemView.findViewById(R.id.txt_lcategory)
 
+    }
+
+    fun updateCategoryList(categoriesList: ArrayList<Categories>){
+        this.categoriesList=categoriesList
+        notifyDataSetChanged()
     }
 }
