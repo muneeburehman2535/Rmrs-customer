@@ -38,4 +38,7 @@ public interface WebRequestGeo {
 
     @GET("/customer/home/?")
     Call<ResponseBody> getHomeData(@Query("categoryID") String categoryID);
+
+    @GET("/customer/restaurant-detail/?")
+    Call<ResponseBody> getRestaurantDetail(@Query("restaurantid") String restaurantid);
 }

@@ -10,7 +10,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import com.teletaleem.rmrs_customer.R
 import com.teletaleem.rmrs_customer.databinding.ProfileFragmentBinding
-import com.teletaleem.rmrs_customer.shared_view_models.EditProfileSharedViewModel
 import com.teletaleem.rmrs_customer.ui.home.CustomerHomeActivity
 
 class ProfileFragment : Fragment() {

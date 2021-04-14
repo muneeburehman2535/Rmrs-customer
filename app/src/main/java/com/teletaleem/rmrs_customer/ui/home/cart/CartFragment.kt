@@ -8,15 +8,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.teletaleem.rmrs_customer.R
 import com.teletaleem.rmrs_customer.adapters.CartItemAdapter
 import com.teletaleem.rmrs_customer.data_class.cart.Cart
 import com.teletaleem.rmrs_customer.databinding.CartFragmentBinding
+import com.teletaleem.rmrs_customer.db.CustomerDatabase
+import com.teletaleem.rmrs_customer.db.dataclass.Favourite
 import com.teletaleem.rmrs_customer.ui.checkout.CheckoutFragment
 import com.teletaleem.rmrs_customer.ui.home.CustomerHomeActivity
 import com.teletaleem.rmrs_customer.utilities.AppGlobal
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class CartFragment : Fragment(),View.OnClickListener,CartItemAdapter.UpdateItemQuantityListener {
     private lateinit var mBinding:CartFragmentBinding
     private lateinit var cartList:ArrayList<Cart>
@@ -29,6 +34,9 @@ class CartFragment : Fragment(),View.OnClickListener,CartItemAdapter.UpdateItemQ
     private var mSalesTaxAmount="0.00"
     private var mServicesCharges="40.00"
     private var mTotalAmount="0.00"
+    private var restaurantId="0"
+
+    private lateinit var  databaseCreator: CustomerDatabase
 
     companion object {
         fun newInstance() = CartFragment()
@@ -52,23 +60,34 @@ class CartFragment : Fragment(),View.OnClickListener,CartItemAdapter.UpdateItemQ
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        databaseCreator= CustomerDatabase.getInstance(requireActivity())
         setCartList()
         setDealsAdapter()
-        calculatePrice()
-        setViews()
+        getRestaurantId()
+//        calculatePrice()
+//        setViews()
         setClickListeners()
+
 
     }
 
     private fun setCartList() {
         cartList= arrayListOf()
 
-        val cart=Cart("Pizza BBQ","Size Regular, Wheat thin crust onion, jalapeno, Black olive","999","120","2")
+        val cart=Cart("1","Pizza BBQ","Size Regular, Wheat thin crust onion, jalapeno, Black olive","999","120","2","")
         cartList.add(cart)
 
-        val cart1=Cart("Beef Burger","Grilled Beef, Fries, Black olive","500","80","1")
+        val cart1=Cart("1","Beef Burger","Grilled Beef, Fries, Black olive","500","80","1","")
         cartList.add(cart1)
     }
+
+    private fun getRestaurantId(){
+        (activity as CustomerHomeActivity?)?.mModel?.restaurantID?.observe(viewLifecycleOwner, Observer {
+            this.restaurantId=it
+            getCartRecord()
+        })
+    }
+
     /*****************************************************************************************************************************/
     //                                          Set Click Listeners
     /*****************************************************************************************************************************/
@@ -81,8 +100,8 @@ class CartFragment : Fragment(),View.OnClickListener,CartItemAdapter.UpdateItemQ
         {
             R.id.btn_pay_to_proceed->
             {
-                (context as CustomerHomeActivity?)?.changeToolbarName(getString(R.string.title_checkout))
-                (context as CustomerHomeActivity?)?.loadNewFragment(
+                (activity as CustomerHomeActivity?)?.changeToolbarName(getString(R.string.title_checkout))
+                (activity as CustomerHomeActivity?)?.loadNewFragment(
                     CheckoutFragment(),
                     "checkout"
                 )
@@ -94,9 +113,9 @@ class CartFragment : Fragment(),View.OnClickListener,CartItemAdapter.UpdateItemQ
     //                                    2:- Set Update Quantity Interface Listener
     /*****************************************************************************************************************************/
     private fun setDealsAdapter() {
-        cartItemAdapter = CartItemAdapter(requireContext(),cartList)
+        cartItemAdapter = CartItemAdapter(requireActivity(),cartList)
         mBinding.rvDeliveryLocCf.layoutManager = LinearLayoutManager(
-                context,
+                activity,
                 LinearLayoutManager.VERTICAL,
                 false
         )
@@ -131,8 +150,8 @@ class CartFragment : Fragment(),View.OnClickListener,CartItemAdapter.UpdateItemQ
         mDiscountTotal="0.0"
         for (index in 0 until cartList.size)
         {
-            mItemTotalAmount= AppGlobal.roundTwoPlaces(mItemTotalAmount.toDouble()+(cartList[index].item_price.toDouble()*cartList[index].quantity.toDouble())).toString()
-            mDiscountTotal= AppGlobal.roundTwoPlaces(mDiscountTotal.toDouble()+(cartList[index].discount.toDouble()*cartList[index].quantity.toDouble())).toString()
+            mItemTotalAmount= AppGlobal.roundTwoPlaces(mItemTotalAmount.toDouble()+(cartList[index].original_price.toDouble()*cartList[index].quantity.toDouble())).toString()
+            mDiscountTotal= AppGlobal.roundTwoPlaces(mDiscountTotal.toDouble()+(cartList[index].item_price.toDouble()*cartList[index].quantity.toDouble())).toString()
 
         }
         mTotalDiscountedAmount=AppGlobal.roundTwoPlaces(mItemTotalAmount.toDouble()-mDiscountTotal.toDouble()).toString()
@@ -148,6 +167,19 @@ class CartFragment : Fragment(),View.OnClickListener,CartItemAdapter.UpdateItemQ
         mBinding.txtTaxChrgCf.text=AppGlobal.mCurrency+mSalesTaxAmount
         mBinding.txtServiceChrgCf.text=AppGlobal.mCurrency+mServicesCharges
         mBinding.txtTotalPayCf.text=AppGlobal.mCurrency+mTotalAmount
+    }
+
+    private fun getCartRecord(){
+        val cartLiveData=databaseCreator.cartDao.fetch(restaurantId)
+
+        cartLiveData.observe(requireActivity(), Observer {
+            cartList= it as ArrayList<Cart>
+            cartItemAdapter.updateList(it as ArrayList<Cart>)
+            calculatePrice()
+            setViews()
+        })
+
+
     }
 
 }

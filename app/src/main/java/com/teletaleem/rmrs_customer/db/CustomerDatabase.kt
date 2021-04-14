@@ -4,14 +4,17 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.teletaleem.rmrs_customer.data_class.cart.Cart
+import com.teletaleem.rmrs_customer.db.dao.CartDao
 import com.teletaleem.rmrs_customer.db.dao.FavouriteDao
 import com.teletaleem.rmrs_customer.db.dataclass.Favourite
 
-@Database(entities = [Favourite::class], version = 1,exportSchema = false)
+@Database(entities = [Favourite::class, Cart::class], version = 1,exportSchema = false)
 abstract class CustomerDatabase:RoomDatabase(){
 
 
     abstract val favouriteDao:FavouriteDao
+    abstract val cartDao:CartDao
     companion object {
 
 

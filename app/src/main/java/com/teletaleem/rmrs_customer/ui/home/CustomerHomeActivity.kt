@@ -29,16 +29,17 @@ import com.shivtechs.maplocationpicker.LocationPickerActivity
 import com.shivtechs.maplocationpicker.MapUtility
 import com.teletaleem.rmrs_customer.R
 import com.teletaleem.rmrs_customer.databinding.ActivityCustomerHomeBinding
-import com.teletaleem.rmrs_customer.shared_view_models.EditProfileSharedViewModel
+import com.teletaleem.rmrs_customer.shared_view_models.SharedViewModel
 import com.teletaleem.rmrs_customer.ui.home.cart.CartFragment
 import com.teletaleem.rmrs_customer.ui.home.favourite.FavouriteFragment
 import com.teletaleem.rmrs_customer.ui.home.profile.ProfileFragment
 import com.teletaleem.rmrs_customer.ui.myorders.MyOrdersFragment
 import com.teletaleem.rmrs_customer.ui.updatepassword.UpdatePasswordFragment
 import com.teletaleem.rmrs_customer.utilities.AppGlobal
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 
-
+@AndroidEntryPoint
 class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var mBinding:ActivityCustomerHomeBinding
@@ -52,12 +53,12 @@ class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItem
     private var mCurrentLocation:String=""
     private val pLACE_PICKER_REQUEST = 4
     private lateinit var fields:List<Place.Field>
-    lateinit var mModel:EditProfileSharedViewModel
+    lateinit var mModel:SharedViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mBinding=DataBindingUtil.setContentView(this, R.layout.activity_customer_home)
-        mModel = ViewModelProvider(this).get(EditProfileSharedViewModel::class.java)
+        mModel = ViewModelProvider(this).get(SharedViewModel::class.java)
 
 
         setBottomNavigationView()

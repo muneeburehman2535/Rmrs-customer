@@ -5,6 +5,12 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "cart")
 data class Cart(
-    @PrimaryKey(autoGenerate = true)
-    val id:Long=0L,
+    @PrimaryKey()
+    val restaurant_id:String,
+    val item_name:String,
+    val item_desc:String,
+    val item_price:String,
+    val original_price:String,
+    val quantity:String,
+    val image:String
 )

@@ -6,6 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -18,14 +21,18 @@ import com.teletaleem.rmrs_customer.data_class.home.category.Categories
 import com.teletaleem.rmrs_customer.data_class.home.restaurants.Deals
 import com.teletaleem.rmrs_customer.data_class.home.restaurants.Restaurants
 import com.teletaleem.rmrs_customer.databinding.FragmentHomeBinding
+import com.teletaleem.rmrs_customer.db.CustomerDatabase
+import com.teletaleem.rmrs_customer.db.dataclass.Favourite
+import com.teletaleem.rmrs_customer.shared_view_models.SharedViewModel
 import com.teletaleem.rmrs_customer.ui.restauratntdetail.RestaurantDetailFragment
 import com.teletaleem.rmrs_customer.ui.search.filter_search.FilterSearchFragment
 import com.teletaleem.rmrs_customer.ui.search.simple_search.SimpleSearchFragment
 import com.teletaleem.rmrs_customer.utilities.AppGlobal
 import com.teletaleem.rmrs_customer.utilities.RecyclerItemClickListener
-import kotlin.collections.ArrayList
+import dagger.hilt.android.AndroidEntryPoint
 
-class HomeFragment : Fragment() ,View.OnClickListener{
+@AndroidEntryPoint
+class HomeFragment : Fragment() ,View.OnClickListener,RestaurantAdapter.AddToFavouriteListener,RestaurantAdapter.ViewClickListener{
 
     private lateinit var homeViewModel: HomeViewModel
     private lateinit var mBinding: FragmentHomeBinding
@@ -39,10 +46,14 @@ class HomeFragment : Fragment() ,View.OnClickListener{
     private lateinit var restaurantsList:ArrayList<Restaurants>
     private lateinit var dealsList:ArrayList<Deals>
 
+    private lateinit var  databaseCreator: CustomerDatabase
+    private lateinit var favouriteLiveData:LiveData<Favourite?>
+
+
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?,
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?,
     ): View {
 
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
@@ -52,10 +63,10 @@ class HomeFragment : Fragment() ,View.OnClickListener{
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        homeViewModel =
-                ViewModelProvider(this).get(HomeViewModel::class.java)
+        homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
         mBinding.homeViewModel=homeViewModel
-        progressDialog=AppGlobal.setProgressDialog(requireContext())
+        progressDialog=AppGlobal.setProgressDialog(requireActivity())
+        databaseCreator= CustomerDatabase.getInstance(requireActivity())
 
         setCategoryAdapter()
         setRestaurantAdapter()
@@ -73,8 +84,7 @@ class HomeFragment : Fragment() ,View.OnClickListener{
     override fun onClick(v: View?) {
         when(v?.id)
         {
-            R.id.img_filter_home->
-            {
+            R.id.img_filter_home -> {
                 (context as CustomerHomeActivity?)?.changeToolbarName(getString(R.string.title_filter))
                 (context as CustomerHomeActivity?)?.loadNewFragment(
                         FilterSearchFragment(),
@@ -82,7 +92,7 @@ class HomeFragment : Fragment() ,View.OnClickListener{
                 )
             }
 
-            R.id.card_search_home->{
+            R.id.card_search_home -> {
                 (context as CustomerHomeActivity?)?.changeToolbarName(getString(R.string.hint_search_food))
                 (context as CustomerHomeActivity?)?.loadNewFragment(
                         SimpleSearchFragment(),
@@ -98,77 +108,142 @@ class HomeFragment : Fragment() ,View.OnClickListener{
 
     private fun setCategoryAdapter() {
         categoriesList= arrayListOf()
-        categoryAdapter = CategoriesAdapter(requireContext(),categoriesList)
+        categoryAdapter = CategoriesAdapter(requireContext(), categoriesList)
         mBinding.rvCategories.layoutManager = LinearLayoutManager(
-            context,
-            LinearLayoutManager.HORIZONTAL,
-            false
+                context,
+                LinearLayoutManager.HORIZONTAL,
+                false
         )
         mBinding.rvCategories.adapter = categoryAdapter
-        setRecyclerViewListener(mBinding.rvCategories,"categories")
+        setRecyclerViewListener(mBinding.rvCategories, "categories")
 
     }
 
     private fun setRestaurantAdapter() {
         restaurantsList= arrayListOf()
-        restaurantsAdapter = RestaurantAdapter(requireContext(),restaurantsList)
+        restaurantsAdapter = RestaurantAdapter(requireContext(), restaurantsList)
         mBinding.rvRestaurants.layoutManager = LinearLayoutManager(
-            context,
-            LinearLayoutManager.HORIZONTAL,
-            false
+                context,
+                LinearLayoutManager.HORIZONTAL,
+                false
         )
         mBinding.rvRestaurants.adapter = restaurantsAdapter
-        setRecyclerViewListener(mBinding.rvRestaurants,"restaurants")
+        restaurantsAdapter.setAddToFavouriteListener(this)
+        restaurantsAdapter.setViewClickListener(this)
+        //setRecyclerViewListener(mBinding.rvRestaurants,"restaurants")
     }
 
     private fun setDealsAdapter() {
         dealsList= arrayListOf()
-        dealsAdapter = DealsAdapter(requireContext(),dealsList)
+        dealsAdapter = DealsAdapter(requireContext(), dealsList)
         mBinding.rvDeals.layoutManager = LinearLayoutManager(
-            context,
-            LinearLayoutManager.HORIZONTAL,
-            false
+                context,
+                LinearLayoutManager.HORIZONTAL,
+                false
         )
         mBinding.rvDeals.adapter = dealsAdapter
-        setRecyclerViewListener(mBinding.rvDeals,"deals")
+        setRecyclerViewListener(mBinding.rvDeals, "deals")
     }
 
     /*
     * Set Click listener on Recycler view
     * */
-    private fun setRecyclerViewListener(recyclerView: RecyclerView,source:String)
+    private fun setRecyclerViewListener(recyclerView: RecyclerView, source: String)
     {
         recyclerView.addOnItemTouchListener(
-            RecyclerItemClickListener(
-                requireContext(),
-                recyclerView, object : RecyclerItemClickListener.OnItemClickListener {
+                RecyclerItemClickListener(
+                        requireContext(),
+                        recyclerView, object : RecyclerItemClickListener.OnItemClickListener {
                     override fun onLongItemClick(view: View?, position: Int) {
 
                     }
 
                     override fun onItemClick(view: View, position: Int) {
-                        if (source=="categories"){
-                            for (index in 0 until categoriesList.size)
-                            {
-                                categoriesList[index].isClicked=false
+                        if (source == "categories") {
+                            for (index in 0 until categoriesList.size) {
+                                categoriesList[index].isClicked = false
                             }
-                            categoriesList[position].isClicked=true
+                            categoriesList[position].isClicked = true
                             categoryAdapter.updateCategoryList(categoriesList)
 
                             getRestaurantsList(categoriesList[position].CategoryID)
-                        }
-                        else{
-                            (context as CustomerHomeActivity?)?.changeToolbarName(getString(R.string.title_restaurants))
-                            (context as CustomerHomeActivity?)?.loadNewFragment(
-                                    RestaurantDetailFragment(),
-                                    "restaurant_detail"
-                            )
                         }
 
                     }
 
                 })
         )
+    }
+
+    /**************************************************************************************************************************/
+    //                                          Interfaces Section
+    /**************************************************************************************************************************/
+
+    override fun onAddToFavouriteClick(position: Int) {
+       //val favourite= homeViewModel.getRecordById(restaurantsList[position].RestaurantID)
+
+//        val favouriteLiveData=databaseCreator.favouriteDao.findRestaurantByID(restaurantsList[position].RestaurantID)
+//
+//
+//        favouriteLiveData.observe(requireActivity(), Observer<Favourite?>{
+//            if (it!=null){
+//                deleteFavourite(position,favouriteLiveData)
+//            }
+//            else{
+//                addToFavourite(position,favouriteLiveData)
+//            }
+//        })
+
+    }
+
+    override fun onViewClicked(position: Int) {
+        (activity as CustomerHomeActivity).mModel.updateRestaurantId(restaurantsList[position].RestaurantID)
+        (activity as CustomerHomeActivity).changeToolbarName(getString(R.string.title_restaurants))
+        (activity as CustomerHomeActivity).loadNewFragment(
+                RestaurantDetailFragment(),
+                "restaurant_detail"
+        )
+
+    }
+
+
+    /**************************************************************************************************************************/
+    //                                          Room Database Section
+    /**************************************************************************************************************************/
+
+    private fun checkRestaurantById(position: Int):MutableLiveData<Favourite>{
+        val favourite=MutableLiveData<Favourite>()
+        favouriteLiveData=databaseCreator.favouriteDao.findRestaurantByID(restaurantsList[position].RestaurantID)
+
+
+        favouriteLiveData.observe(requireActivity(), Observer<Favourite?>{
+            val id = position
+
+            favourite.postValue(it)
+
+
+        })
+        return favourite
+    }
+
+
+    private fun addToFavourite(position: Int, favouriteLiveData: LiveData<Favourite?>)
+    {
+        favouriteLiveData.removeObservers(requireActivity())
+        val mFavourite=Favourite(restaurantsList[position].RestaurantID, restaurantsList[position].RestaurantName, restaurantsList[position].Address, restaurantsList[position].Rating, restaurantsList[position].RatingCount, restaurantsList[position].Image)
+        homeViewModel.insertFavourite(mFavourite)
+        restaurantsList[position].isFavourite=true
+        restaurantsAdapter.updateRestaurantsList(restaurantsList)
+    }
+
+    private fun deleteFavourite(position: Int, favouriteLiveData: LiveData<Favourite?>)
+    {
+        favouriteLiveData.removeObservers(requireActivity())
+        val mFavourite=Favourite(restaurantsList[position].RestaurantID, restaurantsList[position].RestaurantName, restaurantsList[position].Address, restaurantsList[position].Rating, restaurantsList[position].RatingCount, restaurantsList[position].Image)
+        homeViewModel.deleteFavouriteRecord(mFavourite)
+        restaurantsList[position].isFavourite=false
+        restaurantsAdapter.updateRestaurantsList(restaurantsList)
+
     }
 
     /**************************************************************************************************************************/
@@ -181,43 +256,68 @@ class HomeFragment : Fragment() ,View.OnClickListener{
     private fun getCategoriesList(){
         progressDialog.setLabel("Please Wait")
         progressDialog.show()
-        homeViewModel.getCategoryResponse().observe(requireActivity(), {
-            progressDialog.dismiss()
-            if (it.Message=="Success")
-            {
+        activity?.let {
+            homeViewModel.getCategoryResponse().observe(it, {
+                //progressDialog.dismiss()
+                if (it.Message == "Success") {
 
-                categoriesList=it.data.categories
-                categoriesList[0].isClicked=true
-                categoryAdapter.updateCategoryList(categoriesList)
-                getRestaurantsList(categoriesList[0].CategoryID)
+                    categoriesList = it.data.categories
+                    categoriesList[0].isClicked = true
+                    categoryAdapter.updateCategoryList(categoriesList)
+                    getRestaurantsList(categoriesList[0].CategoryID)
 
-            }
-            else{
-                AppGlobal.showDialog(getString(R.string.title_alert),it.data.description,requireContext())
-            }
-        })
+                } else {
+                    AppGlobal.showDialog(getString(R.string.title_alert), it.data.description, requireContext())
+                }
+            })
+        }
     }
 
     /*
    * Get Restaurants Data API Method
    * */
-    private fun getRestaurantsList(categoryID:String){
-        progressDialog.setLabel("Please Wait")
-        progressDialog.show()
+    private fun getRestaurantsList(categoryID: String){
         homeViewModel.getRestaurantsResponse(categoryID).observe(requireActivity(), {
             progressDialog.dismiss()
-            if (it.Message=="Success")
-            {
+            if (it.Message == "Success") {
 
-                restaurantsList=it.data.restaurants
-                dealsList=it.data.deals
+                restaurantsList = it.data.restaurants
+                dealsList = it.data.deals
+//                checkFavouriteAndUpdateRecord().observe(requireActivity(),{ it1 ->
+//                    if (it1)
+//                    {
+//                        restaurantsAdapter.updateRestaurantsList(restaurantsList)
+//                    }
+//                })
                 restaurantsAdapter.updateRestaurantsList(restaurantsList)
+
+
                 dealsAdapter.updateList(dealsList)
 
-            }
-            else{
-                AppGlobal.showDialog(getString(R.string.title_alert),it.data.description,requireContext())
+            } else {
+                AppGlobal.showDialog(getString(R.string.title_alert), it.data.description, requireContext())
             }
         })
     }
+
+    private fun checkFavouriteAndUpdateRecord() :MutableLiveData<Boolean>{
+        val isFavoured= MutableLiveData<Boolean>()
+        for (index in 0 until restaurantsList.size)
+        {
+            checkRestaurantById(index).observe(requireActivity(),{
+                favouriteLiveData.removeObservers(requireActivity())
+                if (it!=null)
+                {
+                    restaurantsList[index].isFavourite = it!=null
+                }
+                if (index==restaurantsList.size){
+
+                    isFavoured.postValue(true)
+                }
+            })
+        }
+        return isFavoured
+    }
+
+
 }

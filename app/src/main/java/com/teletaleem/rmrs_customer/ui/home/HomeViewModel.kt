@@ -1,28 +1,55 @@
 package com.teletaleem.rmrs_customer.ui.home
 
 import android.app.Application
+import android.os.AsyncTask
+import android.os.Handler
+import android.os.Looper
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.teletaleem.rmrs_customer.data_class.home.category.CategoryResponse
 import com.teletaleem.rmrs_customer.data_class.home.restaurants.RestaurantsResponse
-import com.teletaleem.rmrs_customer.data_class.login.Login
-import com.teletaleem.rmrs_customer.data_class.login.LoginResponse
+import com.teletaleem.rmrs_customer.db.dataclass.Favourite
 import com.teletaleem.rmrs_customer.repository.HomeRepository
-import com.teletaleem.rmrs_customer.repository.LoginRepository
+import com.teletaleem.rmrs_customer.repository.RoomDBRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class HomeViewModel(application: Application) : AndroidViewModel(application) {
+
+@HiltViewModel
+class HomeViewModel
+@Inject
+constructor(application: Application, private val roomDBRepository: RoomDBRepository) : AndroidViewModel(application) {
 
 
     private var homeRepository: HomeRepository = HomeRepository()
+    private val TIME_OUT:Long = 1000
+    private lateinit var restaurantResponseLiveData: MutableLiveData<RestaurantsResponse>
+    var restaurantId:String="0"
 
     fun getCategoryResponse():LiveData<CategoryResponse>{
         return homeRepository.getLoginResponseLiveData()
     }
 
-    fun getRestaurantsResponse(categoryId:String):LiveData<RestaurantsResponse>{
+    fun getRestaurantsResponse(categoryId: String):LiveData<RestaurantsResponse>{
         return homeRepository.getRestaurantResponseLiveData(categoryId)
+    }
+
+    fun insertFavourite(favourite: Favourite){
+        viewModelScope.launch {
+            roomDBRepository.insertFavouriteItem(favourite)
+        }
+
+    }
+
+//    val getRestaurantById:LiveData<Favourite>get() = roomDBRepository.searchRestaurantById(restaurantId).f
+
+    fun deleteFavouriteRecord(favourite: Favourite){
+        viewModelScope.launch {
+          roomDBRepository.deleteFavouriteItem(favourite)
+        }
     }
 
 }

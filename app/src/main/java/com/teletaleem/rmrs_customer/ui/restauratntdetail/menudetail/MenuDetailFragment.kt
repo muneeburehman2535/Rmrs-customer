@@ -1,25 +1,37 @@
 package com.teletaleem.rmrs_customer.ui.restauratntdetail.menudetail
 
-import androidx.lifecycle.ViewModelProvider
+import android.annotation.SuppressLint
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.widget.Button
+import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.teletaleem.rmrs_customer.R
 import com.teletaleem.rmrs_customer.adapters.MenuAdapter
-import com.teletaleem.rmrs_customer.adapters.RestaurantAdapter
+import com.teletaleem.rmrs_customer.data_class.cart.Cart
+import com.teletaleem.rmrs_customer.data_class.restaurantdetail.Menu
 import com.teletaleem.rmrs_customer.databinding.MenuDetailFragmentBinding
+import com.teletaleem.rmrs_customer.db.CustomerDatabase
 import com.teletaleem.rmrs_customer.ui.home.CustomerHomeActivity
 import com.teletaleem.rmrs_customer.ui.home.cart.CartFragment
-import com.teletaleem.rmrs_customer.ui.restauratntdetail.RestaurantDetailFragment
+import com.teletaleem.rmrs_customer.utilities.AppGlobal
 import com.teletaleem.rmrs_customer.utilities.RecyclerItemClickListener
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MenuDetailFragment : Fragment() {
     private lateinit var mBinding:MenuDetailFragmentBinding
+    private lateinit var menuList:ArrayList<Menu>
+    private lateinit var menuAdapter: MenuAdapter
+    private lateinit var  databaseCreator: CustomerDatabase
+    private lateinit var alertDialog:AlertDialog
+    private var restaurantId="0"
 
     companion object {
         fun newInstance() = MenuDetailFragment()
@@ -31,7 +43,7 @@ class MenuDetailFragment : Fragment() {
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?,
     ): View {
-        mBinding=DataBindingUtil.inflate(inflater,R.layout.menu_detail_fragment,container,false)
+        mBinding=DataBindingUtil.inflate(inflater, R.layout.menu_detail_fragment, container, false)
         return mBinding.root
     }
 
@@ -43,13 +55,30 @@ class MenuDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        databaseCreator= CustomerDatabase.getInstance(requireActivity())
         setMenuAdapter()
+        getMenuList()
+        getRestaurantId()
+    }
+
+    private fun getRestaurantId(){
+        (activity as CustomerHomeActivity?)?.mModel?.restaurantID?.observe(viewLifecycleOwner, Observer {
+            this.restaurantId=it
+        })
+    }
+
+    private fun getMenuList() {
+        (activity as CustomerHomeActivity?)?.mModel?.menuList?.observe(viewLifecycleOwner, Observer {
+            menuList=it
+            menuAdapter.updateList(it)
+        })
     }
 
     private fun setMenuAdapter() {
-        val menuAdapter = MenuAdapter(requireContext())
+        menuList= arrayListOf()
+        menuAdapter = MenuAdapter(requireActivity(), menuList)
         mBinding.rvMenuDf.layoutManager = LinearLayoutManager(
-                context,
+                activity,
                 LinearLayoutManager.VERTICAL,
                 false
         )
@@ -64,22 +93,92 @@ class MenuDetailFragment : Fragment() {
     {
         recyclerView.addOnItemTouchListener(
                 RecyclerItemClickListener(
-                        requireContext(),
+                        requireActivity(),
                         recyclerView, object : RecyclerItemClickListener.OnItemClickListener {
                     override fun onLongItemClick(view: View?, position: Int) {
 
                     }
 
                     override fun onItemClick(view: View, position: Int) {
-                        (context as CustomerHomeActivity?)?.changeToolbarName(getString(R.string.title_cart))
-                        (context as CustomerHomeActivity?)?.loadNewFragment(
-                                CartFragment(),
-                                "cart"
-                        )
+//                        (context as CustomerHomeActivity?)?.changeToolbarName(getString(R.string.title_cart))
+//                        (context as CustomerHomeActivity?)?.loadNewFragment(
+//                                CartFragment(),
+//                                "cart"
+//                        )
+                        getCartRecord(position)
+
                     }
 
                 })
         )
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun showAddToCartDialog(menu: Menu) {
+        var quantity=1
+        val dialogBuilder: AlertDialog.Builder = AlertDialog.Builder(requireActivity())
+
+// ...Irrelevant code for customizing the buttons and title
+// ...Irrelevant code for customizing the buttons and title
+        val inflater = this.layoutInflater
+        val dialogView: View = inflater.inflate(R.layout.layout_cart_card, null)
+        dialogBuilder.setView(dialogView)
+
+        val txtItemName=dialogView.findViewById<TextView>(R.id.txt_item_title_lcc)
+        val txtItemPrice=dialogView.findViewById<TextView>(R.id.txt_item_price_lcc)
+        val txtItemDesc=dialogView.findViewById<TextView>(R.id.txt_item_desc_lcc)
+        val txtItemIncQuantity=dialogView.findViewById<TextView>(R.id.txt_plus_lcc)
+        val txtItemDecQuantity=dialogView.findViewById<TextView>(R.id.txt_minus_lcc)
+        val txtItemQuantity=dialogView.findViewById<TextView>(R.id.txt_quantity_lcc)
+        val btnAddToCart=dialogView.findViewById<Button>(R.id.btn_add_to_cart_lcc)
+
+        txtItemName.text=menu.MenuName
+        txtItemDesc.text=menu.Description
+        txtItemPrice.text=AppGlobal.mCurrency+AppGlobal.roundTwoPlaces(menu.MenuPrice.toDouble())
+
+        txtItemIncQuantity.setOnClickListener(View.OnClickListener {
+            quantity += 1
+            txtItemQuantity.text=quantity.toString()
+        })
+        txtItemDecQuantity.setOnClickListener(View.OnClickListener {
+            if (quantity>1){
+                quantity -= 1
+                txtItemQuantity.text=quantity.toString()
+            }
+        })
+
+        btnAddToCart.setOnClickListener(View.OnClickListener {
+
+            val cart=Cart(menu.RestaurantID,menu.MenuName,menu.Description,menu.MenuPrice,menu.OriginalPrice,txtItemQuantity.text.toString(),menu.Image)
+            viewModel.insertCartItem(cart)
+            (activity as CustomerHomeActivity?)?.changeToolbarName(getString(R.string.title_cart))
+            (activity as CustomerHomeActivity?)?.loadNewFragment(
+                    CartFragment(),
+                    "cart"
+            )
+            alertDialog.dismiss()
+        })
+
+
+         alertDialog = dialogBuilder.create()
+        alertDialog.show()
+    }
+
+    private fun getCartRecord(position: Int) {
+        val cartLiveData=databaseCreator.cartDao.fetchCartRecord(restaurantId)
+
+        cartLiveData.observe(requireActivity(), Observer {
+
+            if (it!=null){
+                AppGlobal.showDialog(getString(R.string.title_alert),getString(R.string.err_already_added),requireActivity())
+            }
+            else{
+                showAddToCartDialog(menuList[position])
+
+            }
+        })
+
+
     }
 
 }

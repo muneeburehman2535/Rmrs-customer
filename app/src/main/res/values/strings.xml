@@ -74,6 +74,7 @@
     <string name="title_service_charges">Service Charges</string>
     <string name="title_no_charges">No charges</string>
     <string name="title_total_pay">Total to pay</string>
+    <string name="title_add_to_cart">Add to cart</string>
 
     //Checkout Strings
     <string name="title_payment_method">Payment Method</string>
@@ -117,6 +118,7 @@
     <string name="err_cnic">Enter CNIC</string>
     <string name="err_address">Enter Address</string>
     <string name="err_no_internet">No internet connection! Try again.</string>
+    <string name="err_already_added">Selected item already added</string>
     <string name="title_activity_customer_home">CustomerHomeActivity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

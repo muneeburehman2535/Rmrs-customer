@@ -10,9 +10,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.teletaleem.rmrs_customer.R
 import com.teletaleem.rmrs_customer.adapters.OrderDetailIItemsAdapter
+import com.teletaleem.rmrs_customer.data_class.login.Login
 import com.teletaleem.rmrs_customer.databinding.ActivityOrderDetailBinding
 import com.teletaleem.rmrs_customer.ui.home.CustomerHomeActivity
 import com.teletaleem.rmrs_customer.ui.restauratntdetail.RestaurantDetailFragment
+import com.teletaleem.rmrs_customer.utilities.AppGlobal
 import com.teletaleem.rmrs_customer.utilities.RecyclerItemClickListener
 
 class OrderDetailActivity : AppCompatActivity(),View.OnClickListener {
@@ -52,6 +54,9 @@ class OrderDetailActivity : AppCompatActivity(),View.OnClickListener {
             }
         }
     }
+
+
+
 
 
 }

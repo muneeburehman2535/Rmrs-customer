@@ -9,5 +9,6 @@ data class Restaurants(
         val RatingCount:String,
         val CategoryID:String,
         val RestaurantCategory:String,
-        val Image:String
+        val Image:String,
+        var isFavourite:Boolean
 )
