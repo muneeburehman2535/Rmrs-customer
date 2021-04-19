@@ -43,7 +43,8 @@ class MenuAdapter(val requireContext: Context, private var menuList: ArrayList<M
             holder.txtOldPrice.visibility=View.GONE
         }
 
-        //AppGlobal.loadImageIntoGlide(menuList[position].M,holder.imgRestaurant,requireContext)
+        //AppGlobal.loadImageIntoGlide(menuList[position].Image,holder.imgMenu,requireContext)
+        AppGlobal.loadImageIntoPicasso(menuList[position].Image,holder.imgMenu)
 
     }
 

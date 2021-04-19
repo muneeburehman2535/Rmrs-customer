@@ -1,9 +1,6 @@
 package com.teletaleem.rmrs_customer.ui.home
 
 import android.app.Application
-import android.os.AsyncTask
-import android.os.Handler
-import android.os.Looper
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -12,7 +9,7 @@ import com.teletaleem.rmrs_customer.data_class.home.category.CategoryResponse
 import com.teletaleem.rmrs_customer.data_class.home.restaurants.RestaurantsResponse
 import com.teletaleem.rmrs_customer.db.dataclass.Favourite
 import com.teletaleem.rmrs_customer.repository.HomeRepository
-import com.teletaleem.rmrs_customer.repository.RoomDBRepository
+import com.teletaleem.rmrs_customer.db.repository.RoomDBRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

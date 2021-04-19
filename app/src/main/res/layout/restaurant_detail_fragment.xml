@@ -53,7 +53,7 @@
                             android:layout_marginStart="@dimen/margin_xl"
                             android:layout_marginTop="@dimen/margin_xl"
                             android:scaleType="fitXY"
-                            android:src="@drawable/background"
+                            android:src="@drawable/library_placeholder"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 

@@ -17,6 +17,7 @@ import com.teletaleem.rmrs_customer.R
 import com.teletaleem.rmrs_customer.adapters.CategoriesAdapter
 import com.teletaleem.rmrs_customer.adapters.DealsAdapter
 import com.teletaleem.rmrs_customer.adapters.RestaurantAdapter
+import com.teletaleem.rmrs_customer.data_class.cart.Cart
 import com.teletaleem.rmrs_customer.data_class.home.category.Categories
 import com.teletaleem.rmrs_customer.data_class.home.restaurants.Deals
 import com.teletaleem.rmrs_customer.data_class.home.restaurants.Restaurants
@@ -49,6 +50,8 @@ class HomeFragment : Fragment() ,View.OnClickListener,RestaurantAdapter.AddToFav
     private lateinit var  databaseCreator: CustomerDatabase
     private lateinit var favouriteLiveData:LiveData<Favourite?>
 
+    private  var restaurantId:String="0"
+
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -73,6 +76,7 @@ class HomeFragment : Fragment() ,View.OnClickListener,RestaurantAdapter.AddToFav
         setDealsAdapter()
         setClickListeners()
         getCategoriesList()
+
         mBinding.searchBarHome.inputType = 0x00000000
     }
 
@@ -101,6 +105,8 @@ class HomeFragment : Fragment() ,View.OnClickListener,RestaurantAdapter.AddToFav
             }
         }
     }
+
+
 
     /**************************************************************************************************************************/
     //                                          Recyclerview Adapters
@@ -198,6 +204,8 @@ class HomeFragment : Fragment() ,View.OnClickListener,RestaurantAdapter.AddToFav
 
     override fun onViewClicked(position: Int) {
         (activity as CustomerHomeActivity).mModel.updateRestaurantId(restaurantsList[position].RestaurantID)
+        AppGlobal.writeString(requireActivity(),AppGlobal.restaurantId,restaurantsList[position].RestaurantID)
+        (activity as CustomerHomeActivity).mModel.updateRestaurantName(restaurantsList[position].RestaurantName)
         (activity as CustomerHomeActivity).changeToolbarName(getString(R.string.title_restaurants))
         (activity as CustomerHomeActivity).loadNewFragment(
                 RestaurantDetailFragment(),
@@ -277,6 +285,8 @@ class HomeFragment : Fragment() ,View.OnClickListener,RestaurantAdapter.AddToFav
    * Get Restaurants Data API Method
    * */
     private fun getRestaurantsList(categoryID: String){
+        progressDialog.setLabel("Please Wait")
+        progressDialog.show()
         homeViewModel.getRestaurantsResponse(categoryID).observe(requireActivity(), {
             progressDialog.dismiss()
             if (it.Message == "Success") {
@@ -318,6 +328,8 @@ class HomeFragment : Fragment() ,View.OnClickListener,RestaurantAdapter.AddToFav
         }
         return isFavoured
     }
+
+
 
 
 }

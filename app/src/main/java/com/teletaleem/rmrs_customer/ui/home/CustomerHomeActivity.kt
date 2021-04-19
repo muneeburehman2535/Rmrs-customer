@@ -28,7 +28,9 @@ import com.google.android.material.navigation.NavigationView
 import com.shivtechs.maplocationpicker.LocationPickerActivity
 import com.shivtechs.maplocationpicker.MapUtility
 import com.teletaleem.rmrs_customer.R
+import com.teletaleem.rmrs_customer.data_class.cart.Cart
 import com.teletaleem.rmrs_customer.databinding.ActivityCustomerHomeBinding
+import com.teletaleem.rmrs_customer.db.CustomerDatabase
 import com.teletaleem.rmrs_customer.shared_view_models.SharedViewModel
 import com.teletaleem.rmrs_customer.ui.home.cart.CartFragment
 import com.teletaleem.rmrs_customer.ui.home.favourite.FavouriteFragment
@@ -43,7 +45,7 @@ import java.util.*
 class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var mBinding:ActivityCustomerHomeBinding
-    lateinit var mNavigation: BottomNavigationView
+    private lateinit var mNavigation: BottomNavigationView
     private lateinit var drawerLayout:DrawerLayout
     private  lateinit var txtToolbarName:TextView
     private lateinit var mToolbarLayout:LinearLayout
@@ -54,17 +56,20 @@ class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItem
     private val pLACE_PICKER_REQUEST = 4
     private lateinit var fields:List<Place.Field>
     lateinit var mModel:SharedViewModel
+    private lateinit var  databaseCreator: CustomerDatabase
+    private  var restaurantId:String="0"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mBinding=DataBindingUtil.setContentView(this, R.layout.activity_customer_home)
         mModel = ViewModelProvider(this).get(SharedViewModel::class.java)
-
+        databaseCreator= CustomerDatabase.getInstance(this)
 
         setBottomNavigationView()
         setDrawableLayout()
         loadFragment(HomeFragment())
         initializePlacePicker()
+        //getRestaurantId()
 
     }
 
@@ -161,10 +166,34 @@ class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItem
         return super.onOptionsItemSelected(item)
     }
 
+    fun updateBottomNavigationCount(quantity:Int)
+    {
+        mNavigation.getOrCreateBadge(R.id.cart).number=quantity
+    }
+
     fun changeToolbarName(toolbarName:String)
     {
        //Toolbar.title=""
         mToolbar.title = toolbarName
+    }
+
+    private fun getCartRecord(restaurantId:String) {
+        val cartLiveData=databaseCreator.cartDao.fetch(restaurantId)
+        cartLiveData.observe(this, androidx.lifecycle.Observer {
+            if (it!=null)
+            {
+                val cartArray=it as ArrayList<Cart>
+                updateBottomNavigationCount(cartArray.size)
+            }
+            cartLiveData.removeObservers(this)
+        })
+
+    }
+
+    private fun getRestaurantId(){
+
+        restaurantId=AppGlobal.readString(this,AppGlobal.restaurantId,"0")
+        getCartRecord(restaurantId)
     }
 
     /*******************************************************************************************************************/

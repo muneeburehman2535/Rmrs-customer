@@ -6,11 +6,16 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "cart")
 data class Cart(
-        @PrimaryKey()
+
         @ColumnInfo(name = "restaurant_id")
         var restaurant_id:String,
+        @ColumnInfo(name = "restaurant_name")
+        val restaurant_name:String,
         @ColumnInfo(name = "item_name")
         val item_name:String,
+        @PrimaryKey()
+        @ColumnInfo(name = "menu_id")
+        val menu_id:String,
         @ColumnInfo(name = "item_desc")
         val item_desc:String,
         @ColumnInfo(name = "item_price")
@@ -20,5 +25,7 @@ data class Cart(
         @ColumnInfo(name = "quantity")
         var quantity:String,
         @ColumnInfo(name="image")
-        val image:String
+        val image:String,
+        @ColumnInfo(name = "description")
+        val description:String
 )

@@ -7,13 +7,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
+import com.kaopiz.kprogresshud.KProgressHUD
 import com.teletaleem.rmrs_customer.R
+import com.teletaleem.rmrs_customer.data_class.checkout.Checkout
 import com.teletaleem.rmrs_customer.databinding.CheckoutFragmentBinding
+import com.teletaleem.rmrs_customer.db.CustomerDatabase
 import com.teletaleem.rmrs_customer.ui.home.CustomerHomeActivity
 import com.teletaleem.rmrs_customer.ui.review.ReviewFragment
+import com.teletaleem.rmrs_customer.utilities.AppGlobal
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class CheckoutFragment : Fragment(),View.OnClickListener {
     private lateinit var mBinding:CheckoutFragmentBinding
+    private lateinit var progressDialog: KProgressHUD
+    private lateinit var orderCheckout:Checkout
+    private lateinit var  databaseCreator: CustomerDatabase
 
     companion object {
         fun newInstance() = CheckoutFragment()
@@ -37,7 +47,17 @@ class CheckoutFragment : Fragment(),View.OnClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        databaseCreator= CustomerDatabase.getInstance(requireActivity())
+        progressDialog=AppGlobal.setProgressDialog(requireActivity())
         setClickListeners()
+        getOrderData()
+    }
+
+    private fun getOrderData()
+    {
+        (activity as CustomerHomeActivity?)?.mModel?.checkout?.observe(viewLifecycleOwner, Observer {
+            this.orderCheckout=it
+        })
     }
 
     private fun setClickListeners() {
@@ -49,13 +69,35 @@ class CheckoutFragment : Fragment(),View.OnClickListener {
         {
             R.id.btn_checkout_fc->
             {
-                (context as CustomerHomeActivity?)?.changeToolbarName(getString(R.string.title_review))
-                (context as CustomerHomeActivity?)?.loadNewFragment(
-                    ReviewFragment(),
-                    "review"
-                )
+               checkoutOrder()
             }
         }
+    }
+
+    /*
+  * Get Restaurants Data API Method
+  * */
+    private fun checkoutOrder(){
+        progressDialog.setLabel("Please Wait")
+        progressDialog.show()
+        viewModel.getCheckoutResponse(orderCheckout).observe(requireActivity(), {
+            progressDialog.dismiss()
+            if (it.Message == "Success") {
+                emptyCartRecord()
+                (activity as CustomerHomeActivity?)?.changeToolbarName(getString(R.string.title_review))
+                (activity as CustomerHomeActivity?)?.loadNewFragment(
+                        ReviewFragment(),
+                        "review"
+                )
+
+            } else {
+                AppGlobal.showDialog(getString(R.string.title_alert), it.data.description, requireActivity())
+            }
+        })
+    }
+
+    private fun emptyCartRecord() {
+        viewModel.emptyCartRecord()
     }
 
 }

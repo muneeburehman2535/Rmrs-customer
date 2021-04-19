@@ -32,6 +32,8 @@ class MenuDetailFragment : Fragment() {
     private lateinit var  databaseCreator: CustomerDatabase
     private lateinit var alertDialog:AlertDialog
     private var restaurantId="0"
+    private var restaurantName=""
+    private lateinit var cartList:ArrayList<Cart>
 
     companion object {
         fun newInstance() = MenuDetailFragment()
@@ -59,11 +61,20 @@ class MenuDetailFragment : Fragment() {
         setMenuAdapter()
         getMenuList()
         getRestaurantId()
+        getRestaurantName()
+        cartList= arrayListOf()
     }
 
     private fun getRestaurantId(){
         (activity as CustomerHomeActivity?)?.mModel?.restaurantID?.observe(viewLifecycleOwner, Observer {
             this.restaurantId=it
+        })
+    }
+
+    private fun getRestaurantName()
+    {
+        (activity as CustomerHomeActivity?)?.mModel?.restaurantName?.observe(viewLifecycleOwner, Observer {
+            this.restaurantName=it
         })
     }
 
@@ -135,6 +146,7 @@ class MenuDetailFragment : Fragment() {
         txtItemName.text=menu.MenuName
         txtItemDesc.text=menu.Description
         txtItemPrice.text=AppGlobal.mCurrency+AppGlobal.roundTwoPlaces(menu.MenuPrice.toDouble())
+        txtItemQuantity.text=quantity.toString()
 
         txtItemIncQuantity.setOnClickListener(View.OnClickListener {
             quantity += 1
@@ -149,13 +161,15 @@ class MenuDetailFragment : Fragment() {
 
         btnAddToCart.setOnClickListener(View.OnClickListener {
 
-            val cart=Cart(menu.RestaurantID,menu.MenuName,menu.Description,menu.MenuPrice,menu.OriginalPrice,txtItemQuantity.text.toString(),menu.Image)
+            val cart=Cart(menu.RestaurantID,restaurantName,menu.MenuName,menu.MenuID,menu.Description,menu.MenuPrice,menu.OriginalPrice,txtItemQuantity.text.toString(),menu.Image,menu.Description)
             viewModel.insertCartItem(cart)
-            (activity as CustomerHomeActivity?)?.changeToolbarName(getString(R.string.title_cart))
-            (activity as CustomerHomeActivity?)?.loadNewFragment(
-                    CartFragment(),
-                    "cart"
-            )
+
+            updateCartBadge()
+//            (activity as CustomerHomeActivity?)?.changeToolbarName(getString(R.string.title_cart))
+//            (activity as CustomerHomeActivity?)?.loadNewFragment(
+//                    CartFragment(),
+//                    "cart"
+//            )
             alertDialog.dismiss()
         })
 
@@ -164,8 +178,21 @@ class MenuDetailFragment : Fragment() {
         alertDialog.show()
     }
 
+    private fun updateCartBadge() {
+        val cartLiveData=databaseCreator.cartDao.fetch(restaurantId)
+        cartLiveData.observe(requireActivity(), Observer {
+            if (it!=null)
+            {
+                val cartArray=it as ArrayList<Cart>
+                (requireActivity() as CustomerHomeActivity).updateBottomNavigationCount(cartArray.size)
+            }
+            alertDialog.dismiss()
+//            cartLiveData.removeObservers(requireActivity())
+        })
+    }
+
     private fun getCartRecord(position: Int) {
-        val cartLiveData=databaseCreator.cartDao.fetchCartRecord(restaurantId)
+        val cartLiveData=databaseCreator.cartDao.fetchCartRecord(restaurantId,menuList[position].MenuID)
 
         cartLiveData.observe(requireActivity(), Observer {
 
@@ -176,6 +203,7 @@ class MenuDetailFragment : Fragment() {
                 showAddToCartDialog(menuList[position])
 
             }
+            cartLiveData.removeObservers(requireActivity())
         })
 
 

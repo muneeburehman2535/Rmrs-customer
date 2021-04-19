@@ -23,5 +23,6 @@
         android:layout_alignParentBottom="true"
         android:background="?android:attr/windowBackground"
         app:itemIconTint="@drawable/tab_color"
-        app:menu="@menu/bottom_nav_menu" />
+        app:menu="@menu/bottom_nav_menu"
+        android:theme="@style/Theme.RmrscustomerNavigation"/>
 </RelativeLayout>

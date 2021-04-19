@@ -4,15 +4,13 @@ import android.content.Context
 import com.teletaleem.rmrs_customer.db.CustomerDatabase
 import com.teletaleem.rmrs_customer.db.dao.CartDao
 import com.teletaleem.rmrs_customer.db.dao.FavouriteDao
-import com.teletaleem.rmrs_customer.db.repository.CartDBRepository
-import com.teletaleem.rmrs_customer.repository.RoomDBRepository
+import com.teletaleem.rmrs_customer.db.repository.RoomDBRepository
 
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import kotlinx.coroutines.InternalCoroutinesApi
 import javax.inject.Singleton
 
 @Module

@@ -13,7 +13,7 @@
             android:id="@+id/img_menu_crd"
             android:layout_width="@dimen/img_size_l"
             android:layout_height="@dimen/img_size_l"
-            app:srcCompat="@drawable/library_placeholder"
+            app:srcCompat="@drawable/burger_10956"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"

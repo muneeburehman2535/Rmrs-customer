@@ -1,5 +1,6 @@
 package com.teletaleem.rmrs_customer.network;
 
+import com.teletaleem.rmrs_customer.data_class.checkout.Checkout;
 import com.teletaleem.rmrs_customer.data_class.confirm_otp.ConfirmOtp;
 import com.teletaleem.rmrs_customer.data_class.email_mobile.EmailMobileVerification;
 import com.teletaleem.rmrs_customer.data_class.email_mobile.EmailMobileVerificationResponse;
@@ -41,4 +42,9 @@ public interface WebRequestGeo {
 
     @GET("/customer/restaurant-detail/?")
     Call<ResponseBody> getRestaurantDetail(@Query("restaurantid") String restaurantid);
+    @POST("/customer/place-order")
+    Call<ResponseBody> checkoutUser(@Body Checkout checkout);
+
+    @GET("/customer/my-order/?")
+    Call<ResponseBody> myOrders(@Query("CustomerID") String CustomerID);
 }

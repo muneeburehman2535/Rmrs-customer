@@ -16,6 +16,7 @@ import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import com.kaopiz.kprogresshud.KProgressHUD
+import com.squareup.picasso.Picasso
 import com.teletaleem.rmrs_customer.R
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
@@ -30,6 +31,7 @@ class AppGlobal {
 
         const val tokenId = "token_id"
         const val customerId = "customer_id"
+        const val restaurantId="restaurant_id"
 
 
         /*****************************************************Base URLs********************************************************/
@@ -186,6 +188,10 @@ class AppGlobal {
                 .error(R.drawable.placeholder)
                 .fitCenter()
                 .into(imageView)
+        }
+
+        fun loadImageIntoPicasso(imageURL:String?,imageView: ImageView){
+            Picasso.get().load(imageURL).placeholder(R.drawable.burger_10956).error(R.drawable.burger_10956).into(imageView)
         }
     }
 }

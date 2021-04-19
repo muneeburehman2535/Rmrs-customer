@@ -11,7 +11,7 @@ import com.teletaleem.rmrs_customer.R
 import com.teletaleem.rmrs_customer.data_class.myorders.currentorders.CurrentOrderDataClass
 import com.teletaleem.rmrs_customer.utilities.AppGlobal
 
-class CurrentOrdersAdapter(private val context: Context,private val currentOrderList:ArrayList<CurrentOrderDataClass>): RecyclerView.Adapter<CurrentOrdersAdapter.ViewHolder>() {
+class CurrentOrdersAdapter(private val context: Context,private var currentOrderList:ArrayList<CurrentOrderDataClass>): RecyclerView.Adapter<CurrentOrdersAdapter.ViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -21,10 +21,17 @@ class CurrentOrdersAdapter(private val context: Context,private val currentOrder
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.txtOrderName.text=currentOrderList[position].name
-        holder.txtOrderMenu.text=currentOrderList[position].desc
-        holder.txtOrderTime.text=currentOrderList[position].time
-        holder.txtOrderPrice.text=AppGlobal.mCurrency+AppGlobal.roundTwoPlaces(currentOrderList[position].price.toDouble())
+        holder.txtOrderName.text=currentOrderList[position].RestaurantName
+        holder.txtOrderMenu.text=currentOrderList[position].MenuOrdered[0].Description
+        //holder.txtOrderTime.text=currentOrderList[position].time
+        holder.txtOrderPrice.text=AppGlobal.mCurrency+currentOrderList[position].TotalAmount.toString()
+        if (currentOrderList[position].Status=="NEW_ORDER")
+        {
+            holder.txtOrderStatus.text=context.getString(R.string.status_pending)
+        }
+        else{
+            holder.txtOrderStatus.text=context.getString(R.string.status_in_progress)
+        }
     }
 
     override fun getItemCount(): Int {
@@ -36,5 +43,11 @@ class CurrentOrdersAdapter(private val context: Context,private val currentOrder
         val txtOrderName= itemView.findViewById<TextView>(R.id.txt_restaurant_name_cco)!!
         val txtOrderMenu= itemView.findViewById<TextView>(R.id.txt_menu_cco)!!
         val txtOrderTime= itemView.findViewById<TextView>(R.id.txt_time_cco)!!
+        val txtOrderStatus=itemView.findViewById<TextView>(R.id.txt_order_status_cco)!!
+    }
+
+    fun updateList(currentOrderList: ArrayList<CurrentOrderDataClass>){
+        this.currentOrderList=currentOrderList
+        notifyDataSetChanged()
     }
 }

@@ -10,16 +10,20 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.gson.Gson
 import com.teletaleem.rmrs_customer.R
 import com.teletaleem.rmrs_customer.adapters.CartItemAdapter
 import com.teletaleem.rmrs_customer.data_class.cart.Cart
+import com.teletaleem.rmrs_customer.data_class.checkout.Checkout
+import com.teletaleem.rmrs_customer.data_class.checkout.Delivery
+import com.teletaleem.rmrs_customer.data_class.checkout.MenuOrdered
 import com.teletaleem.rmrs_customer.databinding.CartFragmentBinding
 import com.teletaleem.rmrs_customer.db.CustomerDatabase
-import com.teletaleem.rmrs_customer.db.dataclass.Favourite
 import com.teletaleem.rmrs_customer.ui.checkout.CheckoutFragment
 import com.teletaleem.rmrs_customer.ui.home.CustomerHomeActivity
 import com.teletaleem.rmrs_customer.utilities.AppGlobal
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 @AndroidEntryPoint
 class CartFragment : Fragment(),View.OnClickListener,CartItemAdapter.UpdateItemQuantityListener {
@@ -27,14 +31,15 @@ class CartFragment : Fragment(),View.OnClickListener,CartItemAdapter.UpdateItemQ
     private lateinit var cartList:ArrayList<Cart>
     private lateinit var cartItemAdapter:CartItemAdapter
 
-    private var mSalesTax="7.5"
-    private var mItemTotalAmount="0.00"
-    private var mDiscountTotal="0.00"
-    private var mTotalDiscountedAmount="0.00"
-    private var mSalesTaxAmount="0.00"
-    private var mServicesCharges="40.00"
-    private var mTotalAmount="0.00"
+    private var mSalesTax="7"
+    private var mItemTotalAmount="0"
+    private var mDiscountTotal="0"
+    private var mTotalDiscountedAmount="0"
+    private var mSalesTaxAmount="0"
+    private var mServicesCharges="40"
+    private var mTotalAmount="0"
     private var restaurantId="0"
+    private var restaurantName=""
 
     private lateinit var  databaseCreator: CustomerDatabase
 
@@ -74,19 +79,23 @@ class CartFragment : Fragment(),View.OnClickListener,CartItemAdapter.UpdateItemQ
     private fun setCartList() {
         cartList= arrayListOf()
 
-        val cart=Cart("1","Pizza BBQ","Size Regular, Wheat thin crust onion, jalapeno, Black olive","999","120","2","")
+        val cart=Cart("1","abc","Pizza BBQ","1","Size Regular, Wheat thin crust onion, jalapeno, Black olive","999","120","2","","test")
         cartList.add(cart)
 
-        val cart1=Cart("1","Beef Burger","Grilled Beef, Fries, Black olive","500","80","1","")
+        val cart1=Cart("1","abcs","Beef Burger","2","Grilled Beef, Fries, Black olive","500","80","1","","test")
         cartList.add(cart1)
     }
 
     private fun getRestaurantId(){
-        (activity as CustomerHomeActivity?)?.mModel?.restaurantID?.observe(viewLifecycleOwner, Observer {
-            this.restaurantId=it
-            getCartRecord()
-        })
+//        (activity as CustomerHomeActivity?)?.mModel?.restaurantID?.observe(viewLifecycleOwner, Observer {
+//            this.restaurantId=it
+//            getCartRecord()
+//        })
+        restaurantId=AppGlobal.readString(requireActivity(),AppGlobal.restaurantId,"")
+        getCartRecord()
     }
+
+
 
     /*****************************************************************************************************************************/
     //                                          Set Click Listeners
@@ -100,11 +109,12 @@ class CartFragment : Fragment(),View.OnClickListener,CartItemAdapter.UpdateItemQ
         {
             R.id.btn_pay_to_proceed->
             {
-                (activity as CustomerHomeActivity?)?.changeToolbarName(getString(R.string.title_checkout))
-                (activity as CustomerHomeActivity?)?.loadNewFragment(
-                    CheckoutFragment(),
-                    "checkout"
-                )
+//                (activity as CustomerHomeActivity?)?.changeToolbarName(getString(R.string.title_checkout))
+//                (activity as CustomerHomeActivity?)?.loadNewFragment(
+//                    CheckoutFragment(),
+//                    "checkout"
+//                )
+                bindCheckoutData()
             }
         }
     }
@@ -127,16 +137,23 @@ class CartFragment : Fragment(),View.OnClickListener,CartItemAdapter.UpdateItemQ
     override fun onUpdateItemQuantityClick(quantity: Int?, position: Int) {
         if (quantity==0)
         {
-            cartList.removeAt(position)
+
+
+            deleteItemRow(cartList[position])
+            //cartList.removeAt(position)
+
 
         }
         else{
             cartList[position].quantity=quantity.toString()
+            cartList[position].quantity=quantity.toString()
+            updateCart(cartList[position])
         }
 
-        cartItemAdapter.updateList(cartList)
-        calculatePrice()
-        setViews()
+        //cartItemAdapter.updateList(cartList)
+
+//        calculatePrice()
+//        setViews()
     }
 
     /*****************************************************************************************************************************/
@@ -146,18 +163,25 @@ class CartFragment : Fragment(),View.OnClickListener,CartItemAdapter.UpdateItemQ
 
 
     private fun calculatePrice() {
-        mItemTotalAmount="0.0"
-        mDiscountTotal="0.0"
+        mItemTotalAmount="0"
+        mDiscountTotal="0"
         for (index in 0 until cartList.size)
         {
-            mItemTotalAmount= AppGlobal.roundTwoPlaces(mItemTotalAmount.toDouble()+(cartList[index].original_price.toDouble()*cartList[index].quantity.toDouble())).toString()
-            mDiscountTotal= AppGlobal.roundTwoPlaces(mDiscountTotal.toDouble()+(cartList[index].item_price.toDouble()*cartList[index].quantity.toDouble())).toString()
+            mItemTotalAmount= (mItemTotalAmount.toInt()+(cartList[index].original_price.toInt()*cartList[index].quantity.toInt())).toString()
+            mDiscountTotal= (mDiscountTotal.toInt()+(cartList[index].item_price.toInt()*cartList[index].quantity.toInt())).toString()
 
         }
-        mTotalDiscountedAmount=AppGlobal.roundTwoPlaces(mItemTotalAmount.toDouble()-mDiscountTotal.toDouble()).toString()
-        mSalesTaxAmount=AppGlobal.roundTwoPlaces(((mSalesTax.toDouble()*mTotalDiscountedAmount.toDouble())/100.00)).toString()
+        mTotalDiscountedAmount = if (mItemTotalAmount.toInt()>mDiscountTotal.toInt())
+        {
+           (mItemTotalAmount.toInt()-mDiscountTotal.toInt()).toString()
+        }
+        else{
+            mItemTotalAmount
+        }
 
-        mTotalAmount=AppGlobal.roundTwoPlaces(mTotalDiscountedAmount.toDouble()+mSalesTaxAmount.toDouble()+mServicesCharges.toDouble()).toString()
+        mSalesTaxAmount=(((mSalesTax.toInt()*mTotalDiscountedAmount.toInt())/100)).toString()
+
+        mTotalAmount=(mTotalDiscountedAmount.toInt()+mSalesTaxAmount.toInt()+mServicesCharges.toInt()).toString()
     }
 
     @SuppressLint("SetTextI18n")
@@ -169,17 +193,61 @@ class CartFragment : Fragment(),View.OnClickListener,CartItemAdapter.UpdateItemQ
         mBinding.txtTotalPayCf.text=AppGlobal.mCurrency+mTotalAmount
     }
 
+    private fun bindCheckoutData(){
+
+        val menuOrderedList= arrayListOf<MenuOrdered>()
+        for (index in 0 until cartList.size)
+        {
+            val menuOrdered=MenuOrdered(cartList[index].menu_id,cartList[index].item_name,cartList[index].item_price,cartList[index].quantity,cartList[index].description)
+            menuOrderedList.add(menuOrdered)
+        }
+        val mCheckout=Checkout(cartList[0].restaurant_id,cartList[0].restaurant_name,true,AppGlobal.readString(requireActivity(),AppGlobal.customerId,""),"Usama Wajid",mTotalAmount.toInt(),mSalesTaxAmount.toInt(),"New_Order",menuOrderedList, Delivery())
+        Timber.d("Checkout data: ${Gson().toJson(mCheckout)}")
+        (activity as CustomerHomeActivity).mModel.updateCheckoutOrder(mCheckout)
+        redirectCheckout()
+    }
+
+    private fun redirectCheckout() {
+        (activity as CustomerHomeActivity?)?.changeToolbarName(getString(R.string.title_checkout))
+                (activity as CustomerHomeActivity?)?.loadNewFragment(
+                    CheckoutFragment(),
+                    "checkout"
+                )
+    }
+
+    /*****************************************************************************************************************************/
+    //                                      Room Database Section
+    /*****************************************************************************************************************************/
+    //                                    1:- Get Cart Record from Room Database
+    //                                    2:- Update Cart in Room Database
+    //                                    3:- Delete Item from Room Database
+    /*****************************************************************************************************************************/
+
     private fun getCartRecord(){
         val cartLiveData=databaseCreator.cartDao.fetch(restaurantId)
 
         cartLiveData.observe(requireActivity(), Observer {
+
             cartList= it as ArrayList<Cart>
-            cartItemAdapter.updateList(it as ArrayList<Cart>)
-            calculatePrice()
-            setViews()
+            if (cartList!=null)
+            {
+                cartItemAdapter.updateList(it as ArrayList<Cart>)
+                calculatePrice()
+                setViews()
+               //(requireActivity()as CustomerHomeActivity).updateBottomNavigationCount(cartList.size)
+                //cartLiveData.removeObservers(requireActivity())
+            }
+
         })
+    }
+    private fun updateCart(cart: Cart) {
+        viewModel.updateCart(cart)
+        getCartRecord()
+    }
 
-
+    private fun deleteItemRow(cart:Cart){
+        viewModel.deleteCartItem(cart)
+        getCartRecord()
     }
 
 }

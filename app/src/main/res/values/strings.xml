@@ -95,6 +95,8 @@
     <string name="title_delivery_fee">Delivery fee</string>
     <string name="title_total">Total (incl. GST)</string>
     <string name="title_reorder">Reorder</string>
+    <string name="status_pending">Pending</string>
+    <string name="status_in_progress">In Progress</string>
 
     //Filter Search
     <string name="title_select_category">Select Categories:</string>

@@ -10,16 +10,15 @@ interface CartDao {
 
     //Insert new record in cart
     @WorkerThread
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert
     suspend fun insert(cart: Cart):Long
-
 
     //Get all cart records
     @Query("select * from cart where restaurant_id = :restaurantId")
     fun fetch(restaurantId:String):LiveData<MutableList<Cart>>
 
-    @Query ("select * from cart where restaurant_id = :restaurantId")
-    fun fetchCartRecord(restaurantId: String):LiveData<Cart>
+    @Query ("select * from cart where restaurant_id = :restaurantId and menu_id = :menuId")
+    fun fetchCartRecord(restaurantId: String, menuId:String):LiveData<Cart>
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
     suspend fun updateItemRecord(cart: Cart)
@@ -30,5 +29,5 @@ interface CartDao {
 
     //Empty Cart
     @Query("DELETE from cart")
-    fun emptyCart()
+    suspend fun emptyCart()
 }
