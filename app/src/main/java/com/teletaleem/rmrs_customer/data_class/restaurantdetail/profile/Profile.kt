@@ -14,6 +14,7 @@ data class Profile(
         val OwnerID:String,
         val Rating:Int,
         val RatingCount:Int,
+        val SumofRating:Int,
         val Image:String,
         val __v:Int
 )

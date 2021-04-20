@@ -134,6 +134,8 @@ class RestaurantDetailFragment : Fragment() {
             {
                 menuList=it.data.menu
                 setTabLayout()
+                (activity as CustomerHomeActivity).mModel.updateRatingCount(it.data.profile[0].RatingCount)
+                (activity as CustomerHomeActivity).mModel.updateSumOfRating(it.data.profile[0].SumofRating)
                 setViews(it)
                 (activity as CustomerHomeActivity).mModel.updateMenuList(menuList)
             }

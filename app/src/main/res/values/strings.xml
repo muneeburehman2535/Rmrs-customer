@@ -93,6 +93,7 @@
     <string name="title_delivery_address">Delivery address</string>
     <string name="title_sub_total">Subtotal</string>
     <string name="title_delivery_fee">Delivery fee</string>
+    <string name="title_sales_tax">Sales tax</string>
     <string name="title_total">Total (incl. GST)</string>
     <string name="title_reorder">Reorder</string>
     <string name="status_pending">Pending</string>

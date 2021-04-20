@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.Gson
 import com.souq.uae.thebooksouq.Conversions.ConvertResponseToString
+import com.teletaleem.rmrs_customer.data_class.checkout.checkout_response.CheckoutResponse
 import com.teletaleem.rmrs_customer.data_class.home.restaurants.RestaurantsResponse
 import com.teletaleem.rmrs_customer.data_class.myorders.MyOrdersResponse
 import com.teletaleem.rmrs_customer.network.RetrofitClass
@@ -16,6 +17,7 @@ import timber.log.Timber
 class MyOrdersRepository {
 
     private lateinit var myOrdersResponseLiveData: MutableLiveData<MyOrdersResponse>
+    private lateinit var checkoutResponseLiveData:MutableLiveData<CheckoutResponse>
 
     fun getMyOrdersResponseLiveData(categoryId:String): LiveData<MyOrdersResponse> {
         myOrdersResponseLiveData=MutableLiveData<MyOrdersResponse>()
@@ -40,6 +42,31 @@ class MyOrdersRepository {
             }
         })
         return myOrdersResponseLiveData
+    }
+
+    fun getOrderDetailResponseLiveData(customerId:String,orderId:String): LiveData<CheckoutResponse> {
+        checkoutResponseLiveData=MutableLiveData<CheckoutResponse>()
+        RetrofitClass.getHomeInstance()?.getHomeRequestsInstance()?.getOrderDetail(customerId,orderId)?.enqueue(object :
+                Callback<ResponseBody?> {
+            override fun onResponse(call: Call<ResponseBody?>, response: Response<ResponseBody?>) {
+                var checkoutResponse: CheckoutResponse?=null
+
+                checkoutResponse = if (response.body()==null) {
+                    Gson().fromJson(response.errorBody()?.string(), CheckoutResponse::class.java)
+
+                } else{
+                    Gson().fromJson(ConvertResponseToString.getString(response), CheckoutResponse::class.java)
+
+                }
+                Timber.d(Gson().toJson(checkoutResponse).toString())
+                checkoutResponseLiveData.postValue(checkoutResponse)
+            }
+
+            override fun onFailure(call: Call<ResponseBody?>, t: Throwable) {
+                Timber.e("Error: ${t.message.toString()}")
+            }
+        })
+        return checkoutResponseLiveData
     }
 
 }

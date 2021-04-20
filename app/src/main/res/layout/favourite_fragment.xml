@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.home.favourite.FavouriteFragment">
-
-    <TextView
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="favourite_view_model"
+            type="com.teletaleem.rmrs_customer.ui.home.favourite.FavouriteViewModel" />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Favourite" />
-
-</FrameLayout>
+        android:layout_height="match_parent">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_favourite"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

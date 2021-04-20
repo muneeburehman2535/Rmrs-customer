@@ -47,4 +47,7 @@ public interface WebRequestGeo {
 
     @GET("/customer/my-order/?")
     Call<ResponseBody> myOrders(@Query("CustomerID") String CustomerID);
+
+    @GET("/customer/get-order/?")
+    Call<ResponseBody> getOrderDetail(@Query("CustomerID") String CustomerId,@Query("OrderID") String OrderId);
 }

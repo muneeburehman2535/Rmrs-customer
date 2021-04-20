@@ -7,6 +7,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "favourite")
 data class Favourite(
     @PrimaryKey()
+    @ColumnInfo(name = "restaurant_id")
     var restaurant_id:String,
     @ColumnInfo(name = "restaurant_name")
     var restaurant_name:String,

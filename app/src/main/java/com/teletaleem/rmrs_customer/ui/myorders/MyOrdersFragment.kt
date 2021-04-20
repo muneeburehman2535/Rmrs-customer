@@ -1,5 +1,6 @@
 package com.teletaleem.rmrs_customer.ui.myorders
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,6 +17,7 @@ import com.teletaleem.rmrs_customer.adapters.*
 import com.teletaleem.rmrs_customer.data_class.myorders.currentorders.CurrentOrderDataClass
 import com.teletaleem.rmrs_customer.data_class.myorders.pastorders.PastOrdersDataClass
 import com.teletaleem.rmrs_customer.databinding.MyOrdersFragmentBinding
+import com.teletaleem.rmrs_customer.ui.orderdetail.OrderDetailActivity
 import com.teletaleem.rmrs_customer.utilities.AppGlobal
 import com.teletaleem.rmrs_customer.utilities.RecyclerItemClickListener
 
@@ -95,7 +97,7 @@ class MyOrdersFragment : Fragment() {
             false
         )
         mBinding.rvCurrentOrdersFmo.adapter = currentOrderAdapter
-        setRecyclerViewListener(mBinding.rvCurrentOrdersFmo)
+        setRecyclerViewListener(mBinding.rvCurrentOrdersFmo,"new_order")
 
     }
 
@@ -110,24 +112,31 @@ class MyOrdersFragment : Fragment() {
             false
         )
         mBinding.rvPastOrdersFmo.adapter = pastOrderAdapter
-        setRecyclerViewListener(mBinding.rvPastOrdersFmo)
+        setRecyclerViewListener(mBinding.rvPastOrdersFmo,"past_order")
     }
 
     /*
   * Set Click listener on Recycler view
   * */
-    private fun setRecyclerViewListener(recyclerView: RecyclerView)
+    private fun setRecyclerViewListener(recyclerView: RecyclerView,orderType:String)
     {
         recyclerView.addOnItemTouchListener(
             RecyclerItemClickListener(
                 requireContext(),
                 recyclerView, object : RecyclerItemClickListener.OnItemClickListener {
                     override fun onLongItemClick(view: View?, position: Int) {
-
+                        //activity?.startActivity(Intent(activity,OrderDetailActivity::class.java))
                     }
 
                     override fun onItemClick(view: View, position: Int) {
-                        //startActivity(Intent(requireContext(),OrderDetailActivity::class.java))
+                        val intent=Intent(requireActivity(),OrderDetailActivity::class.java)
+                        if (orderType=="new_order"){
+                            intent.putExtra("order_id",currentOrderList[position].OrderID)
+                        }
+                        else{
+                            intent.putExtra("order_id",pastOrderList[position].OrderID)
+                        }
+                        startActivity(intent)
                     }
 
                 })

@@ -23,7 +23,7 @@
                     android:id="@+id/img_background_order_detail"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/img_size_nrml"
-                    android:src="@drawable/background"
+                    android:src="@drawable/placeholder"
                     app:layout_constraintTop_toTopOf="parent"
                     android:scaleType="fitXY"
                     android:alpha="0.84" />
@@ -31,7 +31,6 @@
                     android:id="@+id/txt_title_restaurant_name_detail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Rustam Fast Food"
                     android:textSize="@dimen/text_size_avg"
                     android:textStyle="bold"
                     android:textColor="@color/white"
@@ -103,7 +102,6 @@
                         android:id="@+id/txt_order_number"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="#y8ud-q6nx"
                         android:textStyle="bold"
                         android:textSize="@dimen/text_size_small"
                         android:textColor="@color/colorAccent"
@@ -115,7 +113,6 @@
                         android:id="@+id/txt_order_from"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Rustam Fast Food"
                         android:textSize="@dimen/text_size_small"
                         android:textColor="@color/text_color"
                         android:textStyle="bold"
@@ -176,7 +173,6 @@
                     android:id="@+id/txt_subtotal_aod"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Rs. 180.00"
                     android:textSize="@dimen/text_size_small"
                     android:textColor="@color/text_color"
                     app:layout_constraintTop_toBottomOf="@+id/rv_items_order_detail"
@@ -185,10 +181,10 @@
                     android:layout_marginEnd="@dimen/margin_l"/>
 
                 <TextView
-                    android:id="@+id/txt_title_delivery_fee_aod"
+                    android:id="@+id/txt_title_sales_tax_aod"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/title_delivery_fee"
+                    android:text="@string/title_sales_tax"
                     android:textSize="@dimen/text_size_small"
                     android:textColor="@color/text_color"
                     app:layout_constraintTop_toBottomOf="@+id/txt_title_subtotal_aod"
@@ -196,10 +192,9 @@
                     android:layout_marginTop="@dimen/margin_xl"
                     android:layout_marginStart="@dimen/margin_l"/>
                 <TextView
-                    android:id="@+id/txt_delivery_fee_aod"
+                    android:id="@+id/txt_sales_tax_aod"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Rs. 20.00"
                     android:textSize="@dimen/text_size_small"
                     android:textColor="@color/text_color"
                     app:layout_constraintTop_toBottomOf="@+id/txt_subtotal_aod"
@@ -211,7 +206,7 @@
                     android:id="@+id/layout_total_amount_aod"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@+id/txt_title_delivery_fee_aod"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_title_sales_tax_aod"
                     android:layout_marginTop="@dimen/margin_xxl"
                     android:background="@color/color_layout_background">
 
@@ -233,7 +228,6 @@
                         android:id="@+id/txt_total_amount_aod"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Rs. 200.00"
                         android:textSize="@dimen/text_size_small"
                         android:textColor="@color/text_color"
                         app:layout_constraintTop_toTopOf="parent"

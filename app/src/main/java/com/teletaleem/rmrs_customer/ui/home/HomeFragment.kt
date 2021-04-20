@@ -24,7 +24,6 @@ import com.teletaleem.rmrs_customer.data_class.home.restaurants.Restaurants
 import com.teletaleem.rmrs_customer.databinding.FragmentHomeBinding
 import com.teletaleem.rmrs_customer.db.CustomerDatabase
 import com.teletaleem.rmrs_customer.db.dataclass.Favourite
-import com.teletaleem.rmrs_customer.shared_view_models.SharedViewModel
 import com.teletaleem.rmrs_customer.ui.restauratntdetail.RestaurantDetailFragment
 import com.teletaleem.rmrs_customer.ui.search.filter_search.FilterSearchFragment
 import com.teletaleem.rmrs_customer.ui.search.simple_search.SimpleSearchFragment
@@ -48,7 +47,7 @@ class HomeFragment : Fragment() ,View.OnClickListener,RestaurantAdapter.AddToFav
     private lateinit var dealsList:ArrayList<Deals>
 
     private lateinit var  databaseCreator: CustomerDatabase
-    private lateinit var favouriteLiveData:LiveData<Favourite?>
+
 
     private  var restaurantId:String="0"
 
@@ -186,19 +185,22 @@ class HomeFragment : Fragment() ,View.OnClickListener,RestaurantAdapter.AddToFav
     /**************************************************************************************************************************/
 
     override fun onAddToFavouriteClick(position: Int) {
-       //val favourite= homeViewModel.getRecordById(restaurantsList[position].RestaurantID)
 
-//        val favouriteLiveData=databaseCreator.favouriteDao.findRestaurantByID(restaurantsList[position].RestaurantID)
-//
-//
-//        favouriteLiveData.observe(requireActivity(), Observer<Favourite?>{
-//            if (it!=null){
-//                deleteFavourite(position,favouriteLiveData)
-//            }
-//            else{
-//                addToFavourite(position,favouriteLiveData)
-//            }
-//        })
+        val favouriteLiveData=databaseCreator.favouriteDao.fetchFavouriteRecord(restaurantsList[position].RestaurantID)
+
+        favouriteLiveData.observe(requireActivity(), Observer {
+
+            val favouriteList= it as ArrayList<Favourite>
+
+            if (favouriteList.size>0){
+                deleteFavourite(position,favouriteLiveData)
+            }
+            else{
+                addToFavourite(position,favouriteLiveData)
+            }
+
+        })
+
 
     }
 
@@ -219,23 +221,33 @@ class HomeFragment : Fragment() ,View.OnClickListener,RestaurantAdapter.AddToFav
     //                                          Room Database Section
     /**************************************************************************************************************************/
 
-    private fun checkRestaurantById(position: Int):MutableLiveData<Favourite>{
-        val favourite=MutableLiveData<Favourite>()
-        favouriteLiveData=databaseCreator.favouriteDao.findRestaurantByID(restaurantsList[position].RestaurantID)
+    private fun checkRestaurantById(){
+        val favouriteLiveData=databaseCreator.favouriteDao.findRestaurants()
 
+        favouriteLiveData.observe(requireActivity(), Observer {
 
-        favouriteLiveData.observe(requireActivity(), Observer<Favourite?>{
-            val id = position
+            val favouriteList= it as ArrayList<Favourite>
 
-            favourite.postValue(it)
-
+            if (favouriteList!=null){
+                for (index in 0 until restaurantsList.size)
+                {
+                    for(ind in 0 until favouriteList.size)
+                    {
+                        if (restaurantsList[index].RestaurantID==favouriteList[ind].restaurant_id)
+                        {
+                            restaurantsList[index].isFavourite=true
+                            break
+                        }
+                    }
+                }
+                restaurantsAdapter.updateRestaurantsList(restaurantsList)
+            }
 
         })
-        return favourite
     }
 
 
-    private fun addToFavourite(position: Int, favouriteLiveData: LiveData<Favourite?>)
+    private fun addToFavourite(position: Int, favouriteLiveData: LiveData<MutableList<Favourite>>)
     {
         favouriteLiveData.removeObservers(requireActivity())
         val mFavourite=Favourite(restaurantsList[position].RestaurantID, restaurantsList[position].RestaurantName, restaurantsList[position].Address, restaurantsList[position].Rating, restaurantsList[position].RatingCount, restaurantsList[position].Image)
@@ -244,7 +256,7 @@ class HomeFragment : Fragment() ,View.OnClickListener,RestaurantAdapter.AddToFav
         restaurantsAdapter.updateRestaurantsList(restaurantsList)
     }
 
-    private fun deleteFavourite(position: Int, favouriteLiveData: LiveData<Favourite?>)
+    private fun deleteFavourite(position: Int, favouriteLiveData: LiveData<MutableList<Favourite>>)
     {
         favouriteLiveData.removeObservers(requireActivity())
         val mFavourite=Favourite(restaurantsList[position].RestaurantID, restaurantsList[position].RestaurantName, restaurantsList[position].Address, restaurantsList[position].Rating, restaurantsList[position].RatingCount, restaurantsList[position].Image)
@@ -293,40 +305,13 @@ class HomeFragment : Fragment() ,View.OnClickListener,RestaurantAdapter.AddToFav
 
                 restaurantsList = it.data.restaurants
                 dealsList = it.data.deals
-//                checkFavouriteAndUpdateRecord().observe(requireActivity(),{ it1 ->
-//                    if (it1)
-//                    {
-//                        restaurantsAdapter.updateRestaurantsList(restaurantsList)
-//                    }
-//                })
-                restaurantsAdapter.updateRestaurantsList(restaurantsList)
-
-
+                checkRestaurantById()
                 dealsAdapter.updateList(dealsList)
 
             } else {
                 AppGlobal.showDialog(getString(R.string.title_alert), it.data.description, requireContext())
             }
         })
-    }
-
-    private fun checkFavouriteAndUpdateRecord() :MutableLiveData<Boolean>{
-        val isFavoured= MutableLiveData<Boolean>()
-        for (index in 0 until restaurantsList.size)
-        {
-            checkRestaurantById(index).observe(requireActivity(),{
-                favouriteLiveData.removeObservers(requireActivity())
-                if (it!=null)
-                {
-                    restaurantsList[index].isFavourite = it!=null
-                }
-                if (index==restaurantsList.size){
-
-                    isFavoured.postValue(true)
-                }
-            })
-        }
-        return isFavoured
     }
 
 
