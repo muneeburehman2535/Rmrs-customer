@@ -8,6 +8,7 @@ import com.teletaleem.rmrs_customer.data_class.login.Login;
 import com.teletaleem.rmrs_customer.data_class.login.LoginResponse;
 import com.teletaleem.rmrs_customer.data_class.registration.Registration;
 import com.teletaleem.rmrs_customer.data_class.registration.RegistrationResponse;
+import com.teletaleem.rmrs_customer.data_class.review.Review;
 import com.teletaleem.rmrs_customer.data_class.send_otp.SendOTP;
 
 import okhttp3.ResponseBody;
@@ -50,4 +51,10 @@ public interface WebRequestGeo {
 
     @GET("/customer/get-order/?")
     Call<ResponseBody> getOrderDetail(@Query("CustomerID") String CustomerId,@Query("OrderID") String OrderId);
+
+    @POST("/customer/review")
+    Call<ResponseBody> submitReview(@Body Review review);
+
+    @GET("/customer/review")
+    Call<ResponseBody> getReviewList(@Query("RestaurantID") String restaurantId);
 }

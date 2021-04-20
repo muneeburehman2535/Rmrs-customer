@@ -12,9 +12,9 @@ data class Profile(
         val RestaurantVerified:Boolean,
         val TotalDevices:Int,
         val OwnerID:String,
-        val Rating:Int,
+        val Rating:Double,
         val RatingCount:Int,
-        val SumofRating:Int,
+        val SumofRating:Double,
         val Image:String,
         val __v:Int
 )

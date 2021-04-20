@@ -144,7 +144,10 @@
 
     <string name="title_give_review">LEAVE US A REVIEW AND LET US KNOW HOW WE DID</string>
     <string name="title_review">Review</string>
+    <string name="title_customer_name">Customer name</string>
     <string name="title_submit">Submit</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>

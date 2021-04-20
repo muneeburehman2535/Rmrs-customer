@@ -203,7 +203,7 @@ class CartFragment : Fragment(),View.OnClickListener,CartItemAdapter.UpdateItemQ
         }
         val mCheckout=Checkout(cartList[0].restaurant_id,cartList[0].restaurant_name,true,AppGlobal.readString(requireActivity(),AppGlobal.customerId,""),"Usama Wajid",mTotalAmount.toInt(),mSalesTaxAmount.toInt(),"New_Order",menuOrderedList, Delivery())
         Timber.d("Checkout data: ${Gson().toJson(mCheckout)}")
-        (activity as CustomerHomeActivity).mModel.updateCheckoutOrder(mCheckout)
+        (activity as CustomerHomeActivity).mModel.updateCheckout(mCheckout)
         redirectCheckout()
     }
 
