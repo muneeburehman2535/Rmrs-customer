@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import com.teletaleem.rmrs_customer.data_class.restaurantdetail.RestaurantDetailResponse
 import com.teletaleem.rmrs_customer.data_class.review.Review
 import com.teletaleem.rmrs_customer.data_class.review.ReviewResponse
+import com.teletaleem.rmrs_customer.data_class.review.reviewlist.ReviewListResponse
 import com.teletaleem.rmrs_customer.repository.RestaurantDetailRepository
 import com.teletaleem.rmrs_customer.repository.ReviewRepository
 
@@ -15,7 +16,7 @@ class ReviewViewModel : ViewModel() {
         return reviewRepository.getReviewResponseLiveData(review)
     }
 
-    fun getReviewListResponse(restaurantID:String): LiveData<ReviewResponse> {
+    fun getReviewListResponse(restaurantID:String): LiveData<ReviewListResponse> {
         return reviewRepository.getReviewResponseLiveData(restaurantID)
     }
 }

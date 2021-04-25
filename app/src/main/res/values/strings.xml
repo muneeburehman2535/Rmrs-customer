@@ -48,6 +48,7 @@
     <string name="title_deals">Deals</string>
     <string name="title_restaurants">Restaurants</string>
     <string name="title_filter">Filters</string>
+    <string name="title_reviews">Reviews</string>
 
     //Profile Screen
     <string name="title_name">Name</string>
@@ -80,6 +81,7 @@
     <string name="title_payment_method">Payment Method</string>
     <string name="title_cod">Cash on delivery</string>
     <string name="title_checkout">Checkout</string>
+    <string name="title_special_ins">Special Instructions</string>
 
     //My Orders Strings
     <string name="title_my_orders">My Orders</string>
@@ -98,6 +100,7 @@
     <string name="title_reorder">Reorder</string>
     <string name="status_pending">Pending</string>
     <string name="status_in_progress">In Progress</string>
+    <string name="title_special_instructions">Special Instructions</string>
 
     //Filter Search
     <string name="title_select_category">Select Categories:</string>
@@ -110,6 +113,15 @@
     <string name="title_update">Update</string>
     <string name="title_change_password">You must update your password now.</string>
     <string name="title_logout">Logout</string>
+
+
+    //Reservation
+    <string name="title_reservation">Reservation</string>
+    <string name="hint_customer_name">Customer Name</string>
+    <string name="hint_customer_phn_no">Contact no</string>
+    <string name="hint_no_of_people">Number of peoples</string>
+    <string name="hint_reservation_time">Reservation Time</string>
+    <string name="title_place_reservation">Place Reservation</string>
 
 
     //Error Strings

@@ -88,16 +88,16 @@ class HomeFragment : Fragment() ,View.OnClickListener,RestaurantAdapter.AddToFav
         when(v?.id)
         {
             R.id.img_filter_home -> {
-                (context as CustomerHomeActivity?)?.changeToolbarName(getString(R.string.title_filter))
-                (context as CustomerHomeActivity?)?.loadNewFragment(
+                (activity as CustomerHomeActivity?)?.changeToolbarName(getString(R.string.title_filter))
+                (activity as CustomerHomeActivity?)?.loadNewFragment(
                         FilterSearchFragment(),
                         "filter_search"
                 )
             }
 
             R.id.card_search_home -> {
-                (context as CustomerHomeActivity?)?.changeToolbarName(getString(R.string.hint_search_food))
-                (context as CustomerHomeActivity?)?.loadNewFragment(
+                (activity as CustomerHomeActivity?)?.changeToolbarName(getString(R.string.hint_search_food))
+                (activity as CustomerHomeActivity?)?.loadNewFragment(
                         SimpleSearchFragment(),
                         "simple_search"
                 )

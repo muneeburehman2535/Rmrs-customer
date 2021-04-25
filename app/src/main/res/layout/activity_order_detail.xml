@@ -151,11 +151,60 @@
                     android:layout_marginStart="@dimen/margin_xl"
                     android:layout_marginEnd="@dimen/margin_xl"/>
 
+                <LinearLayout
+                    android:id="@+id/layout_special_ins"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintTop_toBottomOf="@+id/line_seprator_order_details"
+                    android:layout_marginTop="@dimen/margin_xl">
+                    <TextView
+                        android:id="@+id/txt_title_special_instructions"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/title_special_instructions"
+                        android:textSize="@dimen/text_size_avg"
+                        android:textStyle="bold"
+                        android:layout_marginStart="@dimen/margin_avg"
+                        android:layout_marginEnd="@dimen/margin_avg" />
+
+                    <EditText
+                        android:id="@+id/edtxt_special_ins_od"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/img_size_normal"
+                        android:background="@drawable/edit_text_background"
+                        android:gravity="top|start"
+                        android:paddingTop="@dimen/padding_l"
+                        android:paddingStart="@dimen/padding_l"
+                        android:paddingEnd="@dimen/padding_avg"
+                        app:layout_constraintTop_toBottomOf="@+id/card_payment_method_fc"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginTop="@dimen/margin_avg"
+                        android:layout_marginStart="@dimen/margin_avg"
+                        android:layout_marginEnd="@dimen/margin_avg"
+                        android:enabled="false"/>
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/line_seprator1_order_details"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/grey"
+                    app:layout_constraintTop_toBottomOf="@+id/layout_special_ins"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginTop="@dimen/margin_xl"
+                    android:layout_marginStart="@dimen/margin_xl"
+                    android:layout_marginEnd="@dimen/margin_xl"/>
+
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_items_order_detail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@+id/line_seprator_order_details"/>
+                    app:layout_constraintTop_toBottomOf="@+id/line_seprator1_order_details"
+                    android:layout_marginTop="@dimen/margin_avg"/>
 
                 <TextView
                     android:id="@+id/txt_title_subtotal_aod"
@@ -202,11 +251,33 @@
                     android:layout_marginTop="@dimen/margin_xl"
                     android:layout_marginEnd="@dimen/margin_l"/>
 
+                <TextView
+                    android:id="@+id/txt_title_service_charges_aod"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/title_delivery_fee"
+                    android:textSize="@dimen/text_size_small"
+                    android:textColor="@color/text_color"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_title_sales_tax_aod"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginTop="@dimen/margin_xl"
+                    android:layout_marginStart="@dimen/margin_l"/>
+                <TextView
+                    android:id="@+id/txt_service_charges_aod"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_size_small"
+                    android:textColor="@color/text_color"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_sales_tax_aod"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginTop="@dimen/margin_xl"
+                    android:layout_marginEnd="@dimen/margin_l"/>
+
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/layout_total_amount_aod"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@+id/txt_title_sales_tax_aod"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_title_service_charges_aod"
                     android:layout_marginTop="@dimen/margin_xxl"
                     android:background="@color/color_layout_background">
 

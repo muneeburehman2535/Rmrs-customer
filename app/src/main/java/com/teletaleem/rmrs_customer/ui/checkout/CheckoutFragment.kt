@@ -60,6 +60,7 @@ class CheckoutFragment : Fragment(),View.OnClickListener {
         })
     }
 
+
     private fun setClickListeners() {
         mBinding.btnCheckoutFc.setOnClickListener(this)
     }
@@ -69,6 +70,11 @@ class CheckoutFragment : Fragment(),View.OnClickListener {
         {
             R.id.btn_checkout_fc->
             {
+                if (mBinding.rbCheckoutFc.isChecked)
+                {
+                    orderCheckout.PaymentMethod="COD"
+                }
+                orderCheckout.Comments=mBinding.edtxtSpecialInsCf.text.toString()
                checkoutOrder()
             }
         }

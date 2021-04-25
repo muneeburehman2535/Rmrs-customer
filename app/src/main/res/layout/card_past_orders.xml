@@ -23,21 +23,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="@dimen/margin_xl"
             android:layout_marginTop="@dimen/margin_l"/>
-        <Button
-            android:id="@+id/btn_order_status_cpo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Reorder"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_size_small"
-            android:paddingStart="@dimen/padding_l"
-            android:paddingEnd="@dimen/padding_l"
-            android:textAllCaps="false"
-            android:background="@drawable/small_button_background"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="@dimen/margin_xl"
-            android:layout_marginBottom="@dimen/margin_avg"/>
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"

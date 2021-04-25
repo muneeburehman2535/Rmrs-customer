@@ -1,6 +1,7 @@
 package com.teletaleem.rmrs_customer.ui.restauratntdetail
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
@@ -19,6 +20,7 @@ import com.teletaleem.rmrs_customer.data_class.restaurantdetail.Menu
 import com.teletaleem.rmrs_customer.data_class.restaurantdetail.RestaurantDetailResponse
 import com.teletaleem.rmrs_customer.databinding.RestaurantDetailFragmentBinding
 import com.teletaleem.rmrs_customer.ui.home.CustomerHomeActivity
+import com.teletaleem.rmrs_customer.ui.reservation.ReservationActivity
 import com.teletaleem.rmrs_customer.utilities.AppGlobal
 import com.teletaleem.rmrs_customer.utilities.BlurBuilder
 import dagger.hilt.android.AndroidEntryPoint
@@ -52,6 +54,11 @@ class RestaurantDetailFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(RestaurantDetailViewModel::class.java)
+
+        mBinding.restaurantDetailViewModel=viewModel
+        mBinding.fabRestaurantDetail.setOnClickListener(View.OnClickListener {
+            startActivity(Intent(requireActivity(),ReservationActivity::class.java))
+        })
 
     }
 
@@ -136,6 +143,7 @@ class RestaurantDetailFragment : Fragment() {
                 setTabLayout()
                 (activity as CustomerHomeActivity).mModel.updateRatingCount(it.data.profile[0].RatingCount)
                 (activity as CustomerHomeActivity).mModel.updateSumOfRating(it.data.profile[0].SumofRating)
+                AppGlobal.writeString(requireActivity(),AppGlobal.ownerId,it.data.profile[0].OwnerID)
                 setViews(it)
                 (activity as CustomerHomeActivity).mModel.updateMenuList(menuList)
             }
@@ -153,6 +161,7 @@ class RestaurantDetailFragment : Fragment() {
         mBinding.rbRatingFrd.rating=mProfile.Rating.toFloat()
         mBinding.rbRatingFrd.numStars=5
         mBinding.txtTotalRestaurantRatingFrd.text="(${mProfile.RatingCount})"
+        AppGlobal.loadImageIntoGlide(mProfile.Image,mBinding.imgRestaurantFrd,requireActivity())
     }
 
 }

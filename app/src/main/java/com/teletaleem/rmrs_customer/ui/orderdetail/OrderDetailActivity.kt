@@ -48,9 +48,11 @@ class OrderDetailActivity : AppCompatActivity(),View.OnClickListener {
         mBinding.txtTitleRestaurantNameDetail.text=checkoutResponse.RestaurantName
         mBinding.txtOrderNumber.text="#${checkoutResponse.OrderID}"
         mBinding.txtOrderFrom.text=checkoutResponse.RestaurantName
-        mBinding.txtSubtotalAod.text=AppGlobal.mCurrency+checkoutResponse.TotalAmount.toString()
+        mBinding.txtSubtotalAod.text=AppGlobal.mCurrency+checkoutResponse.SubTotal.toString()
         mBinding.txtSalesTaxAod.text=AppGlobal.mCurrency+checkoutResponse.SalesTax
+        mBinding.txtServiceChargesAod.text=AppGlobal.mCurrency+checkoutResponse.DeliveryCharges
         mBinding.txtTotalAmountAod.text=AppGlobal.mCurrency+checkoutResponse.TotalAmount.toString()
+        mBinding.edtxtSpecialInsOd.setText(checkoutResponse.Comments)
     }
 
     private fun setRestaurantAdapter() {

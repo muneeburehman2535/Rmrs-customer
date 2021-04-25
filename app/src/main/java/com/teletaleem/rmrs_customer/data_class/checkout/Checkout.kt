@@ -9,11 +9,18 @@ data class Checkout(
         val CustomerRegistered:Boolean,
         val CustomerID:String,
         val CustomerName:String,
-        val TotalAmount:Int,
-        val SalesTax:Int,
+        val TotalAmount:Float,
+
+        val SalesTax:Float,
         val Status:String,
         val MenuOrdered:ArrayList<MenuOrdered>,
-        val Delivery:Delivery
+        val Delivery:Delivery,
+        val OwnerID:String,
+        val SubTotal:Float,
+        val DeliveryCharges:Float,
+        var Comments:String,
+        var PaymentMethod:String
+
 
 
 )

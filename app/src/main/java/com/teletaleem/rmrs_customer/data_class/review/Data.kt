@@ -7,5 +7,6 @@ data class Data(
         val Comment:String,
         val DateCreated:String,
         val RestaurantID:String,
-        val __v:String
+        val __v:String,
+        val Rating:Float
 )

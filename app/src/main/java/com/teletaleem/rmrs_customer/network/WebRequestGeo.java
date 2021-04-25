@@ -57,4 +57,7 @@ public interface WebRequestGeo {
 
     @GET("/customer/review")
     Call<ResponseBody> getReviewList(@Query("RestaurantID") String restaurantId);
+
+    @GET("/customer/simple_search/?")
+    Call<ResponseBody> getSearchList(@Query("search") String search);
 }

@@ -40,6 +40,7 @@ class CartFragment : Fragment(),View.OnClickListener,CartItemAdapter.UpdateItemQ
     private var mTotalAmount="0"
     private var restaurantId="0"
     private var restaurantName=""
+    private lateinit var ownerId:String
 
     private lateinit var  databaseCreator: CustomerDatabase
 
@@ -69,6 +70,7 @@ class CartFragment : Fragment(),View.OnClickListener,CartItemAdapter.UpdateItemQ
         setCartList()
         setDealsAdapter()
         getRestaurantId()
+        getOwnerId()
 //        calculatePrice()
 //        setViews()
         setClickListeners()
@@ -93,6 +95,11 @@ class CartFragment : Fragment(),View.OnClickListener,CartItemAdapter.UpdateItemQ
 //        })
         restaurantId=AppGlobal.readString(requireActivity(),AppGlobal.restaurantId,"")
         getCartRecord()
+    }
+
+    private fun getOwnerId(){
+
+        ownerId=AppGlobal.readString(requireActivity(),AppGlobal.ownerId,"0")
     }
 
 
@@ -201,7 +208,7 @@ class CartFragment : Fragment(),View.OnClickListener,CartItemAdapter.UpdateItemQ
             val menuOrdered=MenuOrdered(cartList[index].menu_id,cartList[index].item_name,cartList[index].item_price,cartList[index].quantity,cartList[index].description)
             menuOrderedList.add(menuOrdered)
         }
-        val mCheckout=Checkout(cartList[0].restaurant_id,cartList[0].restaurant_name,true,AppGlobal.readString(requireActivity(),AppGlobal.customerId,""),"Usama Wajid",mTotalAmount.toInt(),mSalesTaxAmount.toInt(),"New_Order",menuOrderedList, Delivery())
+        val mCheckout=Checkout(cartList[0].restaurant_id,cartList[0].restaurant_name,true,AppGlobal.readString(requireActivity(),AppGlobal.customerId,""),"Usama Wajid",mTotalAmount.toFloat(),mSalesTaxAmount.toFloat(),"New_Order",menuOrderedList, Delivery(),ownerId,mItemTotalAmount.toFloat(),mServicesCharges.toFloat(),"","")
         Timber.d("Checkout data: ${Gson().toJson(mCheckout)}")
         (activity as CustomerHomeActivity).mModel.updateCheckout(mCheckout)
         redirectCheckout()

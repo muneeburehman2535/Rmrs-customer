@@ -36,6 +36,8 @@ import com.teletaleem.rmrs_customer.ui.home.cart.CartFragment
 import com.teletaleem.rmrs_customer.ui.home.favourite.FavouriteFragment
 import com.teletaleem.rmrs_customer.ui.home.profile.ProfileFragment
 import com.teletaleem.rmrs_customer.ui.myorders.MyOrdersFragment
+import com.teletaleem.rmrs_customer.ui.restauratntdetail.RestaurantDetailFragment
+import com.teletaleem.rmrs_customer.ui.review.restaurantreviews.ReviewsListFragment
 import com.teletaleem.rmrs_customer.ui.updatepassword.UpdatePasswordFragment
 import com.teletaleem.rmrs_customer.utilities.AppGlobal
 import dagger.hilt.android.AndroidEntryPoint
@@ -52,6 +54,7 @@ class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItem
     private lateinit var mToolbar:Toolbar
     private lateinit var locationMenu:MenuItem
     private lateinit var editProfileMenu:MenuItem
+    private lateinit var infoMenu:MenuItem
     private var mCurrentLocation:String=""
     private val pLACE_PICKER_REQUEST = 4
     private lateinit var fields:List<Place.Field>
@@ -145,6 +148,7 @@ class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItem
         inflater.inflate(R.menu.customer_home, menu)
         locationMenu=menu.findItem(R.id.action_location)
         editProfileMenu=menu.findItem(R.id.action_edit)
+        infoMenu=menu.findItem(R.id.action_info)
         val spanString = SpannableString(editProfileMenu.title.toString())
         spanString.setSpan( ForegroundColorSpan(getColor(R.color.colorAccent)), 0,     spanString.length, 0)
         editProfileMenu.title = spanString
@@ -161,6 +165,13 @@ class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItem
             R.id.action_edit -> {
 
                 mModel.updateEditProfileData(true)
+            }
+            R.id.action_info->{
+                changeToolbarName(getString(R.string.title_reviews))
+                loadNewFragment(
+                    ReviewsListFragment(),
+                    "review_list"
+                )
             }
         }
         return super.onOptionsItemSelected(item)
@@ -283,6 +294,7 @@ class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItem
     }
 
     fun loadNewFragment(fragment: Fragment?, name: String) {
+        infoMenu.isVisible = name=="restaurant_detail"
         locationMenu.isVisible = false
         mToolbarLayout.visibility = View.GONE
         supportFragmentManager.beginTransaction()

@@ -31,7 +31,7 @@ class ReviewListAdapter(private var reviewList:ArrayList<Data>): RecyclerView.Ad
         calendar.set(dateList[0].toInt(),month,dateList[2].toInt())
         val updatedData=AppGlobal.dateToTimeStamp(Date(calendar.timeInMillis),"MMM dd, yyyy")
         holder.txtDate.text=updatedData
-        //holder.restaurantRating.rating=reviewList[position].
+        holder.restaurantRating.rating=reviewList[position].Rating
     }
 
     override fun getItemCount(): Int {

@@ -26,7 +26,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Rmrscustomer"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.orderdetail.OrderDetailActivity"></activity>
+        <activity android:name=".ui.reservation.ReservationActivity"></activity>
+        <activity android:name=".ui.orderdetail.OrderDetailActivity" />
 
         <meta-data
             android:name="com.google.android.gms.version"
@@ -38,8 +39,8 @@
         <activity
             android:name=".ui.home.CustomerHomeActivity"
             android:label="@string/title_activity_customer_home"
-            android:theme="@style/Theme.Rmrscustomer.NoActionBar"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Rmrscustomer.NoActionBar" />
         <activity
             android:name=".ui.otpverification.ConfirmOtpActivity"
             android:screenOrientation="portrait" />

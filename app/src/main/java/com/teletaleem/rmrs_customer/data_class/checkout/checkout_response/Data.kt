@@ -15,5 +15,10 @@ data class Data(
         val Status:String,
         val OrderDate:String,
         val __v:Int,
-        val description:String
+        val description:String,
+        val OwnerID:String,
+        val SubTotal:Float,
+        val DeliveryCharges:Float,
+        var Comments:String,
+        var PaymentMethod:String
 )
