@@ -112,7 +112,7 @@
                 android:textAppearance="?android:textAppearanceMedium"
                 android:textSize="16sp"
                 android:inputType="none"
-                android:focusable="falsetg"/>
+                android:focusable="false"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button

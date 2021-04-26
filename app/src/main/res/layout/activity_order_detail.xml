@@ -23,7 +23,7 @@
                     android:id="@+id/img_background_order_detail"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/img_size_nrml"
-                    android:src="@drawable/placeholder"
+                    android:src="@drawable/photo_1552566626_52f8b828add9"
                     app:layout_constraintTop_toTopOf="parent"
                     android:scaleType="fitXY"
                     android:alpha="0.84" />

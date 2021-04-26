@@ -198,6 +198,9 @@ class CartFragment : Fragment(),View.OnClickListener,CartItemAdapter.UpdateItemQ
         mBinding.txtTaxChrgCf.text=AppGlobal.mCurrency+mSalesTaxAmount
         mBinding.txtServiceChrgCf.text=AppGlobal.mCurrency+mServicesCharges
         mBinding.txtTotalPayCf.text=AppGlobal.mCurrency+mTotalAmount
+        mBinding.txtRestaurantNameLcic.text=AppGlobal.readString(requireActivity(),AppGlobal.restaurantName,"")
+        mBinding.txtRestaurantLocLcic.text=AppGlobal.readString(requireActivity(),AppGlobal.restaurantAddress,"")
+        AppGlobal.loadImageIntoGlide(AppGlobal.readString(requireActivity(),AppGlobal.restaurantImage,""),mBinding.imgRestaurantLcic,requireActivity())
     }
 
     private fun bindCheckoutData(){

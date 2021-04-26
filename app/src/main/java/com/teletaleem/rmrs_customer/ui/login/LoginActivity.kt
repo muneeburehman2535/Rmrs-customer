@@ -72,7 +72,7 @@ class LoginActivity : AppCompatActivity(),View.OnClickListener {
 //                        AppGlobal.snackBar(mBinding.layoutParentLogin,getString(R.string.err_no_internet),AppGlobal.LONG)
 //                    }
 //                }
-                AppGlobal.writeString(this,AppGlobal.customerId,"7IzjAIInd4")
+                AppGlobal.writeString(this,AppGlobal.customerId,"ai0anPGypI")
                 AppGlobal.startNewActivity(this, CustomerHomeActivity::class.java)
             }
             R.id.txt_signup_al->

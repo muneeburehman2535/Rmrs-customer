@@ -8,60 +8,60 @@
             name="checkout_view_model"
             type="com.teletaleem.rmrs_customer.ui.checkout.CheckoutViewModel" />
     </data>
-    <FrameLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-        <!--Delivery Location View-->
+            <!--Delivery Location View-->
             <androidx.cardview.widget.CardView
-            android:id="@+id/card_delivery_loc_fc"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="@dimen/margin_xl">
-            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/card_delivery_loc_fc"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <ImageView
-                    android:id="@+id/img_location_fc"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_location_large"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    android:layout_marginTop="@dimen/margin_xl"
-                    android:layout_marginStart="@dimen/margin_xxl"
-                    android:layout_marginBottom="@dimen/margin_xl"/>
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="@dimen/margin_xl">
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <ImageView
+                        android:id="@+id/img_location_fc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_location_large"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_marginTop="@dimen/margin_xl"
+                        android:layout_marginStart="@dimen/margin_xxl"
+                        android:layout_marginBottom="@dimen/margin_xl"/>
 
-                <TextView
-                    android:id="@+id/txt_title_delivery_loc_fc"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/title_delivery_location"
-                    android:textSize="@dimen/text_size_small"
-                    android:textStyle="bold"
-                    android:textColor="@color/colorAccent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/img_location_fc"
-                    android:layout_marginTop="@dimen/margin_xl"
-                    android:layout_marginStart="@dimen/margin_l"/>
-                <TextView
-                    android:id="@+id/txt_delivery_loc_cf"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="House 21, St 66, F-7/2, Islamabad, Pakistan"
-                    android:textSize="@dimen/text_size_xsmall"
-                    android:textStyle="bold"
-                    app:layout_constraintTop_toBottomOf="@+id/txt_title_delivery_loc_fc"
-                    app:layout_constraintStart_toEndOf="@+id/img_location_fc"
-                    android:layout_marginStart="@dimen/margin_l"
-                    android:layout_marginBottom="@dimen/margin_xl"/>
+                    <TextView
+                        android:id="@+id/txt_title_delivery_loc_fc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/title_delivery_location"
+                        android:textSize="@dimen/text_size_small"
+                        android:textStyle="bold"
+                        android:textColor="@color/colorAccent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/img_location_fc"
+                        android:layout_marginTop="@dimen/margin_xl"
+                        android:layout_marginStart="@dimen/margin_l"/>
+                    <TextView
+                        android:id="@+id/txt_delivery_loc_cf"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="House 21, St 66, F-7/2, Islamabad, Pakistan"
+                        android:textSize="@dimen/text_size_xsmall"
+                        android:textStyle="bold"
+                        app:layout_constraintTop_toBottomOf="@+id/txt_title_delivery_loc_fc"
+                        app:layout_constraintStart_toEndOf="@+id/img_location_fc"
+                        android:layout_marginStart="@dimen/margin_l"
+                        android:layout_marginBottom="@dimen/margin_xl"/>
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.cardview.widget.CardView>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/card_payment_method_fc"
@@ -116,16 +116,16 @@
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 android:layout_marginStart="@dimen/margin_xl"/>
 
-                                <RadioButton
-                                    android:id="@+id/rb_checkout_fc"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    app:layout_constraintEnd_toEndOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent"
-                                    app:layout_constraintBottom_toBottomOf="parent"
-                                    android:layout_marginEnd="@dimen/margin_xl"
-                                    android:checked="true"
-                                    android:enabled="false"/>
+                            <RadioButton
+                                android:id="@+id/rb_checkout_fc"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                android:layout_marginEnd="@dimen/margin_xl"
+                                android:checked="true"
+                                android:enabled="false"/>
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
                     </androidx.cardview.widget.CardView>
@@ -161,13 +161,15 @@
                 android:paddingTop="@dimen/padding_xl"
                 android:paddingBottom="@dimen/padding_xl"
                 android:background="@drawable/button_background"
+                app:layout_constraintTop_toBottomOf="@+id/edtxt_special_ins_cf"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginBottom="@dimen/margin_xxxl"
+                android:layout_marginTop="@dimen/margin_xxxxl"
                 android:layout_marginStart="@dimen/margin_xxxl"
+                android:layout_marginBottom="@dimen/margin_xxxxl"
                 android:layout_marginEnd="@dimen/margin_xxxl"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 
-    </FrameLayout>
 </layout>

@@ -144,6 +144,10 @@ class RestaurantDetailFragment : Fragment() {
                 (activity as CustomerHomeActivity).mModel.updateRatingCount(it.data.profile[0].RatingCount)
                 (activity as CustomerHomeActivity).mModel.updateSumOfRating(it.data.profile[0].SumofRating)
                 AppGlobal.writeString(requireActivity(),AppGlobal.ownerId,it.data.profile[0].OwnerID)
+                AppGlobal.writeString(requireActivity(),AppGlobal.restaurantName,it.data.profile[0].RestaurantName)
+                AppGlobal.writeString(requireActivity(),AppGlobal.restaurantAddress,it.data.profile[0].Address)
+                AppGlobal.writeString(requireActivity(),AppGlobal.restaurantImage,it.data.profile[0].Image)
+
                 setViews(it)
                 (activity as CustomerHomeActivity).mModel.updateMenuList(menuList)
             }

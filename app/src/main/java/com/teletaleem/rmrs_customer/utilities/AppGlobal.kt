@@ -33,6 +33,9 @@ class AppGlobal {
         const val customerId = "customer_id"
         const val restaurantId="restaurant_id"
         const val ownerId="owner_id"
+        const val restaurantName="restaurant_name"
+        const val restaurantAddress="restaurant_address"
+        const val restaurantImage="restaurant_image"
 
 
         /*****************************************************Base URLs********************************************************/

@@ -30,6 +30,28 @@
             android:layout_gravity="start"
             android:fitsSystemWindows="true"
             app:headerLayout="@layout/nav_header_main"
-            app:menu="@menu/activity_main_drawer" />
+            app:menu="@menu/activity_main_drawer" >
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:clickable="true"
+                android:orientation="vertical">
+                <View
+                    android:id="@+id/view"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/grey"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/view"
+                    android:textAlignment="center"
+                    android:text="@string/version_number"
+                    android:textAppearance="?android:textAppearanceSmall"
+                    android:layout_marginTop="@dimen/margin_avg"
+                    android:layout_marginBottom="@dimen/margin_avg"/>
+            </RelativeLayout>
+        </com.google.android.material.navigation.NavigationView>
     </androidx.drawerlayout.widget.DrawerLayout>
 </layout>

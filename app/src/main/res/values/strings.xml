@@ -117,6 +117,7 @@
 
     //Reservation
     <string name="title_reservation">Reservation</string>
+    <string name="title_my_reservations">My Reservations</string>
     <string name="hint_customer_name">Customer Name</string>
     <string name="hint_customer_phn_no">Contact no</string>
     <string name="hint_no_of_people">Number of peoples</string>
@@ -148,6 +149,7 @@
     <string name="menu_slideshow">Slideshow</string>
     <string name="menu_cart">Cart</string>
     <string name="menu_my_orders">My Orders</string>
+    <string name="menu_my_reservations">My Reservations</string>
     <string name="menu_profile">Profile</string>
     <string name="menu_favourite">Favourite</string>
     <string name="menu_bottom_nav">Bottom Navigation</string>
@@ -160,6 +162,8 @@
     <string name="title_submit">Submit</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="version_number">Version: 1.0.4</string>
 
 
 </resources>

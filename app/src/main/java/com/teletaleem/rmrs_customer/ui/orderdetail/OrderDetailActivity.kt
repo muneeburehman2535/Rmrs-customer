@@ -53,6 +53,7 @@ class OrderDetailActivity : AppCompatActivity(),View.OnClickListener {
         mBinding.txtServiceChargesAod.text=AppGlobal.mCurrency+checkoutResponse.DeliveryCharges
         mBinding.txtTotalAmountAod.text=AppGlobal.mCurrency+checkoutResponse.TotalAmount.toString()
         mBinding.edtxtSpecialInsOd.setText(checkoutResponse.Comments)
+        //AppGlobal.loadImageIntoGlide(mBinding.imgBackgroundOrderDetail,checkoutResponse.)
     }
 
     private fun setRestaurantAdapter() {

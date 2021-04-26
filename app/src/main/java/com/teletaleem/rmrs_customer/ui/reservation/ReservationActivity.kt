@@ -12,7 +12,10 @@ import android.widget.TimePicker
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import com.kaopiz.kprogresshud.KProgressHUD
 import com.teletaleem.rmrs_customer.R
+import com.teletaleem.rmrs_customer.data_class.reservation.Reservation
+import com.teletaleem.rmrs_customer.data_class.review.Review
 import com.teletaleem.rmrs_customer.databinding.ActivityReservationBinding
 import com.teletaleem.rmrs_customer.utilities.AppGlobal
 import java.util.*
@@ -21,8 +24,9 @@ class ReservationActivity : AppCompatActivity(), View.OnClickListener, DatePicke
     TimePickerDialog.OnTimeSetListener {
     private lateinit var txtToolbarText:TextView
     private lateinit var mBinding:ActivityReservationBinding
-    private lateinit var mViewHolder:ReservationViewModel
+    private lateinit var mViewModel:ReservationViewModel
     private lateinit var mCalendar: Calendar
+    private lateinit var progressDialog: KProgressHUD
 
     var day = 0
     var month: Int = 0
@@ -39,8 +43,9 @@ class ReservationActivity : AppCompatActivity(), View.OnClickListener, DatePicke
         super.onCreate(savedInstanceState)
 
         mBinding=DataBindingUtil.setContentView(this, R.layout.activity_reservation)
-        mViewHolder=ViewModelProvider(this).get(ReservationViewModel::class.java)
-        mBinding.reservationViewModel=mViewHolder
+        mViewModel=ViewModelProvider(this).get(ReservationViewModel::class.java)
+        mBinding.reservationViewModel=mViewModel
+        progressDialog=AppGlobal.setProgressDialog(this)
 
         setSupportActionBar(mBinding.toolbarReservation.findViewById(R.id.toolbar_reservation))
 
@@ -51,6 +56,8 @@ class ReservationActivity : AppCompatActivity(), View.OnClickListener, DatePicke
         txtToolbarText=mBinding.toolbarReservation.findViewById(R.id.txt_title_toolbar)
 
         mBinding.edtxtReservationTimeAr.setOnClickListener(this)
+        mBinding.btnReservationAr.setOnClickListener(this)
+        txtToolbarText.setText(R.string.title_reservation)
 
     }
 
@@ -68,7 +75,24 @@ class ReservationActivity : AppCompatActivity(), View.OnClickListener, DatePicke
                     datePickerDialog.show()
             }
             R.id.btn_reservation_ar->{
+                if (checkCredentials())
+                {
+                    val reservation=Reservation(AppGlobal.readString(this,AppGlobal.restaurantId,"0")
+                            ,AppGlobal.readString(this,AppGlobal.customerId,"0")
+                            ,mBinding.edtxtCustomerNameAr.text.toString()
+                            ,mBinding.edtxtPeopleNoAr.text.toString()
+                            ,mBinding.edtxtCustomerPhnNoAr.text.toString()
+                            ,Date(mCalendar.timeInMillis)
+                            ,AppGlobal.readString(this,AppGlobal.restaurantName,""))
 
+                    if (AppGlobal.isInternetAvailable(this))
+                    {
+                        addRestaurantDetail(reservation)
+                    }
+                    else{
+                        AppGlobal.showDialog(getString(R.string.title_alert),getString(R.string.err_no_internet),this)
+                    }
+                }
             }
         }
     }
@@ -95,13 +119,13 @@ class ReservationActivity : AppCompatActivity(), View.OnClickListener, DatePicke
             msg="${msg}Select Reservation date & time. \n"
         }
 
-        if (msg=="")
+        return if (msg=="")
         {
-            return true
+            true
         }
         else{
             AppGlobal.showDialog(getString(R.string.title_alert),msg,this)
-            return false
+            false
         }
     }
 
@@ -123,6 +147,28 @@ class ReservationActivity : AppCompatActivity(), View.OnClickListener, DatePicke
         //mBinding.edtxtReservationTimeAr.text = " myYear + "\n" + "Month: " + myMonth + "\n" + "Day: " + myDay + "\n" + "Hour: " + myHour + "\n" + "Minute: " + myMinute"
         mCalendar=Calendar.getInstance()
         mCalendar.set(myYear,myMonth,myDay,myHour,myMinute)
-        mBinding.edtxtReservationTimeAr.setText(AppGlobal.dateToTimeStamp(Date(mCalendar.timeInMillis),"MMM dd, yyyy hh mm a"))
+        mBinding.edtxtReservationTimeAr.setText(AppGlobal.dateToTimeStamp(Date(mCalendar.timeInMillis),"MMM dd, yyyy hh:mm a"))
+    }
+
+    //*************************************************************************************************************************************************/
+    //                                                                API Calls Section:
+    //************************************************************************************************************************************************/
+
+    /*
+    * Reservation API Method
+    * */
+    private fun addRestaurantDetail(reservation: Reservation){
+        progressDialog.setLabel("Please Wait")
+        progressDialog.show()
+        mViewModel.getReviewResponse(reservation).observe(this, {
+            progressDialog.dismiss()
+            if (it.Message=="Success")
+            {
+                AppGlobal.showDialogWithCloseActivity(getString(R.string.title_alert),it.data.description,this)
+            }
+            else{
+                AppGlobal.showDialog(getString(R.string.title_alert),it.data.description,this)
+            }
+        })
     }
 }

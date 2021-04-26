@@ -8,6 +8,7 @@ import com.teletaleem.rmrs_customer.data_class.login.Login;
 import com.teletaleem.rmrs_customer.data_class.login.LoginResponse;
 import com.teletaleem.rmrs_customer.data_class.registration.Registration;
 import com.teletaleem.rmrs_customer.data_class.registration.RegistrationResponse;
+import com.teletaleem.rmrs_customer.data_class.reservation.Reservation;
 import com.teletaleem.rmrs_customer.data_class.review.Review;
 import com.teletaleem.rmrs_customer.data_class.send_otp.SendOTP;
 
@@ -60,4 +61,10 @@ public interface WebRequestGeo {
 
     @GET("/customer/simple_search/?")
     Call<ResponseBody> getSearchList(@Query("search") String search);
+
+    @POST("/customer/reservation")
+    Call<ResponseBody> addReservation(@Body Reservation reservation);
+
+    @GET("/customer/reservation/?")
+    Call<ResponseBody> getReservationList(@Query("CustomerID") String CustomerId);
 }

@@ -36,6 +36,7 @@ import com.teletaleem.rmrs_customer.ui.home.cart.CartFragment
 import com.teletaleem.rmrs_customer.ui.home.favourite.FavouriteFragment
 import com.teletaleem.rmrs_customer.ui.home.profile.ProfileFragment
 import com.teletaleem.rmrs_customer.ui.myorders.MyOrdersFragment
+import com.teletaleem.rmrs_customer.ui.reservation.myreservation.MyReservationsFragment
 import com.teletaleem.rmrs_customer.ui.restauratntdetail.RestaurantDetailFragment
 import com.teletaleem.rmrs_customer.ui.review.restaurantreviews.ReviewsListFragment
 import com.teletaleem.rmrs_customer.ui.updatepassword.UpdatePasswordFragment
@@ -332,6 +333,15 @@ class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItem
                 mToolbar.title = getString(R.string.title_my_orders)
                 editProfileMenu.isVisible = false
                 replaceNewFragment(MyOrdersFragment())
+                mBinding.drawerLayout.closeDrawers()
+                return true
+            }
+            R.id.nav_reservations->{
+                locationMenu.isVisible = false
+                mToolbarLayout.visibility = View.GONE
+                mToolbar.title = getString(R.string.title_my_reservations)
+                editProfileMenu.isVisible = false
+                replaceNewFragment(MyReservationsFragment())
                 mBinding.drawerLayout.closeDrawers()
                 return true
             }
