@@ -12,5 +12,6 @@
         android:layout_height="wrap_content"
         android:textAlignment="center"
         android:textColor="@color/colorAccent"
+        android:layout_marginEnd="@dimen/margin_xl"
         android:textAppearance="?android:textAppearanceMedium"/>
 </androidx.appcompat.widget.Toolbar>

@@ -18,119 +18,143 @@
             android:id="@+id/toolbar_reservation"
             app:layout_constraintTop_toTopOf="parent"/>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/til_customer_name_ar"
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_xxl"
-            android:layout_marginTop="@dimen/margin_xxxxl"
-            android:layout_marginEnd="@dimen/margin_xxl"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolbar_reservation"
-            tools:ignore="MissingConstraints">
-
-            <EditText
-                android:id="@+id/edtxt_customer_name_ar"
+            android:background="@color/white">
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:drawablePadding="16dp"
-                android:hint="@string/hint_customer_name"
-                android:inputType="text"
-                android:maxLines="1"
-                android:textAppearance="?android:textAppearanceMedium"
-                android:textSize="16sp" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_height="wrap_content"
+                >
+                <ImageView
+                    android:id="@+id/img_reservation"
+                    android:layout_width="@dimen/img_size_large"
+                    android:layout_height="@dimen/img_size_large"
+                    android:src="@drawable/ic_undraw_time_management_30iu"
+                    android:layout_marginTop="@dimen/margin_xxxl"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                     />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/til_customer_phn_no_ar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_xxl"
-            android:layout_marginTop="@dimen/margin_avg"
-            android:layout_marginEnd="@dimen/margin_xxl"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/til_customer_name_ar"
-            tools:ignore="MissingConstraints">
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_customer_name_ar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_xxl"
+                    android:layout_marginTop="@dimen/margin_xxxl"
+                    android:layout_marginEnd="@dimen/margin_xxl"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/img_reservation"
+                    tools:ignore="MissingConstraints">
 
-            <EditText
-                android:id="@+id/edtxt_customer_phn_no_ar"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:drawablePadding="16dp"
-                android:hint="@string/hint_customer_phn_no"
-                android:inputType="number"
-                android:maxLines="1"
-                android:textAppearance="?android:textAppearanceMedium"
-                android:textSize="16sp" />
-        </com.google.android.material.textfield.TextInputLayout>
+                    <EditText
+                        android:id="@+id/edtxt_customer_name_ar"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:drawablePadding="16dp"
+                        android:hint="@string/hint_customer_name"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:textAppearance="?android:textAppearanceMedium"
+                        android:textSize="16sp" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/til_people_no_ar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_xxl"
-            android:layout_marginTop="@dimen/margin_l"
-            android:layout_marginEnd="@dimen/margin_xxl"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/til_customer_phn_no_ar"
-            tools:ignore="MissingConstraints">
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_customer_phn_no_ar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_xxl"
+                    android:layout_marginTop="@dimen/margin_avg"
+                    android:layout_marginEnd="@dimen/margin_xxl"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/til_customer_name_ar"
+                    tools:ignore="MissingConstraints">
 
-            <EditText
-                android:id="@+id/edtxt_people_no_ar"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:drawablePadding="16dp"
-                android:hint="@string/hint_no_of_people"
-                android:inputType="number"
-                android:maxLines="1"
-                android:textAppearance="?android:textAppearanceMedium"
-                android:textSize="16sp" />
-        </com.google.android.material.textfield.TextInputLayout>
+                    <EditText
+                        android:id="@+id/edtxt_customer_phn_no_ar"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:drawablePadding="16dp"
+                        android:hint="@string/hint_customer_phn_no"
+                        android:inputType="number"
+                        android:maxLines="1"
+                        android:textAppearance="?android:textAppearanceMedium"
+                        android:textSize="16sp" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/til_reservation_time_ar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_xxl"
-            android:layout_marginTop="@dimen/margin_l"
-            android:layout_marginEnd="@dimen/margin_xxl"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/til_people_no_ar"
-            tools:ignore="MissingConstraints">
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_people_no_ar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_xxl"
+                    android:layout_marginTop="@dimen/margin_l"
+                    android:layout_marginEnd="@dimen/margin_xxl"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/til_customer_phn_no_ar"
+                    tools:ignore="MissingConstraints">
 
-            <EditText
-                android:id="@+id/edtxt_reservation_time_ar"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:drawablePadding="16dp"
-                android:hint="@string/hint_reservation_time"
-                android:maxLines="1"
-                android:textAppearance="?android:textAppearanceMedium"
-                android:textSize="16sp"
-                android:inputType="none"
-                android:focusable="false"/>
-        </com.google.android.material.textfield.TextInputLayout>
+                    <EditText
+                        android:id="@+id/edtxt_people_no_ar"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:drawablePadding="16dp"
+                        android:hint="@string/hint_no_of_people"
+                        android:inputType="number"
+                        android:maxLines="1"
+                        android:textAppearance="?android:textAppearanceMedium"
+                        android:textSize="16sp" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-        <Button
-            android:id="@+id/btn_reservation_ar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_xxxl"
-            android:layout_marginTop="@dimen/margin_xxxxl"
-            android:layout_marginEnd="@dimen/margin_xxxl"
-            android:background="@drawable/small_button_background"
-            android:paddingTop="@dimen/padding_xl"
-            android:paddingBottom="@dimen/padding_xl"
-            android:text="@string/title_place_reservation"
-            android:textAppearance="?android:textAppearanceMedium"
-            android:textColor="@color/white"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/til_reservation_time_ar" />
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_reservation_time_ar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_xxl"
+                    android:layout_marginTop="@dimen/margin_l"
+                    android:layout_marginEnd="@dimen/margin_xxl"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/til_people_no_ar"
+                    tools:ignore="MissingConstraints">
+
+                    <EditText
+                        android:id="@+id/edtxt_reservation_time_ar"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:drawablePadding="16dp"
+                        android:hint="@string/hint_reservation_time"
+                        android:maxLines="1"
+                        android:textAppearance="?android:textAppearanceMedium"
+                        android:textSize="16sp"
+                        android:inputType="none"
+                        android:focusable="false"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <Button
+                    android:id="@+id/btn_reservation_ar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_xxxl"
+                    android:layout_marginTop="@dimen/margin_xxxxl"
+                    android:layout_marginEnd="@dimen/margin_xxxl"
+                    android:background="@drawable/small_button_background"
+                    android:paddingTop="@dimen/padding_xl"
+                    android:paddingBottom="@dimen/padding_xl"
+                    android:text="@string/title_place_reservation"
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:textColor="@color/white"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/til_reservation_time_ar" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

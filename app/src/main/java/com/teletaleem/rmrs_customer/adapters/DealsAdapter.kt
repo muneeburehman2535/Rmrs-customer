@@ -23,7 +23,7 @@ class DealsAdapter(private val requireContext: Context,private var dealsList: Ar
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: DealsAdapter.ViewHolder, position: Int) {
 
-        AppGlobal.loadImageIntoGlide(dealsList[position].image,holder.imgProfile,requireContext)
+        AppGlobal.loadImageIntoGlide(dealsList[position].Image,holder.imgProfile,requireContext)
 
         holder.txtRestaurantName.text=dealsList[position].name
         holder.txtRestaurantAddress.text=dealsList[position].address

@@ -45,6 +45,7 @@
                     android:text="@string/title_order_detail"
                     android:textSize="@dimen/text_size_avg"
                     android:textStyle="bold"
+                    android:fontFamily="@font/montserrat_bold"
                     android:textColor="@color/text_color"
                     app:layout_constraintTop_toBottomOf="@+id/img_background_order_detail"
                     app:layout_constraintStart_toStartOf="parent"
@@ -104,6 +105,7 @@
                         android:layout_height="wrap_content"
                         android:textStyle="bold"
                         android:textSize="@dimen/text_size_small"
+                        android:fontFamily="@font/montserrat_bold"
                         android:textColor="@color/colorAccent"
                         android:layout_alignParentEnd="true"
                         android:layout_marginTop="@dimen/margin_xl"
@@ -131,6 +133,7 @@
                         android:textSize="@dimen/text_size_small"
                         android:textColor="@color/text_color"
                         android:textStyle="bold"
+                        android:fontFamily="@font/montserrat_bold"
                         android:textAlignment="textEnd"
                         android:layout_below="@+id/txt_order_from"
                         android:layout_alignParentEnd="true"
@@ -165,6 +168,7 @@
                         android:text="@string/title_special_instructions"
                         android:textSize="@dimen/text_size_avg"
                         android:textStyle="bold"
+                        android:fontFamily="@font/montserrat_bold"
                         android:layout_marginStart="@dimen/margin_avg"
                         android:layout_marginEnd="@dimen/margin_avg" />
 

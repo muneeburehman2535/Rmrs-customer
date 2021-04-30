@@ -46,7 +46,7 @@ class ProfileFragment : Fragment() {
                 mBinding.txtNameAp.setBackgroundResource(R.drawable.edit_text_background)
                 mBinding.txtNumberAp.isEnabled=true
                 mBinding.txtNumberAp.setBackgroundResource(R.drawable.edit_text_background)
-                (context as CustomerHomeActivity?)?.changeToolbarName(getString(R.string.title_edit_profile))
+                (context as CustomerHomeActivity?)?.changeToolbarName(getString(R.string.title_edit_profile), isProfileMenuVisible = false, locationVisibility = false)
             }
         })
     }

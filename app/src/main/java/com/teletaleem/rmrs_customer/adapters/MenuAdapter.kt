@@ -20,6 +20,8 @@ class MenuAdapter(val requireContext: Context, private var menuList: ArrayList<M
 
 
     private val STRIKE_THROUGH_SPAN = StrikethroughSpan()
+
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val itemView=LayoutInflater.from(parent.context).inflate(R.layout.card_restaurant_detail, parent, false)
         return ViewHolder(itemView)
@@ -43,6 +45,7 @@ class MenuAdapter(val requireContext: Context, private var menuList: ArrayList<M
             holder.txtOldPrice.visibility=View.GONE
         }
 
+        holder.imgMenu.clipToOutline=true
         //AppGlobal.loadImageIntoGlide(menuList[position].Image,holder.imgMenu,requireContext)
         AppGlobal.loadImageIntoPicasso(menuList[position].Image,holder.imgMenu)
 

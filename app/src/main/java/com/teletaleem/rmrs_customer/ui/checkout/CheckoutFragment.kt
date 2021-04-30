@@ -59,6 +59,10 @@ class CheckoutFragment : Fragment(),View.OnClickListener {
             this.orderCheckout=it
         })
     }
+    override fun onResume() {
+        super.onResume()
+        (activity as CustomerHomeActivity?)?.changeToolbarName(getString(R.string.title_checkout), isProfileMenuVisible = false, locationVisibility = true)
+    }
 
 
     private fun setClickListeners() {
@@ -90,7 +94,7 @@ class CheckoutFragment : Fragment(),View.OnClickListener {
             progressDialog.dismiss()
             if (it.Message == "Success") {
                 emptyCartRecord()
-                (activity as CustomerHomeActivity?)?.changeToolbarName(getString(R.string.title_review))
+                (activity as CustomerHomeActivity?)?.changeToolbarName(getString(R.string.title_review), isProfileMenuVisible = false, locationVisibility = false)
                 (activity as CustomerHomeActivity?)?.loadNewFragment(
                         ReviewFragment(),
                         "review"

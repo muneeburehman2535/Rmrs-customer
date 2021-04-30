@@ -5,8 +5,8 @@
     app:cardCornerRadius="@dimen/margin_avg"
     android:layout_marginTop="@dimen/margin_small"
     android:layout_marginBottom="@dimen/margin_small"
-    android:layout_marginStart="@dimen/margin_small"
-    android:layout_marginEnd="@dimen/margin_small"
+    android:layout_marginStart="@dimen/margin_l"
+    android:layout_marginEnd="@dimen/margin_l"
     xmlns:android="http://schemas.android.com/apk/res/android" >
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -16,8 +16,8 @@
         <ImageView
             android:id="@+id/img_profile"
             android:layout_width="match_parent"
-            android:layout_height="120dp"
-            android:src="@drawable/background"
+            android:layout_height="@dimen/img_size_normal"
+            android:src="@drawable/placeholder"
             android:scaleType="fitXY"
             app:layout_constraintTop_toTopOf="parent" />
         <TextView

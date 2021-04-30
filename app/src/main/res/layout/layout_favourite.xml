@@ -31,6 +31,7 @@
             android:textAppearance="?android:textAppearanceMedium"
             android:textColor="@color/text_color_restaurant"
             android:textStyle="bold"
+            android:fontFamily="@font/montserrat_bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/txt_rating_lf"
             app:layout_constraintHorizontal_weight="10"

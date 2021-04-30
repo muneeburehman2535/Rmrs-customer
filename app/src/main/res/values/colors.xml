@@ -13,11 +13,14 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="button_background_color">#3A7B22</color>
+    <color name="color_text_background">#58BA34</color>
     <color name="color_text_blue">#3292B9</color>
     <color name="text_color">#141414</color>
     <color name="text_color_restaurant">#32b99d</color>
     <color name="text_color_deals">#b9324e</color>
     <color name="color_background">#FAFAFA</color>
     <color name="color_rating">#FFA500</color>
+    <color name="color_orange">#FF8C00</color>
     <color name="color_layout_background">#F5F5F5</color>
+    <color name="light_grey">#f9f9f9</color>
 </resources>

@@ -19,6 +19,7 @@
             android:textSize="@dimen/text_size_average"
             android:textColor="@color/text_color"
             android:textStyle="bold"
+            android:fontFamily="@font/montserrat_bold"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginTop="@dimen/margin_avg"

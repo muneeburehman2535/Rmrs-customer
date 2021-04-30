@@ -17,6 +17,7 @@
             android:textColor="@color/text_color"
             android:textSize="@dimen/text_size_avg"
             android:textStyle="bold"
+            android:fontFamily="@font/montserrat_bold"
             android:layout_toStartOf="@+id/txt_item_price_lcc"
             android:layout_alignParentStart="true"
             android:layout_marginTop="@dimen/margin_xxxl"
@@ -29,6 +30,7 @@
             android:textColor="@color/text_color"
             android:textSize="@dimen/text_size_avg"
             android:textStyle="bold"
+            android:fontFamily="@font/montserrat_bold"
            android:layout_alignParentEnd="true"
             android:layout_marginTop="@dimen/margin_xxxl"
             android:layout_marginEnd="@dimen/margin_l"/>

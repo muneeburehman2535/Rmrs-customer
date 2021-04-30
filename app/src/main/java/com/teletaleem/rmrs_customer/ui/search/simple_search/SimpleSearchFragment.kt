@@ -78,6 +78,11 @@ class SimpleSearchFragment : Fragment() {
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        (activity as CustomerHomeActivity?)?.changeToolbarName(getString(R.string.hint_search_food), isProfileMenuVisible = false, locationVisibility = true)
+    }
+
 
 
     private fun setSearchResultAdapter() {
@@ -106,7 +111,10 @@ class SimpleSearchFragment : Fragment() {
                     }
 
                     override fun onItemClick(view: View, position: Int) {
-                        (context as CustomerHomeActivity?)?.changeToolbarName(getString(R.string.title_restaurants))
+                        (activity as CustomerHomeActivity).mModel.updateRestaurantId(searchResultList[position].RestaurantID)
+                        AppGlobal.writeString(requireActivity(),AppGlobal.restaurantId,searchResultList[position].RestaurantID)
+                        (activity as CustomerHomeActivity).mModel.updateRestaurantName(searchResultList[position].RestaurantName)
+                        (context as CustomerHomeActivity?)?.changeToolbarName(getString(R.string.title_restaurants), isProfileMenuVisible = false, locationVisibility = false)
                         (context as CustomerHomeActivity?)?.loadNewFragment(
                                 RestaurantDetailFragment(),
                                 "restaurant_detail"

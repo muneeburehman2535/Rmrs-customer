@@ -24,9 +24,10 @@ import com.teletaleem.rmrs_customer.ui.reservation.ReservationActivity
 import com.teletaleem.rmrs_customer.utilities.AppGlobal
 import com.teletaleem.rmrs_customer.utilities.BlurBuilder
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 @AndroidEntryPoint
-class RestaurantDetailFragment : Fragment() {
+class RestaurantDetailFragment : Fragment() ,TabsAdapter.ViewClickListener{
     private lateinit var mBinding:RestaurantDetailFragmentBinding
     private lateinit var menuList:ArrayList<Menu>
 
@@ -66,6 +67,7 @@ class RestaurantDetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         progressDialog=AppGlobal.setProgressDialog(requireActivity())
         setBlurBackgroundImage()
+        mBinding.imgRestaurantFrd.clipToOutline=true
         //setTabLayout()
         getRestaurantId()
 
@@ -80,13 +82,17 @@ class RestaurantDetailFragment : Fragment() {
                 tabList.add(menuList[index].MenuCategory)
             }
             else{
+                var isMenuFound=false
                 for (ind in 0 until tabList.size)
                 {
-                    if (tabList[ind] != menuList[index].MenuCategory)
+                    if (tabList[ind] == menuList[index].MenuCategory)
                     {
-                        tabList.add(menuList[index].MenuCategory)
-                        break
+                       isMenuFound=true
                     }
+                }
+                if (!isMenuFound)
+                {
+                    tabList.add(menuList[index].MenuCategory)
                 }
 
             }
@@ -98,20 +104,40 @@ class RestaurantDetailFragment : Fragment() {
         }
 
         mBinding.layoutTabRdf.tabGravity = TabLayout.GRAVITY_FILL
-        val adapter = TabsAdapter( childFragmentManager,requireContext(), mBinding.layoutTabRdf.tabCount)
+        val adapter = TabsAdapter( childFragmentManager,requireActivity(), mBinding.layoutTabRdf.tabCount,menuList,tabList,true)
+        adapter.setViewClickListener(this)
         mBinding.viewpagerRdf.adapter = adapter
         mBinding.viewpagerRdf.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(mBinding.layoutTabRdf))
         mBinding.layoutTabRdf.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 mBinding.viewpagerRdf.currentItem = tab.position
+                val text=tab.text.toString()
+
+                val updatedMenuList= arrayListOf<Menu>()
+                for (index in 0 until menuList.size)
+                {
+
+                    if (menuList[index].MenuCategory==text)
+                    {
+                        updatedMenuList.add(menuList[index])
+                    }
+
+                }
+
+                (activity as CustomerHomeActivity).mModel.updateMenuList(updatedMenuList)
+
+                Timber.d(text.toString())
             }
             override fun onTabUnselected(tab: TabLayout.Tab) {}
-            override fun onTabReselected(tab: TabLayout.Tab) {}
+            override fun onTabReselected(tab: TabLayout.Tab) {
+
+            }
         })
+        adapter.updateNewKey(false)
     }
 
     private fun setBlurBackgroundImage() {
-        val originalBitmap = BitmapFactory.decodeResource(resources, R.drawable.background)
+        val originalBitmap = BitmapFactory.decodeResource(resources, R.drawable.photo_1552566626_52f8b828add9)
         val blurredBitmap = BlurBuilder.blur(context, originalBitmap)
         mBinding.layoutBackgroungFrd.background = BitmapDrawable(resources, blurredBitmap)
 
@@ -140,16 +166,19 @@ class RestaurantDetailFragment : Fragment() {
             if (it.Message=="Success")
             {
                 menuList=it.data.menu
-                setTabLayout()
-                (activity as CustomerHomeActivity).mModel.updateRatingCount(it.data.profile[0].RatingCount)
-                (activity as CustomerHomeActivity).mModel.updateSumOfRating(it.data.profile[0].SumofRating)
-                AppGlobal.writeString(requireActivity(),AppGlobal.ownerId,it.data.profile[0].OwnerID)
-                AppGlobal.writeString(requireActivity(),AppGlobal.restaurantName,it.data.profile[0].RestaurantName)
-                AppGlobal.writeString(requireActivity(),AppGlobal.restaurantAddress,it.data.profile[0].Address)
-                AppGlobal.writeString(requireActivity(),AppGlobal.restaurantImage,it.data.profile[0].Image)
+                if (menuList.size>0){
+                    setTabLayout()
+                    (activity as CustomerHomeActivity).mModel.updateRatingCount(it.data.profile[0].RatingCount)
+                    (activity as CustomerHomeActivity).mModel.updateSumOfRating(it.data.profile[0].SumofRating)
+                    AppGlobal.writeString(requireActivity(),AppGlobal.ownerId,it.data.profile[0].OwnerID)
+                    AppGlobal.writeString(requireActivity(),AppGlobal.restaurantName,it.data.profile[0].RestaurantName)
+                    AppGlobal.writeString(requireActivity(),AppGlobal.restaurantAddress,it.data.profile[0].Address)
+                    AppGlobal.writeString(requireActivity(),AppGlobal.restaurantImage,it.data.profile[0].Image)
 
-                setViews(it)
-                (activity as CustomerHomeActivity).mModel.updateMenuList(menuList)
+                    setViews(it)
+                    //(activity as CustomerHomeActivity).mModel.updateMenuList(menuList)
+                }
+
             }
             else{
                 AppGlobal.showDialog(getString(R.string.title_alert),it.data.description,requireContext())
@@ -166,6 +195,10 @@ class RestaurantDetailFragment : Fragment() {
         mBinding.rbRatingFrd.numStars=5
         mBinding.txtTotalRestaurantRatingFrd.text="(${mProfile.RatingCount})"
         AppGlobal.loadImageIntoGlide(mProfile.Image,mBinding.imgRestaurantFrd,requireActivity())
+    }
+
+    override fun onViewClicked(updatedMenuList: ArrayList<Menu>) {
+        (requireActivity() as CustomerHomeActivity).mModel.updateMenuList(updatedMenuList)
     }
 
 }

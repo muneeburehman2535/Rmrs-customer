@@ -24,7 +24,7 @@ import java.util.*
 
 class AppGlobal {
     companion object{
-        var BUILD = "STAGE"
+        var BUILD = "STAGING"
         val LONG=3500
         val SHORT=2000
         var mCurrency="Rs. "
@@ -39,7 +39,7 @@ class AppGlobal {
 
 
         /*****************************************************Base URLs********************************************************/
-        var HOME_BASE_URL = if ("PRODUCTION" == BUILD) "live-url" else "https://Customer.teletaleem.com"
+        var HOME_BASE_URL = if ("PRODUCTION" == BUILD) "https://cust-be-1.teletaleem.com" else "https://Customer.teletaleem.com"
         var HOME_BASE_URL_IMAGE = if ("PRODUCTION" == BUILD) "live-url" else "stage-url"
         const val LOCATION_IQ_URL = "https://us1.locationiq.com/"
 

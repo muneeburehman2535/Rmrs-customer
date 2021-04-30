@@ -12,6 +12,8 @@ import com.teletaleem.rmrs_customer.R
 import com.teletaleem.rmrs_customer.adapters.FilterCategoryAdapter
 import com.teletaleem.rmrs_customer.data_class.filtersearch.FilterSearch
 import com.teletaleem.rmrs_customer.databinding.FilterSearchFragmentBinding
+import com.teletaleem.rmrs_customer.ui.home.CustomerHomeActivity
+import com.teletaleem.rmrs_customer.ui.home.HomeFragment
 
 class FilterSearchFragment : Fragment() {
     private lateinit var mBinding:FilterSearchFragmentBinding
@@ -41,6 +43,12 @@ class FilterSearchFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setCategoryList()
         setCategoryAdapter()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        (activity as CustomerHomeActivity?)?.updateToolbarTitle(getString(R.string.title_filter),false, View.VISIBLE,true)
+        //(context as CustomerHomeActivity?)?.updateToolbarAddress()
     }
 
     private fun setCategoryList() {

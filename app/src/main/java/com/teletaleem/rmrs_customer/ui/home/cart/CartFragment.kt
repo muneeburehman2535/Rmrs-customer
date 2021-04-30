@@ -74,6 +74,9 @@ class CartFragment : Fragment(),View.OnClickListener,CartItemAdapter.UpdateItemQ
 //        calculatePrice()
 //        setViews()
         setClickListeners()
+        mBinding.txtRestaurantNameLcic.text=AppGlobal.readString(requireActivity(),AppGlobal.restaurantName,"")
+        mBinding.txtRestaurantLocLcic.text=AppGlobal.readString(requireActivity(),AppGlobal.restaurantAddress,"")
+        AppGlobal.loadImageIntoGlide(AppGlobal.readString(requireActivity(),AppGlobal.restaurantImage,""),mBinding.imgRestaurantLcic,requireActivity())
 
 
     }
@@ -81,11 +84,11 @@ class CartFragment : Fragment(),View.OnClickListener,CartItemAdapter.UpdateItemQ
     private fun setCartList() {
         cartList= arrayListOf()
 
-        val cart=Cart("1","abc","Pizza BBQ","1","Size Regular, Wheat thin crust onion, jalapeno, Black olive","999","120","2","","test")
-        cartList.add(cart)
-
-        val cart1=Cart("1","abcs","Beef Burger","2","Grilled Beef, Fries, Black olive","500","80","1","","test")
-        cartList.add(cart1)
+//        val cart=Cart("1","abc","Pizza BBQ","1","Size Regular, Wheat thin crust onion, jalapeno, Black olive","999","120","2","","test")
+//        cartList.add(cart)
+//
+//        val cart1=Cart("1","abcs","Beef Burger","2","Grilled Beef, Fries, Black olive","500","80","1","","test")
+//        cartList.add(cart1)
     }
 
     private fun getRestaurantId(){
@@ -116,11 +119,6 @@ class CartFragment : Fragment(),View.OnClickListener,CartItemAdapter.UpdateItemQ
         {
             R.id.btn_pay_to_proceed->
             {
-//                (activity as CustomerHomeActivity?)?.changeToolbarName(getString(R.string.title_checkout))
-//                (activity as CustomerHomeActivity?)?.loadNewFragment(
-//                    CheckoutFragment(),
-//                    "checkout"
-//                )
                 bindCheckoutData()
             }
         }
@@ -198,9 +196,7 @@ class CartFragment : Fragment(),View.OnClickListener,CartItemAdapter.UpdateItemQ
         mBinding.txtTaxChrgCf.text=AppGlobal.mCurrency+mSalesTaxAmount
         mBinding.txtServiceChrgCf.text=AppGlobal.mCurrency+mServicesCharges
         mBinding.txtTotalPayCf.text=AppGlobal.mCurrency+mTotalAmount
-        mBinding.txtRestaurantNameLcic.text=AppGlobal.readString(requireActivity(),AppGlobal.restaurantName,"")
-        mBinding.txtRestaurantLocLcic.text=AppGlobal.readString(requireActivity(),AppGlobal.restaurantAddress,"")
-        AppGlobal.loadImageIntoGlide(AppGlobal.readString(requireActivity(),AppGlobal.restaurantImage,""),mBinding.imgRestaurantLcic,requireActivity())
+
     }
 
     private fun bindCheckoutData(){
@@ -218,7 +214,7 @@ class CartFragment : Fragment(),View.OnClickListener,CartItemAdapter.UpdateItemQ
     }
 
     private fun redirectCheckout() {
-        (activity as CustomerHomeActivity?)?.changeToolbarName(getString(R.string.title_checkout))
+        (activity as CustomerHomeActivity?)?.changeToolbarName(getString(R.string.title_checkout), isProfileMenuVisible = false, locationVisibility = false)
                 (activity as CustomerHomeActivity?)?.loadNewFragment(
                     CheckoutFragment(),
                     "checkout"
@@ -239,14 +235,13 @@ class CartFragment : Fragment(),View.OnClickListener,CartItemAdapter.UpdateItemQ
         cartLiveData.observe(requireActivity(), Observer {
 
             cartList= it as ArrayList<Cart>
-            if (cartList!=null)
-            {
-                cartItemAdapter.updateList(it as ArrayList<Cart>)
-                calculatePrice()
-                setViews()
+
+            cartItemAdapter.updateList(it as ArrayList<Cart>)
+            calculatePrice()
+            setViews()
                //(requireActivity()as CustomerHomeActivity).updateBottomNavigationCount(cartList.size)
                 //cartLiveData.removeObservers(requireActivity())
-            }
+
 
         })
     }

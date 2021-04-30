@@ -13,7 +13,7 @@ class MyApplication:Application() {
     private val TAG = "TAG"
     override fun onCreate() {
         super.onCreate()
-        TestFairy.begin(this, "SDK-4HJOUdP2")
+//        TestFairy.begin(this, "SDK-4HJOUdP2")
 
         //Initialize Timber
         if (BuildConfig.DEBUG) {

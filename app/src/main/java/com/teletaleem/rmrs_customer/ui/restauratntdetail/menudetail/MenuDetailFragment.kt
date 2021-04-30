@@ -19,7 +19,6 @@ import com.teletaleem.rmrs_customer.data_class.restaurantdetail.Menu
 import com.teletaleem.rmrs_customer.databinding.MenuDetailFragmentBinding
 import com.teletaleem.rmrs_customer.db.CustomerDatabase
 import com.teletaleem.rmrs_customer.ui.home.CustomerHomeActivity
-import com.teletaleem.rmrs_customer.ui.home.cart.CartFragment
 import com.teletaleem.rmrs_customer.utilities.AppGlobal
 import com.teletaleem.rmrs_customer.utilities.RecyclerItemClickListener
 import dagger.hilt.android.AndroidEntryPoint
@@ -28,6 +27,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class MenuDetailFragment : Fragment() {
     private lateinit var mBinding:MenuDetailFragmentBinding
     private lateinit var menuList:ArrayList<Menu>
+
     private lateinit var menuAdapter: MenuAdapter
     private lateinit var  databaseCreator: CustomerDatabase
     private lateinit var alertDialog:AlertDialog
@@ -35,11 +35,22 @@ class MenuDetailFragment : Fragment() {
     private var restaurantName=""
     private lateinit var cartList:ArrayList<Cart>
 
-    companion object {
-        fun newInstance() = MenuDetailFragment()
-    }
+
 
     private lateinit var viewModel: MenuDetailViewModel
+
+    companion object{
+        lateinit var updatedMenuList: ArrayList<Menu>
+        fun getInstance(position: Int,menuList: ArrayList<Menu>): Fragment {
+            updatedMenuList=menuList
+            val bundle = Bundle()
+            bundle.putInt("pos", position)
+            val tabFragment = MenuDetailFragment()
+            tabFragment.setArguments(bundle)
+            return tabFragment
+        }
+    }
+
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
@@ -67,21 +78,22 @@ class MenuDetailFragment : Fragment() {
 
     private fun getRestaurantId(){
         (activity as CustomerHomeActivity?)?.mModel?.restaurantID?.observe(viewLifecycleOwner, Observer {
-            this.restaurantId=it
+            this.restaurantId = it
         })
     }
 
     private fun getRestaurantName()
     {
         (activity as CustomerHomeActivity?)?.mModel?.restaurantName?.observe(viewLifecycleOwner, Observer {
-            this.restaurantName=it
+            this.restaurantName = it
         })
     }
 
     private fun getMenuList() {
         (activity as CustomerHomeActivity?)?.mModel?.menuList?.observe(viewLifecycleOwner, Observer {
-            menuList=it
-            menuAdapter.updateList(it)
+            menuList = it
+            //updatedMenuList= menuList.clone() as ArrayList<Menu>
+            menuAdapter.updateList(menuList)
         })
     }
 
@@ -150,18 +162,18 @@ class MenuDetailFragment : Fragment() {
 
         txtItemIncQuantity.setOnClickListener(View.OnClickListener {
             quantity += 1
-            txtItemQuantity.text=quantity.toString()
+            txtItemQuantity.text = quantity.toString()
         })
         txtItemDecQuantity.setOnClickListener(View.OnClickListener {
-            if (quantity>1){
+            if (quantity > 1) {
                 quantity -= 1
-                txtItemQuantity.text=quantity.toString()
+                txtItemQuantity.text = quantity.toString()
             }
         })
 
         btnAddToCart.setOnClickListener(View.OnClickListener {
 
-            val cart=Cart(menu.RestaurantID,restaurantName,menu.MenuName,menu.MenuID,menu.Description,menu.MenuPrice,menu.OriginalPrice,txtItemQuantity.text.toString(),menu.Image,menu.Description)
+            val cart = Cart(menu.RestaurantID, restaurantName, menu.MenuName, menu.MenuID, menu.Description, menu.MenuPrice, menu.OriginalPrice, txtItemQuantity.text.toString(), menu.Image, menu.Description)
             viewModel.insertCartItem(cart)
 
             updateCartBadge()
@@ -181,9 +193,8 @@ class MenuDetailFragment : Fragment() {
     private fun updateCartBadge() {
         val cartLiveData=databaseCreator.cartDao.fetch(restaurantId)
         cartLiveData.observe(requireActivity(), Observer {
-            if (it!=null)
-            {
-                val cartArray=it as ArrayList<Cart>
+            if (it != null) {
+                val cartArray = it as ArrayList<Cart>
                 (requireActivity() as CustomerHomeActivity).updateBottomNavigationCount(cartArray.size)
             }
             alertDialog.dismiss()
@@ -192,14 +203,13 @@ class MenuDetailFragment : Fragment() {
     }
 
     private fun getCartRecord(position: Int) {
-        val cartLiveData=databaseCreator.cartDao.fetchCartRecord(restaurantId,menuList[position].MenuID)
+        val cartLiveData=databaseCreator.cartDao.fetchCartRecord(restaurantId, menuList[position].MenuID)
 
         cartLiveData.observe(requireActivity(), Observer {
 
-            if (it!=null){
-                AppGlobal.showDialog(getString(R.string.title_alert),getString(R.string.err_already_added),requireActivity())
-            }
-            else{
+            if (it != null) {
+                AppGlobal.showDialog(getString(R.string.title_alert), getString(R.string.err_already_added), requireActivity())
+            } else {
                 showAddToCartDialog(menuList[position])
 
             }
@@ -208,5 +218,7 @@ class MenuDetailFragment : Fragment() {
 
 
     }
+
+
 
 }

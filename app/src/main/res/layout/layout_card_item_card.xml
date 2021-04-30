@@ -18,6 +18,7 @@
             android:text="Pizza BBQ"
             android:textColor="@color/text_color"
             android:textStyle="bold"
+            android:fontFamily="@font/montserrat_bold"
             android:textSize="@dimen/text_size_small"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
