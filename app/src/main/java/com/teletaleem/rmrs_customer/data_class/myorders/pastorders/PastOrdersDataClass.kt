@@ -10,8 +10,8 @@ data class PastOrdersDataClass(
     val RestaurantName:String,
     val CustomerRegistered:Boolean,
     val CustomerID:String,
-    val TotalAmount:Int,
-    val SalesTax:Int,
+    val TotalAmount:Float,
+    val SalesTax:Float,
     val Status:String,
     val OrderDate:String,
     val __v:Int

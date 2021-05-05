@@ -329,7 +329,8 @@
            android:layout_alignParentBottom="true"
             android:layout_marginStart="@dimen/margin_l"
             android:layout_marginEnd="@dimen/margin_l"
-            android:layout_marginBottom="@dimen/margin_xl"/>
+            android:layout_marginBottom="@dimen/margin_xl"
+            android:visibility="gone"/>
 
 
 

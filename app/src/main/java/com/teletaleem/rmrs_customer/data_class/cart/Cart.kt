@@ -27,5 +27,9 @@ data class Cart(
         @ColumnInfo(name="image")
         val image:String,
         @ColumnInfo(name = "description")
-        val description:String
+        val description:String,
+        @ColumnInfo(name = "restaurant_address")
+        val restaurant_address:String,
+        @ColumnInfo(name = "restaurant_image")
+        val restaurant_image:String
 )

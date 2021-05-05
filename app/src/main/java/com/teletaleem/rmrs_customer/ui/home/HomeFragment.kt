@@ -1,15 +1,10 @@
 package com.teletaleem.rmrs_customer.ui.home
 
-import android.Manifest
-import android.content.pm.PackageManager
-import android.location.Location
-import android.location.LocationManager
+import android.app.Activity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
@@ -55,14 +50,15 @@ class HomeFragment : Fragment() ,View.OnClickListener,RestaurantAdapter.AddToFav
 
 
     private  var restaurantId:String="0"
+    private lateinit var mActivity:Activity
 
 
 
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
     ): View {
 
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
@@ -76,6 +72,7 @@ class HomeFragment : Fragment() ,View.OnClickListener,RestaurantAdapter.AddToFav
         mBinding.homeViewModel=homeViewModel
         progressDialog=AppGlobal.setProgressDialog(requireActivity())
         databaseCreator= CustomerDatabase.getInstance(requireActivity())
+        mActivity=requireActivity()
 
         setCategoryAdapter()
         setRestaurantAdapter()
@@ -88,9 +85,15 @@ class HomeFragment : Fragment() ,View.OnClickListener,RestaurantAdapter.AddToFav
 
     override fun onResume() {
         super.onResume()
-        (activity as CustomerHomeActivity?)?.changeToolbarName("", isProfileMenuVisible = false, locationVisibility = true)
-        (activity as CustomerHomeActivity?)?.updateToolbarAddress()
+//        (activity as CustomerHomeActivity?)?.changeToolbarName(
+//            "",
+//            isProfileMenuVisible = false,
+//            locationVisibility = true
+//        )
+//        (activity as CustomerHomeActivity?)?.updateToolbarAddress()
     }
+
+
 
     private fun setClickListeners() {
         mBinding.imgFilterHome.setOnClickListener(this)
@@ -101,18 +104,26 @@ class HomeFragment : Fragment() ,View.OnClickListener,RestaurantAdapter.AddToFav
         when(v?.id)
         {
             R.id.img_filter_home -> {
-                (activity as CustomerHomeActivity?)?.changeToolbarName(getString(R.string.title_filter), isProfileMenuVisible = false, locationVisibility = false)
+                (activity as CustomerHomeActivity?)?.changeToolbarName(
+                    getString(R.string.title_filter),
+                    isProfileMenuVisible = false,
+                    locationVisibility = false
+                )
                 (activity as CustomerHomeActivity?)?.loadNewFragment(
-                        FilterSearchFragment(),
-                        "filter_search"
+                    FilterSearchFragment(),
+                    "filter_search"
                 )
             }
 
             R.id.card_search_home -> {
-                (activity as CustomerHomeActivity?)?.changeToolbarName(getString(R.string.hint_search_food), isProfileMenuVisible = false, locationVisibility = false)
+                (activity as CustomerHomeActivity?)?.changeToolbarName(
+                    getString(R.string.hint_search_food),
+                    isProfileMenuVisible = false,
+                    locationVisibility = false
+                )
                 (activity as CustomerHomeActivity?)?.loadNewFragment(
-                        SimpleSearchFragment(),
-                        "simple_search"
+                    SimpleSearchFragment(),
+                    "simple_search"
                 )
             }
         }
@@ -128,9 +139,9 @@ class HomeFragment : Fragment() ,View.OnClickListener,RestaurantAdapter.AddToFav
         categoriesList= arrayListOf()
         categoryAdapter = CategoriesAdapter(requireContext(), categoriesList)
         mBinding.rvCategories.layoutManager = LinearLayoutManager(
-                context,
-                LinearLayoutManager.HORIZONTAL,
-                false
+            context,
+            LinearLayoutManager.HORIZONTAL,
+            false
         )
         mBinding.rvCategories.adapter = categoryAdapter
         setRecyclerViewListener(mBinding.rvCategories, "categories")
@@ -141,9 +152,9 @@ class HomeFragment : Fragment() ,View.OnClickListener,RestaurantAdapter.AddToFav
         restaurantsList= arrayListOf()
         restaurantsAdapter = RestaurantAdapter(requireContext(), restaurantsList)
         mBinding.rvRestaurants.layoutManager = LinearLayoutManager(
-                context,
-                LinearLayoutManager.VERTICAL,
-                false
+            context,
+            LinearLayoutManager.VERTICAL,
+            false
         )
         mBinding.rvRestaurants.adapter = restaurantsAdapter
         restaurantsAdapter.setAddToFavouriteListener(this)
@@ -155,9 +166,9 @@ class HomeFragment : Fragment() ,View.OnClickListener,RestaurantAdapter.AddToFav
         dealsList= arrayListOf()
         dealsAdapter = DealsAdapter(requireContext(), dealsList)
         mBinding.rvDeals.layoutManager = LinearLayoutManager(
-                context,
-                LinearLayoutManager.HORIZONTAL,
-                false
+            context,
+            LinearLayoutManager.HORIZONTAL,
+            false
         )
         mBinding.rvDeals.adapter = dealsAdapter
         setRecyclerViewListener(mBinding.rvDeals, "deals")
@@ -169,9 +180,9 @@ class HomeFragment : Fragment() ,View.OnClickListener,RestaurantAdapter.AddToFav
     private fun setRecyclerViewListener(recyclerView: RecyclerView, source: String)
     {
         recyclerView.addOnItemTouchListener(
-                RecyclerItemClickListener(
-                        requireContext(),
-                        recyclerView, object : RecyclerItemClickListener.OnItemClickListener {
+            RecyclerItemClickListener(
+                requireContext(),
+                recyclerView, object : RecyclerItemClickListener.OnItemClickListener {
                     override fun onLongItemClick(view: View?, position: Int) {
 
                     }
@@ -218,12 +229,20 @@ class HomeFragment : Fragment() ,View.OnClickListener,RestaurantAdapter.AddToFav
 
     override fun onViewClicked(position: Int) {
         (activity as CustomerHomeActivity).mModel.updateRestaurantId(restaurantsList[position].RestaurantID)
-        AppGlobal.writeString(requireActivity(), AppGlobal.restaurantId, restaurantsList[position].RestaurantID)
+        AppGlobal.writeString(
+            requireActivity(),
+            AppGlobal.restaurantId,
+            restaurantsList[position].RestaurantID
+        )
         (activity as CustomerHomeActivity).mModel.updateRestaurantName(restaurantsList[position].RestaurantName)
-        (activity as CustomerHomeActivity).changeToolbarName(getString(R.string.title_restaurants), isProfileMenuVisible = false, locationVisibility = false)
+        (activity as CustomerHomeActivity).changeToolbarName(
+            getString(R.string.title_restaurants),
+            isProfileMenuVisible = false,
+            locationVisibility = false
+        )
         (activity as CustomerHomeActivity).loadNewFragment(
-                RestaurantDetailFragment(),
-                "restaurant_detail"
+            RestaurantDetailFragment(),
+            "restaurant_detail"
         )
 
     }
@@ -236,32 +255,44 @@ class HomeFragment : Fragment() ,View.OnClickListener,RestaurantAdapter.AddToFav
     /**************************************************************************************************************************/
 
     private fun checkRestaurantById(){
-        val favouriteLiveData=databaseCreator.favouriteDao.findRestaurants()
+        if (activity!=null){
+            val favouriteLiveData=databaseCreator.favouriteDao.findRestaurants()
 
-        favouriteLiveData.observe(requireActivity(), Observer {
+            favouriteLiveData.observe(requireActivity(), Observer {
 
-            val favouriteList = it as ArrayList<Favourite>
+                val favouriteList = it as ArrayList<Favourite>
 
-            if (favouriteList != null) {
-                for (index in 0 until restaurantsList.size) {
-                    for (ind in 0 until favouriteList.size) {
-                        if (restaurantsList[index].RestaurantID == favouriteList[ind].restaurant_id) {
-                            restaurantsList[index].isFavourite = true
-                            break
+                if (favouriteList.size>0) {
+                    for (index in 0 until restaurantsList.size) {
+                        for (ind in 0 until favouriteList.size) {
+                            if (restaurantsList[index].RestaurantID == favouriteList[ind].restaurant_id) {
+                                restaurantsList[index].isFavourite = true
+                                break
+                            }
                         }
                     }
-                }
-                restaurantsAdapter.updateRestaurantsList(restaurantsList)
-            }
 
-        })
+                }
+                //(requireActivity() as CustomerHomeActivity).getNewCallerFragment()
+                restaurantsAdapter.updateRestaurantsList(restaurantsList)
+
+            })
+        }
+
     }
 
 
     private fun addToFavourite(position: Int, favouriteLiveData: LiveData<MutableList<Favourite>>)
     {
         favouriteLiveData.removeObservers(requireActivity())
-        val mFavourite=Favourite(restaurantsList[position].RestaurantID, restaurantsList[position].RestaurantName, restaurantsList[position].Address, restaurantsList[position].Rating, restaurantsList[position].RatingCount, restaurantsList[position].Image)
+        val mFavourite=Favourite(
+            restaurantsList[position].RestaurantID,
+            restaurantsList[position].RestaurantName,
+            restaurantsList[position].Address,
+            restaurantsList[position].Rating,
+            restaurantsList[position].RatingCount,
+            restaurantsList[position].Image
+        )
         homeViewModel.insertFavourite(mFavourite)
         restaurantsList[position].isFavourite=true
         restaurantsAdapter.updateRestaurantsList(restaurantsList)
@@ -270,7 +301,14 @@ class HomeFragment : Fragment() ,View.OnClickListener,RestaurantAdapter.AddToFav
     private fun deleteFavourite(position: Int, favouriteLiveData: LiveData<MutableList<Favourite>>)
     {
         favouriteLiveData.removeObservers(requireActivity())
-        val mFavourite=Favourite(restaurantsList[position].RestaurantID, restaurantsList[position].RestaurantName, restaurantsList[position].Address, restaurantsList[position].Rating, restaurantsList[position].RatingCount, restaurantsList[position].Image)
+        val mFavourite=Favourite(
+            restaurantsList[position].RestaurantID,
+            restaurantsList[position].RestaurantName,
+            restaurantsList[position].Address,
+            restaurantsList[position].Rating,
+            restaurantsList[position].RatingCount,
+            restaurantsList[position].Image
+        )
         homeViewModel.deleteFavouriteRecord(mFavourite)
         restaurantsList[position].isFavourite=false
         restaurantsAdapter.updateRestaurantsList(restaurantsList)
@@ -295,15 +333,17 @@ class HomeFragment : Fragment() ,View.OnClickListener,RestaurantAdapter.AddToFav
                     categoriesList = it.data.categories
                     categoriesList[0].isClicked = true
                     categoryAdapter.updateCategoryList(categoriesList)
-                    if (categoriesList.size>0)
-                    {
+                    if (categoriesList.size > 0) {
                         getRestaurantsList(categoriesList[0].CategoryID)
                     }
 
 
-
                 } else {
-                    AppGlobal.showDialog(getString(R.string.title_alert), it.data.description, requireContext())
+                    AppGlobal.showDialog(
+                        getString(R.string.title_alert),
+                        it.data.description,
+                        requireContext()
+                    )
                 }
             })
         }
@@ -325,7 +365,11 @@ class HomeFragment : Fragment() ,View.OnClickListener,RestaurantAdapter.AddToFav
                 dealsAdapter.updateList(dealsList)
 
             } else {
-                AppGlobal.showDialog(getString(R.string.title_alert), it.data.description, requireContext())
+                AppGlobal.showDialog(
+                    getString(R.string.title_alert),
+                    it.data.description,
+                    requireContext()
+                )
             }
         })
     }

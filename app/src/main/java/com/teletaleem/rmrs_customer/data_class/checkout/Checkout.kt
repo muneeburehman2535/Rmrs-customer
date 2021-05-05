@@ -19,7 +19,8 @@ data class Checkout(
         val SubTotal:Float,
         val DeliveryCharges:Float,
         var Comments:String,
-        var PaymentMethod:String
+        var PaymentMethod:String,
+        var CustomerAddress:String
 
 
 

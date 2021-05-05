@@ -11,10 +11,14 @@ import androidx.lifecycle.Observer
 import com.teletaleem.rmrs_customer.R
 import com.teletaleem.rmrs_customer.databinding.ProfileFragmentBinding
 import com.teletaleem.rmrs_customer.ui.home.CustomerHomeActivity
+import com.teletaleem.rmrs_customer.utilities.AppGlobal
 
 class ProfileFragment : Fragment() {
     private var isEditProfile:Boolean=false
     private lateinit var mBinding:ProfileFragmentBinding
+    private lateinit var customerName:String
+    private lateinit var customerEmail:String
+    private lateinit var customerMobile:String
     companion object {
         fun newInstance() = ProfileFragment()
     }
@@ -46,9 +50,24 @@ class ProfileFragment : Fragment() {
                 mBinding.txtNameAp.setBackgroundResource(R.drawable.edit_text_background)
                 mBinding.txtNumberAp.isEnabled=true
                 mBinding.txtNumberAp.setBackgroundResource(R.drawable.edit_text_background)
+                mBinding.btnUpdatePf.visibility=View.VISIBLE
                 (context as CustomerHomeActivity?)?.changeToolbarName(getString(R.string.title_edit_profile), isProfileMenuVisible = false, locationVisibility = false)
             }
         })
+        getCustomerData()
+        setViews()
+    }
+
+    private fun setViews() {
+        mBinding.txtNameAp.setText(customerName)
+        mBinding.txtNumberAp.setText(customerMobile)
+        mBinding.txtEmailAp.text = customerEmail
+    }
+
+    private fun getCustomerData() {
+        customerName=AppGlobal.readString(requireActivity(),AppGlobal.customerName,"")
+        customerEmail=AppGlobal.readString(requireActivity(),AppGlobal.customerEmail,"")
+        customerMobile=AppGlobal.readString(requireActivity(),AppGlobal.customerMobile,"")
     }
 
 }

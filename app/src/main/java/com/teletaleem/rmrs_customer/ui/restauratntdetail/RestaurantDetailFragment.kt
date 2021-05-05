@@ -21,6 +21,7 @@ import com.teletaleem.rmrs_customer.data_class.restaurantdetail.RestaurantDetail
 import com.teletaleem.rmrs_customer.databinding.RestaurantDetailFragmentBinding
 import com.teletaleem.rmrs_customer.ui.home.CustomerHomeActivity
 import com.teletaleem.rmrs_customer.ui.reservation.ReservationActivity
+import com.teletaleem.rmrs_customer.ui.review.restaurantreviews.ReviewsListFragment
 import com.teletaleem.rmrs_customer.utilities.AppGlobal
 import com.teletaleem.rmrs_customer.utilities.BlurBuilder
 import dagger.hilt.android.AndroidEntryPoint
@@ -71,6 +72,28 @@ class RestaurantDetailFragment : Fragment() ,TabsAdapter.ViewClickListener{
         //setTabLayout()
         getRestaurantId()
 
+        mBinding.imgRestaurantFrd.setOnClickListener(View.OnClickListener {
+            (activity as CustomerHomeActivity).changeToolbarName(
+                getString(R.string.title_reviews),
+                isProfileMenuVisible = false,
+                locationVisibility = false
+            )
+            (activity as CustomerHomeActivity).loadNewFragment(
+                ReviewsListFragment(),
+                "review_list"
+            )
+        })
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+        (activity as CustomerHomeActivity).changeToolbarName(
+            getString(R.string.title_restaurants),
+            isProfileMenuVisible = false,
+            locationVisibility = false
+        )
+        (requireActivity()as CustomerHomeActivity).infoMenu.isVisible=true
     }
 
     private fun setTabLayout() {

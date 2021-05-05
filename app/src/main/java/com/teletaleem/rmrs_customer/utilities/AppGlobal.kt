@@ -29,6 +29,9 @@ class AppGlobal {
         val SHORT=2000
         var mCurrency="Rs. "
 
+        val testEmail="usamawajid116@hotmail.com"
+        val testPassword="Usama@123"
+
         const val tokenId = "token_id"
         const val customerId = "customer_id"
         const val restaurantId="restaurant_id"
@@ -36,6 +39,10 @@ class AppGlobal {
         const val restaurantName="restaurant_name"
         const val restaurantAddress="restaurant_address"
         const val restaurantImage="restaurant_image"
+        const val customerAddress="customer_address"
+        const val customerName="customer_name"
+        const val customerEmail="customer_email"
+        const val customerMobile="customer_mobile"
 
 
         /*****************************************************Base URLs********************************************************/

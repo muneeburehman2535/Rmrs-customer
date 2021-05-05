@@ -18,7 +18,6 @@ class SharedViewModel: ViewModel() {
 
 
 
-
     /*
     * Allow Edit Profile
     * */

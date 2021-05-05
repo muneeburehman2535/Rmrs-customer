@@ -35,6 +35,12 @@ class LoginActivity : AppCompatActivity(),View.OnClickListener {
         progressDialog=AppGlobal.setProgressDialog(this)
         setClickListeners()
 
+        if (AppGlobal.BUILD=="STAGING")
+        {
+            mBinding.edtxtEmailAl.setText(AppGlobal.testEmail)
+            mBinding.edtxtPasswordAl.setText(AppGlobal.testPassword)
+        }
+
     }
 
     /*
@@ -61,19 +67,18 @@ class LoginActivity : AppCompatActivity(),View.OnClickListener {
     override fun onClick(v: View?) {
         when(v?.id){
             R.id.btn_login_al -> {
-//                checkCredentials()
-//                if (mAwesomeValidation.validate())
-//                {
-//                    if (AppGlobal.isInternetAvailable(this))
-//                    {
-//                        loginUser()
-//                    }
-//                    else{
-//                        AppGlobal.snackBar(mBinding.layoutParentLogin,getString(R.string.err_no_internet),AppGlobal.LONG)
-//                    }
-//                }
-                AppGlobal.writeString(this,AppGlobal.customerId,"ai0anPGypI")
-                AppGlobal.startNewActivity(this, CustomerHomeActivity::class.java)
+                checkCredentials()
+                if (mAwesomeValidation.validate())
+                {
+                    if (AppGlobal.isInternetAvailable(this))
+                    {
+                        loginUser()
+                    }
+                    else{
+                        AppGlobal.snackBar(mBinding.layoutParentLogin,getString(R.string.err_no_internet),AppGlobal.LONG)
+                    }
+                }
+
             }
             R.id.txt_signup_al->
             {
@@ -104,7 +109,13 @@ class LoginActivity : AppCompatActivity(),View.OnClickListener {
             {
                 AppGlobal.writeString(this,AppGlobal.tokenId, it.data.Token)
                 AppGlobal.writeString(this,AppGlobal.customerId,it.data.CustomerID)
+                AppGlobal.writeString(this,AppGlobal.customerName,it.data.Name)
+                AppGlobal.writeString(this,AppGlobal.customerEmail,it.data.Email)
+                AppGlobal.writeString(this,AppGlobal.customerMobile,it.data.MobileNumber)
                 AppGlobal.startNewActivity(this, CustomerHomeActivity::class.java)
+
+                //AppGlobal.writeString(this,AppGlobal.customerId,"ai0anPGypI")
+               // AppGlobal.startNewActivity(this, CustomerHomeActivity::class.java)
                 finishAffinity()
             }
             else{

@@ -74,9 +74,7 @@ class CartFragment : Fragment(),View.OnClickListener,CartItemAdapter.UpdateItemQ
 //        calculatePrice()
 //        setViews()
         setClickListeners()
-        mBinding.txtRestaurantNameLcic.text=AppGlobal.readString(requireActivity(),AppGlobal.restaurantName,"")
-        mBinding.txtRestaurantLocLcic.text=AppGlobal.readString(requireActivity(),AppGlobal.restaurantAddress,"")
-        AppGlobal.loadImageIntoGlide(AppGlobal.readString(requireActivity(),AppGlobal.restaurantImage,""),mBinding.imgRestaurantLcic,requireActivity())
+
 
 
     }
@@ -172,30 +170,39 @@ class CartFragment : Fragment(),View.OnClickListener,CartItemAdapter.UpdateItemQ
         mDiscountTotal="0"
         for (index in 0 until cartList.size)
         {
-            mItemTotalAmount= (mItemTotalAmount.toInt()+(cartList[index].original_price.toInt()*cartList[index].quantity.toInt())).toString()
-            mDiscountTotal= (mDiscountTotal.toInt()+(cartList[index].item_price.toInt()*cartList[index].quantity.toInt())).toString()
+            mItemTotalAmount= (mItemTotalAmount.toDouble()+(cartList[index].original_price.toDouble()*cartList[index].quantity.toDouble())).toString()
+            mDiscountTotal= (mDiscountTotal.toDouble()+(cartList[index].item_price.toDouble()*cartList[index].quantity.toDouble())).toString()
 
         }
-        mTotalDiscountedAmount = if (mItemTotalAmount.toInt()>mDiscountTotal.toInt())
+        mTotalDiscountedAmount = if (mItemTotalAmount.toDouble()>mDiscountTotal.toDouble())
         {
-           (mItemTotalAmount.toInt()-mDiscountTotal.toInt()).toString()
+           AppGlobal.roundTwoPlaces(mDiscountTotal.toDouble()).toString()
         }
         else{
             mItemTotalAmount
         }
 
-        mSalesTaxAmount=(((mSalesTax.toInt()*mTotalDiscountedAmount.toInt())/100)).toString()
+        mSalesTaxAmount=(((mSalesTax.toDouble()*mTotalDiscountedAmount.toDouble())/100)).toString()
 
-        mTotalAmount=(mTotalDiscountedAmount.toInt()+mSalesTaxAmount.toInt()+mServicesCharges.toInt()).toString()
+        mTotalAmount=(mTotalDiscountedAmount.toDouble()+mSalesTaxAmount.toDouble()+mServicesCharges.toDouble()).toString()
     }
 
     @SuppressLint("SetTextI18n")
     private fun setViews() {
+        mBinding.txtDeliveryLocCartf.text=AppGlobal.readString(requireActivity(),AppGlobal.customerAddress,"")
         mBinding.txtItemTotalCf.text=AppGlobal.mCurrency+mItemTotalAmount
         mBinding.txtDiscountCf.text=AppGlobal.mCurrency+mDiscountTotal
         mBinding.txtTaxChrgCf.text=AppGlobal.mCurrency+mSalesTaxAmount
         mBinding.txtServiceChrgCf.text=AppGlobal.mCurrency+mServicesCharges
         mBinding.txtTotalPayCf.text=AppGlobal.mCurrency+mTotalAmount
+        if (cartList.size>0){
+            mBinding.txtRestaurantNameLcic.text=cartList[0].restaurant_name
+            mBinding.txtRestaurantLocLcic.text=cartList[0].restaurant_address
+            if (activity!=null){
+                AppGlobal.loadImageIntoGlide(cartList[0].restaurant_image,mBinding.imgRestaurantLcic,requireActivity())
+            }
+
+        }
 
     }
 
@@ -207,7 +214,7 @@ class CartFragment : Fragment(),View.OnClickListener,CartItemAdapter.UpdateItemQ
             val menuOrdered=MenuOrdered(cartList[index].menu_id,cartList[index].item_name,cartList[index].item_price,cartList[index].quantity,cartList[index].description)
             menuOrderedList.add(menuOrdered)
         }
-        val mCheckout=Checkout(cartList[0].restaurant_id,cartList[0].restaurant_name,true,AppGlobal.readString(requireActivity(),AppGlobal.customerId,""),"Usama Wajid",mTotalAmount.toFloat(),mSalesTaxAmount.toFloat(),"New_Order",menuOrderedList, Delivery(),ownerId,mItemTotalAmount.toFloat(),mServicesCharges.toFloat(),"","")
+        val mCheckout=Checkout(cartList[0].restaurant_id,cartList[0].restaurant_name,true,AppGlobal.readString(requireActivity(),AppGlobal.customerId,""),"Usama Wajid",mTotalAmount.toFloat(),mSalesTaxAmount.toFloat(),"New_Order",menuOrderedList, Delivery(),ownerId,mItemTotalAmount.toFloat(),mServicesCharges.toFloat(),"","","")
         Timber.d("Checkout data: ${Gson().toJson(mCheckout)}")
         (activity as CustomerHomeActivity).mModel.updateCheckout(mCheckout)
         redirectCheckout()

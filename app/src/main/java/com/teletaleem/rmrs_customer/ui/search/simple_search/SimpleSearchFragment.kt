@@ -138,8 +138,14 @@ class SimpleSearchFragment : Fragment() {
         progressDialog.show()
         viewModel.getSearchResponse(searchQuery).observe(requireActivity(), {
             progressDialog.dismiss()
-            searchResultList=it.data.result
-            searchResultAdapter.updateSearchList(searchResultList)
+            if (it.Message=="Success"){
+                searchResultList=it.data.result
+                searchResultAdapter.updateSearchList(searchResultList)
+            }
+            else{
+                AppGlobal.showDialog(getString(R.string.title_alert),it.data.description,requireActivity())
+            }
+
 
         })
     }

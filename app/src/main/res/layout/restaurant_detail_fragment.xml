@@ -35,7 +35,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_l"
-                    android:layout_marginTop="@dimen/margin_xxxl"
+                    android:layout_marginTop="@dimen/margin_xxl"
                     android:layout_marginEnd="@dimen/margin_l"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -44,7 +44,8 @@
 
                     <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/margin_xxl">
 
                         <ImageView
                             android:id="@+id/img_restaurant_frd"
@@ -89,7 +90,7 @@
                                     android:layout_marginStart="@dimen/margin_l"
                                     android:layout_marginTop="@dimen/margin_small"
                                     android:text="4.9"
-                                    android:fontFamily="@font/montserrat_regular"
+                                    android:fontFamily="@font/montserrat_bold"
                                     android:textAppearance="?android:textAppearanceSmall"
                                     android:textColor="@color/text_color"
                                     app:layout_constraintStart_toStartOf="parent"
@@ -115,7 +116,7 @@
                                     android:layout_marginStart="@dimen/margin_small"
                                     android:layout_marginTop="@dimen/margin_small"
                                     android:text="(120)"
-                                    android:fontFamily="@font/montserrat_regular"
+                                    android:fontFamily="@font/montserrat_bold"
                                     android:textAppearance="?android:textAppearanceSmall"
                                     android:textColor="@color/text_color"
                                     app:layout_constraintStart_toEndOf="@+id/rb_rating_frd"

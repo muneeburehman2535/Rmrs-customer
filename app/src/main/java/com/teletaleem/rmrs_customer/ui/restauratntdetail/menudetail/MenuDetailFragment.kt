@@ -157,7 +157,7 @@ class MenuDetailFragment : Fragment() {
 
         txtItemName.text=menu.MenuName
         txtItemDesc.text=menu.Description
-        txtItemPrice.text=AppGlobal.mCurrency+AppGlobal.roundTwoPlaces(menu.MenuPrice.toDouble())
+        txtItemPrice.text=AppGlobal.mCurrency+AppGlobal.roundTwoPlaces(menu.CalculatedPrice.toDouble())
         txtItemQuantity.text=quantity.toString()
 
         txtItemIncQuantity.setOnClickListener(View.OnClickListener {
@@ -173,7 +173,20 @@ class MenuDetailFragment : Fragment() {
 
         btnAddToCart.setOnClickListener(View.OnClickListener {
 
-            val cart = Cart(menu.RestaurantID, restaurantName, menu.MenuName, menu.MenuID, menu.Description, menu.MenuPrice, menu.OriginalPrice, txtItemQuantity.text.toString(), menu.Image, menu.Description)
+
+
+            val cart = Cart(menu.RestaurantID
+                , restaurantName
+                , menu.MenuName
+                , menu.MenuID
+                , menu.Description
+                , menu.CalculatedPrice.toString()
+                , menu.ItemPrice.toString()
+                , txtItemQuantity.text.toString()
+                , menu.Image
+                , menu.Description
+                ,AppGlobal.readString(requireActivity(),AppGlobal.restaurantAddress,"")
+                ,AppGlobal.readString(requireActivity(),AppGlobal.restaurantImage,""))
             viewModel.insertCartItem(cart)
 
             updateCartBadge()

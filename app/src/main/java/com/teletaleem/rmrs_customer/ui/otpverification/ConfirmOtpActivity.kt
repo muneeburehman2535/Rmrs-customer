@@ -149,8 +149,11 @@ class ConfirmOtpActivity : AppCompatActivity() ,View.OnClickListener{
             progressDialog.dismiss()
             if (it?.data?.Token != null) {
 
-                AppGlobal.writeString(this, AppGlobal.tokenId, it.data.Token)
-                AppGlobal.writeString(this, AppGlobal.customerId, it.data.CustomerID)
+                AppGlobal.writeString(this,AppGlobal.tokenId, it.data.Token)
+                AppGlobal.writeString(this,AppGlobal.customerId,it.data.CustomerID)
+                AppGlobal.writeString(this,AppGlobal.customerName,it.data.Name)
+                AppGlobal.writeString(this,AppGlobal.customerEmail,it.data.Email)
+                AppGlobal.writeString(this,AppGlobal.customerMobile,it.data.MobileNumber)
                 AppGlobal.startNewActivity(this, CustomerHomeActivity::class.java)
                 finishAffinity()
             } else {

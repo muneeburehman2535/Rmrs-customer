@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import com.kaopiz.kprogresshud.KProgressHUD
@@ -13,6 +14,7 @@ import com.teletaleem.rmrs_customer.R
 import com.teletaleem.rmrs_customer.data_class.review.Review
 import com.teletaleem.rmrs_customer.databinding.ReviewFragmentBinding
 import com.teletaleem.rmrs_customer.ui.home.CustomerHomeActivity
+import com.teletaleem.rmrs_customer.ui.home.HomeFragment
 import com.teletaleem.rmrs_customer.utilities.AppGlobal
 
 class ReviewFragment : Fragment(),View.OnClickListener {
@@ -51,10 +53,13 @@ class ReviewFragment : Fragment(),View.OnClickListener {
     }
 
     private fun getRestaurantId(){
-        (activity as CustomerHomeActivity?)?.mModel?.restaurantID?.observe(viewLifecycleOwner, Observer {
-            this.restaurantID=it
-            getRatingCount()
-        })
+//        (activity as CustomerHomeActivity?)?.mModel?.restaurantID?.observe(viewLifecycleOwner, Observer {
+//            this.restaurantID=it
+//            getRatingCount()
+//        })
+
+        restaurantID=AppGlobal.readString(requireActivity(),AppGlobal.restaurantId,"0")
+        getRatingCount()
     }
 
     private fun getRatingCount(){
@@ -97,9 +102,23 @@ class ReviewFragment : Fragment(),View.OnClickListener {
         progressDialog.show()
         viewModel.getReviewResponse(review).observe(requireActivity(), {
             progressDialog.dismiss()
-            if (it.Message=="Success")
+            if (it.Message=="Sucess")
             {
-                AppGlobal.showDialog(getString(R.string.title_alert),it.data.description,requireContext())
+               // AppGlobal.showDialog(getString(R.string.title_alert),it.data.description,requireContext())
+                val alertDialog = AlertDialog.Builder(requireActivity())
+                alertDialog.setTitle(getString(R.string.title_alert))
+                alertDialog.setMessage(it.data.description)
+                alertDialog.setCancelable(false)
+                alertDialog.setPositiveButton("Ok") { dialog, _ ->
+                    (requireActivity() as CustomerHomeActivity).getCallerFragment()
+                    (requireActivity() as CustomerHomeActivity).txtToolbarName.text =(requireActivity() as CustomerHomeActivity).mCurrentLocation
+                    //getCallerFragment()
+                    (requireActivity() as CustomerHomeActivity).setToolbarTitle("", HomeFragment(), false, View.VISIBLE, true)
+                    dialog.cancel()
+                }
+                val alertDialog1 = alertDialog.create()
+                alertDialog1.show()
+
             }
             else{
                 AppGlobal.showDialog(getString(R.string.title_alert),it.data.description,requireContext())

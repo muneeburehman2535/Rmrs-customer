@@ -51,6 +51,7 @@ class CheckoutFragment : Fragment(),View.OnClickListener {
         progressDialog=AppGlobal.setProgressDialog(requireActivity())
         setClickListeners()
         getOrderData()
+        mBinding.txtDeliveryLocCf.text=AppGlobal.readString(requireActivity(),AppGlobal.customerAddress,"")
     }
 
     private fun getOrderData()
@@ -79,6 +80,7 @@ class CheckoutFragment : Fragment(),View.OnClickListener {
                     orderCheckout.PaymentMethod="COD"
                 }
                 orderCheckout.Comments=mBinding.edtxtSpecialInsCf.text.toString()
+                orderCheckout.CustomerAddress=mBinding.txtDeliveryLocCf.text.toString()
                checkoutOrder()
             }
         }

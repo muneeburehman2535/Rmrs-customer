@@ -81,7 +81,7 @@
                 android:textAppearance="?android:textAppearanceMedium"
                 android:layout_below="@+id/txt_menu_crd"
                 android:layout_toEndOf="@+id/txt_price_crd"
-                android:layout_marginTop="@dimen/margin_xl"
+                android:layout_marginTop="@dimen/margin_avg"
                 android:layout_marginStart="@dimen/margin_small"
                 android:layout_marginEnd="@dimen/margin_small"
                 android:layout_marginBottom="@dimen/margin_xl"

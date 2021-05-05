@@ -65,6 +65,7 @@
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="36dp"
             android:text="(79)"
+            android:fontFamily="@font/montserrat_bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
@@ -75,6 +76,7 @@
             android:layout_marginEnd="@dimen/margin_small"
             android:layout_marginBottom="36dp"
             android:text="4.9"
+            android:fontFamily="@font/montserrat_bold"
             android:textColor="@color/text_color"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/txt_points_lf" />

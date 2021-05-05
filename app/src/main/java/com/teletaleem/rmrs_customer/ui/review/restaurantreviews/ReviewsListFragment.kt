@@ -22,10 +22,6 @@ import com.teletaleem.rmrs_customer.utilities.AppGlobal
 
 class ReviewsListFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = ReviewsListFragment()
-    }
-
     private lateinit var viewModel: ReviewViewModel
     private lateinit var mBinding:ReviewsListFragmentBinding
     private lateinit var reviewListAdapter: ReviewListAdapter
@@ -52,11 +48,13 @@ class ReviewsListFragment : Fragment() {
 
     private fun getRestaurantId()
     {
-        (activity as CustomerHomeActivity?)?.mModel?.restaurantID?.observe(viewLifecycleOwner, Observer {
-            this.restaurantId=it
-
-            getRestaurantDetail(restaurantId)
-        })
+//        (activity as CustomerHomeActivity?)?.mModel?.restaurantID?.observe(viewLifecycleOwner, Observer {
+//            this.restaurantId=it
+//
+//            getRestaurantDetail(restaurantId)
+//        })
+        restaurantId=AppGlobal.readString(requireActivity(),AppGlobal.restaurantId,"")
+        getRestaurantDetail(restaurantId)
     }
 
     private fun setRecyclerViewAdapter(){
@@ -82,7 +80,11 @@ class ReviewsListFragment : Fragment() {
             {
                 reviewList=it.data
                 mBinding.txtReviewTotal.text="${reviewList.size} Reviews"
-                reviewListAdapter.updateReviewList(reviewList)
+                if (reviewList.size>0)
+                {
+                    reviewListAdapter.updateReviewList(reviewList)
+                }
+
             }
 //            else{
 //                AppGlobal.showDialog(getString(R.string.title_alert),it.data.description,requireContext())

@@ -11,7 +11,7 @@
     <dimen name="img_size_average">110dp</dimen>
     <dimen name="img_size_l">130dp</dimen>
     <dimen name="img_size_large">180dp</dimen>
-    <dimen name="img_size_xl">260dp</dimen>
+    <dimen name="img_size_xl">180dp</dimen>
 
     <dimen name="margin_avg_login">30dp</dimen>
     <dimen name="margin_l_login">20dp</dimen>
