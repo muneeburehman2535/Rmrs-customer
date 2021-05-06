@@ -6,6 +6,7 @@ import com.teletaleem.rmrs_customer.data_class.email_mobile.EmailMobileVerificat
 import com.teletaleem.rmrs_customer.data_class.email_mobile.EmailMobileVerificationResponse;
 import com.teletaleem.rmrs_customer.data_class.login.Login;
 import com.teletaleem.rmrs_customer.data_class.login.LoginResponse;
+import com.teletaleem.rmrs_customer.data_class.profile.Profile;
 import com.teletaleem.rmrs_customer.data_class.registration.Registration;
 import com.teletaleem.rmrs_customer.data_class.registration.RegistrationResponse;
 import com.teletaleem.rmrs_customer.data_class.reservation.Reservation;
@@ -67,4 +68,7 @@ public interface WebRequestGeo {
 
     @GET("/customer/reservation/?")
     Call<ResponseBody> getReservationList(@Query("CustomerID") String CustomerId);
+
+    @POST("/customer/customer-profile")
+    Call<ResponseBody> updateCustomerProfile(@Body Profile profile);
 }

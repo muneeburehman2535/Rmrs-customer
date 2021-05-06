@@ -64,7 +64,7 @@ class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItem
     private lateinit var mToolbarLayout:LinearLayout
     private lateinit var mToolbar:Toolbar
     private  var locationMenu:MenuItem?=null
-    private var editProfileMenu:MenuItem?=null
+    var editProfileMenu:MenuItem?=null
     lateinit var infoMenu:MenuItem
     var mCurrentLocation:String=""
     private val pLACE_PICKER_REQUEST = 4
