@@ -17,6 +17,7 @@ import com.teletaleem.rmrs_customer.R
 import com.teletaleem.rmrs_customer.adapters.CategoriesAdapter
 import com.teletaleem.rmrs_customer.adapters.DealsAdapter
 import com.teletaleem.rmrs_customer.adapters.RestaurantAdapter
+import com.teletaleem.rmrs_customer.data_class.cart.Cart
 import com.teletaleem.rmrs_customer.data_class.home.category.Categories
 import com.teletaleem.rmrs_customer.data_class.home.restaurants.Deals
 import com.teletaleem.rmrs_customer.data_class.home.restaurants.Restaurants
@@ -71,7 +72,7 @@ class HomeFragment : Fragment() ,View.OnClickListener,RestaurantAdapter.AddToFav
         homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
         mBinding.homeViewModel=homeViewModel
         progressDialog=AppGlobal.setProgressDialog(requireActivity())
-        databaseCreator= CustomerDatabase.getInstance(requireActivity())
+
         mActivity=requireActivity()
 
         setCategoryAdapter()
@@ -83,14 +84,9 @@ class HomeFragment : Fragment() ,View.OnClickListener,RestaurantAdapter.AddToFav
         mBinding.searchBarHome.inputType = 0x00000000
     }
 
-    override fun onResume() {
-        super.onResume()
-//        (activity as CustomerHomeActivity?)?.changeToolbarName(
-//            "",
-//            isProfileMenuVisible = false,
-//            locationVisibility = true
-//        )
-//        (activity as CustomerHomeActivity?)?.updateToolbarAddress()
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        getCartRecord()
     }
 
 
@@ -313,6 +309,29 @@ class HomeFragment : Fragment() ,View.OnClickListener,RestaurantAdapter.AddToFav
         restaurantsList[position].isFavourite=false
         restaurantsAdapter.updateRestaurantsList(restaurantsList)
 
+    }
+
+
+    /*****************************************************************************************************************************/
+    //                                      Room Database Section
+    /*****************************************************************************************************************************/
+    //                                    1:- Get Cart Record from Room Database
+    //                                    2:- Update Cart in Room Database
+    //                                    3:- Delete Item from Room Database
+    /*****************************************************************************************************************************/
+
+    private fun getCartRecord(){
+        databaseCreator= CustomerDatabase.getInstance(requireActivity())
+        val cartLiveData=databaseCreator.cartDao.fetch(AppGlobal.readString(requireActivity(),AppGlobal.restaurantId,"0"))
+
+        cartLiveData.observe(requireActivity(), Observer {
+
+           val cartList= it as ArrayList<Cart>
+            (requireActivity() as CustomerHomeActivity).updateBottomNavigationCount(cartList.size)
+            cartLiveData.removeObservers(requireActivity())
+
+
+        })
     }
 
     /**************************************************************************************************************************/

@@ -15,6 +15,7 @@ class SharedViewModel: ViewModel() {
     var ratingCount=MutableLiveData<Int>()
     var sumOfRating=MutableLiveData<Double>()
     var ownerId= MutableLiveData<String>()
+    var menuItem=MutableLiveData<Menu>()
 
 
 
@@ -72,6 +73,13 @@ class SharedViewModel: ViewModel() {
     * */
     fun updateOwnerId(ownerId:String){
         this.ownerId.value=ownerId
+    }
+
+    /*
+    * Update Menu Item
+    * */
+    fun updateMenuItem(menu:Menu){
+        this.menuItem.value=menu
     }
 
 }

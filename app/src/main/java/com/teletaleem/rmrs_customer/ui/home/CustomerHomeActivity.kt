@@ -11,6 +11,7 @@ import android.os.Bundle
 import android.provider.Settings
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -30,9 +31,13 @@ import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.gms.tasks.OnSuccessListener
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.installations.FirebaseInstallations
+import com.google.firebase.messaging.FirebaseMessaging
 import com.shivtechs.maplocationpicker.LocationPickerActivity
 import com.shivtechs.maplocationpicker.MapUtility
 import com.teletaleem.rmrs_customer.R
@@ -58,6 +63,7 @@ import java.util.*
 class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var mBinding:ActivityCustomerHomeBinding
+    private lateinit var mViewModel:CustomerHomeViewModel
     private lateinit var mNavigation: BottomNavigationView
     private lateinit var drawerLayout:DrawerLayout
     lateinit var txtToolbarName:TextView
@@ -83,6 +89,7 @@ class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItem
         super.onCreate(savedInstanceState)
         mBinding=DataBindingUtil.setContentView(this, R.layout.activity_customer_home)
         mModel = ViewModelProvider(this).get(SharedViewModel::class.java)
+        mBinding
         databaseCreator= CustomerDatabase.getInstance(this)
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
@@ -99,6 +106,20 @@ class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItem
             getLocation()
         }
         //getRestaurantId()
+
+        //setSummaryFragment();
+
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.w("ERROR:", "Fetching FCM registration token failed", task.exception)
+                return@OnCompleteListener
+            }
+
+            // Get new FCM registration token
+            val newToken = task.result
+            Timber.d("Token: $newToken")
+            Timber.d("Old Token: ${AppGlobal.readString(this,AppGlobal.tokenId,"0")}")
+        })
 
     }
 
@@ -495,6 +516,11 @@ class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItem
             .replace(R.id.nav_host_fragment, fragment!!)
             .addToBackStack(name)
             .commit()
+    }
+
+    fun removeFragment()
+    {
+        supportFragmentManager.popBackStack()
     }
 
     fun getCallerFragment() {

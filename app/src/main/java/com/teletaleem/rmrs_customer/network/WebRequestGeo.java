@@ -4,6 +4,7 @@ import com.teletaleem.rmrs_customer.data_class.checkout.Checkout;
 import com.teletaleem.rmrs_customer.data_class.confirm_otp.ConfirmOtp;
 import com.teletaleem.rmrs_customer.data_class.email_mobile.EmailMobileVerification;
 import com.teletaleem.rmrs_customer.data_class.email_mobile.EmailMobileVerificationResponse;
+import com.teletaleem.rmrs_customer.data_class.fcm.FcmNotification;
 import com.teletaleem.rmrs_customer.data_class.login.Login;
 import com.teletaleem.rmrs_customer.data_class.login.LoginResponse;
 import com.teletaleem.rmrs_customer.data_class.profile.Profile;
@@ -12,6 +13,7 @@ import com.teletaleem.rmrs_customer.data_class.registration.RegistrationResponse
 import com.teletaleem.rmrs_customer.data_class.reservation.Reservation;
 import com.teletaleem.rmrs_customer.data_class.review.Review;
 import com.teletaleem.rmrs_customer.data_class.send_otp.SendOTP;
+import com.teletaleem.rmrs_customer.data_class.updatepassword.UpdatePassword;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -71,4 +73,10 @@ public interface WebRequestGeo {
 
     @POST("/customer/customer-profile")
     Call<ResponseBody> updateCustomerProfile(@Body Profile profile);
+
+    @POST("/customer/change-password")
+    Call<ResponseBody> updateCustomerPassword(@Body UpdatePassword updatePassword);
+
+    @POST("/customer/fcm-notification")
+    Call<ResponseBody> updateFCMToken(@Body FcmNotification fcmNotification);
 }

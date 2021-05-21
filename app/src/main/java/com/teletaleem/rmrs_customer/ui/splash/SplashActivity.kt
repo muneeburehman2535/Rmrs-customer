@@ -12,6 +12,7 @@ import android.view.animation.AnimationUtils
 import androidx.databinding.DataBindingUtil
 import com.teletaleem.rmrs_customer.R
 import com.teletaleem.rmrs_customer.databinding.ActivitySplashBinding
+import com.teletaleem.rmrs_customer.ui.home.CustomerHomeActivity
 import com.teletaleem.rmrs_customer.ui.login.LoginActivity
 import com.teletaleem.rmrs_customer.utilities.AppGlobal
 
@@ -47,16 +48,16 @@ class SplashActivity : AppCompatActivity() {
 
         Handler(Looper.getMainLooper()).postDelayed(
                 {
-//                    if (!AppGlobal.getToken(this).equals("")&&!AppGlobal.getToken(this).equals("null")&&!AppGlobal.getToken(this).equals("0"))
-//                    {
-//                        AppGlobal.startNewActivity(this,HomeActivity::class.java)
-//                    }
-//                    else
-//                    {
-//                        AppGlobal.startNewActivity(this,LoginActivity::class.java)
-//
-//                    }
-                    AppGlobal.startNewActivity(this, LoginActivity::class.java)
+                    if (AppGlobal.readString(this,AppGlobal.tokenId,"0")!="0")
+                    {
+                        AppGlobal.startNewActivity(this,CustomerHomeActivity::class.java)
+                    }
+                    else
+                    {
+                        AppGlobal.startNewActivity(this,LoginActivity::class.java)
+
+                    }
+                    //AppGlobal.startNewActivity(this, LoginActivity::class.java)
                     finish()
                 }, SPLASH_TIME_OUT)
     }

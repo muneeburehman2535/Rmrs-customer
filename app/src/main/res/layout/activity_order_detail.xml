@@ -33,6 +33,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/text_size_avg"
                     android:textStyle="bold"
+                    android:fontFamily="@font/montserrat_bold"
                     android:textColor="@color/white"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

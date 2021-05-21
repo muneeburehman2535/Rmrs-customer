@@ -2,6 +2,8 @@ package com.teletaleem.rmrs_customer.ui.restauratntdetail.menudetail
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.*
 import android.widget.Button
 import android.widget.TextView
@@ -19,6 +21,8 @@ import com.teletaleem.rmrs_customer.data_class.restaurantdetail.Menu
 import com.teletaleem.rmrs_customer.databinding.MenuDetailFragmentBinding
 import com.teletaleem.rmrs_customer.db.CustomerDatabase
 import com.teletaleem.rmrs_customer.ui.home.CustomerHomeActivity
+import com.teletaleem.rmrs_customer.ui.restauratntdetail.RestaurantDetailFragment
+import com.teletaleem.rmrs_customer.ui.restauratntdetail.variant.VariantFragment
 import com.teletaleem.rmrs_customer.utilities.AppGlobal
 import com.teletaleem.rmrs_customer.utilities.RecyclerItemClickListener
 import dagger.hilt.android.AndroidEntryPoint
@@ -128,7 +132,18 @@ class MenuDetailFragment : Fragment() {
 //                                CartFragment(),
 //                                "cart"
 //                        )
-                        getCartRecord(position)
+                        //getCartRecord(position)
+
+                        (activity as CustomerHomeActivity).changeToolbarName(
+                            getString(R.string.title_variants),
+                            isProfileMenuVisible = false,
+                            locationVisibility = false
+                        )
+                        (activity as CustomerHomeActivity).mModel.updateMenuItem(menuList[position])
+                        (activity as CustomerHomeActivity).loadNewFragment(
+                            VariantFragment(),
+                            "menu_variant"
+                        )
 
                     }
 
@@ -204,15 +219,18 @@ class MenuDetailFragment : Fragment() {
     }
 
     private fun updateCartBadge() {
-        val cartLiveData=databaseCreator.cartDao.fetch(restaurantId)
-        cartLiveData.observe(requireActivity(), Observer {
-            if (it != null) {
-                val cartArray = it as ArrayList<Cart>
-                (requireActivity() as CustomerHomeActivity).updateBottomNavigationCount(cartArray.size)
-            }
-            alertDialog.dismiss()
-//            cartLiveData.removeObservers(requireActivity())
-        })
+        Handler(Looper.getMainLooper()).postDelayed({
+            val cartLiveData=databaseCreator.cartDao.fetch(restaurantId)
+            cartLiveData.observe(requireActivity(), Observer {
+                if (it != null) {
+                    val cartArray = it as ArrayList<Cart>
+                    (requireActivity() as CustomerHomeActivity).updateBottomNavigationCount(cartArray.size)
+                }
+                alertDialog.dismiss()
+                cartLiveData.removeObservers(requireActivity())
+            })
+        },100)
+
     }
 
     private fun getCartRecord(position: Int) {

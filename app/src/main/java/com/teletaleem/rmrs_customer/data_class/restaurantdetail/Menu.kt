@@ -13,5 +13,6 @@ data class Menu(
         val Description:String,
         val ItemPrice:Float,
         val Image:String,
-        val __v:Int
+        val __v:Int,
+        val Variant:ArrayList<Variant>
 )

@@ -2,11 +2,11 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
-<!--    <data>-->
-<!--        <variable-->
-<!--            name="customer_home_view_model"-->
-<!--            type="" />-->
-<!--    </data>-->
+    <data>
+        <variable
+            name="customer_home_view_model"
+            type="com.teletaleem.rmrs_customer.ui.home.CustomerHomeViewModel" />
+    </data>
 
     <androidx.drawerlayout.widget.DrawerLayout
         android:id="@+id/drawer_layout"

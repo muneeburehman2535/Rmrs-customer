@@ -1,9 +1,10 @@
 package com.teletaleem.rmrs_customer.utilities
 
-import android.app.Activity
+import android.app.*
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.content.res.Resources
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
@@ -12,6 +13,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
@@ -24,7 +26,9 @@ import java.util.*
 
 class AppGlobal {
     companion object{
-        var BUILD = "STAGING"
+        var NOTIFICATION_CHANNEL = "RMRSCUSTOMER"
+        val NOTIFICATION_GENERAL = "RMRS_Gernal"
+        var BUILD = "PRODUCTION"
         val LONG=3500
         val SHORT=2000
         var mCurrency="Rs. "
@@ -43,10 +47,11 @@ class AppGlobal {
         const val customerName="customer_name"
         const val customerEmail="customer_email"
         const val customerMobile="customer_mobile"
+        const val deviceId="device_id"
 
 
         /*****************************************************Base URLs********************************************************/
-        var HOME_BASE_URL = if ("PRODUCTION" == BUILD) "https://cust-be-1.teletaleem.com" else "https://Customer.teletaleem.com"
+        var HOME_BASE_URL = if ("PRODUCTION" == BUILD) "https://Customer.teletaleem.com" else "https://customer-backend.k8s.symcloud.net"
         var HOME_BASE_URL_IMAGE = if ("PRODUCTION" == BUILD) "live-url" else "stage-url"
         const val LOCATION_IQ_URL = "https://us1.locationiq.com/"
 
@@ -204,5 +209,52 @@ class AppGlobal {
         fun loadImageIntoPicasso(imageURL:String?,imageView: ImageView){
             Picasso.get().load(imageURL).placeholder(R.drawable.burger_10956).error(R.drawable.burger_10956).into(imageView)
         }
+
+        fun sendNotification(context:Context, notificationID : Int, title:String, message:String, drawableImage:Int, vibration:Boolean, onGoing:Boolean, pendingIntent: PendingIntent, whenTime:Long) {
+
+            try { //            NotificationManager notificationManager =
+//                    (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+                val notificationManager = NotificationManagerCompat.from(context)
+                val bigTextStyle = Notification.BigTextStyle()
+                val mBuilder: Notification.Builder
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    var mChannel = notificationManager.getNotificationChannel(AppGlobal.NOTIFICATION_CHANNEL)
+                    if (mChannel == null) {
+                        mChannel = NotificationChannel(NOTIFICATION_CHANNEL,
+                            NOTIFICATION_GENERAL, NotificationManager.IMPORTANCE_DEFAULT)
+                        mChannel.enableVibration(vibration)
+                        notificationManager.createNotificationChannel(mChannel)
+                    }
+                    mBuilder = Notification.Builder(context, AppGlobal.NOTIFICATION_CHANNEL)
+                } else {
+                    mBuilder = Notification.Builder(context)
+                }
+                val color: Int = ContextCompat.getColor(context,R.color.white)
+                mBuilder
+                    .setSmallIcon(drawableImage)
+                    .setContentTitle(title)
+                    .setContentText(message)
+                    .setStyle(bigTextStyle)
+                    .setColor(color)
+                    .setAutoCancel(true)
+                    .setOngoing(onGoing)
+//                        .setDefaults(Notification.DEFAULT_SOUND)
+//                        .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
+                mBuilder.setContentIntent(pendingIntent)
+                if (whenTime != -1L) {
+                    mBuilder.setWhen(whenTime)
+                }
+                notificationManager.notify(notificationID, mBuilder.build())
+                val intentUpdate = Intent()
+                intentUpdate.action = "com.teletaleem.rmrs_customer.broadcast.notification"
+                intentUpdate.putExtra("messageBody", message)
+
+                context.sendBroadcast(intentUpdate)
+
+            } catch (e: Resources.NotFoundException) {
+                e.printStackTrace()
+            }
+        }
+
     }
 }

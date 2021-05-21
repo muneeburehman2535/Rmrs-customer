@@ -49,6 +49,7 @@
     <string name="title_restaurants">Restaurants</string>
     <string name="title_filter">Filters</string>
     <string name="title_reviews">Reviews</string>
+    <string name="title_variants">Variants</string>
 
     //Profile Screen
     <string name="title_name">Name</string>
@@ -101,6 +102,9 @@
     <string name="status_pending">Pending</string>
     <string name="status_in_progress">In Progress</string>
     <string name="title_special_instructions">Special Instructions</string>
+    <string name="title_choose">Choose Your </string>
+    <string name="title_select_one">Select one</string>
+    <string name="title_required">1 Required</string>
 
     //Filter Search
     <string name="title_select_category">Select Categories:</string>

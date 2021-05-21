@@ -3,6 +3,8 @@ package com.teletaleem.rmrs_customer.ui.home.cart
 import android.annotation.SuppressLint
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -247,19 +249,35 @@ class CartFragment : Fragment(),View.OnClickListener,CartItemAdapter.UpdateItemQ
             calculatePrice()
             setViews()
                //(requireActivity()as CustomerHomeActivity).updateBottomNavigationCount(cartList.size)
-                //cartLiveData.removeObservers(requireActivity())
+                cartLiveData.removeObservers(requireActivity())
 
 
         })
     }
     private fun updateCart(cart: Cart) {
         viewModel.updateCart(cart)
-        getCartRecord()
+        updateCartBadge()
     }
 
     private fun deleteItemRow(cart:Cart){
         viewModel.deleteCartItem(cart)
-        getCartRecord()
+        updateCartBadge()
+
+    }
+
+    private fun updateCartBadge() {
+        Handler(Looper.getMainLooper()).postDelayed({
+            val cartLiveData=databaseCreator.cartDao.fetch(restaurantId)
+            cartLiveData.observe(requireActivity(), Observer {
+                if (it != null) {
+                    val cartArray = it as ArrayList<Cart>
+                    getCartRecord()
+                    (requireActivity() as CustomerHomeActivity).updateBottomNavigationCount(cartArray.size)
+                }
+                cartLiveData.removeObservers(requireActivity())
+            })
+        },100)
+
     }
 
 }
