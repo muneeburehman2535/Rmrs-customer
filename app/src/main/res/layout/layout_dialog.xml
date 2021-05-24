@@ -29,7 +29,7 @@
         <Button
             android:id="@+id/btn_close_ld"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/btn_size"
             android:layout_weight="1"
             android:text="@string/title_close"
             android:textAllCaps="false"
@@ -37,19 +37,19 @@
             android:background="@drawable/border_button_background"
             android:layout_marginTop="@dimen/margin_xxl"
             android:layout_marginStart="@dimen/margin_l"
-            android:layout_marginEnd="@dimen/margin_l"
+            android:layout_marginEnd="@dimen/margin_avg"
             android:layout_marginBottom="@dimen/margin_l"/>
         <Button
             android:id="@+id/btn_continue_ld"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/btn_size"
             android:layout_weight="1"
             android:text="@string/title_continue"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:background="@drawable/button_background_avg"
             android:layout_marginTop="@dimen/margin_xxl"
-            android:layout_marginStart="@dimen/margin_l"
+            android:layout_marginStart="@dimen/margin_avg"
             android:layout_marginEnd="@dimen/margin_l"
             android:layout_marginBottom="@dimen/margin_l"/>
     </LinearLayout>

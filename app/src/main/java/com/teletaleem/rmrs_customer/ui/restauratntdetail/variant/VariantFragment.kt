@@ -109,6 +109,7 @@ class VariantFragment : Fragment(),VariantAdapter.MenuSelectionListener,View.OnC
         btnContinue?.setOnClickListener(View.OnClickListener {
             emptyCartRecord()
             Handler(Looper.getMainLooper()).postDelayed({addItemToCart()},100)
+            alertDialog.cancel()
         })
     }
 

@@ -7,6 +7,7 @@
     <dimen name="img_size_nrml">240dp</dimen>
     <dimen name="img_size_l">200dp</dimen>
     <dimen name="img_size_xl">350dp</dimen>
+    <dimen name="btn_size">70dp</dimen>
 
     <dimen name="margin_avg_login">70dp</dimen>
     <dimen name="margin_l_login">290dp</dimen>
