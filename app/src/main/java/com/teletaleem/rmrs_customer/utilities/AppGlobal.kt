@@ -28,7 +28,7 @@ class AppGlobal {
     companion object{
         var NOTIFICATION_CHANNEL = "RMRSCUSTOMER"
         val NOTIFICATION_GENERAL = "RMRS_Gernal"
-        var BUILD = "PRODUCTION"
+        var BUILD = "STAGING"
         val LONG=3500
         val SHORT=2000
         var mCurrency="Rs. "

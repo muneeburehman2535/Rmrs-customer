@@ -32,7 +32,7 @@ class MenuAdapter(val requireContext: Context, private var menuList: ArrayList<M
 
         holder.txtMenuName.text=menuList[position].MenuName
         holder.txtDescription.text=menuList[position].Description
-        holder.txtLatestPrice.text=AppGlobal.mCurrency+AppGlobal.roundTwoPlaces(menuList[position].Variant[0].ItemPrice.toDouble())
+        holder.txtLatestPrice.text=AppGlobal.mCurrency+AppGlobal.roundTwoPlaces(menuList[position].Variant[0].CalculatedPrice.toDouble())
         if (menuList[position].CalculatedPrice<menuList[position].ItemPrice)
         {
             val oldPrice=AppGlobal.mCurrency+AppGlobal.roundTwoPlaces(menuList[position].Variant[0].ItemPrice.toDouble())

@@ -4,15 +4,17 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.text.InputType
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.teletaleem.rmrs_customer.R
 import com.teletaleem.rmrs_customer.adapters.VariantAdapter
 import com.teletaleem.rmrs_customer.data_class.cart.Cart
@@ -24,7 +26,7 @@ import com.teletaleem.rmrs_customer.ui.home.CustomerHomeActivity
 import com.teletaleem.rmrs_customer.utilities.AppGlobal
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
-import kotlin.collections.ArrayList
+
 
 @AndroidEntryPoint
 class VariantFragment : Fragment(),VariantAdapter.MenuSelectionListener,View.OnClickListener {
@@ -90,11 +92,31 @@ class VariantFragment : Fragment(),VariantAdapter.MenuSelectionListener,View.OnC
         })
     }
 
+    private fun showErrorDialog(){
+        val alertDialog: AlertDialog = MaterialAlertDialogBuilder(
+            requireActivity(),
+            R.style.MyRounded_MaterialComponents_MaterialAlertDialog
+        ) // for fragment you can use getActivity() instead of this
+            .setView(R.layout.layout_dialog) // custom layout is here
+            .show()
+
+        val btnClose = alertDialog.findViewById<Button>(R.id.btn_close_ld)
+        val btnContinue=alertDialog.findViewById<Button>(R.id.btn_continue_ld)
+        btnClose?.setOnClickListener(View.OnClickListener{
+            alertDialog.cancel()
+        })
+
+        btnContinue?.setOnClickListener(View.OnClickListener {
+            emptyCartRecord()
+            Handler(Looper.getMainLooper()).postDelayed({addItemToCart()},100)
+        })
+    }
+
     @SuppressLint("SetTextI18n")
     private fun setViews() {
         mBinding.txtTitleVariantFragment.text=menuItem.MenuName
         mBinding.txtTitleItemDescFv.text=menuItem.Description
-        mBinding.txtTitleTotalItemPriceFv.text=AppGlobal.mCurrency+AppGlobal.roundTwoPlaces(variantList[0].ItemPrice.toDouble())
+        mBinding.txtTitleTotalItemPriceFv.text=AppGlobal.mCurrency+AppGlobal.roundTwoPlaces(variantList[0].CalculatedPrice.toDouble())
         mBinding.txtQuantityFv.text=itemQuantity.toString()
         val mVariantType="${getString(R.string.title_choose)} ${menuItem.MenuCategory}"
         //mBinding.txtTitleVariantTypeFv.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_CAP_WORDS
@@ -121,7 +143,7 @@ class VariantFragment : Fragment(),VariantAdapter.MenuSelectionListener,View.OnC
     @SuppressLint("SetTextI18n")
     override fun onMenuSelectionClick(position: Int) {
         variantPosition=position
-        mBinding.txtTitleTotalItemPriceFv.text=AppGlobal.mCurrency+AppGlobal.roundTwoPlaces(variantList[position].ItemPrice.toDouble())
+        mBinding.txtTitleTotalItemPriceFv.text=AppGlobal.mCurrency+AppGlobal.roundTwoPlaces(variantList[position].CalculatedPrice.toDouble())
         for (index in 0 until variantList.size)
         {
             variantList[index].isChecked=false
@@ -144,7 +166,8 @@ class VariantFragment : Fragment(),VariantAdapter.MenuSelectionListener,View.OnC
             }
             R.id.btn_add_to_cart_fv->{
 
-                getCartRecord()
+                //getCartRecord()
+                getAllCartRecord()
             }
         }
     }
@@ -155,7 +178,7 @@ class VariantFragment : Fragment(),VariantAdapter.MenuSelectionListener,View.OnC
             , menuItem.MenuName
             , menuItem.MenuID
             , variantList[variantPosition].ItemName
-            , variantList[variantPosition].ItemPrice.toString()
+            , variantList[variantPosition].CalculatedPrice.toString()
             , variantList[variantPosition].ItemPrice.toString()
             , mBinding.txtQuantityFv.text.toString()
             , menuItem.Image
@@ -185,8 +208,7 @@ class VariantFragment : Fragment(),VariantAdapter.MenuSelectionListener,View.OnC
         val cartLiveData=databaseCreator.cartDao.fetchCartRecord(AppGlobal.readString(requireActivity(),AppGlobal.restaurantId,"0"), menuItem.MenuID)
 
         cartLiveData.observe(requireActivity(), Observer {
-
-            if (it != null) {
+            if (it!=null) {
                 AppGlobal.showDialog(getString(R.string.title_alert), getString(R.string.err_already_added), requireActivity())
             } else {
                 addItemToCart()
@@ -194,8 +216,36 @@ class VariantFragment : Fragment(),VariantAdapter.MenuSelectionListener,View.OnC
             }
             cartLiveData.removeObservers(requireActivity())
         })
+    }
+    private fun getAllCartRecord(){
+        val cartLiveData=databaseCreator.cartDao.fetchAllRecord()
+        cartLiveData.observe(requireActivity(), Observer {
+            if(it!=null){
+                val cartList= it as ArrayList<Cart>
+                var isFound=false
+                for (ind in 0 until cartList.size){
+                    if(AppGlobal.readString(requireActivity(),AppGlobal.restaurantId,"0")==cartList[ind].restaurant_id){
+                        isFound=true
+                        break
+                    }
+                }
+                if (!isFound&&cartList.size>0){
+                    showErrorDialog()
+                }
+                else{
+                    getCartRecord()
+                }
+            }
+            else{
+                getCartRecord()
+            }
 
+            cartLiveData.removeObservers(requireActivity())
+        })
+    }
 
+    private fun emptyCartRecord() {
+        viewModel.emptyCartRecord()
     }
 
 

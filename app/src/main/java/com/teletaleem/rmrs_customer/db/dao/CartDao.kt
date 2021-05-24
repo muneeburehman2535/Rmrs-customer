@@ -17,6 +17,9 @@ interface CartDao {
     @Query("select * from cart where restaurant_id = :restaurantId")
     fun fetch(restaurantId:String):LiveData<MutableList<Cart>>
 
+    @Query("select * from cart")
+    fun fetchAllRecord():LiveData<MutableList<Cart>>
+
     @Query ("select * from cart where restaurant_id = :restaurantId and menu_id = :menuId")
     fun fetchCartRecord(restaurantId: String, menuId:String):LiveData<Cart>
 

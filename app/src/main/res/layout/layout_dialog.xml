@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/txt_remove_cart_ld"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/title_clear_cart"
+        android:textSize="@dimen/text_size_small"
+        android:textColor="@color/text_color"
+        android:textAlignment="textStart"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="@dimen/margin_xxxl"
+        android:layout_marginStart="@dimen/margin_xl"
+        android:layout_marginEnd="@dimen/margin_xl"/>
+
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        app:layout_constraintTop_toBottomOf="@+id/txt_remove_cart_ld">
+        <Button
+            android:id="@+id/btn_close_ld"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/title_close"
+            android:textAllCaps="false"
+            android:textColor="@color/colorAccent"
+            android:background="@drawable/border_button_background"
+            android:layout_marginTop="@dimen/margin_xxl"
+            android:layout_marginStart="@dimen/margin_l"
+            android:layout_marginEnd="@dimen/margin_l"
+            android:layout_marginBottom="@dimen/margin_l"/>
+        <Button
+            android:id="@+id/btn_continue_ld"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/title_continue"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:background="@drawable/button_background_avg"
+            android:layout_marginTop="@dimen/margin_xxl"
+            android:layout_marginStart="@dimen/margin_l"
+            android:layout_marginEnd="@dimen/margin_l"
+            android:layout_marginBottom="@dimen/margin_l"/>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

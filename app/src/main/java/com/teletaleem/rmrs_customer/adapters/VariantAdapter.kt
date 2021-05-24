@@ -36,7 +36,7 @@ class VariantAdapter(val context: Context,var variantList:ArrayList<Variant>): R
        val variant=variantList[position]
         holder.radioButtonVariant.isChecked=false
         holder.txtItemName.text = variant.ItemName
-        holder.txtItemPrice.text="+ ${AppGlobal.mCurrency+AppGlobal.roundTwoPlaces(variant.ItemPrice.toDouble())}"
+        holder.txtItemPrice.text="+ ${AppGlobal.mCurrency+AppGlobal.roundTwoPlaces(variant.CalculatedPrice.toDouble())}"
         if (variant.isChecked){
             holder.radioButtonVariant.isChecked=true
         }

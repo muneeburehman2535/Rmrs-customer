@@ -21,4 +21,10 @@ constructor(application: Application, private val roomDBRepository: RoomDBReposi
         }
 
     }
+
+    fun emptyCartRecord(){
+        viewModelScope.launch {
+            roomDBRepository.emptyCart()
+        }
+    }
 }
