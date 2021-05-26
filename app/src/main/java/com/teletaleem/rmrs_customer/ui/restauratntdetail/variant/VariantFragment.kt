@@ -15,6 +15,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.gson.Gson
 import com.teletaleem.rmrs_customer.R
 import com.teletaleem.rmrs_customer.adapters.VariantAdapter
 import com.teletaleem.rmrs_customer.data_class.cart.Cart
@@ -178,14 +179,16 @@ class VariantFragment : Fragment(),VariantAdapter.MenuSelectionListener,View.OnC
             , restaurantName
             , menuItem.MenuName
             , menuItem.MenuID
-            , variantList[variantPosition].ItemName
+            , menuItem.Description
             , variantList[variantPosition].CalculatedPrice.toString()
             , variantList[variantPosition].ItemPrice.toString()
             , mBinding.txtQuantityFv.text.toString()
             , menuItem.Image
-            , variantList[variantPosition].ItemName
+            , menuItem.Description
             ,AppGlobal.readString(requireActivity(),AppGlobal.restaurantAddress,"")
-            ,AppGlobal.readString(requireActivity(),AppGlobal.restaurantImage,""))
+            ,AppGlobal.readString(requireActivity(),AppGlobal.restaurantImage,"")
+            ,Gson().toJson(variantList[variantPosition]).toString()
+            ,variantList[variantPosition].ItemName)
         viewModel.insertCartItem(cart)
         updateCartBadge()
     }
@@ -206,7 +209,7 @@ class VariantFragment : Fragment(),VariantAdapter.MenuSelectionListener,View.OnC
     }
 
     private fun getCartRecord() {
-        val cartLiveData=databaseCreator.cartDao.fetchCartRecord(AppGlobal.readString(requireActivity(),AppGlobal.restaurantId,"0"), menuItem.MenuID)
+        val cartLiveData=databaseCreator.cartDao.fetchCartRecord(AppGlobal.readString(requireActivity(),AppGlobal.restaurantId,"0"), menuItem.MenuID,variantList[variantPosition].ItemName)
 
         cartLiveData.observe(requireActivity(), Observer {
             if (it!=null) {

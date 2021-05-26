@@ -14,6 +14,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.gson.Gson
 import com.teletaleem.rmrs_customer.R
 import com.teletaleem.rmrs_customer.adapters.MenuAdapter
 import com.teletaleem.rmrs_customer.data_class.cart.Cart
@@ -190,19 +191,20 @@ class MenuDetailFragment : Fragment() {
 
 
 
-            val cart = Cart(menu.RestaurantID
-                , restaurantName
-                , menu.MenuName
-                , menu.MenuID
-                , menu.Description
-                , menu.CalculatedPrice.toString()
-                , menu.ItemPrice.toString()
-                , txtItemQuantity.text.toString()
-                , menu.Image
-                , menu.Description
-                ,AppGlobal.readString(requireActivity(),AppGlobal.restaurantAddress,"")
-                ,AppGlobal.readString(requireActivity(),AppGlobal.restaurantImage,""))
-            viewModel.insertCartItem(cart)
+//            val cart = Cart(menu.RestaurantID
+//                , restaurantName
+//                , menu.MenuName
+//                , menu.MenuID
+//                , menu.Description
+//                , menu.CalculatedPrice.toString()
+//                , menu.ItemPrice.toString()
+//                , txtItemQuantity.text.toString()
+//                , menu.Image
+//                , menu.Description
+//                ,AppGlobal.readString(requireActivity(),AppGlobal.restaurantAddress,"")
+//                ,AppGlobal.readString(requireActivity(),AppGlobal.restaurantImage,"")
+//                ,Gson().toJson(menu.Variant))
+//            viewModel.insertCartItem(cart)
 
             updateCartBadge()
 //            (activity as CustomerHomeActivity?)?.changeToolbarName(getString(R.string.title_cart))
@@ -233,22 +235,22 @@ class MenuDetailFragment : Fragment() {
 
     }
 
-    private fun getCartRecord(position: Int) {
-        val cartLiveData=databaseCreator.cartDao.fetchCartRecord(restaurantId, menuList[position].MenuID)
-
-        cartLiveData.observe(requireActivity(), Observer {
-
-            if (it != null) {
-                AppGlobal.showDialog(getString(R.string.title_alert), getString(R.string.err_already_added), requireActivity())
-            } else {
-                showAddToCartDialog(menuList[position])
-
-            }
-            cartLiveData.removeObservers(requireActivity())
-        })
-
-
-    }
+//    private fun getCartRecord(position: Int) {
+//        val cartLiveData=databaseCreator.cartDao.fetchCartRecord(restaurantId, menuList[position].MenuID)
+//
+//        cartLiveData.observe(requireActivity(), Observer {
+//
+//            if (it != null) {
+//                AppGlobal.showDialog(getString(R.string.title_alert), getString(R.string.err_already_added), requireActivity())
+//            } else {
+//                showAddToCartDialog(menuList[position])
+//
+//            }
+//            cartLiveData.removeObservers(requireActivity())
+//        })
+//
+//
+//    }
 
 
 

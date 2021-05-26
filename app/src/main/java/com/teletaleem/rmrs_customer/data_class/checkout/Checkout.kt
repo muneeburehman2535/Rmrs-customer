@@ -20,7 +20,7 @@ data class Checkout(
         val DeliveryCharges:Float,
         var Comments:String,
         var PaymentMethod:String,
-        var CustomerAddress:String
+        var CustomerAddress:String,
 
 
 

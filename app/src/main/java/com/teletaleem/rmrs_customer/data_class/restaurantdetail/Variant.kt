@@ -5,5 +5,6 @@ data class Variant(
     val ItemPrice:Float,
     val CalculatedPrice:Float,
     val DiscountPrice:Int,
-    var isChecked:Boolean
+    var isChecked:Boolean,
+    var Quantity:Int
 )

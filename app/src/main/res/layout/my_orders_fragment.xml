@@ -10,7 +10,7 @@
             type="com.teletaleem.rmrs_customer.ui.myorders.MyOrdersViewModel" />
     </data>
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -22,7 +22,7 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="parent"
                 android:layout_marginTop="@dimen/margin_avg"
-                android:nestedScrollingEnabled="false"/>
+                />
             <TextView
                 android:id="@+id/txt_title_past_orders_fmo"
                 android:layout_width="wrap_content"
@@ -43,6 +43,6 @@
                 android:layout_marginTop="@dimen/margin_avg"
                 android:nestedScrollingEnabled="false"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
 </layout>

@@ -19,6 +19,8 @@ import com.teletaleem.rmrs_customer.data_class.cart.Cart
 import com.teletaleem.rmrs_customer.data_class.checkout.Checkout
 import com.teletaleem.rmrs_customer.data_class.checkout.Delivery
 import com.teletaleem.rmrs_customer.data_class.checkout.MenuOrdered
+import com.teletaleem.rmrs_customer.data_class.restaurantdetail.RestaurantDetailResponse
+import com.teletaleem.rmrs_customer.data_class.restaurantdetail.Variant
 import com.teletaleem.rmrs_customer.databinding.CartFragmentBinding
 import com.teletaleem.rmrs_customer.db.CustomerDatabase
 import com.teletaleem.rmrs_customer.ui.checkout.CheckoutFragment
@@ -92,16 +94,11 @@ class CartFragment : Fragment(),View.OnClickListener,CartItemAdapter.UpdateItemQ
     }
 
     private fun getRestaurantId(){
-//        (activity as CustomerHomeActivity?)?.mModel?.restaurantID?.observe(viewLifecycleOwner, Observer {
-//            this.restaurantId=it
-//            getCartRecord()
-//        })
         restaurantId=AppGlobal.readString(requireActivity(),AppGlobal.restaurantId,"")
         getCartRecord()
     }
 
     private fun getOwnerId(){
-
         ownerId=AppGlobal.readString(requireActivity(),AppGlobal.ownerId,"0")
     }
 
@@ -142,12 +139,7 @@ class CartFragment : Fragment(),View.OnClickListener,CartItemAdapter.UpdateItemQ
     override fun onUpdateItemQuantityClick(quantity: Int?, position: Int) {
         if (quantity==0)
         {
-
-
             deleteItemRow(cartList[position])
-            //cartList.removeAt(position)
-
-
         }
         else{
             cartList[position].quantity=quantity.toString()
@@ -155,15 +147,13 @@ class CartFragment : Fragment(),View.OnClickListener,CartItemAdapter.UpdateItemQ
             updateCart(cartList[position])
         }
 
-        //cartItemAdapter.updateList(cartList)
-
-//        calculatePrice()
-//        setViews()
     }
 
     /*****************************************************************************************************************************/
     //                                    1:- Calculate Total Amounts
     //                                    2:- Set Amounts on Views
+    //                                    3:- Bind Data for checkout
+    //                                    4:- Redirect to checkout
     /*****************************************************************************************************************************/
 
 
@@ -192,11 +182,11 @@ class CartFragment : Fragment(),View.OnClickListener,CartItemAdapter.UpdateItemQ
     @SuppressLint("SetTextI18n")
     private fun setViews() {
         mBinding.txtDeliveryLocCartf.text=AppGlobal.readString(requireActivity(),AppGlobal.customerAddress,"")
-        mBinding.txtItemTotalCf.text=AppGlobal.mCurrency+mItemTotalAmount
-        mBinding.txtDiscountCf.text=AppGlobal.mCurrency+mDiscountTotal
-        mBinding.txtTaxChrgCf.text=AppGlobal.mCurrency+mSalesTaxAmount
-        mBinding.txtServiceChrgCf.text=AppGlobal.mCurrency+mServicesCharges
-        mBinding.txtTotalPayCf.text=AppGlobal.mCurrency+mTotalAmount
+        mBinding.txtItemTotalCf.text=AppGlobal.mCurrency+AppGlobal.roundTwoPlaces(mItemTotalAmount.toDouble())
+        mBinding.txtDiscountCf.text=AppGlobal.mCurrency+AppGlobal.roundTwoPlaces(mDiscountTotal.toDouble())
+        mBinding.txtTaxChrgCf.text=AppGlobal.mCurrency+AppGlobal.roundTwoPlaces(mSalesTaxAmount.toDouble())
+        mBinding.txtServiceChrgCf.text=AppGlobal.mCurrency+AppGlobal.roundTwoPlaces(mServicesCharges.toDouble())
+        mBinding.txtTotalPayCf.text=AppGlobal.mCurrency+AppGlobal.roundTwoPlaces(mTotalAmount.toDouble())
         if (cartList.size>0){
             mBinding.txtRestaurantNameLcic.text=cartList[0].restaurant_name
             mBinding.txtRestaurantLocLcic.text=cartList[0].restaurant_address
@@ -213,8 +203,12 @@ class CartFragment : Fragment(),View.OnClickListener,CartItemAdapter.UpdateItemQ
         val menuOrderedList= arrayListOf<MenuOrdered>()
         for (index in 0 until cartList.size)
         {
-            val menuOrdered=MenuOrdered(cartList[index].menu_id,cartList[index].item_name,cartList[index].item_price,cartList[index].quantity,cartList[index].description)
+
+            val menuOrdered=MenuOrdered(cartList[index].menu_id,cartList[index].item_name,cartList[index].item_price
+                ,cartList[index].quantity,cartList[index].description, Gson().fromJson(cartList[index].variant, Variant::class.java))
+            menuOrdered.variant.Quantity=cartList[index].quantity.toInt()
             menuOrderedList.add(menuOrdered)
+
         }
         val mCheckout=Checkout(cartList[0].restaurant_id,cartList[0].restaurant_name,true,AppGlobal.readString(requireActivity(),AppGlobal.customerId,""),"Usama Wajid",mTotalAmount.toFloat(),mSalesTaxAmount.toFloat(),"New_Order",menuOrderedList, Delivery(),ownerId,mItemTotalAmount.toFloat(),mServicesCharges.toFloat(),"","","")
         Timber.d("Checkout data: ${Gson().toJson(mCheckout)}")
@@ -236,6 +230,7 @@ class CartFragment : Fragment(),View.OnClickListener,CartItemAdapter.UpdateItemQ
     //                                    1:- Get Cart Record from Room Database
     //                                    2:- Update Cart in Room Database
     //                                    3:- Delete Item from Room Database
+    //                                    4:- Update Cart Badge
     /*****************************************************************************************************************************/
 
     private fun getCartRecord(){

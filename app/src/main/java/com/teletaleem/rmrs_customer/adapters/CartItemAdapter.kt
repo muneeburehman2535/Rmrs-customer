@@ -38,7 +38,7 @@ class CartItemAdapter(requireContext: Context, private var cartList:ArrayList<Ca
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.txtItemName.text=cartList[position].item_name
         holder.txtItemDesc.text=cartList[position].item_desc
-        holder.txtItemPrice.text=AppGlobal.mCurrency+cartList[position].item_price
+        holder.txtItemPrice.text=AppGlobal.mCurrency+AppGlobal.roundTwoPlaces(cartList[position].item_price.toDouble())
         holder.txtItemQuantity.text=cartList[position].quantity
 
         holder.txtDecreaseQuantity.setOnClickListener(View.OnClickListener {

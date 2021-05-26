@@ -32,7 +32,7 @@ class PastOrdersAdapter(context: Context,private var pastOrdersList:ArrayList<Pa
         val timeArr=dateArr[1].split(":")
         holder.txtOrderTime.text="${timeArr[0]}:${timeArr[1]}"
         holder.txtOrderDate.text=dateArr[0]
-        holder.txtOrderPrice.text= AppGlobal.mCurrency+ pastOrdersList[position].TotalAmount.toString()
+        holder.txtOrderPrice.text= AppGlobal.mCurrency+ AppGlobal.roundTwoPlaces(pastOrdersList[position].TotalAmount.toDouble())
     }
 
     override fun getItemCount(): Int {

@@ -48,10 +48,10 @@ class OrderDetailActivity : AppCompatActivity(),View.OnClickListener {
         mBinding.txtTitleRestaurantNameDetail.text=checkoutResponse.RestaurantName
         mBinding.txtOrderNumber.text="#${checkoutResponse.OrderID}"
         mBinding.txtOrderFrom.text=checkoutResponse.RestaurantName
-        mBinding.txtSubtotalAod.text=AppGlobal.mCurrency+checkoutResponse.SubTotal.toString()
-        mBinding.txtSalesTaxAod.text=AppGlobal.mCurrency+checkoutResponse.SalesTax
-        mBinding.txtServiceChargesAod.text=AppGlobal.mCurrency+checkoutResponse.DeliveryCharges
-        mBinding.txtTotalAmountAod.text=AppGlobal.mCurrency+checkoutResponse.TotalAmount.toString()
+        mBinding.txtSubtotalAod.text=AppGlobal.mCurrency+AppGlobal.roundTwoPlaces(checkoutResponse.SubTotal.toString().toDouble())
+        mBinding.txtSalesTaxAod.text=AppGlobal.mCurrency+AppGlobal.roundTwoPlaces(checkoutResponse.SalesTax.toDouble())
+        mBinding.txtServiceChargesAod.text=AppGlobal.mCurrency+AppGlobal.roundTwoPlaces(checkoutResponse.DeliveryCharges.toDouble())
+        mBinding.txtTotalAmountAod.text=AppGlobal.mCurrency+AppGlobal.roundTwoPlaces(checkoutResponse.TotalAmount.toDouble())
         mBinding.edtxtSpecialInsOd.setText(checkoutResponse.Comments)
         //AppGlobal.loadImageIntoGlide(mBinding.imgBackgroundOrderDetail,checkoutResponse.)
     }

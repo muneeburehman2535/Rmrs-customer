@@ -20,8 +20,8 @@ interface CartDao {
     @Query("select * from cart")
     fun fetchAllRecord():LiveData<MutableList<Cart>>
 
-    @Query ("select * from cart where restaurant_id = :restaurantId and menu_id = :menuId")
-    fun fetchCartRecord(restaurantId: String, menuId:String):LiveData<Cart>
+    @Query ("select * from cart where restaurant_id = :restaurantId and menu_id = :menuId and variant_name = :variantName")
+    fun fetchCartRecord(restaurantId: String, menuId:String, variantName:String):LiveData<Cart>
 
 
     @Update(onConflict = OnConflictStrategy.REPLACE)

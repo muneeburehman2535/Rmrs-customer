@@ -24,7 +24,7 @@ class OrderDetailIItemsAdapter(itemContext: Context,private var menuOrderedList:
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.txtQuantity.text="${menuOrderedList[position].Quantity}x"
         holder.txtMenuName.text=menuOrderedList[position].MenuName
-        holder.txtItemPrice.text=AppGlobal.mCurrency+menuOrderedList[position].MenuPrice
+        holder.txtItemPrice.text=AppGlobal.mCurrency+AppGlobal.roundTwoPlaces(menuOrderedList[position].MenuPrice.toDouble())
     }
 
     override fun getItemCount(): Int {

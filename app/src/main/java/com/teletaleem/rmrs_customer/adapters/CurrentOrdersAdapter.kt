@@ -24,7 +24,7 @@ class CurrentOrdersAdapter(private val context: Context,private var currentOrder
         holder.txtOrderName.text=currentOrderList[position].RestaurantName
         holder.txtOrderMenu.text=currentOrderList[position].MenuOrdered[0].Description
         //holder.txtOrderTime.text=currentOrderList[position].time
-        holder.txtOrderPrice.text=AppGlobal.mCurrency+currentOrderList[position].TotalAmount.toString()
+        holder.txtOrderPrice.text=AppGlobal.mCurrency+AppGlobal.roundTwoPlaces(currentOrderList[position].TotalAmount.toDouble())
         if (currentOrderList[position].Status=="NEW_ORDER")
         {
             holder.txtOrderStatus.text=context.getString(R.string.status_pending)

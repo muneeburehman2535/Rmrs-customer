@@ -3,6 +3,7 @@ package com.teletaleem.rmrs_customer.data_class.cart
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.teletaleem.rmrs_customer.data_class.restaurantdetail.Variant
 
 @Entity(tableName = "cart")
 data class Cart(
@@ -31,5 +32,9 @@ data class Cart(
         @ColumnInfo(name = "restaurant_address")
         val restaurant_address:String,
         @ColumnInfo(name = "restaurant_image")
-        val restaurant_image:String
+        val restaurant_image:String,
+        @ColumnInfo(name = "variant")
+        val variant:String,
+        @ColumnInfo(name = "variant_name")
+        val variant_name:String
 )

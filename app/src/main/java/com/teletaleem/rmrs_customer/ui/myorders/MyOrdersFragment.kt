@@ -20,6 +20,8 @@ import com.teletaleem.rmrs_customer.databinding.MyOrdersFragmentBinding
 import com.teletaleem.rmrs_customer.ui.orderdetail.OrderDetailActivity
 import com.teletaleem.rmrs_customer.utilities.AppGlobal
 import com.teletaleem.rmrs_customer.utilities.RecyclerItemClickListener
+import java.util.*
+import kotlin.collections.ArrayList
 
 class MyOrdersFragment : Fragment() {
 
@@ -155,6 +157,8 @@ class MyOrdersFragment : Fragment() {
 
                 currentOrderList = it.data.CurrentOrder
                 pastOrderList = it.data.PastOrders
+                currentOrderList.reverse()
+                pastOrderList.reverse()
                 currentOrderAdapter.updateList(currentOrderList)
                 pastOrderAdapter.updateList(pastOrderList)
 
