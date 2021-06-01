@@ -14,7 +14,7 @@ data class Cart(
         val restaurant_name:String,
         @ColumnInfo(name = "item_name")
         val item_name:String,
-        @PrimaryKey()
+
         @ColumnInfo(name = "menu_id")
         val menu_id:String,
         @ColumnInfo(name = "item_desc")
@@ -35,6 +35,7 @@ data class Cart(
         val restaurant_image:String,
         @ColumnInfo(name = "variant")
         val variant:String,
-        @ColumnInfo(name = "variant_name")
-        val variant_name:String
+        @PrimaryKey()
+        @ColumnInfo(name = "variant_id")
+        val variant_id:String
 )

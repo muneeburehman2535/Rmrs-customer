@@ -210,7 +210,20 @@ class CartFragment : Fragment(),View.OnClickListener,CartItemAdapter.UpdateItemQ
             menuOrderedList.add(menuOrdered)
 
         }
-        val mCheckout=Checkout(cartList[0].restaurant_id,cartList[0].restaurant_name,true,AppGlobal.readString(requireActivity(),AppGlobal.customerId,""),"Usama Wajid",mTotalAmount.toFloat(),mSalesTaxAmount.toFloat(),"New_Order",menuOrderedList, Delivery(),ownerId,mItemTotalAmount.toFloat(),mServicesCharges.toFloat(),"","","")
+        val mCheckout=Checkout(cartList[0].restaurant_id
+            ,cartList[0].restaurant_name
+            ,true
+            ,AppGlobal.readString(requireActivity(),AppGlobal.customerId,"")
+            ,AppGlobal.readString(requireActivity(),AppGlobal.customerName,"")
+            ,mTotalAmount.toFloat()
+            ,mSalesTaxAmount.toFloat()
+            ,"New_Order"
+            ,menuOrderedList
+            , Delivery()
+            ,ownerId
+            ,mItemTotalAmount.toFloat()
+            ,mServicesCharges.toFloat()
+            ,"","","")
         Timber.d("Checkout data: ${Gson().toJson(mCheckout)}")
         (activity as CustomerHomeActivity).mModel.updateCheckout(mCheckout)
         redirectCheckout()

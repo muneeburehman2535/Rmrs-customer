@@ -1,13 +1,18 @@
 package com.teletaleem.rmrs_customer.ui.restauratntdetail
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -24,11 +29,12 @@ import com.teletaleem.rmrs_customer.ui.reservation.ReservationActivity
 import com.teletaleem.rmrs_customer.ui.review.restaurantreviews.ReviewsListFragment
 import com.teletaleem.rmrs_customer.utilities.AppGlobal
 import com.teletaleem.rmrs_customer.utilities.BlurBuilder
+import com.teletaleem.rmrs_customer.utilities.GPSTracker
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
 @AndroidEntryPoint
-class RestaurantDetailFragment : Fragment() ,TabsAdapter.ViewClickListener{
+class RestaurantDetailFragment : Fragment() ,TabsAdapter.ViewClickListener,View.OnClickListener{
     private lateinit var mBinding:RestaurantDetailFragmentBinding
     private lateinit var menuList:ArrayList<Menu>
 
@@ -39,6 +45,9 @@ class RestaurantDetailFragment : Fragment() ,TabsAdapter.ViewClickListener{
     private lateinit var viewModel: RestaurantDetailViewModel
     private lateinit var progressDialog: KProgressHUD
     private lateinit var restaurantId:String
+    private val REQUEST_LOCATION = 3
+    private var gps: GPSTracker? = null
+    private lateinit var restaurantDetailResponse: RestaurantDetailResponse
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -71,19 +80,34 @@ class RestaurantDetailFragment : Fragment() ,TabsAdapter.ViewClickListener{
         mBinding.imgRestaurantFrd.clipToOutline=true
         //setTabLayout()
         getRestaurantId()
+        setViewClickListener()
 
-        mBinding.imgRestaurantFrd.setOnClickListener(View.OnClickListener {
-            (activity as CustomerHomeActivity).changeToolbarName(
-                getString(R.string.title_reviews),
-                isProfileMenuVisible = false,
-                locationVisibility = false
-            )
-            (activity as CustomerHomeActivity).loadNewFragment(
-                ReviewsListFragment(),
-                "review_list"
-            )
-        })
 
+    }
+
+    private fun setViewClickListener() {
+        mBinding.imgRestaurantFrd.setOnClickListener(this)
+        mBinding.txtDistanceFrd.setOnClickListener(this)
+    }
+
+    override fun onClick(v: View?) {
+        when(v?.id)
+        {
+            R.id.txt_distance_frd->{
+                checkSDKLevel(REQUEST_LOCATION)
+            }
+            R.id.img_restaurant_frd->{
+                (activity as CustomerHomeActivity).changeToolbarName(
+                    getString(R.string.title_reviews),
+                    isProfileMenuVisible = false,
+                    locationVisibility = false
+                )
+                (activity as CustomerHomeActivity).loadNewFragment(
+                    ReviewsListFragment(),
+                    "review_list"
+                )
+            }
+        }
     }
 
     override fun onResume() {
@@ -174,6 +198,104 @@ class RestaurantDetailFragment : Fragment() ,TabsAdapter.ViewClickListener{
     }
 
 
+    private fun getLatLong() {
+        gps = GPSTracker(context)
+
+        // Check if GPS enabled
+        if (gps!!.canGetLocation()) {
+            val latitude: Double = gps!!.latitude
+            val longitude: Double = gps!!.longitude
+            AppGlobal.startGMapIntent(requireActivity(), restaurantDetailResponse.data.profile[0].Address, latitude, longitude)
+
+            // \n is for new line
+            //Toast.makeText(context, "Your Location is - \nLat: " + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
+        } else {
+            // Can't get location.
+            // GPS or network is not enabled.
+            // Ask user to enable GPS/network in settings.
+            gps!!.showSettingsAlert()
+        }
+    }
+
+    private fun checkLocationPermission() {
+        if (ContextCompat.checkSelfPermission(
+                requireActivity(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            requestPermissions(
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                REQUEST_LOCATION
+            )
+        } else {
+            //dispatchTakePictureIntent();
+            getLatLong()
+        }
+    }
+
+
+    /**
+     * Method for Check SDK level for following permissions:
+     * 1:- Camera,
+     * 2:- Gallery
+     * 3:- Location
+     */
+    private fun checkSDKLevel(action: Int) {
+       if (action == REQUEST_LOCATION) {
+            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
+                checkLocationPermission()
+            } else {
+                //dispatchTakePictureIntent();
+                getLatLong()
+            }
+        }
+    }
+
+    /**
+     * Override onRequestPermissionsResult Method for
+     * getting Permission Results of Camera, Gallery
+     * and Location.
+     */
+//    override fun onRequestPermissionsResult(
+//        requestCode: Int,
+//        permissions: Array<String?>?, grantResults: IntArray) {
+//        when (requestCode) {
+//
+//           REQUEST_LOCATION -> {
+//                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                    getLatLong()
+//                } else {
+//                    AppGlobal.Companion.showToast(
+//                        "Location Permission Denied. Try Again.",requireActivity()
+//                    )
+//                }
+//                return
+//            }
+//        }
+ //   }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        when (requestCode) {
+
+            REQUEST_LOCATION -> {
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    getLatLong()
+                } else {
+                    AppGlobal.Companion.showToast(
+                        "Location Permission Denied. Try Again.",requireActivity()
+                    )
+                }
+                return
+            }
+        }
+    }
+
+
+
     //*************************************************************************************************************************************************/
     //                                                                API Calls Section:
     //************************************************************************************************************************************************/
@@ -197,8 +319,8 @@ class RestaurantDetailFragment : Fragment() ,TabsAdapter.ViewClickListener{
                     AppGlobal.writeString(requireActivity(),AppGlobal.restaurantName,it.data.profile[0].RestaurantName)
                     AppGlobal.writeString(requireActivity(),AppGlobal.restaurantAddress,it.data.profile[0].Address)
                     AppGlobal.writeString(requireActivity(),AppGlobal.restaurantImage,it.data.profile[0].Image)
-
-                    setViews(it)
+                    restaurantDetailResponse=it
+                    setViews()
                     //(activity as CustomerHomeActivity).mModel.updateMenuList(menuList)
                 }
 
@@ -210,7 +332,7 @@ class RestaurantDetailFragment : Fragment() ,TabsAdapter.ViewClickListener{
     }
 
     @SuppressLint("SetTextI18n")
-    private fun setViews(restaurantDetailResponse: RestaurantDetailResponse) {
+    private fun setViews() {
         val mProfile=restaurantDetailResponse.data.profile[0]
         mBinding.txtRestaurantNameFrd.text=mProfile.RestaurantName
         mBinding.txtRestaurantRatingFrd.text=mProfile.Rating.toString()
@@ -223,5 +345,7 @@ class RestaurantDetailFragment : Fragment() ,TabsAdapter.ViewClickListener{
     override fun onViewClicked(updatedMenuList: ArrayList<Menu>) {
         (requireActivity() as CustomerHomeActivity).mModel.updateMenuList(updatedMenuList)
     }
+
+
 
 }

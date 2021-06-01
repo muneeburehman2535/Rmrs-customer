@@ -7,6 +7,7 @@ import android.content.SharedPreferences
 import android.content.res.Resources
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
+import android.net.Uri
 import android.os.Build
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -28,7 +29,7 @@ class AppGlobal {
     companion object{
         var NOTIFICATION_CHANNEL = "RMRSCUSTOMER"
         val NOTIFICATION_GENERAL = "RMRS_Gernal"
-        var BUILD = "STAGING"
+        var BUILD = "PRODUCTION"
         val LONG=3500
         val SHORT=2000
         var mCurrency="Rs. "
@@ -253,6 +254,16 @@ class AppGlobal {
 
             } catch (e: Resources.NotFoundException) {
                 e.printStackTrace()
+            }
+        }
+
+        fun startGMapIntent(context: Context, address: String, latitude: Double, longitude: Double)
+        {
+            val gmmIntentUri: Uri = Uri.parse("geo:$latitude,$longitude?q=$address")
+            val mapIntent =Intent(Intent.ACTION_VIEW, gmmIntentUri);
+            mapIntent.setPackage("com.google.android.apps.maps");
+            if (mapIntent.resolveActivity(context.getPackageManager()) != null) {
+                context.startActivity(mapIntent);
             }
         }
 

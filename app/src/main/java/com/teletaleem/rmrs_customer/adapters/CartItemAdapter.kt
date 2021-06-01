@@ -7,8 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.google.gson.Gson
 import com.teletaleem.rmrs_customer.R
 import com.teletaleem.rmrs_customer.data_class.cart.Cart
+import com.teletaleem.rmrs_customer.data_class.restaurantdetail.Variant
 import com.teletaleem.rmrs_customer.utilities.AppGlobal
 
 class CartItemAdapter(requireContext: Context, private var cartList:ArrayList<Cart>) : RecyclerView.Adapter<CartItemAdapter.ViewHolder>() {
@@ -36,10 +38,12 @@ class CartItemAdapter(requireContext: Context, private var cartList:ArrayList<Ca
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val variant= Gson().fromJson(cartList[position].variant, Variant::class.java)
         holder.txtItemName.text=cartList[position].item_name
         holder.txtItemDesc.text=cartList[position].item_desc
         holder.txtItemPrice.text=AppGlobal.mCurrency+AppGlobal.roundTwoPlaces(cartList[position].item_price.toDouble())
         holder.txtItemQuantity.text=cartList[position].quantity
+        holder.txtItemVariant.text="(${variant.ItemName})"
 
         holder.txtDecreaseQuantity.setOnClickListener(View.OnClickListener {
             updateItemQuantityListener.onUpdateItemQuantityClick(cartList[position].quantity.toInt()-1,position)
@@ -56,12 +60,13 @@ class CartItemAdapter(requireContext: Context, private var cartList:ArrayList<Ca
     }
 
     class ViewHolder(itemView: View):RecyclerView.ViewHolder(itemView) {
-        val txtItemName=itemView.findViewById<TextView>(R.id.txt_item_name_lcic)
-        val txtItemDesc=itemView.findViewById<TextView>(R.id.txt_item_desc_lcic)
-        val txtItemPrice=itemView.findViewById<TextView>(R.id.txt_item_price_lcic)
-        val txtItemQuantity=itemView.findViewById<TextView>(R.id.txt_quantity_lcic)
-        val txtIncreaseQuantity=itemView.findViewById<TextView>(R.id.txt_plus_lcic)
-        val txtDecreaseQuantity=itemView.findViewById<TextView>(R.id.txt_minus_lcic)
+        val txtItemName=itemView.findViewById<TextView>(R.id.txt_item_name_lcic)!!
+        val txtItemDesc=itemView.findViewById<TextView>(R.id.txt_item_desc_lcic)!!
+        val txtItemPrice=itemView.findViewById<TextView>(R.id.txt_item_price_lcic)!!
+        val txtItemQuantity=itemView.findViewById<TextView>(R.id.txt_quantity_lcic)!!
+        val txtIncreaseQuantity=itemView.findViewById<TextView>(R.id.txt_plus_lcic)!!
+        val txtDecreaseQuantity=itemView.findViewById<TextView>(R.id.txt_minus_lcic)!!
+        val txtItemVariant=itemView.findViewById<TextView>(R.id.txt_item_variant_lcic)
     }
 
     fun updateList(cartList:ArrayList<Cart>){

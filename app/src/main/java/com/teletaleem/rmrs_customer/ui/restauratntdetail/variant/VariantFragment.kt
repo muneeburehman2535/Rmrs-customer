@@ -188,7 +188,7 @@ class VariantFragment : Fragment(),VariantAdapter.MenuSelectionListener,View.OnC
             ,AppGlobal.readString(requireActivity(),AppGlobal.restaurantAddress,"")
             ,AppGlobal.readString(requireActivity(),AppGlobal.restaurantImage,"")
             ,Gson().toJson(variantList[variantPosition]).toString()
-            ,variantList[variantPosition].ItemName)
+            ,variantList[variantPosition].VariantID)
         viewModel.insertCartItem(cart)
         updateCartBadge()
     }

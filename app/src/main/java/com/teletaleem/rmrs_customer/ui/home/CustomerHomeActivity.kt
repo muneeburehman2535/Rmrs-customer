@@ -38,10 +38,12 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.installations.FirebaseInstallations
 import com.google.firebase.messaging.FirebaseMessaging
+import com.kaopiz.kprogresshud.KProgressHUD
 import com.shivtechs.maplocationpicker.LocationPickerActivity
 import com.shivtechs.maplocationpicker.MapUtility
 import com.teletaleem.rmrs_customer.R
 import com.teletaleem.rmrs_customer.data_class.cart.Cart
+import com.teletaleem.rmrs_customer.data_class.fcm.FcmNotification
 import com.teletaleem.rmrs_customer.databinding.ActivityCustomerHomeBinding
 import com.teletaleem.rmrs_customer.db.CustomerDatabase
 import com.teletaleem.rmrs_customer.shared_view_models.SharedViewModel
@@ -84,14 +86,16 @@ class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItem
     private val REQUEST_LOCATION = 1
     var mContext=this
     private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private lateinit var progressDialog: KProgressHUD
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mBinding=DataBindingUtil.setContentView(this, R.layout.activity_customer_home)
         mModel = ViewModelProvider(this).get(SharedViewModel::class.java)
-        mBinding
+        mViewModel=ViewModelProvider(this).get(CustomerHomeViewModel::class.java)
         databaseCreator= CustomerDatabase.getInstance(this)
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+        progressDialog=AppGlobal.setProgressDialog(this)
 
 
         setBottomNavigationView()
@@ -118,7 +122,9 @@ class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItem
             // Get new FCM registration token
             val newToken = task.result
             Timber.d("Token: $newToken")
-            Timber.d("Old Token: ${AppGlobal.readString(this,AppGlobal.tokenId,"0")}")
+            val fcmNotification=FcmNotification(AppGlobal.readString(this,AppGlobal.customerId,"0"),"Android",newToken)
+            //updateFcmToken(fcmNotification)
+
         })
 
     }
@@ -649,6 +655,26 @@ class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItem
 
     companion object{
         val mContext=this
+    }
+
+    /**************************************************************************************************************************/
+    //                                          API's Calling Section
+    /**************************************************************************************************************************/
+
+    /*
+   * Get Categories API Method
+   * */
+    private fun updateFcmToken(fcmNotification: FcmNotification){
+        progressDialog.setLabel("Please Wait")
+        progressDialog.show()
+
+        mViewModel.updateFcmTokenResponse(fcmNotification).observe(this, {
+            //progressDialog.dismiss()
+            if (it.Message == "Success") {
+                Timber.d("Updated Token: ${it.data.result.Token}")
+            }
+        })
+
     }
 
 

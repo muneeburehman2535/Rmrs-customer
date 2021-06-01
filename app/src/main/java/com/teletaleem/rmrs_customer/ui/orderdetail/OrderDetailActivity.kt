@@ -53,6 +53,7 @@ class OrderDetailActivity : AppCompatActivity(),View.OnClickListener {
         mBinding.txtServiceChargesAod.text=AppGlobal.mCurrency+AppGlobal.roundTwoPlaces(checkoutResponse.DeliveryCharges.toDouble())
         mBinding.txtTotalAmountAod.text=AppGlobal.mCurrency+AppGlobal.roundTwoPlaces(checkoutResponse.TotalAmount.toDouble())
         mBinding.edtxtSpecialInsOd.setText(checkoutResponse.Comments)
+        mBinding.txtOrderDelivery.text = checkoutResponse.CustomerAddress
         //AppGlobal.loadImageIntoGlide(mBinding.imgBackgroundOrderDetail,checkoutResponse.)
     }
 

@@ -4,6 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.Gson
 import com.souq.uae.thebooksouq.Conversions.ConvertResponseToString
+import com.teletaleem.rmrs_customer.data_class.fcm.FCMTokenResponse
+import com.teletaleem.rmrs_customer.data_class.fcm.FcmNotification
 import com.teletaleem.rmrs_customer.data_class.home.category.CategoryResponse
 import com.teletaleem.rmrs_customer.data_class.home.restaurants.RestaurantsResponse
 import com.teletaleem.rmrs_customer.network.RetrofitClass
@@ -17,6 +19,7 @@ class HomeRepository {
 
     private lateinit var categoryResponseLiveData: MutableLiveData<CategoryResponse>
     private lateinit var restaurantResponseLiveData: MutableLiveData<RestaurantsResponse>
+    private lateinit var fcmResponseLiveData: MutableLiveData<FCMTokenResponse>
 
     fun getLoginResponseLiveData(): LiveData<CategoryResponse> {
         categoryResponseLiveData=MutableLiveData<CategoryResponse>()
@@ -65,5 +68,29 @@ class HomeRepository {
             }
         })
         return restaurantResponseLiveData
+    }
+
+    fun updateFCMTokenResponseLiveData(fcmNotification: FcmNotification): LiveData<FCMTokenResponse> {
+        fcmResponseLiveData=MutableLiveData<FCMTokenResponse>()
+        RetrofitClass.getHomeInstance()?.getHomeRequestsInstance()?.updateFCMToken(fcmNotification)?.enqueue(object : Callback<ResponseBody?> {
+            override fun onResponse(call: Call<ResponseBody?>, response: Response<ResponseBody?>) {
+                var fcmTokenResponse: FCMTokenResponse?=null
+
+                fcmTokenResponse = if (response.body()==null) {
+                    Gson().fromJson(response.errorBody()?.string(), FCMTokenResponse::class.java)
+
+                } else{
+                    Gson().fromJson(ConvertResponseToString.getString(response), FCMTokenResponse::class.java)
+
+                }
+                Timber.d(Gson().toJson(fcmTokenResponse).toString())
+                fcmResponseLiveData.postValue(fcmTokenResponse)
+            }
+
+            override fun onFailure(call: Call<ResponseBody?>, t: Throwable) {
+                Timber.e("Error: ${t.message.toString()}")
+            }
+        })
+        return fcmResponseLiveData
     }
 }
