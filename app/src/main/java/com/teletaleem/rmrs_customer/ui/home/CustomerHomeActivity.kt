@@ -1,6 +1,7 @@
 package com.teletaleem.rmrs_customer.ui.home
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
@@ -32,11 +33,9 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.tasks.OnCompleteListener
-import com.google.android.gms.tasks.OnSuccessListener
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
-import com.google.firebase.installations.FirebaseInstallations
 import com.google.firebase.messaging.FirebaseMessaging
 import com.kaopiz.kprogresshud.KProgressHUD
 import com.shivtechs.maplocationpicker.LocationPickerActivity
@@ -87,7 +86,10 @@ class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItem
     var mContext=this
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var progressDialog: KProgressHUD
+    var deviceName = Build.MODEL
+    var deviceId=Build.ID
 
+    @SuppressLint("HardwareIds")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mBinding=DataBindingUtil.setContentView(this, R.layout.activity_customer_home)
@@ -96,6 +98,11 @@ class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItem
         databaseCreator= CustomerDatabase.getInstance(this)
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         progressDialog=AppGlobal.setProgressDialog(this)
+        val deviceID = Settings.Secure.getString(
+            this.contentResolver,
+            Settings.Secure.ANDROID_ID
+        )
+        Timber.d("Device Name: ${deviceName} \n Device Id: ${deviceId} \nSecond Device Id: ${deviceID}")
 
 
         setBottomNavigationView()
@@ -122,8 +129,8 @@ class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItem
             // Get new FCM registration token
             val newToken = task.result
             Timber.d("Token: $newToken")
-            val fcmNotification=FcmNotification(AppGlobal.readString(this,AppGlobal.customerId,"0"),"Android",newToken)
-            //updateFcmToken(fcmNotification)
+            val fcmNotification=FcmNotification(AppGlobal.readString(this,AppGlobal.customerId,"0"),"Android",newToken,deviceID)
+            updateFcmToken(fcmNotification)
 
         })
 
@@ -669,9 +676,10 @@ class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItem
         progressDialog.show()
 
         mViewModel.updateFcmTokenResponse(fcmNotification).observe(this, {
-            //progressDialog.dismiss()
+            progressDialog.dismiss()
             if (it.Message == "Success") {
                 Timber.d("Updated Token: ${it.data.result.Token}")
+
             }
         })
 

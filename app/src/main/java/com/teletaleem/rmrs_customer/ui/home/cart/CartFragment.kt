@@ -206,7 +206,7 @@ class CartFragment : Fragment(),View.OnClickListener,CartItemAdapter.UpdateItemQ
 
             val menuOrdered=MenuOrdered(cartList[index].menu_id,cartList[index].item_name,cartList[index].item_price
                 ,cartList[index].quantity,cartList[index].description, Gson().fromJson(cartList[index].variant, Variant::class.java))
-            menuOrdered.variant.Quantity=cartList[index].quantity.toInt()
+            menuOrdered.Variant.Quantity=cartList[index].quantity.toInt()
             menuOrderedList.add(menuOrdered)
 
         }

@@ -45,7 +45,6 @@ class RestaurantDetailFragment : Fragment() ,TabsAdapter.ViewClickListener,View.
     private lateinit var viewModel: RestaurantDetailViewModel
     private lateinit var progressDialog: KProgressHUD
     private lateinit var restaurantId:String
-    private val REQUEST_LOCATION = 3
     private var gps: GPSTracker? = null
     private lateinit var restaurantDetailResponse: RestaurantDetailResponse
 
@@ -94,7 +93,8 @@ class RestaurantDetailFragment : Fragment() ,TabsAdapter.ViewClickListener,View.
         when(v?.id)
         {
             R.id.txt_distance_frd->{
-                checkSDKLevel(REQUEST_LOCATION)
+
+                getLatLong()
             }
             R.id.img_restaurant_frd->{
                 (activity as CustomerHomeActivity).changeToolbarName(
@@ -216,85 +216,6 @@ class RestaurantDetailFragment : Fragment() ,TabsAdapter.ViewClickListener,View.
             gps!!.showSettingsAlert()
         }
     }
-
-    private fun checkLocationPermission() {
-        if (ContextCompat.checkSelfPermission(
-                requireActivity(),
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            requestPermissions(
-                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-                REQUEST_LOCATION
-            )
-        } else {
-            //dispatchTakePictureIntent();
-            getLatLong()
-        }
-    }
-
-
-    /**
-     * Method for Check SDK level for following permissions:
-     * 1:- Camera,
-     * 2:- Gallery
-     * 3:- Location
-     */
-    private fun checkSDKLevel(action: Int) {
-       if (action == REQUEST_LOCATION) {
-            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
-                checkLocationPermission()
-            } else {
-                //dispatchTakePictureIntent();
-                getLatLong()
-            }
-        }
-    }
-
-    /**
-     * Override onRequestPermissionsResult Method for
-     * getting Permission Results of Camera, Gallery
-     * and Location.
-     */
-//    override fun onRequestPermissionsResult(
-//        requestCode: Int,
-//        permissions: Array<String?>?, grantResults: IntArray) {
-//        when (requestCode) {
-//
-//           REQUEST_LOCATION -> {
-//                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-//                    getLatLong()
-//                } else {
-//                    AppGlobal.Companion.showToast(
-//                        "Location Permission Denied. Try Again.",requireActivity()
-//                    )
-//                }
-//                return
-//            }
-//        }
- //   }
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        when (requestCode) {
-
-            REQUEST_LOCATION -> {
-                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    getLatLong()
-                } else {
-                    AppGlobal.Companion.showToast(
-                        "Location Permission Denied. Try Again.",requireActivity()
-                    )
-                }
-                return
-            }
-        }
-    }
-
-
 
     //*************************************************************************************************************************************************/
     //                                                                API Calls Section:

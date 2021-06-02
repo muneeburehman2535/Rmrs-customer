@@ -51,6 +51,7 @@ class AppGlobal {
         const val deviceId="device_id"
 
 
+
         /*****************************************************Base URLs********************************************************/
         var HOME_BASE_URL = if ("PRODUCTION" == BUILD) "https://Customer.teletaleem.com" else "https://customer-backend.k8s.symcloud.net"
         var HOME_BASE_URL_IMAGE = if ("PRODUCTION" == BUILD) "live-url" else "stage-url"

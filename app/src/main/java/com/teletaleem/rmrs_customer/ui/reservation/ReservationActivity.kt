@@ -66,13 +66,14 @@ class ReservationActivity : AppCompatActivity(), View.OnClickListener, DatePicke
         {
             R.id.edtxt_reservation_time_ar->{
 
-                    val calendar: Calendar = Calendar.getInstance()
-                    day = calendar.get(Calendar.DAY_OF_MONTH)
-                    month = calendar.get(Calendar.MONTH)
-                    year = calendar.get(Calendar.YEAR)
-                    val datePickerDialog =
-                        DatePickerDialog(this, this, year, month,day)
-                    datePickerDialog.show()
+                val calendar: Calendar = Calendar.getInstance()
+                //calendar.add(Calendar.DAY_OF_MONTH,1)
+                day = calendar.get(Calendar.DAY_OF_MONTH)
+                month = calendar.get(Calendar.MONTH)
+                year = calendar.get(Calendar.YEAR)
+                val datePickerDialog = DatePickerDialog(this, this, year, month,day)
+                datePickerDialog.datePicker.minDate = System.currentTimeMillis()-1000
+                datePickerDialog.show()
             }
             R.id.btn_reservation_ar->{
                 if (checkCredentials())
@@ -130,14 +131,14 @@ class ReservationActivity : AppCompatActivity(), View.OnClickListener, DatePicke
     }
 
     override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
-        myDay = day
+        myDay = dayOfMonth
         myYear = year
         myMonth = month
         val calendar: Calendar = Calendar.getInstance()
         hour = calendar.get(Calendar.HOUR)
         minute = calendar.get(Calendar.MINUTE)
-        val timePickerDialog = TimePickerDialog(this, this, hour, minute,
-            DateFormat.is24HourFormat(this))
+        val timePickerDialog = TimePickerDialog(this, this, hour, minute, DateFormat.is24HourFormat(this))
+
         timePickerDialog.show()
     }
 
@@ -147,7 +148,13 @@ class ReservationActivity : AppCompatActivity(), View.OnClickListener, DatePicke
         //mBinding.edtxtReservationTimeAr.text = " myYear + "\n" + "Month: " + myMonth + "\n" + "Day: " + myDay + "\n" + "Hour: " + myHour + "\n" + "Minute: " + myMinute"
         mCalendar=Calendar.getInstance()
         mCalendar.set(myYear,myMonth,myDay,myHour,myMinute)
-        mBinding.edtxtReservationTimeAr.setText(AppGlobal.dateToTimeStamp(Date(mCalendar.timeInMillis),"MMM dd, yyyy hh:mm a"))
+        if (mCalendar.timeInMillis>Calendar.getInstance().timeInMillis){
+            mBinding.edtxtReservationTimeAr.setText(AppGlobal.dateToTimeStamp(Date(mCalendar.timeInMillis),"MMM dd, yyyy hh:mm a"))
+        }
+        else{
+            AppGlobal.snackBar(mBinding.layoutParent,getString(R.string.err_greater_time),AppGlobal.LONG)
+        }
+
     }
 
     //*************************************************************************************************************************************************/

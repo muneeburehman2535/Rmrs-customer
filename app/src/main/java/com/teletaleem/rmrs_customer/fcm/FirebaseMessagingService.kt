@@ -33,11 +33,11 @@ class FirebaseMessagingService : FirebaseMessagingService() {
 
     @SuppressLint("LogNotTimber")
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
-        Log.d(TAG, remoteMessage!!.data.toString())
-        Log.d("MessageBody", remoteMessage!!.messageId!!)
+        Log.d(TAG, remoteMessage.data.toString())
+        Log.d("MessageBody", remoteMessage.messageId!!)
 
 
-        if (remoteMessage.getNotification() != null) {
+        if (remoteMessage.notification != null) {
             Timber.d( "Message Notification Title: ${remoteMessage.notification!!.title} " );
             Log.d(TAG, "Message Notification Body: ${ remoteMessage.notification!!.body}");
             val defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)

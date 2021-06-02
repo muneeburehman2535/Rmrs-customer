@@ -142,6 +142,7 @@
     <string name="err_address">Enter Address</string>
     <string name="err_no_internet">No internet connection! Try again.</string>
     <string name="err_already_added">Selected item already added</string>
+    <string name="err_greater_time">Selected time must be greater than current time</string>
     <string name="title_activity_customer_home">CustomerHomeActivity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -170,7 +171,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
-    <string name="version_number">Version: 1.0.6</string>
+    <string name="version_number">Version: 1.0.7</string>
 
 
 </resources>
