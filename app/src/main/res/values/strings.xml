@@ -103,6 +103,9 @@
     <string name="title_total">Total (incl. GST)</string>
     <string name="title_reorder">Reorder</string>
     <string name="status_pending">Pending</string>
+    <string name="title_reserved">Reserved</string>
+    <string name="title_rejected">Rejected</string>
+    <string name="title_confirmed">Confirmed</string>
     <string name="status_in_progress">In Progress</string>
     <string name="title_special_instructions">Special Instructions</string>
     <string name="title_choose">Choose Your </string>

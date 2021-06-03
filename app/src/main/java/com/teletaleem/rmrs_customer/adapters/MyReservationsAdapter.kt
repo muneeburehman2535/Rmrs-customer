@@ -32,6 +32,17 @@ class MyReservationsAdapter(private val mContext:Context,private var reservation
         {
             holder.txtReservationStatus.text=mContext.getString(R.string.status_pending)
         }
+        else if (reservationList[position].Status=="RESERVED")
+        {
+            holder.txtReservationStatus.text=mContext.getString(R.string.title_reserved)
+        }
+        else if (reservationList[position].Status=="REJECTED")
+        {
+            holder.txtReservationStatus.text=mContext.getString(R.string.title_rejected)
+        }
+        else{
+            holder.txtReservationStatus.text=mContext.getString(R.string.title_confirmed)
+        }
 
         val dateArr=reservationList[position].ReservationTime.split("T")
         val date=dateArr[0].split("-")

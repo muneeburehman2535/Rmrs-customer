@@ -252,6 +252,7 @@ class CartFragment : Fragment(),View.OnClickListener,CartItemAdapter.UpdateItemQ
         cartLiveData.observe(requireActivity(), Observer {
 
             cartList= it as ArrayList<Cart>
+            mBinding.btnPayToProceed.isEnabled = cartList.size > 0
 
             cartItemAdapter.updateList(it as ArrayList<Cart>)
             calculatePrice()
