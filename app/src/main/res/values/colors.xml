@@ -23,4 +23,8 @@
     <color name="color_orange">#FF8C00</color>
     <color name="color_layout_background">#F5F5F5</color>
     <color name="light_grey">#f9f9f9</color>
+
+    <color name="color_pending">#ffb64d</color>
+    <color name="color_rejected">#ff2d50</color>
+    <color name="color_reserved">#007BFF</color>
 </resources>

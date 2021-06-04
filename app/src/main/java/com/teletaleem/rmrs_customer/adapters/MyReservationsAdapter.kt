@@ -2,11 +2,13 @@ package com.teletaleem.rmrs_customer.adapters
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.TextureView
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.teletaleem.rmrs_customer.R
 import com.teletaleem.rmrs_customer.data_class.reservation.Result
@@ -22,26 +24,30 @@ class MyReservationsAdapter(private val mContext:Context,private var reservation
         return ViewHolder(itemView)
     }
 
+    @RequiresApi(Build.VERSION_CODES.M)
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
         holder.txtCustomerName.text=reservationList[position].CustomerName
         holder.txtCustomerMobile.text=reservationList[position].MobileNumber
         holder.txtRestaurantName.text=reservationList[position].RestaurantName
-        if (reservationList[position].Status=="AWAITING_ACCEPTANCE")
-        {
-            holder.txtReservationStatus.text=mContext.getString(R.string.status_pending)
-        }
-        else if (reservationList[position].Status=="RESERVED")
-        {
-            holder.txtReservationStatus.text=mContext.getString(R.string.title_reserved)
-        }
-        else if (reservationList[position].Status=="REJECTED")
-        {
-            holder.txtReservationStatus.text=mContext.getString(R.string.title_rejected)
-        }
-        else{
-            holder.txtReservationStatus.text=mContext.getString(R.string.title_confirmed)
+        when (reservationList[position].Status) {
+            "AWAITING_ACCEPTANCE" -> {
+                holder.txtReservationStatus.text=mContext.getString(R.string.status_pending)
+                holder.txtReservationStatus.setTextColor(mContext.getColor(R.color.color_pending))
+            }
+            "RESERVED" -> {
+                holder.txtReservationStatus.text=mContext.getString(R.string.title_reserved)
+                holder.txtReservationStatus.setTextColor(mContext.getColor(R.color.color_reserved))
+            }
+            "REJECTED" -> {
+                holder.txtReservationStatus.text=mContext.getString(R.string.title_rejected)
+                holder.txtReservationStatus.setTextColor(mContext.getColor(R.color.color_rejected))
+            }
+            else -> {
+                holder.txtReservationStatus.text=mContext.getString(R.string.title_confirmed)
+                holder.txtReservationStatus.setTextColor(mContext.getColor(R.color.colorAccent))
+            }
         }
 
         val dateArr=reservationList[position].ReservationTime.split("T")

@@ -581,6 +581,7 @@ class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItem
                     View.GONE,
                     false
                 )
+                mBinding.drawerLayout.closeDrawers()
                 return true
             }
             R.id.nav_my_orders -> {
@@ -641,7 +642,7 @@ class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItem
                 setToolbarTitle(
                     getString(R.string.title_toolbar_update_password),
                     UpdatePasswordFragment(),
-                    true,
+                    false,
                     View.GONE,
                     false
                 )

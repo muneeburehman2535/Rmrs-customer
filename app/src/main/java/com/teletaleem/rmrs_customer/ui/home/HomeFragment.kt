@@ -348,13 +348,19 @@ class HomeFragment : Fragment() ,View.OnClickListener,RestaurantAdapter.AddToFav
             homeViewModel.getCategoryResponse().observe(it, {
                 //progressDialog.dismiss()
                 if (it.Message == "Success") {
-
                     categoriesList = it.data.categories
-                    categoriesList[0].isClicked = true
-                    categoryAdapter.updateCategoryList(categoriesList)
-                    if (categoriesList.size > 0) {
-                        getRestaurantsList(categoriesList[0].CategoryID)
+                    if (categoriesList.size>0){
+
+                        categoriesList[0].isClicked = true
+                        categoryAdapter.updateCategoryList(categoriesList)
+                        if (categoriesList.size > 0) {
+                            getRestaurantsList(categoriesList[0].CategoryID)
+                        }
                     }
+                    else{
+                        progressDialog.dismiss()
+                    }
+
 
 
                 } else {

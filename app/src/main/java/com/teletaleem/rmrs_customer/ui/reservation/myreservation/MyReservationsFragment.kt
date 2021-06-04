@@ -74,6 +74,7 @@ class MyReservationsFragment : Fragment() {
             progressDialog.dismiss()
             if (it.Message == "Success") {
                 reservationList=it.data.result
+                reservationList.reverse()
                 myReservationsAdapter.updateReservationList(reservationList)
 
             } else {

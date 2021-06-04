@@ -2,6 +2,7 @@ package com.teletaleem.rmrs_customer.ui.myorders
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +11,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
 import com.kaopiz.kprogresshud.KProgressHUD
 import com.teletaleem.rmrs_customer.R
 import com.teletaleem.rmrs_customer.adapters.*
@@ -21,7 +21,6 @@ import com.teletaleem.rmrs_customer.ui.orderdetail.OrderDetailActivity
 import com.teletaleem.rmrs_customer.utilities.AppGlobal
 import com.teletaleem.rmrs_customer.utilities.RecyclerItemClickListener
 import java.util.*
-import kotlin.collections.ArrayList
 
 class MyOrdersFragment : Fragment() {
 
@@ -33,6 +32,8 @@ class MyOrdersFragment : Fragment() {
     private lateinit var pastOrderAdapter: PastOrdersAdapter
 
     private lateinit var progressDialog: KProgressHUD
+
+    private lateinit var threadTimer:CountDownTimer
 
     companion object {
         fun newInstance() = MyOrdersFragment()
@@ -63,11 +64,33 @@ class MyOrdersFragment : Fragment() {
         setCurrentOrdersAdapter()
         setPastOrdersAdapter()
         getCustomerId()
+        refreshList()
+
         
     }
 
     private fun getCustomerId() {
         getMyOrdersList(AppGlobal.readString(requireActivity(), AppGlobal.customerId, "0"))
+    }
+
+    private fun refreshList(){
+        val noOfMinutes = 15 * 1000
+        threadTimer = object: CountDownTimer(noOfMinutes.toLong(), 1000) {
+            override fun onTick(millisUntilFinished: Long) {
+                //getMyOrdersList(AppGlobal.readString(requireActivity(), AppGlobal.customerId, "0"))
+            }
+
+            override fun onFinish() {
+                getMyOrdersList(AppGlobal.readString(requireActivity(), AppGlobal.customerId, "0"))
+                refreshList()
+            }
+        }
+        threadTimer.start()
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        threadTimer.cancel()
     }
 
 //    private fun setCurrentOrderList() {
@@ -153,6 +176,7 @@ class MyOrdersFragment : Fragment() {
         progressDialog.show()
         viewModel.getMyOrdersResponse(customerId).observe(requireActivity(), {
             progressDialog.dismiss()
+            //refreshList()
             if (it.Message == "Success") {
 
                 currentOrderList = it.data.CurrentOrder

@@ -2,10 +2,12 @@ package com.teletaleem.rmrs_customer.adapters
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.teletaleem.rmrs_customer.R
 import com.teletaleem.rmrs_customer.data_class.myorders.currentorders.CurrentOrderDataClass
@@ -19,6 +21,7 @@ class CurrentOrdersAdapter(private val context: Context,private var currentOrder
         return ViewHolder(itemView)
     }
 
+    @RequiresApi(Build.VERSION_CODES.M)
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.txtOrderName.text=currentOrderList[position].RestaurantName
@@ -28,9 +31,11 @@ class CurrentOrdersAdapter(private val context: Context,private var currentOrder
         if (currentOrderList[position].Status=="NEW_ORDER")
         {
             holder.txtOrderStatus.text=context.getString(R.string.status_pending)
+            holder.txtOrderStatus.setTextColor(context.getColor(R.color.color_pending))
         }
         else{
             holder.txtOrderStatus.text=context.getString(R.string.status_in_progress)
+            holder.txtOrderStatus.setTextColor(context.getColor(R.color.colorAccent))
         }
     }
 
