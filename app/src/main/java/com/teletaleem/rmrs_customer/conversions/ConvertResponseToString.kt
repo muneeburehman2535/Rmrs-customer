@@ -1,4 +1,4 @@
-package com.souq.uae.thebooksouq.Conversions
+package com.teletaleem.rmrs_customer.conversions
 
 import android.util.Log
 

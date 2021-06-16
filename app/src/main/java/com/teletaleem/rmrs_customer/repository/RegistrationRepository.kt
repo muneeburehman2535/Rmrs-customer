@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.Gson
-import com.souq.uae.thebooksouq.Conversions.ConvertResponseToString
+import com.teletaleem.rmrs_customer.conversions.ConvertResponseToString
 import com.teletaleem.rmrs_customer.data_class.send_otp.SendOTP
 import com.teletaleem.rmrs_customer.data_class.send_otp.SendOTPResponse
 import com.teletaleem.rmrs_customer.data_class.email_mobile.EmailMobileVerification

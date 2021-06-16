@@ -162,6 +162,7 @@ class CartFragment : Fragment(),View.OnClickListener,CartItemAdapter.UpdateItemQ
         mDiscountTotal="0"
         for (index in 0 until cartList.size)
         {
+
             mItemTotalAmount= (mItemTotalAmount.toDouble()+(cartList[index].original_price.toDouble()*cartList[index].quantity.toDouble())).toString()
             mDiscountTotal= (mDiscountTotal.toDouble()+(cartList[index].item_price.toDouble()*cartList[index].quantity.toDouble())).toString()
 
@@ -203,9 +204,18 @@ class CartFragment : Fragment(),View.OnClickListener,CartItemAdapter.UpdateItemQ
         val menuOrderedList= arrayListOf<MenuOrdered>()
         for (index in 0 until cartList.size)
         {
+            val variant= Gson().fromJson(cartList[index].variant, Variant::class.java)
+            if (!cartList[index].is_variant.toBoolean())
+            {
+                variant.ItemName="Standard"
+                variant.CalculatedPrice=(0.0).toFloat()
+                variant.ItemPrice=(0.0).toFloat()
+                variant.Quantity=0
+                variant.DiscountPrice=0
+            }
 
             val menuOrdered=MenuOrdered(cartList[index].menu_id,cartList[index].item_name,cartList[index].item_price
-                ,cartList[index].quantity,cartList[index].description, Gson().fromJson(cartList[index].variant, Variant::class.java))
+                ,cartList[index].quantity,cartList[index].description, variant,cartList[index].is_variant.toBoolean())
             menuOrdered.Variant.Quantity=cartList[index].quantity.toInt()
             menuOrderedList.add(menuOrdered)
 
@@ -223,7 +233,7 @@ class CartFragment : Fragment(),View.OnClickListener,CartItemAdapter.UpdateItemQ
             ,ownerId
             ,mItemTotalAmount.toFloat()
             ,mServicesCharges.toFloat()
-            ,"","","")
+            ,"","","","")
         Timber.d("Checkout data: ${Gson().toJson(mCheckout)}")
         (activity as CustomerHomeActivity).mModel.updateCheckout(mCheckout)
         redirectCheckout()

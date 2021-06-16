@@ -5,6 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.teletaleem.rmrs_customer.data_class.cart.Cart
+import com.teletaleem.rmrs_customer.data_class.cart.SingleCart
 import com.teletaleem.rmrs_customer.db.dao.CartDao
 import com.teletaleem.rmrs_customer.db.dao.FavouriteDao
 import com.teletaleem.rmrs_customer.db.dataclass.Favourite

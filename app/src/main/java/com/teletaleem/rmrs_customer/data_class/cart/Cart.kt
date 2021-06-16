@@ -37,5 +37,7 @@ data class Cart(
         val variant:String,
         @PrimaryKey()
         @ColumnInfo(name = "variant_id")
-        val variant_id:String
+        val variant_id:String,
+        @ColumnInfo(name = "is_variant")
+        val is_variant:String,
 )

@@ -188,7 +188,7 @@ class VariantFragment : Fragment(),VariantAdapter.MenuSelectionListener,View.OnC
             ,AppGlobal.readString(requireActivity(),AppGlobal.restaurantAddress,"")
             ,AppGlobal.readString(requireActivity(),AppGlobal.restaurantImage,"")
             ,Gson().toJson(variantList[variantPosition]).toString()
-            ,variantList[variantPosition].VariantID)
+            ,variantList[variantPosition].VariantID,menuItem.isVariant.toString())
         viewModel.insertCartItem(cart)
         updateCartBadge()
     }
@@ -209,7 +209,7 @@ class VariantFragment : Fragment(),VariantAdapter.MenuSelectionListener,View.OnC
     }
 
     private fun getCartRecord() {
-        val cartLiveData=databaseCreator.cartDao.fetchCartRecord(AppGlobal.readString(requireActivity(),AppGlobal.restaurantId,"0"), menuItem.MenuID,variantList[variantPosition].ItemName)
+        val cartLiveData=databaseCreator.cartDao.fetchCartRecord(AppGlobal.readString(requireActivity(),AppGlobal.restaurantId,"0"), menuItem.MenuID,variantList[variantPosition].VariantID)
 
         cartLiveData.observe(requireActivity(), Observer {
             if (it!=null) {

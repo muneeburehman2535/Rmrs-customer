@@ -32,7 +32,14 @@ class OrderDetailActivity : AppCompatActivity(),View.OnClickListener {
         progressDialog=AppGlobal.setProgressDialog(this)
         setRestaurantAdapter()
         setClickListeners()
-        getMyOrdersList(AppGlobal.readString(this,AppGlobal.customerId,"0"),orderId)
+        if (AppGlobal.isInternetAvailable(this)){
+            getMyOrdersList(AppGlobal.readString(this,AppGlobal.customerId,"0"),orderId)
+        }
+        else{
+            AppGlobal.snackBar(mBinding.layputParentAod,getString(R.string.err_no_internet),AppGlobal.SHORT)
+        }
+
+
     }
 
     private fun getOrderId() {

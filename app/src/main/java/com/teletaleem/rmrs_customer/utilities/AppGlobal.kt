@@ -1,5 +1,6 @@
 package com.teletaleem.rmrs_customer.utilities
 
+import android.annotation.SuppressLint
 import android.app.*
 import android.content.Context
 import android.content.Intent
@@ -37,8 +38,9 @@ class AppGlobal {
         val testEmail="usamawajid116@hotmail.com"
         val testPassword="Usama@123"
 
-        const val tokenId = "token_id"
+
         const val customerId = "customer_id"
+        const val tokenId = "token_id"
         const val restaurantId="restaurant_id"
         const val ownerId="owner_id"
         const val restaurantName="restaurant_name"
@@ -258,12 +260,14 @@ class AppGlobal {
             }
         }
 
+        @SuppressLint("QueryPermissionsNeeded")
         fun startGMapIntent(context: Context, address: String, latitude: Double, longitude: Double)
         {
             val gmmIntentUri: Uri = Uri.parse("geo:$latitude,$longitude?q=$address")
+            showToast("geo:$latitude,$longitude?q=$address",context)
             val mapIntent =Intent(Intent.ACTION_VIEW, gmmIntentUri);
             mapIntent.setPackage("com.google.android.apps.maps");
-            if (mapIntent.resolveActivity(context.getPackageManager()) != null) {
+            if (mapIntent.resolveActivity(context.packageManager) != null) {
                 context.startActivity(mapIntent);
             }
         }

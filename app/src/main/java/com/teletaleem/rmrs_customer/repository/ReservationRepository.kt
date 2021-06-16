@@ -3,12 +3,9 @@ package com.teletaleem.rmrs_customer.repository
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.Gson
-import com.souq.uae.thebooksouq.Conversions.ConvertResponseToString
+import com.teletaleem.rmrs_customer.conversions.ConvertResponseToString
 import com.teletaleem.rmrs_customer.data_class.reservation.Reservation
 import com.teletaleem.rmrs_customer.data_class.reservation.ReservationResponse
-import com.teletaleem.rmrs_customer.data_class.review.Review
-import com.teletaleem.rmrs_customer.data_class.review.ReviewResponse
-import com.teletaleem.rmrs_customer.data_class.review.reviewlist.ReviewListResponse
 import com.teletaleem.rmrs_customer.network.RetrofitClass
 import okhttp3.ResponseBody
 import retrofit2.Call

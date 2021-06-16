@@ -32,10 +32,21 @@ class MenuAdapter(val requireContext: Context, private var menuList: ArrayList<M
 
         holder.txtMenuName.text=menuList[position].MenuName
         holder.txtDescription.text=menuList[position].Description
-        holder.txtLatestPrice.text=AppGlobal.mCurrency+AppGlobal.roundTwoPlaces(menuList[position].Variant[0].CalculatedPrice.toDouble())
-        if (menuList[position].CalculatedPrice<menuList[position].ItemPrice)
+        var calculatedPrice=0.0
+        var itemPrice=0.0
+        if (menuList[position].isVariant)
         {
-            val oldPrice=AppGlobal.mCurrency+AppGlobal.roundTwoPlaces(menuList[position].Variant[0].ItemPrice.toDouble())
+            calculatedPrice=menuList[position].Variant[0].CalculatedPrice.toDouble()
+            itemPrice=menuList[position].Variant[0].ItemPrice.toDouble()
+        }
+        else{
+            calculatedPrice=menuList[position].CalculatedPrice.toDouble()
+            itemPrice=menuList[position].ItemPrice.toDouble()
+        }
+        holder.txtLatestPrice.text=AppGlobal.mCurrency+AppGlobal.roundTwoPlaces(calculatedPrice)
+        if (calculatedPrice<itemPrice)
+        {
+            val oldPrice=AppGlobal.mCurrency+AppGlobal.roundTwoPlaces(itemPrice)
             holder.txtOldPrice.visibility=View.VISIBLE
             holder.txtOldPrice.setText(oldPrice, TextView.BufferType.SPANNABLE)
             val spannable = holder.txtOldPrice.text as Spannable

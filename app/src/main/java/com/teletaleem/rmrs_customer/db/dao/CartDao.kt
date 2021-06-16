@@ -4,6 +4,7 @@ import androidx.annotation.WorkerThread
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.teletaleem.rmrs_customer.data_class.cart.Cart
+import com.teletaleem.rmrs_customer.data_class.cart.SingleCart
 
 @Dao
 interface CartDao {
@@ -20,6 +21,7 @@ interface CartDao {
     @Query("select * from cart")
     fun fetchAllRecord():LiveData<MutableList<Cart>>
 
+
     @Query ("select * from cart where restaurant_id = :restaurantId and menu_id = :menuId and variant_id = :variantId")
     fun fetchCartRecord(restaurantId: String, menuId:String, variantId:String):LiveData<Cart>
 
@@ -34,4 +36,5 @@ interface CartDao {
     //Empty Cart
     @Query("DELETE from cart")
     suspend fun emptyCart()
+
 }

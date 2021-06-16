@@ -3,8 +3,7 @@ package com.teletaleem.rmrs_customer.repository
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.Gson
-import com.souq.uae.thebooksouq.Conversions.ConvertResponseToString
-import com.teletaleem.rmrs_customer.data_class.restaurantdetail.RestaurantDetailResponse
+import com.teletaleem.rmrs_customer.conversions.ConvertResponseToString
 import com.teletaleem.rmrs_customer.data_class.review.Review
 import com.teletaleem.rmrs_customer.data_class.review.ReviewResponse
 import com.teletaleem.rmrs_customer.data_class.review.reviewlist.ReviewListResponse

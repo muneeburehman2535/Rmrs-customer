@@ -5,6 +5,7 @@ import android.app.TimePickerDialog
 import android.os.Bundle
 import android.text.TextUtils
 import android.text.format.DateFormat
+import android.view.MenuItem
 import android.view.View
 import android.widget.DatePicker
 import android.widget.TextView
@@ -61,6 +62,12 @@ class ReservationActivity : AppCompatActivity(), View.OnClickListener, DatePicke
 
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId==android.R.id.home){
+            finish()
+        }
+        return super.onOptionsItemSelected(item)
+    }
     override fun onClick(v: View?) {
         when(v?.id)
         {

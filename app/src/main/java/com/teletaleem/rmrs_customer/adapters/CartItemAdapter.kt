@@ -38,12 +38,20 @@ class CartItemAdapter(requireContext: Context, private var cartList:ArrayList<Ca
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val variant= Gson().fromJson(cartList[position].variant, Variant::class.java)
+
         holder.txtItemName.text=cartList[position].item_name
         holder.txtItemDesc.text=cartList[position].item_desc
         holder.txtItemPrice.text=AppGlobal.mCurrency+AppGlobal.roundTwoPlaces(cartList[position].item_price.toDouble())
         holder.txtItemQuantity.text=cartList[position].quantity
-        holder.txtItemVariant.text="(${variant.ItemName})"
+        if (cartList[position].is_variant.toBoolean())
+        {
+            val variant= Gson().fromJson(cartList[position].variant, Variant::class.java)
+            holder.txtItemVariant.text="(${variant.ItemName})"
+        }
+        else{
+            holder.txtItemVariant.text=""
+        }
+
 
         holder.txtDecreaseQuantity.setOnClickListener(View.OnClickListener {
             updateItemQuantityListener.onUpdateItemQuantityClick(cartList[position].quantity.toInt()-1,position)

@@ -66,7 +66,14 @@ class UpdatePasswordFragment : Fragment(),View.OnClickListener {
                 if (mAwesomeValidation.validate())
                 {
                     val updatePassword=UpdatePassword(AppGlobal.readString(requireActivity(),AppGlobal.customerId,"0"),mBinding.edtxtPasswordUpf.text.toString())
-                    updatePasswordResult((updatePassword))
+                    if (AppGlobal.isInternetAvailable(requireActivity()))
+                    {
+                        updatePasswordResult((updatePassword))
+                    }
+                    else{
+                        AppGlobal.snackBar(mBinding.layoutParentUpf,getString(R.string.err_no_internet),AppGlobal.SHORT)
+                    }
+
                 }
             }
         }

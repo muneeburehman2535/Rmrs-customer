@@ -79,6 +79,7 @@ class CheckoutFragment : Fragment(),View.OnClickListener {
                 {
                     orderCheckout.PaymentMethod="COD"
                 }
+                orderCheckout.OrderType="Delivery"
                 orderCheckout.Comments=mBinding.edtxtSpecialInsCf.text.toString()
                 orderCheckout.CustomerAddress=mBinding.txtDeliveryLocCf.text.toString()
                checkoutOrder()

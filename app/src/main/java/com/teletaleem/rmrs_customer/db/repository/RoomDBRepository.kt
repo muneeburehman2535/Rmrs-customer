@@ -4,6 +4,7 @@ import androidx.annotation.WorkerThread
 import androidx.lifecycle.LiveData
 import com.teletaleem.rmrs_customer.db.dao.CartDao
 import com.teletaleem.rmrs_customer.data_class.cart.Cart
+import com.teletaleem.rmrs_customer.data_class.cart.SingleCart
 import com.teletaleem.rmrs_customer.data_class.login.LoginResponse
 import com.teletaleem.rmrs_customer.db.dao.FavouriteDao
 import com.teletaleem.rmrs_customer.db.dataclass.Favourite
@@ -27,6 +28,7 @@ class RoomDBRepository @Inject constructor(private val favouriteDao: FavouriteDa
     suspend fun updateItem(cart: Cart)= withContext(Dispatchers.IO){cartDao.updateItemRecord(cart)}
     suspend fun deleteRecord(cart: Cart)= withContext(Dispatchers.IO){cartDao.deleteItem(cart)}
     suspend fun emptyCart()= withContext(Dispatchers.IO){cartDao.emptyCart()}
+
 
     /*******************************************Favourite Methods**************************************/
 

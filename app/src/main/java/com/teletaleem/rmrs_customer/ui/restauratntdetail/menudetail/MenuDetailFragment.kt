@@ -14,19 +14,22 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.Gson
 import com.teletaleem.rmrs_customer.R
 import com.teletaleem.rmrs_customer.adapters.MenuAdapter
 import com.teletaleem.rmrs_customer.data_class.cart.Cart
+import com.teletaleem.rmrs_customer.data_class.cart.SingleCart
 import com.teletaleem.rmrs_customer.data_class.restaurantdetail.Menu
+import com.teletaleem.rmrs_customer.data_class.restaurantdetail.Variant
 import com.teletaleem.rmrs_customer.databinding.MenuDetailFragmentBinding
 import com.teletaleem.rmrs_customer.db.CustomerDatabase
 import com.teletaleem.rmrs_customer.ui.home.CustomerHomeActivity
-import com.teletaleem.rmrs_customer.ui.restauratntdetail.RestaurantDetailFragment
 import com.teletaleem.rmrs_customer.ui.restauratntdetail.variant.VariantFragment
 import com.teletaleem.rmrs_customer.utilities.AppGlobal
 import com.teletaleem.rmrs_customer.utilities.RecyclerItemClickListener
 import dagger.hilt.android.AndroidEntryPoint
+import org.json.JSONObject
 
 @AndroidEntryPoint
 class MenuDetailFragment : Fragment() {
@@ -133,18 +136,25 @@ class MenuDetailFragment : Fragment() {
 //                                CartFragment(),
 //                                "cart"
 //                        )
-                        //getCartRecord(position)
+                        if (!menuList[position].isVariant){
+                            //getCartRecord(position)
+                            getAllCartRecord(position)
+                        }
+                        else{
+                            (activity as CustomerHomeActivity).changeToolbarName(
+                                getString(R.string.title_variants),
+                                isProfileMenuVisible = false,
+                                locationVisibility = false
+                            )
+                            (activity as CustomerHomeActivity).mModel.updateMenuItem(menuList[position])
+                            (activity as CustomerHomeActivity).loadNewFragment(
+                                VariantFragment(),
+                                "menu_variant"
+                            )
+                        }
 
-                        (activity as CustomerHomeActivity).changeToolbarName(
-                            getString(R.string.title_variants),
-                            isProfileMenuVisible = false,
-                            locationVisibility = false
-                        )
-                        (activity as CustomerHomeActivity).mModel.updateMenuItem(menuList[position])
-                        (activity as CustomerHomeActivity).loadNewFragment(
-                            VariantFragment(),
-                            "menu_variant"
-                        )
+
+
 
                     }
 
@@ -191,22 +201,7 @@ class MenuDetailFragment : Fragment() {
 
 
 
-//            val cart = Cart(menu.RestaurantID
-//                , restaurantName
-//                , menu.MenuName
-//                , menu.MenuID
-//                , menu.Description
-//                , menu.CalculatedPrice.toString()
-//                , menu.ItemPrice.toString()
-//                , txtItemQuantity.text.toString()
-//                , menu.Image
-//                , menu.Description
-//                ,AppGlobal.readString(requireActivity(),AppGlobal.restaurantAddress,"")
-//                ,AppGlobal.readString(requireActivity(),AppGlobal.restaurantImage,"")
-//                ,Gson().toJson(menu.Variant))
-//            viewModel.insertCartItem(cart)
-
-            updateCartBadge()
+            insertItemToCart(menu, txtItemQuantity)
 //            (activity as CustomerHomeActivity?)?.changeToolbarName(getString(R.string.title_cart))
 //            (activity as CustomerHomeActivity?)?.loadNewFragment(
 //                    CartFragment(),
@@ -220,12 +215,37 @@ class MenuDetailFragment : Fragment() {
         alertDialog.show()
     }
 
+    private fun insertItemToCart(
+        menu: Menu,
+        txtItemQuantity: TextView
+    ) {
+
+        val cart = Cart(menu.RestaurantID
+            , restaurantName
+            , menu.MenuName
+            , menu.MenuID
+            , menu.Description
+            , menu.CalculatedPrice.toString()
+            , menu.ItemPrice.toString()
+            , txtItemQuantity.text.toString()
+            , menu.Image
+            , menu.Description
+            ,AppGlobal.readString(requireActivity(),AppGlobal.restaurantAddress,"")
+            ,AppGlobal.readString(requireActivity(),AppGlobal.restaurantImage,"")
+            ,Gson().toJson(JSONObject()).toString()
+            ,menu.Variant[0].VariantID,menu.isVariant.toString())
+
+        viewModel.insertCartItem(cart)
+
+        updateCartBadge()
+    }
+
     private fun updateCartBadge() {
         Handler(Looper.getMainLooper()).postDelayed({
             val cartLiveData=databaseCreator.cartDao.fetch(restaurantId)
             cartLiveData.observe(requireActivity(), Observer {
                 if (it != null) {
-                    val cartArray = it as ArrayList<Cart>
+                    val cartArray = it as ArrayList<SingleCart>
                     (requireActivity() as CustomerHomeActivity).updateBottomNavigationCount(cartArray.size)
                 }
                 alertDialog.dismiss()
@@ -235,22 +255,74 @@ class MenuDetailFragment : Fragment() {
 
     }
 
-//    private fun getCartRecord(position: Int) {
-//        val cartLiveData=databaseCreator.cartDao.fetchCartRecord(restaurantId, menuList[position].MenuID)
-//
-//        cartLiveData.observe(requireActivity(), Observer {
-//
-//            if (it != null) {
-//                AppGlobal.showDialog(getString(R.string.title_alert), getString(R.string.err_already_added), requireActivity())
-//            } else {
-//                showAddToCartDialog(menuList[position])
-//
-//            }
-//            cartLiveData.removeObservers(requireActivity())
-//        })
-//
-//
-//    }
+    private fun getCartRecord(position: Int) {
+        val cartLiveData=databaseCreator.cartDao.fetchCartRecord(restaurantId, menuList[position].MenuID,menuList[position].Variant[0].VariantID)
+
+        cartLiveData.observe(requireActivity(), Observer {
+
+            if (it != null) {
+                AppGlobal.showDialog(getString(R.string.title_alert), getString(R.string.err_already_added), requireActivity())
+            } else {
+                showAddToCartDialog(menuList[position])
+
+            }
+            cartLiveData.removeObservers(requireActivity())
+        })
+
+
+    }
+
+    private fun getAllCartRecord(position: Int) {
+        val cartLiveData=databaseCreator.cartDao.fetchAllRecord()
+        cartLiveData.observe(requireActivity(), Observer {
+            if(it!=null){
+                val cartList= it as java.util.ArrayList<Cart>
+                var isFound=false
+                for (ind in 0 until cartList.size){
+                    if(AppGlobal.readString(requireActivity(),AppGlobal.restaurantId,"0")==cartList[ind].restaurant_id){
+                        isFound=true
+                        break
+                    }
+                }
+                if (!isFound&&cartList.size>0){
+                    showErrorDialog(position)
+                }
+                else{
+                    getCartRecord(position)
+                }
+            }
+            else{
+                getCartRecord(position)
+            }
+
+            cartLiveData.removeObservers(requireActivity())
+        })
+    }
+    private fun showErrorDialog(position: Int) {
+        val alertDialog: AlertDialog = MaterialAlertDialogBuilder(
+            requireActivity(),
+            R.style.MyRounded_MaterialComponents_MaterialAlertDialog
+        ) // for fragment you can use getActivity() instead of this
+            .setView(R.layout.layout_dialog) // custom layout is here
+            .show()
+
+        val btnClose = alertDialog.findViewById<Button>(R.id.btn_close_ld)
+        val btnContinue=alertDialog.findViewById<Button>(R.id.btn_continue_ld)
+        btnClose?.setOnClickListener(View.OnClickListener{
+            alertDialog.cancel()
+        })
+
+        btnContinue?.setOnClickListener(View.OnClickListener {
+            emptyCartRecord()
+            Handler(Looper.getMainLooper()).postDelayed({showAddToCartDialog(menuList[position])},100)
+            alertDialog.cancel()
+        })
+    }
+
+    private fun emptyCartRecord() {
+        viewModel.emptyCartRecord()
+    }
+
 
 
 

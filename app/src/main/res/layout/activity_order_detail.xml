@@ -5,7 +5,9 @@
             name="order_detail_view_model"
             type="com.teletaleem.rmrs_customer.ui.orderdetail.OrderDetailViewModel" />
     </data>
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout
+        android:id="@+id/layput_parent_aod"
+        xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"

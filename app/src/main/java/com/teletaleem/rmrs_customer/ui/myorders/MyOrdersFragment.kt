@@ -63,8 +63,15 @@ class MyOrdersFragment : Fragment() {
         progressDialog=AppGlobal.setProgressDialog(requireActivity())
         setCurrentOrdersAdapter()
         setPastOrdersAdapter()
-        getCustomerId()
-        refreshList()
+        if (AppGlobal.isInternetAvailable(requireActivity()))
+        {
+            getCustomerId()
+            refreshList()
+        }
+        else{
+            AppGlobal.snackBar(mBinding.layoutParentFmo,getString(R.string.err_no_internet),AppGlobal.SHORT)
+        }
+
 
         
     }
@@ -181,10 +188,19 @@ class MyOrdersFragment : Fragment() {
 
                 currentOrderList = it.data.CurrentOrder
                 pastOrderList = it.data.PastOrders
-                currentOrderList.reverse()
-                pastOrderList.reverse()
-                currentOrderAdapter.updateList(currentOrderList)
-                pastOrderAdapter.updateList(pastOrderList)
+                if (currentOrderList.size>0||pastOrderList.size>0){
+                    mBinding.layoutOrdersList.visibility=View.VISIBLE
+                    mBinding.imgNotFoundFmo.visibility=View.GONE
+                    currentOrderList.reverse()
+                    pastOrderList.reverse()
+                    currentOrderAdapter.updateList(currentOrderList)
+                    pastOrderAdapter.updateList(pastOrderList)
+                }
+                else{
+                    mBinding.layoutOrdersList.visibility=View.GONE
+                    mBinding.imgNotFoundFmo.visibility=View.VISIBLE
+                }
+
 
             } else {
                 AppGlobal.showDialog(

@@ -40,7 +40,14 @@ class MyReservationsFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(MyReservationsViewModel::class.java)
-        getMyReservationsList(AppGlobal.readString(requireActivity(),AppGlobal.customerId,"0"))
+        if (AppGlobal.isInternetAvailable(requireActivity()))
+        {
+            getMyReservationsList(AppGlobal.readString(requireActivity(),AppGlobal.customerId,"0"))
+        }
+        else{
+            AppGlobal.snackBar(mBinding.layoutParentFmr,getString(R.string.err_no_internet),AppGlobal.SHORT)
+        }
+
 
     }
 
@@ -74,15 +81,27 @@ class MyReservationsFragment : Fragment() {
             progressDialog.dismiss()
             if (it.Message == "Success") {
                 reservationList=it.data.result
-                reservationList.reverse()
-                myReservationsAdapter.updateReservationList(reservationList)
+                if (reservationList.size>0)
+                {
+                    mBinding.rvReservationFrag.visibility=View.VISIBLE
+                    mBinding.imgNotFoundFmr.visibility=View.GONE
+                    reservationList.reverse()
+                    myReservationsAdapter.updateReservationList(reservationList)
+                }
+                else{
+                    mBinding.rvReservationFrag.visibility=View.GONE
+                    mBinding.imgNotFoundFmr.visibility=View.VISIBLE
+                }
+
 
             } else {
-                AppGlobal.showDialog(
-                    getString(R.string.title_alert),
-                    it.data.description,
-                    requireContext()
-                )
+                mBinding.rvReservationFrag.visibility=View.GONE
+                mBinding.imgNotFoundFmr.visibility=View.VISIBLE
+//                AppGlobal.showDialog(
+//                    getString(R.string.title_alert),
+//                    it.data.description,
+//                    requireContext()
+//                )
             }
         })
     }

@@ -81,7 +81,6 @@ class RestaurantDetailFragment : Fragment() ,TabsAdapter.ViewClickListener,View.
         getRestaurantId()
         setViewClickListener()
 
-
     }
 
     private fun setViewClickListener() {
@@ -193,14 +192,21 @@ class RestaurantDetailFragment : Fragment() ,TabsAdapter.ViewClickListener,View.
     {
         (activity as CustomerHomeActivity?)?.mModel?.restaurantID?.observe(viewLifecycleOwner, Observer {
             this.restaurantId=it
-            getRestaurantDetail()
+            if (AppGlobal.isInternetAvailable(requireActivity()))
+            {
+                getRestaurantDetail()
+            }
+            else{
+                AppGlobal.snackBar(mBinding.layoutParentRdf,getString(R.string.err_no_internet),AppGlobal.SHORT)
+            }
         })
     }
 
-
+    /*
+    * Method to open Restaurant Address in Google Map.
+    * */
     private fun getLatLong() {
         gps = GPSTracker(context)
-
         // Check if GPS enabled
         if (gps!!.canGetLocation()) {
             val latitude: Double = gps!!.latitude

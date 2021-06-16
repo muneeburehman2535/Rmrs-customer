@@ -59,7 +59,14 @@ class SimpleSearchFragment : Fragment() {
         mBinding.edtxtSearchFragment?.setOnEditorActionListener(TextView.OnEditorActionListener { v, actionId, event ->
             if (event != null && event.keyCode === KeyEvent.KEYCODE_ENTER || actionId == EditorInfo.IME_ACTION_DONE) {
                 if (v.text.toString().length >= 3) {
-                    getSearchResult(v.text.toString())
+                    if (AppGlobal.isInternetAvailable(requireActivity()))
+                    {
+                        getSearchResult(v.text.toString())
+                    }
+                    else{
+                        AppGlobal.snackBar(mBinding.layoutParentSsf,getString(R.string.err_no_internet),AppGlobal.SHORT)
+                    }
+
                 } else {
                     //no string
                 }
@@ -140,7 +147,16 @@ class SimpleSearchFragment : Fragment() {
             progressDialog.dismiss()
             if (it.Message=="Success"){
                 searchResultList=it.data.result
-                searchResultAdapter.updateSearchList(searchResultList)
+                if(searchResultList.size>0){
+                    mBinding.rvSearch.visibility=View.VISIBLE
+                    mBinding.layoutNotFoundSsf.visibility=View.GONE
+                    searchResultAdapter.updateSearchList(searchResultList)
+                }
+                else{
+                    mBinding.rvSearch.visibility=View.GONE
+                    mBinding.layoutNotFoundSsf.visibility=View.VISIBLE
+                }
+
             }
             else{
                 AppGlobal.showDialog(getString(R.string.title_alert),it.data.description,requireActivity())

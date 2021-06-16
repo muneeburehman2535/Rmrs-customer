@@ -85,7 +85,13 @@ class ReviewFragment : Fragment(),View.OnClickListener {
         when(v?.id)
         {
             R.id.btn_submit_review->{
-                setReviewJson()
+                if (AppGlobal.isInternetAvailable(requireActivity())){
+                    setReviewJson()
+                }
+                else{
+                    AppGlobal.snackBar(mBinding.layoutParentRf,getString(R.string.err_no_internet),AppGlobal.SHORT)
+                }
+
             }
         }
     }

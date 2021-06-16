@@ -54,7 +54,14 @@ class ReviewsListFragment : Fragment() {
 //            getRestaurantDetail(restaurantId)
 //        })
         restaurantId=AppGlobal.readString(requireActivity(),AppGlobal.restaurantId,"")
-        getRestaurantDetail(restaurantId)
+        if (AppGlobal.isInternetAvailable(requireActivity()))
+        {
+            getRestaurantDetail(restaurantId)
+        }
+        else{
+            AppGlobal.snackBar(mBinding.layoutParentRlf,getString(R.string.err_no_internet),AppGlobal.SHORT)
+        }
+
     }
 
     private fun setRecyclerViewAdapter(){
@@ -82,7 +89,13 @@ class ReviewsListFragment : Fragment() {
                 mBinding.txtReviewTotal.text="${reviewList.size} Reviews"
                 if (reviewList.size>0)
                 {
+                    mBinding.layoutReviewList.visibility=View.VISIBLE
+                    mBinding.layoutNotFoundRlf.visibility=View.GONE
                     reviewListAdapter.updateReviewList(reviewList)
+                }
+                else{
+                    mBinding.layoutReviewList.visibility=View.GONE
+                    mBinding.layoutNotFoundRlf.visibility=View.VISIBLE
                 }
 
             }

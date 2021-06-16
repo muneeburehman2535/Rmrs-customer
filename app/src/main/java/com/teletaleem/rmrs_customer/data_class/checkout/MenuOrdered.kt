@@ -10,5 +10,6 @@ data class MenuOrdered(
         val MenuPrice:String,
         val Quantity:String,
         val Description:String,
-        val Variant:Variant
+        val Variant:Variant,
+        val isVariant:Boolean
 )
