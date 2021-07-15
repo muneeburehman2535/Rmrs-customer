@@ -231,16 +231,20 @@ class CartFragment : Fragment(),View.OnClickListener,CartItemAdapter.UpdateItemQ
             ,menuOrderedList
             , Delivery()
             ,ownerId
-            ,mItemTotalAmount.toFloat()
+            ,mDiscountTotal.toFloat()
             ,mServicesCharges.toFloat()
-            ,"","","","")
+            ,""
+            ,""
+            ,""
+            ,""
+            ,AppGlobal.readString(requireActivity(),AppGlobal.customerMobile,"0"))
         Timber.d("Checkout data: ${Gson().toJson(mCheckout)}")
         (activity as CustomerHomeActivity).mModel.updateCheckout(mCheckout)
         redirectCheckout()
     }
 
     private fun redirectCheckout() {
-        (activity as CustomerHomeActivity?)?.changeToolbarName(getString(R.string.title_checkout), isProfileMenuVisible = false, locationVisibility = false)
+        (activity as CustomerHomeActivity?)?.changeToolbarName(getString(R.string.title_checkout), isProfileMenuVisible = false, locationVisibility = false,isMenuVisibility = false)
                 (activity as CustomerHomeActivity?)?.loadNewFragment(
                     CheckoutFragment(),
                     "checkout"
@@ -281,7 +285,6 @@ class CartFragment : Fragment(),View.OnClickListener,CartItemAdapter.UpdateItemQ
     private fun deleteItemRow(cart:Cart){
         viewModel.deleteCartItem(cart)
         updateCartBadge()
-
     }
 
     private fun updateCartBadge() {

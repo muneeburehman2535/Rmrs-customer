@@ -168,7 +168,7 @@ class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItem
 
                     txtToolbarName.text = mCurrentLocation
                     //getCallerFragment()
-                    setToolbarTitle("", HomeFragment(), false, View.VISIBLE, true)
+                    setToolbarTitle("", HomeFragment(), false, View.VISIBLE, true,isMenuVisibility = false)
 
 //                    locationMenu?.isVisible = true
 //                    mToolbarLayout.visibility = View.VISIBLE
@@ -188,7 +188,7 @@ class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItem
                         FavouriteFragment(),
                         false,
                         View.GONE,
-                        false
+                        false,isMenuVisibility = false
                     )
                     return@OnNavigationItemSelectedListener true
                 }
@@ -203,7 +203,7 @@ class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItem
                         CartFragment(),
                         false,
                         View.GONE,
-                        false
+                        false,isMenuVisibility = false
                     )
                     return@OnNavigationItemSelectedListener true
                 }
@@ -218,7 +218,8 @@ class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItem
                         ProfileFragment(),
                         true,
                         View.GONE,
-                        false
+                        false,
+                        isMenuVisibility = false
                     )
                     return@OnNavigationItemSelectedListener true
                 }
@@ -231,10 +232,12 @@ class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItem
         fragment: Fragment,
         isProfileMenuVisible: Boolean,
         toolbarVisibility: Int,
-        locationVisibility: Boolean
+        locationVisibility: Boolean,
+        isMenuVisibility: Boolean
     ){
         locationMenu?.isVisible = locationVisibility
         mToolbarLayout.visibility = toolbarVisibility
+         infoMenu.isVisible=isMenuVisibility
         mToolbar.title =title
         editProfileMenu?.isVisible = isProfileMenuVisible
         replaceNewFragment(fragment)
@@ -310,7 +313,8 @@ class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItem
     fun changeToolbarName(
         toolbarName: String,
         isProfileMenuVisible: Boolean,
-        locationVisibility: Boolean
+        locationVisibility: Boolean,
+        isMenuVisibility:Boolean
     )
     {
        //Toolbar.title=""
@@ -319,6 +323,10 @@ class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItem
             locationMenu?.isVisible = locationVisibility
             editProfileMenu?.isVisible = isProfileMenuVisible
         }
+
+        infoMenu.isVisible=isMenuVisibility
+
+
 
     }
 
@@ -521,7 +529,9 @@ class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItem
     }
 
     fun loadNewFragment(fragment: Fragment?, name: String) {
-        infoMenu.isVisible = name=="restaurant_detail"
+
+
+//        infoMenu.isVisible = name=="restaurant_detail"
         locationMenu?.isVisible = false
         mToolbarLayout.visibility = View.GONE
         supportFragmentManager.beginTransaction()
@@ -564,7 +574,7 @@ class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItem
 //                mToolbar.title = ""
 //                replaceNewFragment(HomeFragment())
 //                editProfileMenu.isVisible = false
-                setToolbarTitle("", HomeFragment(), false, View.VISIBLE, true)
+                setToolbarTitle("", HomeFragment(), false, View.VISIBLE, true,isMenuVisibility = false)
                 mBinding.drawerLayout.closeDrawers()
                 return true
             }
@@ -579,7 +589,8 @@ class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItem
                     CartFragment(),
                     false,
                     View.GONE,
-                    false
+                    false,
+                    isMenuVisibility = false
                 )
                 mBinding.drawerLayout.closeDrawers()
                 return true
@@ -595,7 +606,8 @@ class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItem
                     MyOrdersFragment(),
                     false,
                     View.GONE,
-                    false
+                    false,
+                    isMenuVisibility = false
                 )
                 mBinding.drawerLayout.closeDrawers()
                 return true
@@ -611,7 +623,8 @@ class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItem
                     MyReservationsFragment(),
                     false,
                     View.GONE,
-                    false
+                    false,
+                    isMenuVisibility = false
                 )
                 mBinding.drawerLayout.closeDrawers()
                 return true
@@ -628,7 +641,8 @@ class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItem
                     ProfileFragment(),
                     true,
                     View.GONE,
-                    false
+                    false,
+                    isMenuVisibility = false
                 )
                 mBinding.drawerLayout.closeDrawers()
                 return true
@@ -644,7 +658,8 @@ class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItem
                     UpdatePasswordFragment(),
                     false,
                     View.GONE,
-                    false
+                    false,
+                    isMenuVisibility = false
                 )
 
                 mBinding.drawerLayout.closeDrawers()
@@ -652,7 +667,7 @@ class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItem
             }
 
             R.id.nav_logout -> {
-
+                AppGlobal.writeString(this,AppGlobal.tokenId,"0")
                 startActivity(Intent(this,LoginActivity::class.java))
                 this.finish()
                 return true
