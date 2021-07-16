@@ -89,6 +89,10 @@ class HomeFragment : Fragment() ,View.OnClickListener,RestaurantAdapter.AddToFav
         getCartRecord()
     }
 
+    override fun onResume() {
+        super.onResume()
+        (requireActivity() as CustomerHomeActivity).getLuckyDrawPoints(AppGlobal.readString(requireActivity(), AppGlobal.customerId, "0"))
+    }
 
 
     private fun setClickListeners() {

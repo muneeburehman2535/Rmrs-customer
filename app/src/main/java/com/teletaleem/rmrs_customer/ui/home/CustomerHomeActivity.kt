@@ -88,6 +88,8 @@ class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItem
     private lateinit var progressDialog: KProgressHUD
     var deviceName = Build.MODEL
     var deviceId=Build.ID
+    private lateinit var txtLuckyDrawPoints:TextView
+    private lateinit var txtCustomerName:TextView
 
     @SuppressLint("HardwareIds")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -98,6 +100,11 @@ class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItem
         databaseCreator= CustomerDatabase.getInstance(this)
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         progressDialog=AppGlobal.setProgressDialog(this)
+
+        val headerView: View = mBinding.navView.getHeaderView(0)
+        txtLuckyDrawPoints=headerView.findViewById(R.id.txt_lucky_draw_points_home)
+        txtCustomerName=headerView.findViewById(R.id.txt_customer_name_home)
+        txtCustomerName.text=AppGlobal.readString(this,AppGlobal.customerName,"")
         val deviceID = Settings.Secure.getString(
             this.contentResolver,
             Settings.Secure.ANDROID_ID
@@ -129,7 +136,13 @@ class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItem
             // Get new FCM registration token
             val newToken = task.result
             Timber.d("Token: $newToken")
-            val fcmNotification=FcmNotification(AppGlobal.readString(this,AppGlobal.customerId,"0"),"Android",newToken,deviceID)
+            val fcmNotification = FcmNotification(
+                AppGlobal.readString(
+                    this,
+                    AppGlobal.customerId,
+                    "0"
+                ), "Android", newToken, deviceID
+            )
             updateFcmToken(fcmNotification)
 
         })
@@ -168,7 +181,14 @@ class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItem
 
                     txtToolbarName.text = mCurrentLocation
                     //getCallerFragment()
-                    setToolbarTitle("", HomeFragment(), false, View.VISIBLE, true,isMenuVisibility = false)
+                    setToolbarTitle(
+                        "",
+                        HomeFragment(),
+                        false,
+                        View.VISIBLE,
+                        true,
+                        isMenuVisibility = false
+                    )
 
 //                    locationMenu?.isVisible = true
 //                    mToolbarLayout.visibility = View.VISIBLE
@@ -188,7 +208,7 @@ class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItem
                         FavouriteFragment(),
                         false,
                         View.GONE,
-                        false,isMenuVisibility = false
+                        false, isMenuVisibility = false
                     )
                     return@OnNavigationItemSelectedListener true
                 }
@@ -203,7 +223,7 @@ class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItem
                         CartFragment(),
                         false,
                         View.GONE,
-                        false,isMenuVisibility = false
+                        false, isMenuVisibility = false
                     )
                     return@OnNavigationItemSelectedListener true
                 }
@@ -228,13 +248,13 @@ class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItem
         })
     }
      fun setToolbarTitle(
-        title: String,
-        fragment: Fragment,
-        isProfileMenuVisible: Boolean,
-        toolbarVisibility: Int,
-        locationVisibility: Boolean,
-        isMenuVisibility: Boolean
-    ){
+         title: String,
+         fragment: Fragment,
+         isProfileMenuVisible: Boolean,
+         toolbarVisibility: Int,
+         locationVisibility: Boolean,
+         isMenuVisibility: Boolean
+     ){
         locationMenu?.isVisible = locationVisibility
         mToolbarLayout.visibility = toolbarVisibility
          infoMenu.isVisible=isMenuVisibility
@@ -314,7 +334,7 @@ class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItem
         toolbarName: String,
         isProfileMenuVisible: Boolean,
         locationVisibility: Boolean,
-        isMenuVisibility:Boolean
+        isMenuVisibility: Boolean
     )
     {
        //Toolbar.title=""
@@ -348,10 +368,7 @@ class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItem
         getCartRecord(restaurantId)
     }
 
-    override fun onResume() {
-        super.onResume()
 
-    }
 
     /**************************************************************************************************************************/
     //                                          Get Location Section
@@ -574,7 +591,14 @@ class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItem
 //                mToolbar.title = ""
 //                replaceNewFragment(HomeFragment())
 //                editProfileMenu.isVisible = false
-                setToolbarTitle("", HomeFragment(), false, View.VISIBLE, true,isMenuVisibility = false)
+                setToolbarTitle(
+                    "",
+                    HomeFragment(),
+                    false,
+                    View.VISIBLE,
+                    true,
+                    isMenuVisibility = false
+                )
                 mBinding.drawerLayout.closeDrawers()
                 return true
             }
@@ -667,8 +691,8 @@ class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItem
             }
 
             R.id.nav_logout -> {
-                AppGlobal.writeString(this,AppGlobal.tokenId,"0")
-                startActivity(Intent(this,LoginActivity::class.java))
+                AppGlobal.writeString(this, AppGlobal.tokenId, "0")
+                startActivity(Intent(this, LoginActivity::class.java))
                 this.finish()
                 return true
             }
@@ -700,6 +724,24 @@ class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItem
         })
 
     }
+
+    fun getLuckyDrawPoints(customerID: String){
+        progressDialog.setLabel("Please Wait")
+        progressDialog.show()
+
+        mViewModel.getLuckyDrawPointsResponse(customerID).observe(this, {
+            progressDialog.dismiss()
+            if (it.Message == "Success") {
+                Timber.d("Updated Token: ${it.data.LuckyDrawPoints.toString()}")
+
+                txtLuckyDrawPoints.text = "${getString(R.string.title_lucky_points)} ${AppGlobal.roundTwoPlaces(it.data.LuckyDrawPoints.toDouble())} "
+
+            }
+        })
+
+    }
+
+
 
 
 }

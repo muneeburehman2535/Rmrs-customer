@@ -58,7 +58,7 @@ class RegistrationActivity : AppCompatActivity(),View.OnClickListener {
         mAwesomeValidation.addValidation(mBinding.edtxtCnicAr, "^[0-9]{13}$",getString(R.string.err_cnic))
         mAwesomeValidation.addValidation(mBinding.edtxtPasswordAl,"(?=.*[a-z])(?=.*[A-Z])(?=.*[\\d])(?=.*[~`!@#\\$%\\^&\\*\\(\\)\\-_\\+=\\{\\}\\[\\]\\|\\;:\"<>,./\\?]).{8,}",getString(R.string.err_password))
         mAwesomeValidation.addValidation(mBinding.edtxtConfirmPasswordAl,mBinding.edtxtPasswordAl,getString(R.string.err_password_confirmation))
-        mAwesomeValidation.addValidation(mBinding.edtxtAddressAl, "[a-zA-Z0-9 ]+",getString(R.string.err_address))
+        //mAwesomeValidation.addValidation(mBinding.edtxtAddressAl, "[a-zA-Z0-9 ]+",getString(R.string.err_address))
     }
 
     override fun onClick(v: View?) {
