@@ -79,4 +79,7 @@ public interface WebRequestGeo {
 
     @POST("/customer/fcm-notification")
     Call<ResponseBody> updateFCMToken(@Body FcmNotification fcmNotification);
+
+    @GET("/customer/getLuckyDrawPoints/?")
+    Call<ResponseBody> getLuckyDrawPoints(@Query("CustomerID") String CustomerID);
 }

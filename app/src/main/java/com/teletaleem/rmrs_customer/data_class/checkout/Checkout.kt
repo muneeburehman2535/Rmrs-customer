@@ -21,7 +21,8 @@ data class Checkout(
         var Comments:String,
         var PaymentMethod:String,
         var CustomerAddress:String,
-        var OrderType:String
+        var OrderType:String,
+        val MobileNumber:String
 
 
 

@@ -231,9 +231,13 @@ class CartFragment : Fragment(),View.OnClickListener,CartItemAdapter.UpdateItemQ
             ,menuOrderedList
             , Delivery()
             ,ownerId
-            ,mItemTotalAmount.toFloat()
+            ,mDiscountTotal.toFloat()
             ,mServicesCharges.toFloat()
-            ,"","","","")
+            ,""
+            ,""
+            ,""
+            ,""
+            ,AppGlobal.readString(requireActivity(),AppGlobal.customerMobile,"0"))
         Timber.d("Checkout data: ${Gson().toJson(mCheckout)}")
         (activity as CustomerHomeActivity).mModel.updateCheckout(mCheckout)
         redirectCheckout()

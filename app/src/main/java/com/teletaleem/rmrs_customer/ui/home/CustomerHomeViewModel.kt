@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import com.teletaleem.rmrs_customer.data_class.fcm.FCMTokenResponse
 import com.teletaleem.rmrs_customer.data_class.fcm.FcmNotification
 import com.teletaleem.rmrs_customer.data_class.home.category.CategoryResponse
+import com.teletaleem.rmrs_customer.data_class.luckydrawpoints.LuckyDrawPointsResponse
 import com.teletaleem.rmrs_customer.repository.HomeRepository
 
 class CustomerHomeViewModel(application:Application): AndroidViewModel(application) {
@@ -13,6 +14,10 @@ class CustomerHomeViewModel(application:Application): AndroidViewModel(applicati
     private var homeRepository: HomeRepository = HomeRepository()
     fun updateFcmTokenResponse(fcmNotification: FcmNotification): LiveData<FCMTokenResponse> {
         return homeRepository.updateFCMTokenResponseLiveData(fcmNotification)
+    }
+
+    fun getLuckyDrawPointsResponse(customerID:String): LiveData<LuckyDrawPointsResponse> {
+        return homeRepository.luckyDrawPointsResponseLiveData(customerID)
     }
 
 }

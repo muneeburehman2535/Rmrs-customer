@@ -19,7 +19,7 @@ import com.teletaleem.rmrs_customer.utilities.AppGlobal
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class CheckoutFragment : Fragment(),View.OnClickListener {
+class  CheckoutFragment : Fragment(),View.OnClickListener {
     private lateinit var mBinding:CheckoutFragmentBinding
     private lateinit var progressDialog: KProgressHUD
     private lateinit var orderCheckout:Checkout
