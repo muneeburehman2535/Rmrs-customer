@@ -144,7 +144,8 @@ class MenuDetailFragment : Fragment() {
                             (activity as CustomerHomeActivity).changeToolbarName(
                                 getString(R.string.title_variants),
                                 isProfileMenuVisible = false,
-                                locationVisibility = false
+                                locationVisibility = false,
+                                isMenuVisibility = false
                             )
                             (activity as CustomerHomeActivity).mModel.updateMenuItem(menuList[position])
                             (activity as CustomerHomeActivity).loadNewFragment(

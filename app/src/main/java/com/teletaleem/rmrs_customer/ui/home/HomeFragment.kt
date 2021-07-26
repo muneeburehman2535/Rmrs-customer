@@ -103,7 +103,8 @@ class HomeFragment : Fragment() ,View.OnClickListener,RestaurantAdapter.AddToFav
                 (activity as CustomerHomeActivity?)?.changeToolbarName(
                     getString(R.string.title_filter),
                     isProfileMenuVisible = false,
-                    locationVisibility = false
+                    locationVisibility = false,
+                    isMenuVisibility = false
                 )
                 (activity as CustomerHomeActivity?)?.loadNewFragment(
                     FilterSearchFragment(),
@@ -115,7 +116,8 @@ class HomeFragment : Fragment() ,View.OnClickListener,RestaurantAdapter.AddToFav
                 (activity as CustomerHomeActivity?)?.changeToolbarName(
                     getString(R.string.hint_search_food),
                     isProfileMenuVisible = false,
-                    locationVisibility = false
+                    locationVisibility = false,
+                    isMenuVisibility = false
                 )
                 (activity as CustomerHomeActivity?)?.loadNewFragment(
                     SimpleSearchFragment(),
@@ -234,7 +236,8 @@ class HomeFragment : Fragment() ,View.OnClickListener,RestaurantAdapter.AddToFav
         (activity as CustomerHomeActivity).changeToolbarName(
             getString(R.string.title_restaurants),
             isProfileMenuVisible = false,
-            locationVisibility = false
+            locationVisibility = false,
+            isMenuVisibility = true
         )
         (activity as CustomerHomeActivity).loadNewFragment(
             RestaurantDetailFragment(),

@@ -119,7 +119,7 @@ class ReviewFragment : Fragment(),View.OnClickListener {
                     (requireActivity() as CustomerHomeActivity).getCallerFragment()
                     (requireActivity() as CustomerHomeActivity).txtToolbarName.text =(requireActivity() as CustomerHomeActivity).mCurrentLocation
                     //getCallerFragment()
-                    (requireActivity() as CustomerHomeActivity).setToolbarTitle("", HomeFragment(), false, View.VISIBLE, true)
+                    (requireActivity() as CustomerHomeActivity).setToolbarTitle("", HomeFragment(), false, View.VISIBLE, true,isMenuVisibility = false)
                     dialog.cancel()
                 }
                 val alertDialog1 = alertDialog.create()

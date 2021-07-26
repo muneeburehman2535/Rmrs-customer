@@ -60,7 +60,7 @@ class ProfileFragment : Fragment(),View.OnClickListener {
                 mBinding.txtNumberAp.isEnabled=true
                 mBinding.txtNumberAp.setBackgroundResource(R.drawable.edit_text_background)
                 mBinding.btnUpdatePf.visibility=View.VISIBLE
-                (context as CustomerHomeActivity?)?.changeToolbarName(getString(R.string.title_edit_profile), isProfileMenuVisible = false, locationVisibility = false)
+                (context as CustomerHomeActivity?)?.changeToolbarName(getString(R.string.title_edit_profile), isProfileMenuVisible = false, locationVisibility = false,isMenuVisibility = false)
             }
         })
         getCustomerData()

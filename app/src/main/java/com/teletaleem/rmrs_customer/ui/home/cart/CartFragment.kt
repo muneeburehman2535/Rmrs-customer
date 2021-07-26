@@ -240,7 +240,7 @@ class CartFragment : Fragment(),View.OnClickListener,CartItemAdapter.UpdateItemQ
     }
 
     private fun redirectCheckout() {
-        (activity as CustomerHomeActivity?)?.changeToolbarName(getString(R.string.title_checkout), isProfileMenuVisible = false, locationVisibility = false)
+        (activity as CustomerHomeActivity?)?.changeToolbarName(getString(R.string.title_checkout), isProfileMenuVisible = false, locationVisibility = false,isMenuVisibility = false)
                 (activity as CustomerHomeActivity?)?.loadNewFragment(
                     CheckoutFragment(),
                     "checkout"
@@ -281,7 +281,6 @@ class CartFragment : Fragment(),View.OnClickListener,CartItemAdapter.UpdateItemQ
     private fun deleteItemRow(cart:Cart){
         viewModel.deleteCartItem(cart)
         updateCartBadge()
-
     }
 
     private fun updateCartBadge() {

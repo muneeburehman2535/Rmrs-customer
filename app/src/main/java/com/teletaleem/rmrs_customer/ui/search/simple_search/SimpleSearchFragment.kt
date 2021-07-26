@@ -87,7 +87,7 @@ class SimpleSearchFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        (activity as CustomerHomeActivity?)?.changeToolbarName(getString(R.string.hint_search_food), isProfileMenuVisible = false, locationVisibility = true)
+        (activity as CustomerHomeActivity?)?.changeToolbarName(getString(R.string.hint_search_food), isProfileMenuVisible = false, locationVisibility = true,isMenuVisibility = false)
     }
 
 
@@ -121,7 +121,9 @@ class SimpleSearchFragment : Fragment() {
                         (activity as CustomerHomeActivity).mModel.updateRestaurantId(searchResultList[position].RestaurantID)
                         AppGlobal.writeString(requireActivity(),AppGlobal.restaurantId,searchResultList[position].RestaurantID)
                         (activity as CustomerHomeActivity).mModel.updateRestaurantName(searchResultList[position].RestaurantName)
-                        (context as CustomerHomeActivity?)?.changeToolbarName(getString(R.string.title_restaurants), isProfileMenuVisible = false, locationVisibility = false)
+                        (context as CustomerHomeActivity?)?.changeToolbarName(getString(R.string.title_restaurants), isProfileMenuVisible = false,
+                            locationVisibility = false,
+                            isMenuVisibility = true)
                         (context as CustomerHomeActivity?)?.loadNewFragment(
                                 RestaurantDetailFragment(),
                                 "restaurant_detail"

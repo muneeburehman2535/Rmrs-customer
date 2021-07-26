@@ -91,7 +91,7 @@ class FavouriteFragment : Fragment() {
                         (activity as CustomerHomeActivity).mModel.updateRestaurantId(favouriteList[position].restaurant_id)
                         AppGlobal.writeString(requireActivity(),AppGlobal.restaurantId,favouriteList[position].restaurant_id)
                         (activity as CustomerHomeActivity).mModel.updateRestaurantName(favouriteList[position].restaurant_name)
-                        (activity as CustomerHomeActivity).changeToolbarName(getString(R.string.title_restaurants), isProfileMenuVisible = false, locationVisibility = false)
+                        (activity as CustomerHomeActivity).changeToolbarName(getString(R.string.title_restaurants), isProfileMenuVisible = false, locationVisibility = false,isMenuVisibility = true)
                         (activity as CustomerHomeActivity).loadNewFragment(
                                 RestaurantDetailFragment(),
                                 "restaurant_detail"

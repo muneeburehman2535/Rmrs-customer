@@ -99,7 +99,7 @@ class RestaurantDetailFragment : Fragment() ,TabsAdapter.ViewClickListener,View.
                 (activity as CustomerHomeActivity).changeToolbarName(
                     getString(R.string.title_reviews),
                     isProfileMenuVisible = false,
-                    locationVisibility = false
+                    locationVisibility = false,isMenuVisibility = false
                 )
                 (activity as CustomerHomeActivity).loadNewFragment(
                     ReviewsListFragment(),
@@ -114,7 +114,7 @@ class RestaurantDetailFragment : Fragment() ,TabsAdapter.ViewClickListener,View.
         (activity as CustomerHomeActivity).changeToolbarName(
             getString(R.string.title_restaurants),
             isProfileMenuVisible = false,
-            locationVisibility = false
+            locationVisibility = false,isMenuVisibility = true
         )
         (requireActivity()as CustomerHomeActivity).infoMenu.isVisible=true
     }
