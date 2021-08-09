@@ -40,6 +40,7 @@ class ReservationActivity : AppCompatActivity(), View.OnClickListener, DatePicke
     var myHour: Int = 0
     var myMinute: Int = 0
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
