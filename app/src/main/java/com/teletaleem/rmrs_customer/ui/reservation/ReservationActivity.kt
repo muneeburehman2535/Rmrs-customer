@@ -29,7 +29,7 @@ class ReservationActivity : AppCompatActivity(), View.OnClickListener, DatePicke
     private lateinit var mCalendar: Calendar
     private lateinit var progressDialog: KProgressHUD
 
-    var day = 0
+    private var day = 0
     var month: Int = 0
     var year: Int = 0
     var hour: Int = 0
