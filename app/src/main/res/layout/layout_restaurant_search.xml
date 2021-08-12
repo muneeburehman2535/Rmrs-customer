@@ -1,81 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardCornerRadius="@dimen/margin_avg"
-    android:layout_marginTop="@dimen/margin_small"
-    android:layout_marginBottom="@dimen/margin_small"
-    android:layout_marginStart="@dimen/margin_l"
-    android:layout_marginEnd="@dimen/margin_l"
-    xmlns:android="http://schemas.android.com/apk/res/android" >
-    <androidx.constraintlayout.widget.ConstraintLayout
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:binding="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="search_binding"
+            type="com.teletaleem.rmrs_customer.data_class.home.restaurants.Restaurants" />
+    </data>
+
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        app:cardCornerRadius="@dimen/margin_avg"
+        android:layout_marginTop="@dimen/margin_small"
+        android:layout_marginBottom="@dimen/margin_small"
+        android:layout_marginStart="@dimen/margin_l"
+        android:layout_marginEnd="@dimen/margin_l">
 
-        <ImageView
-            android:id="@+id/img_profile"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/img_size_normal"
-            android:src="@drawable/placeholder"
-            android:scaleType="fitXY"
-            app:layout_constraintTop_toTopOf="parent" />
-        <TextView
-            android:id="@+id/txt_name_lrestaurant"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Arizona Grills"
-            android:textStyle="bold"
-            android:textColor="@color/text_color_restaurant"
-            android:textAppearance="?android:textAppearanceMedium"
-            app:layout_constraintTop_toBottomOf="@+id/img_profile"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="@dimen/margin_avg"
-            android:layout_marginTop="@dimen/margin_avg"/>
-        <TextView
-            android:id="@+id/txt_address_lrestaurant"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Ring Road, Cant Area Peshawar"
-            app:layout_constraintTop_toBottomOf="@+id/txt_name_lrestaurant"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginTop="@dimen/margin_small"
-            android:layout_marginStart="@dimen/margin_avg"
-            android:layout_marginBottom="@dimen/margin_xl"/>
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/txt_points_lrestaurant"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="36dp"
-            android:text="(79)"
-            android:fontFamily="@font/montserrat_bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            <ImageView
+                android:id="@+id/img_profile"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/img_size_normal"
+                android:src="@drawable/placeholder"
+                android:scaleType="fitXY"
+                binding:loadImage="@{search_binding.image}"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/txt_rating_lrestaurant"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/margin_small"
-            android:layout_marginBottom="36dp"
-            android:text="4.9"
-            android:fontFamily="@font/montserrat_bold"
-            android:textColor="@color/text_color"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/txt_points_lrestaurant" />
+            <TextView
+                android:id="@+id/txt_name_lrestaurant"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{search_binding.restaurantName}"
+                android:textStyle="bold"
+                android:textColor="@color/text_color_restaurant"
+                android:textAppearance="?android:textAppearanceMedium"
+                app:layout_constraintTop_toBottomOf="@+id/img_profile"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="@dimen/margin_avg"
+                android:layout_marginTop="@dimen/margin_avg" />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_star"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/txt_rating_lrestaurant"
-            android:layout_marginBottom="36dp"
-            android:layout_marginEnd="@dimen/margin_small"/>
+            <TextView
+                android:id="@+id/txt_address_lrestaurant"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{search_binding.address}"
+                app:layout_constraintTop_toBottomOf="@+id/txt_name_lrestaurant"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginTop="@dimen/margin_small"
+                android:layout_marginStart="@dimen/margin_avg"
+                android:layout_marginBottom="@dimen/margin_xl" />
+
+            <TextView
+                android:id="@+id/txt_points_lrestaurant"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="36dp"
+                android:text="@{search_binding.ratingCount}"
+                android:fontFamily="@font/montserrat_bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <TextView
+                android:id="@+id/txt_rating_lrestaurant"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_small"
+                android:layout_marginBottom="36dp"
+                android:text="@{search_binding.rating}"
+                android:fontFamily="@font/montserrat_bold"
+                android:textColor="@color/text_color"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/txt_points_lrestaurant" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_star"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/txt_rating_lrestaurant"
+                android:layout_marginBottom="36dp"
+                android:layout_marginEnd="@dimen/margin_small" />
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</androidx.cardview.widget.CardView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</layout>
