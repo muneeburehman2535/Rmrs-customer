@@ -41,7 +41,7 @@ class RestaurantAdapter(private val requireContext: Context, private var restaur
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val contactView=LayoutInflater.from(parent.context).inflate(R.layout.layout_restaurant,parent,false)
+        val contactView=LayoutInflater.from(parent.context).inflate(R.layout.card_layout_restaurant,parent,false)
         return ViewHolder(contactView)
     }
 

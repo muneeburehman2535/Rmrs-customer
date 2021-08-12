@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+    <androidx.cardview.widget.CardView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="@dimen/margin_avg"
+        android:layout_marginTop="@dimen/margin_avg"
+        android:layout_marginBottom="@dimen/margin_avg"
+        android:layout_marginStart="@dimen/margin_small"
+        android:layout_marginEnd="@dimen/margin_l">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_card_restaurants"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+<!--            Restaurant Image -->
+
+            <ImageView
+                android:id="@+id/img_profile"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/img_size_normal"
+                android:src="@drawable/placeholder"
+                android:scaleType="fitXY"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <!-- Restaurant Name          -->
+
+            <TextView
+                android:id="@+id/txt_name_lrestaurant"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="12dp"
+                android:text="Abc"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:textColor="@color/text_color_restaurant"
+                android:textStyle="bold"
+                android:fontFamily="@font/montserrat_bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/img_rating_lrestaurant"
+                app:layout_constraintHorizontal_weight="10"
+                android:layout_marginEnd="@dimen/margin_small"
+                android:maxLines="1"
+                android:ellipsize="end"
+                app:layout_constraintTop_toBottomOf="@+id/img_profile" />
+
+
+
+<!--        Restaurant Address    -->
+
+            <TextView
+                android:id="@+id/txt_address_lrestaurant"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="House no 42-43"
+                app:layout_constraintTop_toBottomOf="@+id/txt_name_lrestaurant"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/img_rating_lrestaurant"
+                app:layout_constraintHorizontal_weight="10"
+                android:layout_marginEnd="@dimen/margin_small"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:layout_marginStart="@dimen/margin_avg"
+                android:layout_marginBottom="@dimen/margin_l" />
+
+
+<!--        Restaurant Rating count    -->
+            <TextView
+                android:id="@+id/txt_points_lrestaurant"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="36dp"
+                android:text="(79)"
+                android:fontFamily="@font/montserrat_bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+<!--            Restaurant Rating-->
+
+            <TextView
+                android:id="@+id/txt_rating_lrestaurant"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_small"
+                android:layout_marginBottom="36dp"
+                android:text="5"
+                android:fontFamily="@font/montserrat_bold"
+                android:textColor="@color/text_color"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/txt_points_lrestaurant" />
+
+            <ImageView
+                android:id="@+id/img_rating_lrestaurant"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_star"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/txt_rating_lrestaurant"
+                android:layout_marginBottom="36dp"
+                android:layout_marginEnd="@dimen/margin_small" />
+
+            <RelativeLayout
+                android:layout_width="@dimen/img_size_small"
+                android:layout_height="@dimen/img_size_small"
+                android:background="@drawable/rounded_layout_background"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="@dimen/margin_l"
+                android:layout_marginEnd="@dimen/margin_l"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/img_heart_lrestaurant"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_heart"
+                    android:layout_gravity="center"
+                    android:layout_centerInParent="true" />
+            </RelativeLayout>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+

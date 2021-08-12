@@ -1,115 +1,132 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<androidx.cardview.widget.CardView android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/margin_small"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <androidx.constraintlayout.widget.ConstraintLayout
+
+    <data>
+
+        <variable
+            name="cart_binding"
+            type="com.teletaleem.rmrs_customer.data_class.cart.Cart" />
+    </data>
+
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_small">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
 
-
-        <TextView
-            android:id="@+id/txt_item_name_lcic"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Pizza BBQ"
-            android:textColor="@color/text_color"
-            android:textStyle="bold"
-            android:fontFamily="@font/montserrat_bold"
-            android:textSize="@dimen/text_size_small"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="@dimen/margin_avg"
-            android:layout_marginStart="@dimen/margin_xxxl"/>
-
-        <TextView
-            android:id="@+id/txt_item_desc_lcic"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Size Regular, Wheat thin crust onion, jalapeno, Black olive"
-            android:textSize="@dimen/text_size_xsmall"
-            app:layout_constraintTop_toBottomOf="@+id/txt_item_name_lcic"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/layout_quantity_lcic"
-            android:layout_marginStart="@dimen/margin_xxxl"
-            app:layout_constraintHorizontal_weight="10"/>
-        <TextView
-            android:id="@+id/txt_item_price_lcic"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Rs 999"
-            android:textSize="@dimen/text_size_xsmall"
-            app:layout_constraintTop_toBottomOf="@+id/txt_item_desc_lcic"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginStart="@dimen/margin_xxxl"
-            android:layout_marginBottom="@dimen/margin_xxxl"/>
-        <TextView
-            android:id="@+id/txt_item_variant_lcic"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/text_size_xsmall"
-            app:layout_constraintTop_toBottomOf="@+id/txt_item_price_lcic"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginStart="@dimen/margin_xxxl"
-            android:layout_marginBottom="@dimen/margin_xxxl"/>
-        <LinearLayout
-            android:id="@+id/layout_quantity_lcic"
-            android:layout_width="120dp"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:weightSum="3"
-            android:background="@drawable/layout_background_lite"
-            android:layout_marginEnd="@dimen/margin_xl"
-            >
             <TextView
-                android:id="@+id/txt_minus_lcic"
-                android:layout_width="0dp"
+                android:id="@+id/txt_item_name_lcic"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="-"
-                android:textAlignment="center"
-                android:textSize="@dimen/text_size_avg"
-                android:textColor="@color/colorAccent"
-                android:layout_marginTop="@dimen/margin_small"
-                android:layout_marginBottom="@dimen/margin_small" />
-            <View
-                android:layout_width="1dp"
-                android:layout_height="match_parent"
-                android:background="@color/grey"/>
-            <TextView
-                android:id="@+id/txt_quantity_lcic"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="01"
-                android:textAlignment="center"
+                android:text="@{cart_binding.item_name}"
+                android:textColor="@color/text_color"
+                android:textStyle="bold"
+                android:fontFamily="@font/montserrat_bold"
                 android:textSize="@dimen/text_size_small"
-                android:textColor="@color/colorAccent"
-                android:layout_marginTop="@dimen/margin_small"
-                android:layout_marginBottom="@dimen/margin_small"/>
-            <View
-                android:layout_width="1dp"
-                android:layout_height="match_parent"
-                android:background="@color/grey"/>
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="@dimen/margin_avg"
+                android:layout_marginStart="@dimen/margin_xxxl" />
+
             <TextView
-                android:id="@+id/txt_plus_lcic"
+                android:id="@+id/txt_item_desc_lcic"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="+"
-                android:textAlignment="center"
-                android:textSize="@dimen/text_size_avg"
-                android:textColor="@color/colorAccent"
-                android:layout_marginTop="@dimen/margin_small"
-                android:layout_marginBottom="@dimen/margin_small"/>
-        </LinearLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</androidx.cardview.widget.CardView>
+                android:text="@{cart_binding.description}"
+                android:textSize="@dimen/text_size_xsmall"
+                app:layout_constraintTop_toBottomOf="@+id/txt_item_name_lcic"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/layout_quantity_lcic"
+                android:layout_marginStart="@dimen/margin_xxxl"
+                app:layout_constraintHorizontal_weight="10" />
+
+            <TextView
+                android:id="@+id/txt_item_price_lcic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{cart_binding.item_price}"
+                android:textSize="@dimen/text_size_xsmall"
+                app:layout_constraintTop_toBottomOf="@+id/txt_item_desc_lcic"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginStart="@dimen/margin_xxxl"
+                android:layout_marginBottom="@dimen/margin_xxxl" />
+
+            <TextView
+                android:id="@+id/txt_item_variant_lcic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_size_xsmall"
+                android:text="@{cart_binding.variant}"
+                app:layout_constraintTop_toBottomOf="@+id/txt_item_price_lcic"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginStart="@dimen/margin_xxxl"
+                android:layout_marginBottom="@dimen/margin_xxxl" />
+
+            <LinearLayout
+                android:id="@+id/layout_quantity_lcic"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:weightSum="3"
+                android:background="@drawable/layout_background_lite"
+                android:layout_marginEnd="@dimen/margin_xl">
+
+                <TextView
+                    android:id="@+id/txt_minus_lcic"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="-"
+                    android:textAlignment="center"
+                    android:textSize="@dimen/text_size_avg"
+                    android:textColor="@color/colorAccent"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:layout_marginBottom="@dimen/margin_small" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/grey" />
+
+                <TextView
+                    android:id="@+id/txt_quantity_lcic"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="@{cart_binding.quantity}"
+                    android:textAlignment="center"
+                    android:textSize="@dimen/text_size_small"
+                    android:textColor="@color/colorAccent"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:layout_marginBottom="@dimen/margin_small" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/grey" />
+
+                <TextView
+                    android:id="@+id/txt_plus_lcic"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="+"
+                    android:textAlignment="center"
+                    android:textSize="@dimen/text_size_avg"
+                    android:textColor="@color/colorAccent"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:layout_marginBottom="@dimen/margin_small" />
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</layout>
