@@ -11,32 +11,45 @@ import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.teletaleem.rmrs_customer.R
 import com.teletaleem.rmrs_customer.data_class.home.category.Categories
+import com.teletaleem.rmrs_customer.databinding.LayoutCategoryBinding
 
 class CategoriesAdapter(private val context: Context,private var categoriesList: ArrayList<Categories>): RecyclerView.Adapter<CategoriesAdapter.ViewHolder>() {
     private val mContext=context
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val contactView=LayoutInflater.from(parent.context).inflate(R.layout.layout_category,parent,false)
-        return ViewHolder(contactView )
+
+        val binding: LayoutCategoryBinding = DataBindingUtil.inflate(
+            LayoutInflater.from(parent.context),
+            R.layout.layout_category,parent,false
+        )
+        return ViewHolder(binding)
+
+//        val contactView=LayoutInflater.from(parent.context).inflate(R.layout.layout_category,parent,false)
+//        return ViewHolder(contactView )
     }
 
     @RequiresApi(Build.VERSION_CODES.M)
     @SuppressLint("ResourceAsColor")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.layoutParent.background=ContextCompat.getDrawable(mContext,R.drawable.curved_rectengle_layout_background_light)
-        holder.txtCategory.setTextColor(R.color.colorAccent)
+
+        holder.bind(categoriesList[position])
+        holder.binding.layoutCategory.background = ContextCompat.getDrawable(mContext,R.drawable.curved_rectengle_layout_background_light)
+        holder.binding.txtLcategory.setTextColor(R.color.colorAccent)
+        //holder.binding.layout_category.background=ContextCompat.getDrawable(mContext,R.drawable.curved_rectengle_layout_background_light)
+        //holder.binding.txt_lcategory.setTextColor(R.color.colorAccent)
         if (categoriesList[position].isClicked)
         {
-            holder.layoutParent.background=ContextCompat.getDrawable(mContext,R.drawable.curved_rectengle_layout_background)
-            holder.txtCategory.setTextColor(Color.WHITE)
+            holder.binding.layoutCategory.background=ContextCompat.getDrawable(mContext,R.drawable.curved_rectengle_layout_background)
+            holder.binding.txtLcategory.setTextColor(Color.WHITE)
         }
         else{
-            holder.txtCategory.setTextColor(context.getColor(R.color.colorAccent))
+            holder.binding.txtLcategory.setTextColor(context.getColor(R.color.colorAccent))
         }
-        holder.txtCategory.text=categoriesList[position].CategoryName
+        holder.binding.txtLcategory.text=categoriesList[position].CategoryName
 
     }
 
@@ -44,9 +57,14 @@ class CategoriesAdapter(private val context: Context,private var categoriesList:
         return categoriesList.size
     }
 
-    class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-        var layoutParent:ConstraintLayout = itemView.findViewById(R.id.layout_category)
-        var txtCategory:TextView=itemView.findViewById(R.id.txt_lcategory)
+    class ViewHolder(var binding: LayoutCategoryBinding): RecyclerView.ViewHolder(binding.root) {
+
+        fun bind(data: Categories){
+
+            binding.categoryBinding = data
+            binding.executePendingBindings()
+
+        }
 
     }
 
