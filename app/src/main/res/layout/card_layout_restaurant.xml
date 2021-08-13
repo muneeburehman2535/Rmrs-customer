@@ -1,8 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:binding="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="restaurant_binding"
+            type="com.teletaleem.rmrs_customer.data_class.home.restaurants.Restaurants" />
+    </data>
+
+
     <androidx.cardview.widget.CardView
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardCornerRadius="@dimen/margin_avg"
@@ -17,7 +27,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-<!--            Restaurant Image -->
+            <!--            Restaurant Image -->
 
             <ImageView
                 android:id="@+id/img_profile"
@@ -25,6 +35,7 @@
                 android:layout_height="@dimen/img_size_normal"
                 android:src="@drawable/placeholder"
                 android:scaleType="fitXY"
+                binding:loadRestaurantImage="@{restaurant_binding.image}"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <!-- Restaurant Name          -->
@@ -35,7 +46,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="12dp"
-                android:text="Abc"
+                android:text="@{restaurant_binding.restaurantName}"
                 android:textAppearance="?android:textAppearanceMedium"
                 android:textColor="@color/text_color_restaurant"
                 android:textStyle="bold"
@@ -49,14 +60,13 @@
                 app:layout_constraintTop_toBottomOf="@+id/img_profile" />
 
 
-
-<!--        Restaurant Address    -->
+            <!--        Restaurant Address    -->
 
             <TextView
                 android:id="@+id/txt_address_lrestaurant"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="House no 42-43"
+                android:text="@{restaurant_binding.address}"
                 app:layout_constraintTop_toBottomOf="@+id/txt_name_lrestaurant"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -69,19 +79,19 @@
                 android:layout_marginBottom="@dimen/margin_l" />
 
 
-<!--        Restaurant Rating count    -->
+            <!--        Restaurant Rating count    -->
             <TextView
                 android:id="@+id/txt_points_lrestaurant"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="36dp"
-                android:text="(79)"
+                android:text="@{restaurant_binding.ratingCount}"
                 android:fontFamily="@font/montserrat_bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 
-<!--            Restaurant Rating-->
+            <!--            Restaurant Rating-->
 
             <TextView
                 android:id="@+id/txt_rating_lrestaurant"
@@ -89,7 +99,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/margin_small"
                 android:layout_marginBottom="36dp"
-                android:text="5"
+                android:text="@{restaurant_binding.rating}"
                 android:fontFamily="@font/montserrat_bold"
                 android:textColor="@color/text_color"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -127,4 +137,5 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
+</layout>
 
