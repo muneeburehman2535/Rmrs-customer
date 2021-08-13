@@ -43,11 +43,7 @@ class SearchResultAdapter(val context:Context,private var searchResultList:Array
 
         //holder.txtTotalRatingCount.text="(${searchResultList[position].RatingCount})"
         holder.binding.txtPointsLrestaurant.text="(${searchResultList[position].RatingCount})"
-        AppGlobal.loadImageIntoGlide(
-            searchResultList[position].Image,
-            holder.binding.imgProfile,
-            context
-        )
+        AppGlobal.loadImageIntoGlide(searchResultList[position].Image, holder.binding.imgProfile,context)
     }
 
     override fun getItemCount(): Int {
