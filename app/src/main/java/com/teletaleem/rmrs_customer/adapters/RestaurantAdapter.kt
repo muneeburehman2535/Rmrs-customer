@@ -100,8 +100,6 @@ class RestaurantAdapter(private val requireContext: Context, private var restaur
 
         }
 
-
-
 //        val imgRestaurant= itemView.findViewById<ImageView>(R.id.img_profile)!!
 //        val txtRestaurantName= itemView.findViewById<TextView>(R.id.txt_name_lrestaurant)!!
 //        val txtAddress= itemView.findViewById<TextView>(R.id.txt_address_lrestaurant)!!
@@ -126,6 +124,4 @@ class RestaurantAdapter(private val requireContext: Context, private var restaur
             }
         }
     }
-
-
 }

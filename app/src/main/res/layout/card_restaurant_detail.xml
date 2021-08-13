@@ -1,93 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+<layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_marginTop="@dimen/margin_small"
-    android:layout_marginBottom="@dimen/margin_small"
-    android:background="@color/white">
-    <androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:binding="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="restaurantDetail_binding"
+            type="com.teletaleem.rmrs_customer.data_class.restaurantdetail.Menu" />
+
+    </data>
+
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_small"
+        android:layout_marginBottom="@dimen/margin_small"
         android:background="@color/white">
-        <ImageView
-            android:id="@+id/img_menu_crd"
-            android:layout_width="@dimen/img_size_average"
-            android:layout_height="@dimen/img_size_average"
-            app:srcCompat="@drawable/library_placeholder"
-            android:background="@drawable/rounded_corner_image_layout"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:scaleType="fitXY"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginEnd="@dimen/margin_xl"/>
-        <RelativeLayout
-            android:layout_width="0dp"
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintEnd_toStartOf="@+id/img_menu_crd"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintHorizontal_weight="10">
-            <TextView
-                android:id="@+id/txt_menu_name_crd"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Hattric Deal 2"
-                android:textSize="@dimen/text_size_avg"
-                android:textColor="@color/colorAccent"
-                android:textStyle="bold"
-                android:fontFamily="@font/montserrat_bold"
-                android:layout_marginTop="@dimen/margin_l"
+            android:background="@color/white">
+
+            <ImageView
+                android:id="@+id/img_menu_crd"
+                android:layout_width="@dimen/img_size_average"
+                android:layout_height="@dimen/img_size_average"
+                app:srcCompat="@drawable/library_placeholder"
+                android:background="@drawable/rounded_corner_image_layout"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:scaleType="fitXY"
+                app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_marginEnd="@dimen/margin_xl"
-                android:layout_marginStart="@dimen/margin_xxl"/>
+                binding:loadDetailImage="@{restaurantDetail_binding.image}"
+                binding:ignore="ContentDescription" />
 
-            <TextView
-                android:id="@+id/txt_menu_crd"
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Jalapeno Chicken and Regular Fries"
-                android:textSize="@dimen/text_size_small"
-                android:textColor="@color/text_color"
-                android:lines="2"
-                android:ellipsize="end"
-                android:fontFamily="@font/montserrat_regular"
-                android:layout_below="@+id/txt_menu_name_crd"
-                android:layout_marginTop="@dimen/margin_small"
-                android:layout_marginStart="@dimen/margin_xxl"
-                android:layout_marginEnd="@dimen/margin_xl"/>
+                android:orientation="vertical"
+                app:layout_constraintEnd_toStartOf="@+id/img_menu_crd"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintHorizontal_weight="10">
 
-            <TextView
-                android:id="@+id/txt_price_crd"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Rs. 444.00"
-                android:textSize="@dimen/text_size_small"
-                android:textColor="@color/color_orange"
-                android:textStyle="bold"
-                android:fontFamily="@font/montserrat_bold"
-                android:layout_below="@+id/txt_menu_crd"
-                android:layout_marginTop="@dimen/margin_avg"
-                android:layout_marginStart="@dimen/margin_xxl"
-                android:layout_marginEnd="@dimen/margin_l"
-                android:layout_marginBottom="@dimen/margin_xl"/>
-            <TextView
-                android:id="@+id/txt_old_price_crd"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Rs. 888.00"
-                android:fontFamily="@font/montserrat_regular"
-                android:textSize="@dimen/text_size_small"
-                android:layout_below="@+id/txt_menu_crd"
-                android:layout_toEndOf="@+id/txt_price_crd"
-                android:layout_marginTop="@dimen/margin_avg"
-                android:layout_marginStart="@dimen/margin_small"
-                android:layout_marginEnd="@dimen/margin_small"
-                android:layout_marginBottom="@dimen/margin_xl"
-                android:visibility="gone"/>
-        </RelativeLayout>
+                <TextView
+                    android:id="@+id/txt_menu_name_crd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{restaurantDetail_binding.menuName}"
+                    android:textSize="@dimen/text_size_avg"
+                    android:textColor="@color/colorAccent"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/montserrat_bold"
+                    android:layout_marginTop="@dimen/margin_l"
+                    android:layout_marginEnd="@dimen/margin_xl"
+                    android:layout_marginStart="@dimen/margin_xxl" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:id="@+id/txt_menu_crd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{restaurantDetail_binding.description}"
+                    android:textSize="@dimen/text_size_small"
+                    android:textColor="@color/text_color"
+                    android:lines="2"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/montserrat_regular"
+                    android:layout_below="@+id/txt_menu_name_crd"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:layout_marginStart="@dimen/margin_xxl"
+                    android:layout_marginEnd="@dimen/margin_xl" />
 
-</androidx.cardview.widget.CardView>
+                <TextView
+                    android:id="@+id/txt_price_crd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{restaurantDetail_binding.discount}"
+                    android:textSize="@dimen/text_size_small"
+                    android:textColor="@color/color_orange"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/montserrat_bold"
+                    android:layout_below="@+id/txt_menu_crd"
+                    android:layout_marginTop="@dimen/margin_avg"
+                    android:layout_marginStart="@dimen/margin_xxl"
+                    android:layout_marginEnd="@dimen/margin_l"
+                    android:layout_marginBottom="@dimen/margin_xl" />
+
+                <TextView
+                    android:id="@+id/txt_old_price_crd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{restaurantDetail_binding.itemPrice}"
+                    android:fontFamily="@font/montserrat_regular"
+                    android:textSize="@dimen/text_size_small"
+                    android:layout_below="@+id/txt_menu_crd"
+                    android:layout_toEndOf="@+id/txt_price_crd"
+                    android:layout_marginTop="@dimen/margin_avg"
+                    android:layout_marginStart="@dimen/margin_small"
+                    android:layout_marginEnd="@dimen/margin_small"
+                    android:layout_marginBottom="@dimen/margin_xl"
+                    android:visibility="gone" />
+            </RelativeLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+</layout>
