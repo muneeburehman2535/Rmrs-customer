@@ -36,7 +36,7 @@ class CurrentOrdersAdapter(private val context: Context,private var currentOrder
 //        holder.txtOrderMenu.text=currentOrderList[position].MenuOrdered[0].Description
 
         holder.bind(currentOrderList[position])
-        //holder.txtOrderTime.text=currentOrderList[position].time
+        //holder.binding.txtTimeCco.text=currentOrderList[position].OrderDate
         holder.binding.txtOrderPriceCco.text=AppGlobal.mCurrency+AppGlobal.roundTwoPlaces(currentOrderList[position].TotalAmount.toDouble())
         if (currentOrderList[position].Status=="NEW_ORDER")
         {
@@ -47,6 +47,13 @@ class CurrentOrdersAdapter(private val context: Context,private var currentOrder
             holder.binding.txtOrderStatusCco.text=context.getString(R.string.status_in_progress)
             holder.binding.txtOrderStatusCco.setTextColor(context.getColor(R.color.colorAccent))
         }
+
+//        val dateArr=currentOrderList[position].OrderDate.split("T")
+//        val timeArr=dateArr[1].split(":")
+//        holder.binding.txtTimeCco.text="${timeArr[0]}:${timeArr[1]}"
+//        //holder.binding.txtDateCpo.text=dateArr[0]
+//        holder.binding.txtOrderPriceCco.text= AppGlobal.mCurrency+ AppGlobal.roundTwoPlaces(currentOrderList[position].TotalAmount.toDouble())
+
     }
 
     override fun getItemCount(): Int {
