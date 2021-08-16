@@ -6,11 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.teletaleem.rmrs_customer.R
 import com.teletaleem.rmrs_customer.data_class.cart.Cart
 import com.teletaleem.rmrs_customer.data_class.restaurantdetail.Variant
+import com.teletaleem.rmrs_customer.databinding.LayoutCardItemCardBinding
 import com.teletaleem.rmrs_customer.utilities.AppGlobal
 
 class CartItemAdapter(requireContext: Context, private var cartList:ArrayList<Cart>) : RecyclerView.Adapter<CartItemAdapter.ViewHolder>() {
@@ -28,53 +30,67 @@ class CartItemAdapter(requireContext: Context, private var cartList:ArrayList<Ca
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-       val itemView=LayoutInflater.from(parent.context).inflate(
-           R.layout.layout_card_item_card,
-           parent,
-           false
-       )
-        return ViewHolder(itemView)
+
+        val binding:LayoutCardItemCardBinding = DataBindingUtil.inflate(
+            LayoutInflater.from(parent.context),
+            R.layout.layout_card_item_card,parent,false
+        )
+        return ViewHolder(binding)
+
+//       val itemView=LayoutInflater.from(parent.context).inflate(
+//           R.layout.layout_card_item_card,
+//           parent,
+//           false
+//       )
+//        return ViewHolder(itemView)
     }
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        holder.txtItemName.text=cartList[position].item_name
-        holder.txtItemDesc.text=cartList[position].item_desc
-        holder.txtItemPrice.text=AppGlobal.mCurrency+AppGlobal.roundTwoPlaces(cartList[position].item_price.toDouble())
-        holder.txtItemQuantity.text=cartList[position].quantity
+        holder.bind(cartList[position])
+//        holder.txtItemName.text=cartList[position].item_name
+//        holder.txtItemDesc.text=cartList[position].item_desc
+        holder.binding.txtItemPriceLcic.text=AppGlobal.mCurrency+AppGlobal.roundTwoPlaces(cartList[position].item_price.toDouble())
+        holder.binding.txtQuantityLcic.text=cartList[position].quantity
         if (cartList[position].is_variant.toBoolean())
         {
             val variant= Gson().fromJson(cartList[position].variant, Variant::class.java)
-            holder.txtItemVariant.text="(${variant.ItemName})"
+            holder.binding.txtItemVariantLcic.text="(${variant.ItemName})"
         }
         else{
-            holder.txtItemVariant.text=""
+            holder.binding.txtItemVariantLcic.text=""
         }
 
 
-        holder.txtDecreaseQuantity.setOnClickListener(View.OnClickListener {
+        holder.binding.txtMinusLcic.setOnClickListener(View.OnClickListener {
             updateItemQuantityListener.onUpdateItemQuantityClick(cartList[position].quantity.toInt()-1,position)
         })
-
-        holder.txtIncreaseQuantity.setOnClickListener(View.OnClickListener {
+        holder.binding.txtPlusLcic.setOnClickListener(View.OnClickListener {
             updateItemQuantityListener.onUpdateItemQuantityClick(cartList[position].quantity.toInt()+1,position)
 
         })
+
     }
 
     override fun getItemCount(): Int {
        return cartList.size
     }
 
-    class ViewHolder(itemView: View):RecyclerView.ViewHolder(itemView) {
-        val txtItemName=itemView.findViewById<TextView>(R.id.txt_item_name_lcic)!!
-        val txtItemDesc=itemView.findViewById<TextView>(R.id.txt_item_desc_lcic)!!
-        val txtItemPrice=itemView.findViewById<TextView>(R.id.txt_item_price_lcic)!!
-        val txtItemQuantity=itemView.findViewById<TextView>(R.id.txt_quantity_lcic)!!
-        val txtIncreaseQuantity=itemView.findViewById<TextView>(R.id.txt_plus_lcic)!!
-        val txtDecreaseQuantity=itemView.findViewById<TextView>(R.id.txt_minus_lcic)!!
-        val txtItemVariant=itemView.findViewById<TextView>(R.id.txt_item_variant_lcic)
+    class ViewHolder(val binding: LayoutCardItemCardBinding):RecyclerView.ViewHolder(binding.root) {
+//        val txtItemName=itemView.findViewById<TextView>(R.id.txt_item_name_lcic)!!
+//        val txtItemDesc=itemView.findViewById<TextView>(R.id.txt_item_desc_lcic)!!
+//        val txtItemPrice=itemView.findViewById<TextView>(R.id.txt_item_price_lcic)!!
+//        val txtItemQuantity=itemView.findViewById<TextView>(R.id.txt_quantity_lcic)!!
+//        val txtIncreaseQuantity=itemView.findViewById<TextView>(R.id.txt_plus_lcic)!!
+//        val txtDecreaseQuantity=itemView.findViewById<TextView>(R.id.txt_minus_lcic)!!
+//        val txtItemVariant=itemView.findViewById<TextView>(R.id.txt_item_variant_lcic)
+
+        fun bind(data:Cart){
+            binding.cartBinding = data
+            binding.executePendingBindings()
+
+        }
     }
 
     fun updateList(cartList:ArrayList<Cart>){

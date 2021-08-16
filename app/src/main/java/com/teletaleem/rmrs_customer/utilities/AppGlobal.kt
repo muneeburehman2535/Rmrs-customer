@@ -28,16 +28,16 @@ import java.util.*
 
 class AppGlobal {
     companion object{
+
         var NOTIFICATION_CHANNEL = "RMRSCUSTOMER"
         val NOTIFICATION_GENERAL = "RMRS_Gernal"
         var BUILD = "STAGING"
+
         val LONG=3500
         val SHORT=2000
         var mCurrency="Rs. "
-
         val testEmail="usamawajid116@hotmail.com"
         val testPassword="Usama@123"
-
 
         const val customerId = "customer_id"
         const val tokenId = "token_id"
