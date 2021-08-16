@@ -3,6 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/teletaleem/android-project/rmrs-customer/app/src/main/res/drawable-xxxhdpi/layout_background_lite.xml" value="0.18854166666666666" />
+        <entry key="..\:/teletaleem/android-project/rmrs-customer/app/src/main/res/drawable/ic_minus.xml" value="0.1" />
+        <entry key="..\:/teletaleem/android-project/rmrs-customer/app/src/main/res/drawable/ic_plus.xml" value="0.18854166666666666" />
+        <entry key="..\:/teletaleem/android-project/rmrs-customer/app/src/main/res/drawable/iminus.xml" value="0.18854166666666666" />
         <entry key="..\:/teletaleem/android-project/rmrs-customer/app/src/main/res/layout/activity_customer_home.xml" value="0.14447463768115942" />
         <entry key="..\:/teletaleem/android-project/rmrs-customer/app/src/main/res/layout/card_items_order_details.xml" value="0.24114583333333334" />
         <entry key="..\:/teletaleem/android-project/rmrs-customer/app/src/main/res/layout/card_layout_restaurant.xml" value="0.18" />
