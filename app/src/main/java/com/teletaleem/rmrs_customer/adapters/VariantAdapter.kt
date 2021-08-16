@@ -8,9 +8,11 @@ import android.view.ViewGroup
 import android.widget.RadioButton
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.teletaleem.rmrs_customer.R
 import com.teletaleem.rmrs_customer.data_class.restaurantdetail.Variant
+import com.teletaleem.rmrs_customer.databinding.LayoutVariantCardBinding
 import com.teletaleem.rmrs_customer.utilities.AppGlobal
 
 class VariantAdapter(val context: Context,var variantList:ArrayList<Variant>): RecyclerView.Adapter<VariantAdapter.ViewHolder>() {
@@ -27,20 +29,24 @@ class VariantAdapter(val context: Context,var variantList:ArrayList<Variant>): R
         this.menuSelectionListener = menuSelectionListener
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val itemView=LayoutInflater.from(parent.context).inflate(R.layout.layout_variant_card,parent,false)
-        return ViewHolder(itemView)
+//        val itemView=LayoutInflater.from(parent.context).inflate(R.layout.layout_variant_card,parent,false)
+//        return ViewHolder(itemView)
+
+        val binding:LayoutVariantCardBinding = DataBindingUtil.inflate(
+            LayoutInflater.from(parent.context),
+            R.layout.layout_variant_card,parent,false
+        )
+        return ViewHolder(binding)
     }
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
        val variant=variantList[position]
-        holder.radioButtonVariant.isChecked=false
-        holder.txtItemName.text = variant.ItemName
-        holder.txtItemPrice.text="+ ${AppGlobal.mCurrency+AppGlobal.roundTwoPlaces(variant.CalculatedPrice.toDouble())}"
-        if (variant.isChecked){
-            holder.radioButtonVariant.isChecked=true
-        }
-        holder.layoutParent.setOnClickListener(View.OnClickListener {
+
+        holder.bind(variantList[position])
+        holder.binding.txtVariantPriceLvc.text="+ ${AppGlobal.mCurrency+AppGlobal.roundTwoPlaces(variant.CalculatedPrice.toDouble())}"
+        holder.binding.rbVariantLvc.isChecked = variant.isChecked
+        holder.binding.layoutVatiantLvc.setOnClickListener(View.OnClickListener {
             menuSelectionListener.onMenuSelectionClick(position)
         })
     }
@@ -49,11 +55,17 @@ class VariantAdapter(val context: Context,var variantList:ArrayList<Variant>): R
         return variantList.size
     }
 
-    class ViewHolder(itemView:View):RecyclerView.ViewHolder(itemView) {
-        val radioButtonVariant=itemView.findViewById<RadioButton>(R.id.rb_variant_lvc)!!
-        val txtItemName=itemView.findViewById<TextView>(R.id.txt_variant_name_lvc)!!
-        val txtItemPrice=itemView.findViewById<TextView>(R.id.txt_variant_price_lvc)!!
-        val layoutParent=itemView.findViewById<ConstraintLayout>(R.id.layout_vatiant_lvc)!!
+    class ViewHolder(var binding: LayoutVariantCardBinding):RecyclerView.ViewHolder(binding.root) {
+        fun bind(data:Variant){
+            binding.variantBinding = data
+            binding.executePendingBindings()
+        }
+
+
+//        val radioButtonVariant=itemView.findViewById<RadioButton>(R.id.rb_variant_lvc)!!
+//        val txtItemName=itemView.findViewById<TextView>(R.id.txt_variant_name_lvc)!!
+//        val txtItemPrice=itemView.findViewById<TextView>(R.id.txt_variant_price_lvc)!!
+//        val layoutParent=itemView.findViewById<ConstraintLayout>(R.id.layout_vatiant_lvc)!!
     }
 
     fun updateList(variantList: ArrayList<Variant>){

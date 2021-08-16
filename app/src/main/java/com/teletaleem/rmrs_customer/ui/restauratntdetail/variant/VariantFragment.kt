@@ -81,6 +81,9 @@ class VariantFragment : Fragment(),VariantAdapter.MenuSelectionListener,View.OnC
         (activity as CustomerHomeActivity?)?.mModel?.menuItem?.observe(viewLifecycleOwner, Observer {
             this.menuItem=it
             variantList=menuItem.Variant
+            for (index in 0 until variantList.size){
+                variantList[index].isChecked=false
+            }
             variantList[0].isChecked=true
             variantAdapter.updateList(variantList)
             setViews()
