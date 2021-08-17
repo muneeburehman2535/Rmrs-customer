@@ -129,6 +129,7 @@
     //Reservation
     <string name="title_reservation">Reservation</string>
     <string name="title_my_reservations">My Reservations</string>
+    <string name="title_favourite">Favourite</string>
     <string name="hint_customer_name">Customer Name</string>
     <string name="hint_customer_phn_no">Contact no</string>
     <string name="hint_no_of_people">Number of peoples</string>
