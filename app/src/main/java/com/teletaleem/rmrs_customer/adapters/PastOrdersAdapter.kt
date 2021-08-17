@@ -55,6 +55,7 @@ class PastOrdersAdapter(context: Context,private var pastOrdersList:ArrayList<Pa
 
             binding.pastOrderBinding = data
             binding.executePendingBindings()
+
         }
 
 //        val txtOrderPrice= itemView.findViewById<TextView>(R.id.txt_order_price_cpo)!!
@@ -62,6 +63,7 @@ class PastOrdersAdapter(context: Context,private var pastOrdersList:ArrayList<Pa
 //        val txtOrderMenu= itemView.findViewById<TextView>(R.id.txt_menu_cpo)!!
 //        val txtOrderTime= itemView.findViewById<TextView>(R.id.txt_time_cpo)!!
 //        val txtOrderDate= itemView.findViewById<TextView>(R.id.txt_date_cpo)!!
+
     }
 
     fun updateList(pastOrdersList: ArrayList<PastOrdersDataClass>){
