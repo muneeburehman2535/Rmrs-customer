@@ -8,6 +8,7 @@ plugins {
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
+    kapt { generateStubs = true }
 
     defaultConfig {
         applicationId "com.teletaleem.rmrs_customer"
@@ -36,14 +37,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-    buildFeatures{
-        dataBinding{
-            enabled=true
-        }
+
+    dataBinding {
+        enabled = true
     }
-//    dataBinding {
-//        enabled = true
-//    }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8

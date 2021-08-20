@@ -49,10 +49,11 @@
             app:layout_constraintTop_toBottomOf="@+id/txt_name_lf"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/txt_rating_lf"
+
+            app:layout_constraintEnd_toStartOf="@+id/img_rating_lf"
             app:layout_constraintHorizontal_weight="10"
             android:layout_marginEnd="@dimen/margin_small"
-            android:maxLines="2"
+            android:maxLines="1"
             android:ellipsize="end"
             android:layout_marginTop="@dimen/margin_small"
             android:layout_marginStart="@dimen/margin_avg"

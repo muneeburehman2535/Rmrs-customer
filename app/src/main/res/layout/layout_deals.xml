@@ -1,107 +1,125 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView android:layout_width="@dimen/img_size_xl"
-    android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardCornerRadius="@dimen/margin_avg"
-    android:layout_marginTop="@dimen/margin_avg"
-    android:layout_marginBottom="@dimen/margin_avg"
-    android:layout_marginStart="@dimen/margin_small"
-    android:layout_marginEnd="@dimen/margin_avg"
-    xmlns:android="http://schemas.android.com/apk/res/android" >
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:binding="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="deals_binding"
+            type="com.teletaleem.rmrs_customer.data_class.home.restaurants.Deals" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="@dimen/img_size_xl"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        app:cardCornerRadius="@dimen/margin_avg"
+        android:layout_marginTop="@dimen/margin_avg"
+        android:layout_marginBottom="@dimen/margin_avg"
+        android:layout_marginStart="@dimen/margin_small"
+        android:layout_marginEnd="@dimen/margin_avg">
 
-        <ImageView
-            android:id="@+id/img_profile_deals"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:src="@drawable/background"
-            android:scaleType="fitXY"
-            app:layout_constraintTop_toTopOf="parent" />
-        <TextView
-            android:id="@+id/txt_discount_deals"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="Flat 50% OFF"
-            android:textColor="@color/white"
-            android:background="@drawable/deals_background"
-            android:textSize="@dimen/text_size_small"
-            android:paddingTop="@dimen/padding_small"
-            android:paddingBottom="@dimen/padding_small"
-            android:paddingStart="@dimen/padding_l"
-            android:paddingEnd="@dimen/padding_avg"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="@dimen/margin_l"/>
-        <TextView
-            android:id="@+id/txt_name_ldeals"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Arizona Grills"
-            android:textStyle="bold"
-            android:fontFamily="@font/montserrat_bold"
-            android:textColor="@color/text_color_deals"
-            android:maxLines="1"
-            android:ellipsize="end"
-            android:textSize="@dimen/text_size_small"
-            app:layout_constraintTop_toBottomOf="@+id/img_profile_deals"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="@dimen/margin_small"
-            android:layout_marginTop="@dimen/margin_avg"/>
-        <TextView
-            android:id="@+id/txt_address_ldeals"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Ring Road, Cant Area Peshawar"
-            app:layout_constraintTop_toBottomOf="@+id/txt_name_ldeals"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginStart="@dimen/margin_small"
-            android:layout_marginBottom="@dimen/margin_l"
-            app:layout_constraintEnd_toStartOf="@+id/img_rating_ldeals"
-            app:layout_constraintHorizontal_weight="10"
-            android:layout_marginEnd="@dimen/margin_small"
-            android:maxLines="1"
-            android:ellipsize="end"
-            android:textSize="@dimen/text_size_xsmall"/>
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/txt_points_ldeals"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/margin_small"
-            android:layout_marginBottom="36dp"
-            android:text="(79)"
-            android:textSize="@dimen/text_size_xsmall"
-            android:fontFamily="@font/montserrat_bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            <ImageView
+                android:id="@+id/img_profile_deals"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:src="@drawable/background"
+                android:scaleType="fitXY"
+                binding:loadDealsImage="@{deals_binding.image}"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/txt_rating_ldeals"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/margin_small"
-            android:layout_marginBottom="36dp"
-            android:text="4.9"
-            android:textSize="@dimen/text_size_xsmall"
-            android:fontFamily="@font/montserrat_bold"
-            android:textColor="@color/text_color"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/txt_points_ldeals" />
+            <TextView
+                android:id="@+id/txt_discount_deals"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@{deals_binding.discount}"
+                android:textColor="@color/white"
+                android:background="@drawable/deals_background"
+                android:textSize="@dimen/text_size_small"
+                android:paddingTop="@dimen/padding_small"
+                android:paddingBottom="@dimen/padding_small"
+                android:paddingStart="@dimen/padding_l"
+                android:paddingEnd="@dimen/padding_avg"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="@dimen/margin_l" />
 
-        <ImageView
-            android:id="@+id/img_rating_ldeals"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_star"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/txt_rating_ldeals"
-            android:layout_marginBottom="36dp"
-            android:layout_marginEnd="@dimen/margin_small"/>
+            <TextView
+                android:id="@+id/txt_name_ldeals"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{deals_binding.name}"
+                android:textStyle="bold"
+                android:fontFamily="@font/montserrat_bold"
+                android:textColor="@color/text_color_deals"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:textSize="@dimen/text_size_small"
+                app:layout_constraintTop_toBottomOf="@+id/img_profile_deals"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="@dimen/margin_small"
+                android:layout_marginTop="@dimen/margin_avg" />
+
+            <TextView
+                android:id="@+id/txt_address_ldeals"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{deals_binding.address}"
+                app:layout_constraintTop_toBottomOf="@+id/txt_name_ldeals"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginStart="@dimen/margin_small"
+                android:layout_marginBottom="@dimen/margin_l"
+                app:layout_constraintEnd_toStartOf="@+id/img_rating_ldeals"
+                app:layout_constraintHorizontal_weight="10"
+                android:layout_marginEnd="@dimen/margin_small"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:textSize="@dimen/text_size_xsmall" />
+
+            <TextView
+                android:id="@+id/txt_points_ldeals"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_small"
+                android:layout_marginBottom="36dp"
+                android:text="@{deals_binding.rating_count}"
+                android:textSize="@dimen/text_size_xsmall"
+                android:fontFamily="@font/montserrat_bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <TextView
+                android:id="@+id/txt_rating_ldeals"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_small"
+                android:layout_marginBottom="36dp"
+                android:text="@{deals_binding.rating}"
+                android:textSize="@dimen/text_size_xsmall"
+                android:fontFamily="@font/montserrat_bold"
+                android:textColor="@color/text_color"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/txt_points_ldeals" />
+
+            <ImageView
+                android:id="@+id/img_rating_ldeals"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_star"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/txt_rating_ldeals"
+                android:layout_marginBottom="36dp"
+                android:layout_marginEnd="@dimen/margin_small" />
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</androidx.cardview.widget.CardView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</layout>
+
+<!-- binding:loadImage="@{deals_binding.image}"-->
