@@ -106,9 +106,6 @@ class MenuAdapter(val requireContext: Context, private var menuList: ArrayList<M
             }
         }
     }
-
-
-
 //    @JvmStatic
 //    @BindingAdapter(value = ["getDiscount", "getPrice"], requireAll = false)
 //    fun menuPrice(discount:)
