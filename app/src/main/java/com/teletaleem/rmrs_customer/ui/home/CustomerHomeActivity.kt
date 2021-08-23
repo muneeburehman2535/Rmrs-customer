@@ -653,6 +653,26 @@ class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItem
                 mBinding.drawerLayout.closeDrawers()
                 return true
             }
+
+            R.id.nav_favourite -> {
+//                locationMenu.isVisible = false
+//                mToolbarLayout.visibility = View.GONE
+//                mToolbar.title = getString(R.string.title_my_reservations)
+//                editProfileMenu.isVisible = false
+//                replaceNewFragment(MyReservationsFragment())
+                setToolbarTitle(
+                    getString(R.string.title_favourite),
+                    FavouriteFragment(),
+                    false,
+                    View.GONE,
+                    false,
+                    isMenuVisibility = false
+                )
+                mBinding.drawerLayout.closeDrawers()
+                return true
+            }
+
+
             R.id.nav_profile -> {
 //                locationMenu.isVisible = false
 //                mToolbarLayout.visibility = View.GONE
