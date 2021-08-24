@@ -742,7 +742,6 @@ class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItem
 
             }
         })
-
     }
 
     fun getLuckyDrawPoints(customerID: String){
@@ -753,15 +752,8 @@ class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItem
             progressDialog.dismiss()
             if (it.Message == "Success") {
                 Timber.d("Updated Token: ${it.data.LuckyDrawPoints.toString()}")
-
                 txtLuckyDrawPoints.text = "${getString(R.string.title_lucky_points)} ${AppGlobal.roundTwoPlaces(it.data.LuckyDrawPoints.toDouble())} "
-
             }
         })
-
     }
-
-
-
-
 }
