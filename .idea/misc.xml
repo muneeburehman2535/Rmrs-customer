@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/teletaleem/android-project/rmrs-customer/app/src/main/res/drawable-xxxhdpi/layout_background_lite.xml" value="0.18854166666666666" />
+        <entry key="..\:/teletaleem/android-project/rmrs-customer/app/src/main/res/drawable/ic_add.xml" value="0.25729166666666664" />
         <entry key="..\:/teletaleem/android-project/rmrs-customer/app/src/main/res/drawable/ic_minus.xml" value="0.1" />
         <entry key="..\:/teletaleem/android-project/rmrs-customer/app/src/main/res/drawable/ic_plus.xml" value="0.18854166666666666" />
         <entry key="..\:/teletaleem/android-project/rmrs-customer/app/src/main/res/drawable/iminus.xml" value="0.18854166666666666" />
@@ -29,6 +30,7 @@
         <entry key="..\:/teletaleem/android-project/rmrs-customer/app/src/main/res/layout/layout_variant_card.xml" value="0.11727456940222898" />
         <entry key="..\:/teletaleem/android-project/rmrs-customer/app/src/main/res/layout/menu_detail_fragment.xml" value="0.1" />
         <entry key="..\:/teletaleem/android-project/rmrs-customer/app/src/main/res/layout/restaurant_detail_fragment.xml" value="0.1" />
+        <entry key="..\:/teletaleem/android-project/rmrs-customer/app/src/main/res/layout/variant_fragment.xml" value="0.11727456940222898" />
         <entry key="..\:/teletaleem/android-project/rmrs-customer/app/src/main/res/menu/activity_main_drawer.xml" value="0.24114583333333334" />
       </map>
     </option>
