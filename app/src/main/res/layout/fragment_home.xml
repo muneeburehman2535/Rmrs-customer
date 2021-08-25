@@ -30,6 +30,9 @@
                 android:layout_marginStart="@dimen/margin_xl"
                 android:visibility="gone"/>
 
+
+
+
             <LinearLayout
                 android:id="@+id/layout_search_home"
                 android:layout_width="match_parent"

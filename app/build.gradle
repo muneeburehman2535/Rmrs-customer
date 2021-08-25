@@ -148,6 +148,11 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:21.0.1'
     implementation 'com.google.firebase:firebase-core:19.0.0'
 
+    //Auto Image Slider
+    implementation 'com.github.denzcoskun:ImageSlideshow:0.1.0'
+    
+
+
 
 }
 apply plugin: 'kotlin-android'

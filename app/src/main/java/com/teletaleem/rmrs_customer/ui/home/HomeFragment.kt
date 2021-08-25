@@ -91,6 +91,13 @@ class HomeFragment : Fragment() ,View.OnClickListener,RestaurantAdapter.AddToFav
 
     override fun onResume() {
         super.onResume()
+//        (activity as CustomerHomeActivity).setHomeToolbarTitle(
+//            "",
+//            false,
+//            View.VISIBLE,
+//            true,
+//            false
+//        )
         (requireActivity() as CustomerHomeActivity).getLuckyDrawPoints(AppGlobal.readString(requireActivity(), AppGlobal.customerId, "0"))
     }
 
@@ -226,7 +233,6 @@ class HomeFragment : Fragment() ,View.OnClickListener,RestaurantAdapter.AddToFav
 
         })
 
-
     }
 
     override fun onViewClicked(position: Int) {
@@ -249,9 +255,6 @@ class HomeFragment : Fragment() ,View.OnClickListener,RestaurantAdapter.AddToFav
         )
 
     }
-
-
-
 
     /**************************************************************************************************************************/
     //                                          Room Database Section
