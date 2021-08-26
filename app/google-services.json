@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "519994687640-5dkj8khtct0fg4qnbi7fs2o1hfkqju6h.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.teletaleem.rmrs_customer",
+            "certificate_hash": "5d85c81abcbca1d4647438a4bf816b41c3b20fcc"
+          }
+        },
+        {
           "client_id": "519994687640-lld15t7nqk0cpopd6l7iohk7vb5uoko4.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
