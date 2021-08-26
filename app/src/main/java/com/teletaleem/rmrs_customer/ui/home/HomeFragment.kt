@@ -12,6 +12,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.denzcoskun.imageslider.constants.ScaleTypes
+import com.denzcoskun.imageslider.models.SlideModel
 import com.kaopiz.kprogresshud.KProgressHUD
 import com.teletaleem.rmrs_customer.R
 import com.teletaleem.rmrs_customer.adapters.CategoriesAdapter
@@ -80,6 +82,7 @@ class HomeFragment : Fragment() ,View.OnClickListener,RestaurantAdapter.AddToFav
         setDealsAdapter()
         setClickListeners()
         getCategoriesList()
+        autoImageSlider()
 
         mBinding.searchBarHome.inputType = 0x00000000
     }
@@ -91,6 +94,13 @@ class HomeFragment : Fragment() ,View.OnClickListener,RestaurantAdapter.AddToFav
 
     override fun onResume() {
         super.onResume()
+//        (activity as CustomerHomeActivity).setHomeToolbarTitle(
+//            "",
+//            false,
+//            View.VISIBLE,
+//            true,
+//            false
+//        )
         (requireActivity() as CustomerHomeActivity).getLuckyDrawPoints(AppGlobal.readString(requireActivity(), AppGlobal.customerId, "0"))
     }
 
@@ -131,7 +141,21 @@ class HomeFragment : Fragment() ,View.OnClickListener,RestaurantAdapter.AddToFav
         }
     }
 
+    /**************************************************************************************************************************/
+    //                                          Auto Image Slider Method
+    /**************************************************************************************************************************/
 
+
+    fun autoImageSlider(){
+        val imageSlider = mBinding.imageSlider
+        val imageList = ArrayList<SlideModel>()
+
+        imageList.add(SlideModel(R.drawable.imageone))
+        imageList.add(SlideModel(R.drawable.imagetwo))
+        imageList.add(SlideModel(R.drawable.imagethree))
+        imageSlider.setImageList(imageList, ScaleTypes.FIT)
+
+    }
 
     /**************************************************************************************************************************/
     //                                          Recyclerview Adapters
@@ -226,7 +250,6 @@ class HomeFragment : Fragment() ,View.OnClickListener,RestaurantAdapter.AddToFav
 
         })
 
-
     }
 
     override fun onViewClicked(position: Int) {
@@ -249,9 +272,6 @@ class HomeFragment : Fragment() ,View.OnClickListener,RestaurantAdapter.AddToFav
         )
 
     }
-
-
-
 
     /**************************************************************************************************************************/
     //                                          Room Database Section
@@ -354,6 +374,7 @@ class HomeFragment : Fragment() ,View.OnClickListener,RestaurantAdapter.AddToFav
         activity?.let {
             homeViewModel.getCategoryResponse().observe(it, {
                 //progressDialog.dismiss()
+
                 if (it.Message == "Success") {
                     categoriesList = it.data.categories
                     if (categoriesList.size>0){
@@ -405,8 +426,6 @@ class HomeFragment : Fragment() ,View.OnClickListener,RestaurantAdapter.AddToFav
             }
         })
     }
-
-
 
 
 }

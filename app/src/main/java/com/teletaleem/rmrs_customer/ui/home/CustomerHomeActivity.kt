@@ -263,6 +263,21 @@ class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItem
         replaceNewFragment(fragment)
     }
 
+    fun setHomeToolbarTitle(
+        title: String,
+        isProfileMenuVisible: Boolean,
+        toolbarVisibility: Int,
+        locationVisibility: Boolean,
+        isMenuVisibility: Boolean
+    ){
+        locationMenu?.isVisible = locationVisibility
+        mToolbarLayout.visibility = toolbarVisibility
+        infoMenu.isVisible=isMenuVisibility
+        mToolbar.title =title
+        editProfileMenu?.isVisible = isProfileMenuVisible
+
+    }
+
     fun updateToolbarTitle(
         title: String,
         isProfileMenuVisible: Boolean,
