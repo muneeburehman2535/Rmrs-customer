@@ -20,9 +20,10 @@
         <entry key="..\:/teletaleem/android-project/rmrs-customer/app/src/main/res/layout/card_layout_restaurant.xml" value="0.18" />
         <entry key="..\:/teletaleem/android-project/rmrs-customer/app/src/main/res/layout/card_past_orders.xml" value="0.24114583333333334" />
         <entry key="..\:/teletaleem/android-project/rmrs-customer/app/src/main/res/layout/card_restaurant_detail.xml" value="0.24114583333333334" />
-        <entry key="..\:/teletaleem/android-project/rmrs-customer/app/src/main/res/layout/cart_fragment.xml" value="0.22" />
+        <entry key="..\:/teletaleem/android-project/rmrs-customer/app/src/main/res/layout/cart_fragment.xml" value="0.1" />
+        <entry key="..\:/teletaleem/android-project/rmrs-customer/app/src/main/res/layout/checkout_fragment.xml" value="0.1607638888888889" />
         <entry key="..\:/teletaleem/android-project/rmrs-customer/app/src/main/res/layout/filter_search_fragment.xml" value="0.1272644927536232" />
-        <entry key="..\:/teletaleem/android-project/rmrs-customer/app/src/main/res/layout/fragment_home.xml" value="0.2" />
+        <entry key="..\:/teletaleem/android-project/rmrs-customer/app/src/main/res/layout/fragment_home.xml" value="0.33" />
         <entry key="..\:/teletaleem/android-project/rmrs-customer/app/src/main/res/layout/layout_card_item_card.xml" value="0.33" />
         <entry key="..\:/teletaleem/android-project/rmrs-customer/app/src/main/res/layout/layout_cart_card.xml" value="0.1" />
         <entry key="..\:/teletaleem/android-project/rmrs-customer/app/src/main/res/layout/layout_category.xml" value="0.15760869565217392" />

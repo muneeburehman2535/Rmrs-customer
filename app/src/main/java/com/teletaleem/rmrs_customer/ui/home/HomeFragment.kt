@@ -141,7 +141,21 @@ class HomeFragment : Fragment() ,View.OnClickListener,RestaurantAdapter.AddToFav
         }
     }
 
+    /**************************************************************************************************************************/
+    //                                          Auto Image Slider Method
+    /**************************************************************************************************************************/
 
+
+    fun autoImageSlider(){
+        val imageSlider = mBinding.imageSlider
+        val imageList = ArrayList<SlideModel>()
+
+        imageList.add(SlideModel(R.drawable.imageone))
+        imageList.add(SlideModel(R.drawable.imagetwo))
+        imageList.add(SlideModel(R.drawable.imagethree))
+        imageSlider.setImageList(imageList, ScaleTypes.FIT)
+
+    }
 
     /**************************************************************************************************************************/
     //                                          Recyclerview Adapters
@@ -360,6 +374,7 @@ class HomeFragment : Fragment() ,View.OnClickListener,RestaurantAdapter.AddToFav
         activity?.let {
             homeViewModel.getCategoryResponse().observe(it, {
                 //progressDialog.dismiss()
+
                 if (it.Message == "Success") {
                     categoriesList = it.data.categories
                     if (categoriesList.size>0){
@@ -412,20 +427,5 @@ class HomeFragment : Fragment() ,View.OnClickListener,RestaurantAdapter.AddToFav
         })
     }
 
-    /**************************************************************************************************************************/
-    //                                          Auto Image Slider Method
-    /**************************************************************************************************************************/
-
-
-    fun autoImageSlider(){
-        val imageSlider = mBinding.imageSlider
-        val imageList = ArrayList<SlideModel>()
-
-        imageList.add(SlideModel(R.drawable.imageone))
-        imageList.add(SlideModel(R.drawable.imagetwo))
-        imageList.add(SlideModel(R.drawable.imagethree))
-        imageSlider.setImageList(imageList, ScaleTypes.FIT)
-
-    }
 
 }
