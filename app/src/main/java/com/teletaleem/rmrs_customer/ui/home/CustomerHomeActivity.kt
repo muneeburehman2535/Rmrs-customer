@@ -263,6 +263,21 @@ class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItem
         replaceNewFragment(fragment)
     }
 
+    fun setHomeToolbarTitle(
+        title: String,
+        isProfileMenuVisible: Boolean,
+        toolbarVisibility: Int,
+        locationVisibility: Boolean,
+        isMenuVisibility: Boolean
+    ){
+        locationMenu?.isVisible = locationVisibility
+        mToolbarLayout.visibility = toolbarVisibility
+        infoMenu.isVisible=isMenuVisibility
+        mToolbar.title =title
+        editProfileMenu?.isVisible = isProfileMenuVisible
+
+    }
+
     fun updateToolbarTitle(
         title: String,
         isProfileMenuVisible: Boolean,
@@ -742,7 +757,6 @@ class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItem
 
             }
         })
-
     }
 
     fun getLuckyDrawPoints(customerID: String){
@@ -753,15 +767,8 @@ class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItem
             progressDialog.dismiss()
             if (it.Message == "Success") {
                 Timber.d("Updated Token: ${it.data.LuckyDrawPoints.toString()}")
-
                 txtLuckyDrawPoints.text = "${getString(R.string.title_lucky_points)} ${AppGlobal.roundTwoPlaces(it.data.LuckyDrawPoints.toDouble())} "
-
             }
         })
-
     }
-
-
-
-
 }

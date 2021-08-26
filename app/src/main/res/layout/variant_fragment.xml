@@ -28,17 +28,20 @@
                     android:alpha="0.84" />
                 <TextView
                     android:id="@+id/txt_title_variant_fragment"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="@string/title_order_detail"
                     android:textSize="@dimen/text_size_avg"
                     android:textStyle="bold"
                     android:fontFamily="@font/montserrat_bold"
                     android:textColor="@color/colorAccent"
+
                     app:layout_constraintTop_toBottomOf="@+id/img_background_variant_fragment"
                     app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/txt_title_total_item_price_fv"
                     android:layout_marginTop="@dimen/margin_avg"
-                    android:layout_marginStart="@dimen/margin_l"/>
+                    android:layout_marginStart="@dimen/margin_l"
+                    android:layout_marginEnd="@dimen/margin_avg"/>
 
                 <TextView
                     android:id="@+id/txt_title_total_item_price_fv"
@@ -66,11 +69,6 @@
                     android:layout_marginTop="@dimen/margin_l"
                     android:layout_marginStart="@dimen/margin_l"
                     android:layout_marginEnd="@dimen/margin_l"/>
-
-
-
-
-
                 <View
                     android:id="@+id/line_seprator_variant_fragment"
                     android:layout_width="match_parent"
@@ -229,7 +227,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1.1"
-                    android:src="@drawable/ic_plus"
+                    android:src="@drawable/ic_add"
                     android:layout_gravity="center"/>
             </LinearLayout>
             <Button
