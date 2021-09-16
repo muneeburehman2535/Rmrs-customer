@@ -11,7 +11,7 @@ android {
     kapt { generateStubs = true }
 
     defaultConfig {
-        applicationId "com.teletaleem.rmrs_customer"
+        applicationId "com.comcept.rmrs_customer"
         minSdkVersion 21
         targetSdkVersion 30
         versionCode 1
