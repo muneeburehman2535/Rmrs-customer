@@ -48,9 +48,9 @@ class HomeRepository {
     }
 
 
-    fun getRestaurantResponseLiveData(categoryId:String): LiveData<RestaurantsResponse> {
+    fun getRestaurantResponseLiveData(categoryId:String,Latitude:Double,Longitude:Double): LiveData<RestaurantsResponse> {
         restaurantResponseLiveData=MutableLiveData<RestaurantsResponse>()
-        RetrofitClass.getHomeInstance()?.getHomeRequestsInstance()?.getHomeData(categoryId)?.enqueue(object : Callback<ResponseBody?> {
+        RetrofitClass.getHomeInstance()?.getHomeRequestsInstance()?.getHomeData(categoryId,Latitude,Longitude)?.enqueue(object : Callback<ResponseBody?> {
             override fun onResponse(call: Call<ResponseBody?>, response: Response<ResponseBody?>) {
                 var restaurantsResponse: RestaurantsResponse?=null
 

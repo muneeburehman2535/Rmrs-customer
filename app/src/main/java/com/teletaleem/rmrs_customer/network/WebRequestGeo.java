@@ -43,7 +43,7 @@ public interface WebRequestGeo {
     Call<ResponseBody> getCategoriesList();
 
     @GET("/customer/home/?")
-    Call<ResponseBody> getHomeData(@Query("categoryID") String categoryID);
+    Call<ResponseBody> getHomeData(@Query("categoryID") String categoryID,@Query("Latitude") Double Latitude,@Query("Longitude") Double Longitude);
 
     @GET("/customer/restaurant-detail/?")
     Call<ResponseBody> getRestaurantDetail(@Query("restaurantid") String restaurantid);

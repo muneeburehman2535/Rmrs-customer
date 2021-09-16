@@ -221,7 +221,7 @@ class HomeFragment : Fragment() ,View.OnClickListener,RestaurantAdapter.AddToFav
                             categoriesList[position].isClicked = true
                             categoryAdapter.updateCategoryList(categoriesList)
 
-                            getRestaurantsList(categoriesList[position].CategoryID)
+                            getRestaurantsList(categoriesList[position].CategoryID,categoriesList[position].Latitude,categoriesList[position].Longitude)
                         }
 
                     }
@@ -382,7 +382,7 @@ class HomeFragment : Fragment() ,View.OnClickListener,RestaurantAdapter.AddToFav
                         categoriesList[0].isClicked = true
                         categoryAdapter.updateCategoryList(categoriesList)
                         if (categoriesList.size > 0) {
-                            getRestaurantsList(categoriesList[0].CategoryID)
+                            getRestaurantsList(categoriesList[0].CategoryID,categoriesList[4].Latitude,categoriesList[5].Longitude)
                         }
                     }
                     else{
@@ -405,10 +405,10 @@ class HomeFragment : Fragment() ,View.OnClickListener,RestaurantAdapter.AddToFav
     /*
    * Get Restaurants Data API Method
    * */
-    private fun getRestaurantsList(categoryID: String){
+    private fun getRestaurantsList(categoryID: String,Latitude:Double,Longitude:Double){
         progressDialog.setLabel("Please Wait")
         progressDialog.show()
-        homeViewModel.getRestaurantsResponse(categoryID).observe(requireActivity(), {
+        homeViewModel.getRestaurantsResponse(categoryID,Latitude,Longitude).observe(requireActivity(), {
             progressDialog.dismiss()
             if (it.Message == "Success") {
 
