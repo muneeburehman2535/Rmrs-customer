@@ -3,7 +3,7 @@
     <data>
         <variable
             name="order_detail_view_model"
-            type="com.teletaleem.rmrs_customer.ui.orderdetail.OrderDetailViewModel" />
+            type="com.comcept.rmrs_customer.ui.orderdetail.OrderDetailViewModel" />
     </data>
     <RelativeLayout
         android:id="@+id/layput_parent_aod"

@@ -6,7 +6,7 @@
 
         <variable
             name="category_binding"
-            type="com.teletaleem.rmrs_customer.data_class.home.category.Categories" />
+            type="com.comcept.rmrs_customer.data_class.home.category.Categories" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
