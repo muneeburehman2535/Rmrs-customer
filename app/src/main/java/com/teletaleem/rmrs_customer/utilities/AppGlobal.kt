@@ -271,6 +271,5 @@ class AppGlobal {
                 context.startActivity(mapIntent);
             }
         }
-
     }
 }
