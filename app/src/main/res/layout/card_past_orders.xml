@@ -7,7 +7,7 @@
 
         <variable
             name="past_order_binding"
-            type="com.teletaleem.rmrs_customer.data_class.myorders.pastorders.PastOrdersDataClass" />
+            type="com.comcept.rmrs_customer.data_class.myorders.pastorders.PastOrdersDataClass" />
     </data>
 
     <androidx.cardview.widget.CardView

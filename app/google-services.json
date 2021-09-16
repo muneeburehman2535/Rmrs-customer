@@ -9,15 +9,23 @@
       "client_info": {
         "mobilesdk_app_id": "1:519994687640:android:f9b9c49d7c4727bc1050ed",
         "android_client_info": {
-          "package_name": "com.teletaleem.rmrs_customer"
+          "package_name": "com.comcept.rmrs_customer"
         }
       },
       "oauth_client": [
         {
+          "client_id": "519994687640-5dkj8khtct0fg4qnbi7fs2o1hfkqju6h.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.comcept.rmrs_customer",
+            "certificate_hash": "5d85c81abcbca1d4647438a4bf816b41c3b20fcc"
+          }
+        },
+        {
           "client_id": "519994687640-lld15t7nqk0cpopd6l7iohk7vb5uoko4.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.teletaleem.rmrs_customer",
+            "package_name": "com.comcept.rmrs_customer",
             "certificate_hash": "d6ed29bdc2812e3f1f922050ae907903bb73ab57"
           }
         },
@@ -25,7 +33,7 @@
           "client_id": "519994687640-n4auca2026srctkuqheso46f6g8gpqr6.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.teletaleem.rmrs_customer",
+            "package_name": "com.comcept.rmrs_customer",
             "certificate_hash": "df1959a6db060a55515c66cc51b3f43d98b78ddb"
           }
         },

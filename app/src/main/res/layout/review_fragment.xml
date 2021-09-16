@@ -4,7 +4,7 @@
     <data>
         <variable
             name="review_view_model"
-            type="com.teletaleem.rmrs_customer.ui.review.ReviewViewModel" />
+            type="com.comcept.rmrs_customer.ui.review.ReviewViewModel" />
     </data>
 
     <ScrollView
