@@ -1,5 +1,6 @@
 package com.comcept.rmrs_customer.repository
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.Gson
@@ -62,6 +63,7 @@ class HomeRepository {
 
                 }
                 Timber.d(Gson().toJson(restaurantsResponse).toString())
+                Log.d("HomeResponse","${Gson().toJson(restaurantsResponse).toString()}")
                 restaurantResponseLiveData.postValue(restaurantsResponse)
             }
 

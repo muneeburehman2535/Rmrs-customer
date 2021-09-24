@@ -54,6 +54,8 @@ class HomeFragment : Fragment() ,View.OnClickListener,RestaurantAdapter.AddToFav
 
     private  var restaurantId:String="0"
     private lateinit var mActivity:Activity
+    private var mLatitude:Double? = 0.0
+    private var mLongitude:Double? = 0.0
 
 
 
@@ -81,15 +83,28 @@ class HomeFragment : Fragment() ,View.OnClickListener,RestaurantAdapter.AddToFav
         setRestaurantAdapter()
         setDealsAdapter()
         setClickListeners()
-        getCategoriesList()
+        getLocation()
         autoImageSlider()
 
         mBinding.searchBarHome.inputType = 0x00000000
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         getCartRecord()
+    }
+    private fun getLocation(){
+        (activity as CustomerHomeActivity?)?.mModel?.mLatitude?.observe(viewLifecycleOwner, Observer {
+            mLatitude=it
+            getLongitude(mLatitude!!)
+        })
+    }
+    private fun getLongitude(mLatitude: Double) {
+        (activity as CustomerHomeActivity?)?.mModel?.mLongitude?.observe(viewLifecycleOwner, Observer {
+            mLongitude=it
+            getCategoriesList()
+        })
     }
 
     override fun onResume() {
@@ -271,6 +286,8 @@ class HomeFragment : Fragment() ,View.OnClickListener,RestaurantAdapter.AddToFav
             "restaurant_detail"
         )
 
+
+
     }
 
     /**************************************************************************************************************************/
@@ -382,7 +399,7 @@ class HomeFragment : Fragment() ,View.OnClickListener,RestaurantAdapter.AddToFav
                         categoriesList[0].isClicked = true
                         categoryAdapter.updateCategoryList(categoriesList)
                         if (categoriesList.size > 0) {
-                            getRestaurantsList(categoriesList[0].CategoryID,categoriesList[4].Latitude,categoriesList[5].Longitude)
+                            getRestaurantsList(categoriesList[0].CategoryID, mLatitude!!, mLongitude!!)
                         }
                     }
                     else{

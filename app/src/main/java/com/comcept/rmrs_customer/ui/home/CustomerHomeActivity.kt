@@ -423,6 +423,13 @@ class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItem
                             getAddress(location.latitude, location.longitude)
                             mLatitude =  location.latitude
                             mLongitude = location.longitude
+                            mModel.updateLatitude(mLatitude)
+                            mModel.updateLongitude(mLongitude)
+
+
+
+
+
                         }
                         // Got last known location. In some rare situations this can be null.
                     }
@@ -538,6 +545,8 @@ class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItem
 
                     mLatitude = currentLatitude
                     mLongitude = currentLongitude
+                    mModel.updateLatitude(mLatitude)
+                    mModel.updateLongitude(mLongitude)
 
 
                     txtToolbarName.text=mCurrentLocation
