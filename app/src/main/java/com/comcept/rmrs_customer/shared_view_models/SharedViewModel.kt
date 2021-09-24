@@ -16,6 +16,8 @@ class SharedViewModel: ViewModel() {
     var sumOfRating=MutableLiveData<Double>()
     var ownerId= MutableLiveData<String>()
     var menuItem=MutableLiveData<Menu>()
+    var mLatitude=MutableLiveData<Double>()
+    var mLongitude=MutableLiveData<Double>()
 
 
 
@@ -81,5 +83,15 @@ class SharedViewModel: ViewModel() {
     fun updateMenuItem(menu:Menu){
         this.menuItem.value=menu
     }
+
+    fun updateLongitude(longitude:Double){
+        this.mLongitude.value = longitude
+    }
+
+
+    fun updateLatitude(latitude:Double){
+        this.mLatitude.value = latitude
+    }
+
 
 }

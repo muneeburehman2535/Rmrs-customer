@@ -30,8 +30,8 @@ constructor(application: Application, private val roomDBRepository: RoomDBReposi
         return homeRepository.getLoginResponseLiveData()
     }
 
-    fun getRestaurantsResponse(categoryId: String):LiveData<RestaurantsResponse>{
-        return homeRepository.getRestaurantResponseLiveData(categoryId)
+    fun getRestaurantsResponse(categoryId: String,Latitude:Double,Longitude:Double):LiveData<RestaurantsResponse>{
+        return homeRepository.getRestaurantResponseLiveData(categoryId,Latitude,Longitude)
     }
 
     fun insertFavourite(favourite: Favourite){

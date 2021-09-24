@@ -5,5 +5,7 @@ data class Categories(
         val CategoryID:String,
         val CategoryName:String,
         val __v:Int,
-        var isClicked:Boolean
+        var isClicked:Boolean,
+        val Latitude:Double,
+        val Longitude:Double
 )
