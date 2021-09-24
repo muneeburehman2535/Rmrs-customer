@@ -91,6 +91,11 @@ class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItem
     private lateinit var txtLuckyDrawPoints:TextView
     private lateinit var txtCustomerName:TextView
 
+    var mLatitude:Double = 0.0
+    var mLongitude:Double = 0.0
+
+
+
     @SuppressLint("HardwareIds")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -416,6 +421,15 @@ class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItem
                     .addOnSuccessListener { location: Location? ->
                         if (location!=null){
                             getAddress(location.latitude, location.longitude)
+                            mLatitude =  location.latitude
+                            mLongitude = location.longitude
+                            mModel.updateLatitude(mLatitude)
+                            mModel.updateLongitude(mLongitude)
+
+
+
+
+
                         }
                         // Got last known location. In some rare situations this can be null.
                     }
@@ -527,6 +541,14 @@ class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItem
                     val currentLongitude: Double = data.getDoubleExtra(MapUtility.LONGITUDE, 0.0)
                     val completeAddress: Bundle? = data.getBundleExtra("fullAddress")
                     mCurrentLocation=completeAddress!!.getString("addressline2").toString()
+
+
+                    mLatitude = currentLatitude
+                    mLongitude = currentLongitude
+                    mModel.updateLatitude(mLatitude)
+                    mModel.updateLongitude(mLongitude)
+
+
                     txtToolbarName.text=mCurrentLocation
                     AppGlobal.writeString(this, AppGlobal.customerAddress, mCurrentLocation)
                     //Timber.d("Location: ${completeAddress!!.getString("addressline2")+"\t"+completeAddress.getString("city")}")

@@ -1,5 +1,6 @@
 package com.comcept.rmrs_customer.repository
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.Gson
@@ -48,9 +49,9 @@ class HomeRepository {
     }
 
 
-    fun getRestaurantResponseLiveData(categoryId:String): LiveData<RestaurantsResponse> {
+    fun getRestaurantResponseLiveData(categoryId:String,Latitude:Double,Longitude:Double): LiveData<RestaurantsResponse> {
         restaurantResponseLiveData=MutableLiveData<RestaurantsResponse>()
-        RetrofitClass.getHomeInstance()?.getHomeRequestsInstance()?.getHomeData(categoryId)?.enqueue(object : Callback<ResponseBody?> {
+        RetrofitClass.getHomeInstance()?.getHomeRequestsInstance()?.getHomeData(categoryId,Latitude,Longitude)?.enqueue(object : Callback<ResponseBody?> {
             override fun onResponse(call: Call<ResponseBody?>, response: Response<ResponseBody?>) {
                 var restaurantsResponse: RestaurantsResponse?=null
 
@@ -62,6 +63,7 @@ class HomeRepository {
 
                 }
                 Timber.d(Gson().toJson(restaurantsResponse).toString())
+                Log.d("HomeResponse","${Gson().toJson(restaurantsResponse).toString()}")
                 restaurantResponseLiveData.postValue(restaurantsResponse)
             }
 
