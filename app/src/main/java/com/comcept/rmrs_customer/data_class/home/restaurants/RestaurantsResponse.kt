@@ -1,6 +1,6 @@
 package com.comcept.rmrs_customer.data_class.home.restaurants
 
 data class RestaurantsResponse(
-        val Message:String,
+        val message:String,
         val data:Data
 )

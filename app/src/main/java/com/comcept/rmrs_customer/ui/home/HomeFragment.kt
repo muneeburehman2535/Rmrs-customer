@@ -54,8 +54,8 @@ class HomeFragment : Fragment() ,View.OnClickListener,RestaurantAdapter.AddToFav
 
     private  var restaurantId:String="0"
     private lateinit var mActivity:Activity
-    private var mLatitude:Double? = 0.0
-    private var mLongitude:Double? = 0.0
+    private var mLatitude:Double? =33.6624748
+    private var mLongitude:Double? = 73.0560211
 
 
 
@@ -85,6 +85,7 @@ class HomeFragment : Fragment() ,View.OnClickListener,RestaurantAdapter.AddToFav
         setClickListeners()
         getLocation()
         autoImageSlider()
+        getCategoriesList()
 
         mBinding.searchBarHome.inputType = 0x00000000
 
@@ -236,7 +237,9 @@ class HomeFragment : Fragment() ,View.OnClickListener,RestaurantAdapter.AddToFav
                             categoriesList[position].isClicked = true
                             categoryAdapter.updateCategoryList(categoriesList)
 
-                            getRestaurantsList(categoriesList[position].CategoryID,categoriesList[position].Latitude,categoriesList[position].Longitude)
+                            getRestaurantsList(categoriesList[position].CategoryID,
+                                mLatitude!!, mLongitude!!
+                            )
                         }
 
                     }
@@ -427,7 +430,7 @@ class HomeFragment : Fragment() ,View.OnClickListener,RestaurantAdapter.AddToFav
         progressDialog.show()
         homeViewModel.getRestaurantsResponse(categoryID,Latitude,Longitude).observe(requireActivity(), {
             progressDialog.dismiss()
-            if (it.Message == "Success") {
+            if (it.message == "success") {
 
                 restaurantsList = it.data.restaurants
                 dealsList = it.data.deals

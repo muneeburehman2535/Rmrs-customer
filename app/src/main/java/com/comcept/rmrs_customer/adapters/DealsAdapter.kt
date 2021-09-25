@@ -41,7 +41,7 @@ class DealsAdapter(private val requireContext: Context,private var dealsList: Ar
 
         holder.bind(dealsList[position])
         holder.binding.txtPointsLdeals.text = "(${dealsList[position].rating_count})"
-        AppGlobal.loadImageIntoGlide(dealsList[position].Image, holder.binding.imgProfileDeals,requireContext)
+       // AppGlobal.loadImageIntoGlide(dealsList[position].Image, holder.binding.imgProfileDeals,requireContext)
 
     }
 
@@ -64,13 +64,13 @@ class DealsAdapter(private val requireContext: Context,private var dealsList: Ar
         notifyDataSetChanged()
     }
     companion object {
-        @JvmStatic
-        @BindingAdapter("loadDealsImage")
-        fun loadDealsImage(img_profile_deals:ImageView,url:String?){
-            if (!url.isNullOrEmpty()){
-                Glide.with(img_profile_deals.context).load(url).into(img_profile_deals)
-            }
-        }
+//        @JvmStatic
+//        @BindingAdapter("loadDealsImage")
+//        fun loadDealsImage(img_profile_deals:ImageView,url:String?){
+//            if (!url.isNullOrEmpty()){
+//                Glide.with(img_profile_deals.context).load(url).into(img_profile_deals)
+//            }
+//        }
     }
 }
 

@@ -30,7 +30,6 @@
                 android:layout_height="100dp"
                 android:src="@drawable/background"
                 android:scaleType="fitXY"
-                binding:loadDealsImage="@{deals_binding.image}"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
