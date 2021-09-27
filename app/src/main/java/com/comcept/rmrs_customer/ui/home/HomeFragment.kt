@@ -430,7 +430,7 @@ class HomeFragment : Fragment() ,View.OnClickListener,RestaurantAdapter.AddToFav
         progressDialog.show()
         homeViewModel.getRestaurantsResponse(categoryID,Latitude,Longitude).observe(requireActivity(), {
             progressDialog.dismiss()
-            if (it.message == "success") {
+            if (it.Message == "Success") {
 
                 restaurantsList = it.data.restaurants
                 dealsList = it.data.deals

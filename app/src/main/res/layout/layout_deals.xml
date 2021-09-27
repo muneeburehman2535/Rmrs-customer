@@ -28,8 +28,9 @@
                 android:id="@+id/img_profile_deals"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
-                android:src="@drawable/background"
+                android:src="@drawable/error_placeholder"
                 android:scaleType="fitXY"
+                binding:loadRestaurantImage="@{deals_binding.image}"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
