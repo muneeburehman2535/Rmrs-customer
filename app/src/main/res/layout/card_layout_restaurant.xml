@@ -33,7 +33,7 @@
                 android:id="@+id/img_profile"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/img_size_normal"
-                android:src="@drawable/placeholder"
+                android:src="@drawable/error_placeholder"
                 android:scaleType="fitXY"
                 binding:loadRestaurantImage="@{restaurant_binding.image}"
                 app:layout_constraintTop_toTopOf="parent" />

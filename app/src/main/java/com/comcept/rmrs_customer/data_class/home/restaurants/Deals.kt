@@ -6,6 +6,6 @@ data class Deals(
     val address:String,
     val rating:String,
     val rating_count:String,
-    val Image:String,
-    val discount:String
+    val discount:String,
+    val Image:String
 )

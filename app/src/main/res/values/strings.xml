@@ -1,7 +1,8 @@
 <resources>
     <string name="app_name">Rmrs-customer</string>
     <string name="title_alert">Alert!</string>
-    <string name="google_maps_api">AIzaSyDuvFY98SoqVE13WehzpevmD6bZVgBcspo</string>
+<!--    <string name="google_maps_api">AIzaSyDuvFY98SoqVE13WehzpevmD6bZVgBcspo</string>-->
+    <string name="google_maps_api">AIzaSyCnD-96rmf-OjFwXayM5GEZMcCTNEs9WUk</string>
 
     //Splash
     <string name="title_delivery_food">Get The Fastest Delivery Food For You</string>
@@ -176,7 +177,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
-    <string name="version_number">Version: 1.0.12</string>
+    <string name="version_number">Version: 1.0.13</string>
 
 
 </resources>
