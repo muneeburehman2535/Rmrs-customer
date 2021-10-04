@@ -76,8 +76,12 @@ class  CheckoutFragment : Fragment(),View.OnClickListener {
             R.id.btn_checkout_fc->
             {
                 if (mBinding.rbCheckoutFc.isChecked)
-                {
+                {mBinding.rbCheckoutEasypiasaFc.visibility = View.GONE
                     orderCheckout.PaymentMethod="COD"
+                }
+                if (mBinding.rbCheckoutEasypiasaFc.isChecked){
+                    mBinding.rbCheckoutFc.visibility = View.GONE
+                    orderCheckout.PaymentMethod="EP"
                 }
                 orderCheckout.OrderType="Delivery"
                 orderCheckout.Comments=mBinding.edtxtSpecialInsCf.text.toString()
@@ -86,6 +90,7 @@ class  CheckoutFragment : Fragment(),View.OnClickListener {
             }
         }
     }
+
 
     /*
   * Get Restaurants Data API Method
