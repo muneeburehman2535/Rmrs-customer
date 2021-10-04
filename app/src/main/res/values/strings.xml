@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Rmrs-customer</string>
     <string name="title_alert">Alert!</string>
-<!--    <string name="google_maps_api">AIzaSyDuvFY98SoqVE13WehzpevmD6bZVgBcspo</string>-->
+    <!--    <string name="google_maps_api">AIzaSyDuvFY98SoqVE13WehzpevmD6bZVgBcspo</string>-->
     <string name="google_maps_api">AIzaSyCnD-96rmf-OjFwXayM5GEZMcCTNEs9WUk</string>
 
     //Splash
@@ -86,6 +86,7 @@
     //Checkout Strings
     <string name="title_payment_method">Payment Method</string>
     <string name="title_cod">Cash on delivery</string>
+    <string name="title_ep">Easy Paisa </string>
     <string name="title_checkout">Checkout</string>
     <string name="title_special_ins">Special Instructions</string>
 
