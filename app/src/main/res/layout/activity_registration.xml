@@ -7,7 +7,7 @@
     <data>
         <variable
             name="registration_viewmodel"
-            type="com.comcept.rmrs_customer.ui.registration.RegistrationViewModel" />
+            type="com.comcept.rmrscustomer.ui.registration.RegistrationViewModel" />
     </data>
     <ScrollView
         android:layout_width="match_parent"

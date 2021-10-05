@@ -4,7 +4,7 @@
     <data>
         <variable
             name="restaurant_detail_view_model"
-            type="com.comcept.rmrs_customer.ui.restauratntdetail.RestaurantDetailViewModel" />
+            type="com.comcept.rmrscustomer.ui.restauratntdetail.RestaurantDetailViewModel" />
     </data>
 
     <LinearLayout

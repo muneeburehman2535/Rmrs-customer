@@ -7,7 +7,7 @@
     <data>
         <variable
             name="confirm_otp_view_model"
-            type="com.comcept.rmrs_customer.ui.otpverification.ConfirmOTPViewModel" />
+            type="com.comcept.rmrscustomer.ui.otpverification.ConfirmOTPViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

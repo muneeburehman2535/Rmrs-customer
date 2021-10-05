@@ -6,26 +6,26 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="com.comcept.rmrs_customer.ui.home.HomeFragment"
+        android:name="com.comcept.rmrscustomer.ui.home.HomeFragment"
         android:label="@string/menu_dashboard"
         tools:layout="@layout/fragment_home" >
     </fragment>
 
     <fragment
         android:id="@+id/nav_cart"
-        android:name="com.comcept.rmrs_customer.ui.home.cart.CartFragment"
+        android:name="com.comcept.rmrscustomer.ui.home.cart.CartFragment"
         android:label="@string/menu_cart"
         tools:layout="@layout/cart_fragment"/>
 
     <fragment
         android:id="@+id/nav_favourite"
-        android:name="com.comcept.rmrs_customer.ui.home.favourite.FavouriteFragment"
+        android:name="com.comcept.rmrscustomer.ui.home.favourite.FavouriteFragment"
         android:label="@string/menu_slideshow"
         tools:layout="@layout/fragment_slideshow" />
 
     <fragment
         android:id="@+id/nav_profile"
-        android:name="com.comcept.rmrs_customer.ui.home.profile.ProfileFragment"
+        android:name="com.comcept.rmrscustomer.ui.home.profile.ProfileFragment"
         tools:layout="@layout/profile_fragment"
         android:label="@string/menu_profile"/>
 </navigation>

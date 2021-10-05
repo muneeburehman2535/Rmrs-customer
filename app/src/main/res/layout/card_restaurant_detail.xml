@@ -7,7 +7,7 @@
     <data>
         <variable
             name="restaurantDetail_binding"
-            type="com.comcept.rmrs_customer.data_class.restaurantdetail.Menu" />
+            type="com.comcept.rmrscustomer.data_class.restaurantdetail.Menu" />
 
     </data>
 

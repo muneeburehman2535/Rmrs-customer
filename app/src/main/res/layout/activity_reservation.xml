@@ -8,7 +8,7 @@
     <data>
         <variable
             name="reservation_view_model"
-            type="com.comcept.rmrs_customer.ui.reservation.ReservationViewModel" />
+            type="com.comcept.rmrscustomer.ui.reservation.ReservationViewModel" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layout_parent"

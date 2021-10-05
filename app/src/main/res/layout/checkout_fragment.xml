@@ -6,7 +6,7 @@
     <data>
         <variable
             name="checkout_view_model"
-            type="com.comcept.rmrs_customer.ui.checkout.CheckoutViewModel" />
+            type="com.comcept.rmrscustomer.ui.checkout.CheckoutViewModel" />
     </data>
     <ScrollView
         android:layout_width="match_parent"

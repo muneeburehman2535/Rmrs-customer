@@ -3,7 +3,7 @@
     <data>
         <variable
             name="menu_detail_view_model"
-            type="com.comcept.rmrs_customer.ui.restauratntdetail.menudetail.MenuDetailViewModel" />
+            type="com.comcept.rmrscustomer.ui.restauratntdetail.menudetail.MenuDetailViewModel" />
     </data>
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"

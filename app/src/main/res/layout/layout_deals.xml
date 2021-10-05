@@ -7,7 +7,7 @@
 
         <variable
             name="deals_binding"
-            type="com.comcept.rmrs_customer.data_class.home.restaurants.Deals" />
+            type="com.comcept.rmrscustomer.data_class.home.restaurants.Deals" />
     </data>
 
     <androidx.cardview.widget.CardView

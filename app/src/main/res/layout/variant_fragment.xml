@@ -4,7 +4,7 @@
     <data>
         <variable
             name="variant_view_model"
-            type="com.comcept.rmrs_customer.ui.restauratntdetail.variant.VariantViewModel" />
+            type="com.comcept.rmrscustomer.ui.restauratntdetail.variant.VariantViewModel" />
     </data>
 
     <RelativeLayout

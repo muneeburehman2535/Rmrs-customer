@@ -7,7 +7,7 @@
 
         <variable
             name="current_order_binding"
-            type="com.comcept.rmrs_customer.data_class.myorders.currentorders.CurrentOrderDataClass" />
+            type="com.comcept.rmrscustomer.data_class.myorders.currentorders.CurrentOrderDataClass" />
     </data>
 
     <androidx.cardview.widget.CardView

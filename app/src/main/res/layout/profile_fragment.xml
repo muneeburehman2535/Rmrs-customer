@@ -4,7 +4,7 @@
     <data>
         <variable
             name="profile_view_model"
-            type="com.comcept.rmrs_customer.ui.home.profile.ProfileViewModel" />
+            type="com.comcept.rmrscustomer.ui.home.profile.ProfileViewModel" />
     </data>
     <ScrollView
         android:layout_width="match_parent"

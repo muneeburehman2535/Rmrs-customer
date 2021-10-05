@@ -7,41 +7,41 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:519994687640:android:de4b5e6fbe373d261050ed",
+        "mobilesdk_app_id": "1:519994687640:android:194fac957909e9801050ed",
         "android_client_info": {
-          "package_name": "com.comcept.rmrs_customer"
+          "package_name": "com.comcept.rmrscustomer"
         }
       },
       "oauth_client": [
         {
-          "client_id": "519994687640-a1c5djkj6jn0m9edierq2foprbm8tpvg.apps.googleusercontent.com",
+          "client_id": "519994687640-1nmpl9sejpls64ifi810faf8sq89vdj2.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.comcept.rmrs_customer",
-            "certificate_hash": "5d85c81abcbca1d4647438a4bf816b41c3b20fcc"
-          }
-        },
-        {
-          "client_id": "519994687640-ebkg9dfi8s4b16tuo9dnfcfmeg01hfta.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.comcept.rmrs_customer",
-            "certificate_hash": "67e5700eaa9efd7273af04e60cc572c2002a2b83"
-          }
-        },
-        {
-          "client_id": "519994687640-h697mml6glgv3a1rlhgln8s0k8clkmc6.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.comcept.rmrs_customer",
+            "package_name": "com.comcept.rmrscustomer",
             "certificate_hash": "df1959a6db060a55515c66cc51b3f43d98b78ddb"
           }
         },
         {
-          "client_id": "519994687640-n7rip7t0fhpqqh5c15kk1783nda0ep59.apps.googleusercontent.com",
+          "client_id": "519994687640-5m74ajg3r948ls5s2roeh9podfvadao5.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.comcept.rmrs_customer",
+            "package_name": "com.comcept.rmrscustomer",
+            "certificate_hash": "5d85c81abcbca1d4647438a4bf816b41c3b20fcc"
+          }
+        },
+        {
+          "client_id": "519994687640-7h00olttvp8jbjn1nch7qnreigqt8j35.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.comcept.rmrscustomer",
+            "certificate_hash": "6282ff9767bf12e903ed81a9329d557b281d0891"
+          }
+        },
+        {
+          "client_id": "519994687640-vfm4vljs8pemache260gh3t8d6l6383s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.comcept.rmrscustomer",
             "certificate_hash": "d6ed29bdc2812e3f1f922050ae907903bb73ab57"
           }
         },

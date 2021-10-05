@@ -8,7 +8,7 @@
 
         <variable
             name="restaurant_binding"
-            type="com.comcept.rmrs_customer.data_class.home.restaurants.Restaurants" />
+            type="com.comcept.rmrscustomer.data_class.home.restaurants.Restaurants" />
     </data>
 
 

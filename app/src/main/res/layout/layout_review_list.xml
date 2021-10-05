@@ -6,7 +6,7 @@
 
         <variable
             name="review_list_binding"
-            type="com.comcept.rmrs_customer.data_class.review.Data" />
+            type="com.comcept.rmrscustomer.data_class.review.Data" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

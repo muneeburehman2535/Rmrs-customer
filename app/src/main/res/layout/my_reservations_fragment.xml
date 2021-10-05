@@ -3,7 +3,7 @@
     <data>
         <variable
             name="my_reservation_fragment"
-            type="com.comcept.rmrs_customer.ui.reservation.myreservation.MyReservationsViewModel" />
+            type="com.comcept.rmrscustomer.ui.reservation.myreservation.MyReservationsViewModel" />
     </data>
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"

@@ -3,7 +3,7 @@
     <data>
         <variable
             name="cart_view_model"
-            type="com.comcept.rmrs_customer.ui.home.cart.CartViewModel" />
+            type="com.comcept.rmrscustomer.ui.home.cart.CartViewModel" />
     </data>
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
