@@ -30,6 +30,7 @@ import com.comcept.rmrscustomer.utilities.AppGlobal
 import com.comcept.rmrscustomer.utilities.RecyclerItemClickListener
 import dagger.hilt.android.AndroidEntryPoint
 import org.json.JSONObject
+import kotlin.properties.Delegates
 
 @AndroidEntryPoint
 class MenuDetailFragment : Fragment() {
@@ -42,7 +43,8 @@ class MenuDetailFragment : Fragment() {
     private var restaurantId="0"
     private var restaurantName=""
     private lateinit var cartList:ArrayList<Cart>
-
+    private var mSalesTax by Delegates.notNull<Double>()
+    private var mServiceCharges by Delegates.notNull<Double>()
 
 
     private lateinit var viewModel: MenuDetailViewModel
@@ -82,6 +84,13 @@ class MenuDetailFragment : Fragment() {
         getRestaurantId()
         getRestaurantName()
         cartList= arrayListOf()
+
+        (requireActivity() as CustomerHomeActivity).mModel.mSalesTax.observe(requireActivity(), Observer {
+            mSalesTax=it
+        })
+        (requireActivity() as CustomerHomeActivity).mModel.mServiceCharges.observe(requireActivity(), Observer {
+            mServiceCharges=it
+        })
     }
 
     private fun getRestaurantId(){
@@ -208,6 +217,8 @@ class MenuDetailFragment : Fragment() {
 //                    CartFragment(),
 //                    "cart"
 //            )
+            AppGlobal.writeString(requireActivity(),AppGlobal.salesTax,mSalesTax.toString())
+            AppGlobal.writeString(requireActivity(),AppGlobal.serviceCharges,mServiceCharges.toString())
             alertDialog.dismiss()
         })
 

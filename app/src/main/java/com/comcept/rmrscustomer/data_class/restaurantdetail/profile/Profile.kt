@@ -16,5 +16,7 @@ data class Profile(
         val RatingCount:Int,
         val SumofRating:Double,
         val Image:String,
-        val __v:Int
+        val __v:Int,
+        val SalesTax:Float,
+        val ServiceCharges:Float
 )

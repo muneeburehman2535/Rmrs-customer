@@ -18,6 +18,8 @@ class SharedViewModel: ViewModel() {
     var menuItem=MutableLiveData<Menu>()
     var mLatitude=MutableLiveData<Double>()
     var mLongitude=MutableLiveData<Double>()
+    var mSalesTax=MutableLiveData<Double>().apply { value=0.0 }
+    var mServiceCharges=MutableLiveData<Double>().apply { value=0.0 }
 
 
 
@@ -91,6 +93,14 @@ class SharedViewModel: ViewModel() {
 
     fun updateLatitude(latitude:Double){
         this.mLatitude.value = latitude
+    }
+
+    fun updateSalesTax(salesTax:Double){
+        this.mSalesTax.value = salesTax
+    }
+
+    fun updateServiceCharges(serviceCharges:Double){
+        this.mServiceCharges.value = serviceCharges
     }
 
 
