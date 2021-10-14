@@ -35,11 +35,11 @@ class LoginActivity : AppCompatActivity(),View.OnClickListener {
         progressDialog=AppGlobal.setProgressDialog(this)
         setClickListeners()
 
-        if (AppGlobal.BUILD=="STAGING")
-        {
-            mBinding.edtxtEmailAl.setText(AppGlobal.testEmail)
-            mBinding.edtxtPasswordAl.setText(AppGlobal.testPassword)
-        }
+//        if (AppGlobal.BUILD=="STAGING")
+//        {
+//            mBinding.edtxtEmailAl.setText(AppGlobal.testEmail)
+//            mBinding.edtxtPasswordAl.setText(AppGlobal.testPassword)
+//        }
 
     }
 
