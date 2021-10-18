@@ -27,6 +27,7 @@ import com.comcept.rmrscustomer.ui.home.CustomerHomeActivity
 import com.comcept.rmrscustomer.utilities.AppGlobal
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
+import kotlin.properties.Delegates
 
 
 @AndroidEntryPoint
@@ -47,6 +48,8 @@ class VariantFragment : Fragment(),VariantAdapter.MenuSelectionListener,View.OnC
     private var restaurantName=""
     private var variantPosition=0
     private lateinit var  databaseCreator: CustomerDatabase
+    private var mSalesTax by Delegates.notNull<Double>()
+    private var mServiceCharges by Delegates.notNull<Double>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -69,6 +72,12 @@ class VariantFragment : Fragment(),VariantAdapter.MenuSelectionListener,View.OnC
         getMenuItem()
         setClickListeners()
         getRestaurantName()
+        (requireActivity() as CustomerHomeActivity).mModel.mSalesTax.observe(requireActivity(), Observer {
+            mSalesTax=it
+        })
+        (requireActivity() as CustomerHomeActivity).mModel.mServiceCharges.observe(requireActivity(), Observer {
+            mServiceCharges=it
+        })
     }
 
     private fun setClickListeners() {
@@ -112,7 +121,11 @@ class VariantFragment : Fragment(),VariantAdapter.MenuSelectionListener,View.OnC
 
         btnContinue?.setOnClickListener(View.OnClickListener {
             emptyCartRecord()
-            Handler(Looper.getMainLooper()).postDelayed({addItemToCart()},100)
+            Handler(Looper.getMainLooper()).postDelayed({
+                addItemToCart()
+                AppGlobal.writeString(requireActivity(),AppGlobal.salesTax,mSalesTax.toString())
+                AppGlobal.writeString(requireActivity(),AppGlobal.serviceCharges,mServiceCharges.toString())
+                                                        },100)
             alertDialog.cancel()
         })
     }
@@ -219,6 +232,8 @@ class VariantFragment : Fragment(),VariantAdapter.MenuSelectionListener,View.OnC
                 AppGlobal.showDialog(getString(R.string.title_alert), getString(R.string.err_already_added), requireActivity())
             } else {
                 addItemToCart()
+                AppGlobal.writeString(requireActivity(),AppGlobal.salesTax,mSalesTax.toString())
+                AppGlobal.writeString(requireActivity(),AppGlobal.serviceCharges,mServiceCharges.toString())
 
             }
             cartLiveData.removeObservers(requireActivity())

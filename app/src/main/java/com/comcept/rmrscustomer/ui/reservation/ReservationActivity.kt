@@ -92,7 +92,7 @@ class ReservationActivity : AppCompatActivity(), View.OnClickListener, DatePicke
                             ,mBinding.edtxtPeopleNoAr.text.toString()
                             ,mBinding.edtxtCustomerPhnNoAr.text.toString()
                             ,Date(mCalendar.timeInMillis)
-                            ,AppGlobal.readString(this,AppGlobal.restaurantName,""))
+                            ,AppGlobal.readString(this,AppGlobal.restaurantName,""),AppGlobal.readString(this,AppGlobal.ownerId,"0"))
 
                     if (AppGlobal.isInternetAvailable(this))
                     {

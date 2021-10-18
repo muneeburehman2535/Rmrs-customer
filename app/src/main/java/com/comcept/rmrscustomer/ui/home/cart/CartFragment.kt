@@ -35,12 +35,12 @@ class CartFragment : Fragment(),View.OnClickListener,CartItemAdapter.UpdateItemQ
     private lateinit var cartList:ArrayList<Cart>
     private lateinit var cartItemAdapter:CartItemAdapter
 
-    private var mSalesTax="7"
+    private var mSalesTax="0"
     private var mItemTotalAmount="0"
     private var mDiscountTotal="0"
     private var mTotalDiscountedAmount="0"
     private var mSalesTaxAmount="0"
-    private var mServicesCharges="40"
+    private var mServicesCharges="0"
     private var mTotalAmount="0"
     private var restaurantId="0"
     private var restaurantName=""
@@ -71,6 +71,8 @@ class CartFragment : Fragment(),View.OnClickListener,CartItemAdapter.UpdateItemQ
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         databaseCreator= CustomerDatabase.getInstance(requireActivity())
+        mSalesTax=AppGlobal.readString(requireActivity(),AppGlobal.salesTax,"0")
+        mServicesCharges=AppGlobal.readString(requireActivity(),AppGlobal.serviceCharges,"0")
         setCartList()
         setDealsAdapter()
         getRestaurantId()
@@ -78,6 +80,8 @@ class CartFragment : Fragment(),View.OnClickListener,CartItemAdapter.UpdateItemQ
 //        calculatePrice()
 //        setViews()
         setClickListeners()
+
+
 
 
 
@@ -196,6 +200,7 @@ class CartFragment : Fragment(),View.OnClickListener,CartItemAdapter.UpdateItemQ
             }
 
         }
+        mBinding.txtTitleTaxChrgCf.setText("${getString(R.string.title_tax)} ($mSalesTax %)")
 
     }
 

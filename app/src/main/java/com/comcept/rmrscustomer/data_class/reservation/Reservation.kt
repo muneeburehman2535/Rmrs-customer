@@ -9,5 +9,6 @@ data class Reservation(
         val NumberOfPeople:String,
         val MobileNumber:String,
         val ReservationTime:Date,
-        val RestaurantName:String
+        val RestaurantName:String,
+        val OwnerID:String
 )

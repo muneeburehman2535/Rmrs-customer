@@ -267,6 +267,8 @@ class RestaurantDetailFragment : Fragment() ,TabsAdapter.ViewClickListener,View.
         mBinding.rbRatingFrd.numStars=5
         mBinding.txtTotalRestaurantRatingFrd.text="(${mProfile.RatingCount})"
         AppGlobal.loadImageIntoGlide(mProfile.Image,mBinding.imgRestaurantFrd,requireActivity())
+        (requireActivity() as CustomerHomeActivity).mModel.updateSalesTax(mProfile.SalesTax.toDouble())
+        (requireActivity() as CustomerHomeActivity).mModel.updateServiceCharges(mProfile.ServiceCharges.toDouble())
     }
 
     override fun onViewClicked(updatedMenuList: ArrayList<Menu>) {

@@ -19,6 +19,8 @@ class ReservationRepository {
 
     fun getReservationResponseLiveData(reservation: Reservation): LiveData<ReservationResponse> {
         reservationResponseLiveData= MutableLiveData<ReservationResponse>()
+
+        Timber.d("Reservation-Params: ${Gson().toJson(reservation)}")
         RetrofitClass.getHomeInstance()?.getHomeRequestsInstance()?.addReservation(reservation)?.enqueue(object : Callback<ResponseBody?> {
             override fun onResponse(call: Call<ResponseBody?>, response: Response<ResponseBody?>) {
                 var reservationResponse: ReservationResponse?=null

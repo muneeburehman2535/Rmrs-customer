@@ -51,6 +51,8 @@ class AppGlobal {
         const val customerEmail="customer_email"
         const val customerMobile="customer_mobile"
         const val deviceId="device_id"
+        const val salesTax="sales_tax"
+        const val serviceCharges="service_charges"
 
 
 
