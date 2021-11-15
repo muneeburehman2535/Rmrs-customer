@@ -23,6 +23,8 @@ import com.comcept.rmrscustomer.R
 import com.comcept.rmrscustomer.adapters.TabsAdapter
 import com.comcept.rmrscustomer.data_class.restaurantdetail.Menu
 import com.comcept.rmrscustomer.data_class.restaurantdetail.RestaurantDetailResponse
+import com.comcept.rmrscustomer.data_class.restaurantdetail.deals.DealsData
+import com.comcept.rmrscustomer.data_class.restaurantdetail.restaurantdetail.CategoryData
 import com.comcept.rmrscustomer.databinding.RestaurantDetailFragmentBinding
 import com.comcept.rmrscustomer.ui.home.CustomerHomeActivity
 import com.comcept.rmrscustomer.ui.reservation.ReservationActivity
@@ -30,6 +32,7 @@ import com.comcept.rmrscustomer.ui.review.restaurantreviews.ReviewsListFragment
 import com.comcept.rmrscustomer.utilities.AppGlobal
 import com.comcept.rmrscustomer.utilities.BlurBuilder
 import com.comcept.rmrscustomer.utilities.GPSTracker
+import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
@@ -37,6 +40,8 @@ import timber.log.Timber
 class RestaurantDetailFragment : Fragment() ,TabsAdapter.ViewClickListener,View.OnClickListener{
     private lateinit var mBinding:RestaurantDetailFragmentBinding
     private lateinit var menuList:ArrayList<Menu>
+    private lateinit var categoryList:ArrayList<CategoryData>
+    private lateinit var dealsList:ArrayList<DealsData>
 
     companion object {
         fun newInstance() = RestaurantDetailFragment()
@@ -121,24 +126,25 @@ class RestaurantDetailFragment : Fragment() ,TabsAdapter.ViewClickListener,View.
 
     private fun setTabLayout() {
         val tabList= arrayListOf<String>()
-        for (index in 0 until menuList.size)
+        tabList.add("Deals")
+        for (index in 0 until categoryList.size)
         {
             if (index==0)
             {
-                tabList.add(menuList[index].MenuCategory)
+                tabList.add(categoryList[index].CategoryName)
             }
             else{
                 var isMenuFound=false
                 for (ind in 0 until tabList.size)
                 {
-                    if (tabList[ind] == menuList[index].MenuCategory)
+                    if (tabList[ind] == categoryList[index].CategoryName)
                     {
                        isMenuFound=true
                     }
                 }
                 if (!isMenuFound)
                 {
-                    tabList.add(menuList[index].MenuCategory)
+                    tabList.add(categoryList[index].CategoryName)
                 }
 
             }
@@ -150,7 +156,7 @@ class RestaurantDetailFragment : Fragment() ,TabsAdapter.ViewClickListener,View.
         }
 
         mBinding.layoutTabRdf.tabGravity = TabLayout.GRAVITY_FILL
-        val adapter = TabsAdapter( childFragmentManager,requireActivity(), mBinding.layoutTabRdf.tabCount,menuList,tabList,true)
+        val adapter = TabsAdapter( childFragmentManager,requireActivity(), mBinding.layoutTabRdf.tabCount,menuList,categoryList,tabList,true)
         adapter.setViewClickListener(this)
         mBinding.viewpagerRdf.adapter = adapter
         mBinding.viewpagerRdf.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(mBinding.layoutTabRdf))
@@ -162,10 +168,12 @@ class RestaurantDetailFragment : Fragment() ,TabsAdapter.ViewClickListener,View.
                 val updatedMenuList= arrayListOf<Menu>()
                 for (index in 0 until menuList.size)
                 {
-
-                    if (menuList[index].MenuCategory==text)
-                    {
-                        updatedMenuList.add(menuList[index])
+                    val categoryArray=menuList[index].MenuCategory
+                    for (ind in 0 until categoryArray.size){
+                        if (categoryArray[ind].CategoryName==text)
+                        {
+                            updatedMenuList.add(menuList[index])
+                        }
                     }
 
                 }
@@ -194,7 +202,8 @@ class RestaurantDetailFragment : Fragment() ,TabsAdapter.ViewClickListener,View.
             this.restaurantId=it
             if (AppGlobal.isInternetAvailable(requireActivity()))
             {
-                getRestaurantDetail()
+                getRestaurantCategory()
+
             }
             else{
                 AppGlobal.snackBar(mBinding.layoutParentRdf,getString(R.string.err_no_internet),AppGlobal.SHORT)
@@ -237,7 +246,16 @@ class RestaurantDetailFragment : Fragment() ,TabsAdapter.ViewClickListener,View.
             progressDialog.dismiss()
             if (it.Message=="Success")
             {
-                menuList=it.data.menu
+                val menuArray=it.data.menu
+
+                for (index in 0 until menuArray.size){
+                    val menu=menuArray[index]
+                    menu.isDeal=false
+                    menuList.add(menu)
+                }
+
+                Timber.d("menu list: ${Gson().toJson(menuList)}")
+
                 if (menuList.size>0){
                     setTabLayout()
                     (activity as CustomerHomeActivity).mModel.updateRatingCount(it.data.profile[0].RatingCount)
@@ -254,6 +272,80 @@ class RestaurantDetailFragment : Fragment() ,TabsAdapter.ViewClickListener,View.
             }
             else{
                 AppGlobal.showDialog(getString(R.string.title_alert),it.data.description,requireContext())
+            }
+        })
+    }
+
+    private fun getRestaurantCategory(){
+        progressDialog.setLabel("Please Wait")
+        progressDialog.show()
+        viewModel.getRestaurantCategoryResponse(restaurantId).observe(requireActivity(), {
+            progressDialog.dismiss()
+            if (it.message=="Success")
+            {
+                categoryList=it.data
+                if (categoryList.size>0){
+                    //setTabLayout()
+                        getRestaurantDeals()
+                    //getRestaurantDetail()
+//                    (activity as CustomerHomeActivity).mModel.updateRatingCount(it.data.profile[0].RatingCount)
+//                    (activity as CustomerHomeActivity).mModel.updateSumOfRating(it.data.profile[0].SumofRating)
+//                    AppGlobal.writeString(requireActivity(),AppGlobal.ownerId,it.data.profile[0].OwnerID)
+//                    AppGlobal.writeString(requireActivity(),AppGlobal.restaurantName,it.data.profile[0].RestaurantName)
+//                    AppGlobal.writeString(requireActivity(),AppGlobal.restaurantAddress,it.data.profile[0].Address)
+//                    AppGlobal.writeString(requireActivity(),AppGlobal.restaurantImage,it.data.profile[0].Image)
+//                    restaurantDetailResponse=it
+//                    setViews()
+                    //(activity as CustomerHomeActivity).mModel.updateMenuList(menuList)
+                }
+
+            }
+            else{
+              //  AppGlobal.showDialog(getString(R.string.title_alert),it.data.description,requireContext())
+            }
+        })
+    }
+
+    private fun getRestaurantDeals(){
+        progressDialog.setLabel("Please Wait")
+        progressDialog.show()
+        viewModel.getRestaurantDealsResponse(restaurantId).observe(requireActivity(), {
+            progressDialog.dismiss()
+            if (it.message=="Success")
+            {
+                dealsList= arrayListOf()
+                dealsList=it.data
+                if (dealsList.size>0){
+                    menuList= arrayListOf()
+                    for (index in 0 until dealsList.size){
+                        menuList.add(
+                            Menu(""
+                                ,dealsList[index].DealID
+                                ,dealsList[index].DealName
+                                ,dealsList[index].DealPrice,
+                                arrayListOf(),(0).toFloat()
+                                ,dealsList[index].RestaurantID
+                                ,true
+                                ,dealsList[index].Description
+                                ,dealsList[index].DealPrice
+                                ,dealsList[index].Image
+                                ,0
+                                ,dealsList[index].Variant
+                                , isVariant = false
+                                , isDeal = true
+                            ))
+                    }
+                    getRestaurantDetail()
+
+                }
+                else{
+                    menuList= arrayListOf()
+                    getRestaurantDeals()
+                }
+
+            }
+            else{
+              //  AppGlobal.showDialog(getString(R.string.title_alert),it.data.description,requireContext())
             }
         })
     }

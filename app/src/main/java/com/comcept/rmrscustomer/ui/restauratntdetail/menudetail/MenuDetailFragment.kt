@@ -22,6 +22,7 @@ import com.comcept.rmrscustomer.data_class.cart.Cart
 import com.comcept.rmrscustomer.data_class.cart.SingleCart
 import com.comcept.rmrscustomer.data_class.restaurantdetail.Menu
 import com.comcept.rmrscustomer.data_class.restaurantdetail.Variant
+import com.comcept.rmrscustomer.data_class.restaurantdetail.restaurantdetail.CategoryData
 import com.comcept.rmrscustomer.databinding.MenuDetailFragmentBinding
 import com.comcept.rmrscustomer.db.CustomerDatabase
 import com.comcept.rmrscustomer.ui.home.CustomerHomeActivity
@@ -52,7 +53,7 @@ class MenuDetailFragment : Fragment() {
     companion object{
         lateinit var updatedMenuList: ArrayList<Menu>
         fun getInstance(position: Int,menuList: ArrayList<Menu>): Fragment {
-            updatedMenuList=menuList
+            //updatedMenuList=menuList
             val bundle = Bundle()
             bundle.putInt("pos", position)
             val tabFragment = MenuDetailFragment()
