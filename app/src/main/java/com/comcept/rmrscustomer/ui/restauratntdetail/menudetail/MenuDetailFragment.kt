@@ -233,6 +233,12 @@ class MenuDetailFragment : Fragment() {
         txtItemQuantity: TextView
     ) {
 
+        val isDeal=if (menu.isDeal){
+            1
+        }else{
+            0
+        }
+
         val cart = Cart(menu.RestaurantID
             , restaurantName
             , menu.MenuName
@@ -246,7 +252,9 @@ class MenuDetailFragment : Fragment() {
             ,AppGlobal.readString(requireActivity(),AppGlobal.restaurantAddress,"")
             ,AppGlobal.readString(requireActivity(),AppGlobal.restaurantImage,"")
             ,Gson().toJson(JSONObject()).toString()
-            ,menu.Variant[0].VariantID,menu.isVariant.toString())
+            ,menu.Variant[0].VariantID
+            , menu.isVariant.toString()
+            ,isDeal)
 
         viewModel.insertCartItem(cart)
 

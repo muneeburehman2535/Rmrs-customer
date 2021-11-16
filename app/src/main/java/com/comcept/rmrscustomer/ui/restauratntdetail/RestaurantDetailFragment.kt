@@ -166,17 +166,30 @@ class RestaurantDetailFragment : Fragment() ,TabsAdapter.ViewClickListener,View.
                 val text=tab.text.toString()
 
                 val updatedMenuList= arrayListOf<Menu>()
-                for (index in 0 until menuList.size)
-                {
-                    val categoryArray=menuList[index].MenuCategory
-                    for (ind in 0 until categoryArray.size){
-                        if (categoryArray[ind].CategoryName==text)
-                        {
-                            updatedMenuList.add(menuList[index])
-                        }
-                    }
 
+                if (tab.position==0){
+                    for (index in 0 until menuList.size)
+                    {
+                       if (menuList[index].isDeal){
+                           updatedMenuList.add(menuList[index])
+                       }
+
+                    }
                 }
+                else{
+                    for (index in 0 until menuList.size)
+                    {
+                        val categoryArray=menuList[index].MenuCategory
+                        for (ind in 0 until categoryArray.size){
+                            if (categoryArray[ind].CategoryName==text)
+                            {
+                                updatedMenuList.add(menuList[index])
+                            }
+                        }
+
+                    }
+                }
+
 
                 (activity as CustomerHomeActivity).mModel.updateMenuList(updatedMenuList)
 
@@ -358,9 +371,16 @@ class RestaurantDetailFragment : Fragment() ,TabsAdapter.ViewClickListener,View.
         mBinding.rbRatingFrd.rating=mProfile.Rating.toFloat()
         mBinding.rbRatingFrd.numStars=5
         mBinding.txtTotalRestaurantRatingFrd.text="(${mProfile.RatingCount})"
+        mBinding.txtDistanceFrd.text="${mProfile.Address}, ${mProfile.City}."
         AppGlobal.loadImageIntoGlide(mProfile.Image,mBinding.imgRestaurantFrd,requireActivity())
         (requireActivity() as CustomerHomeActivity).mModel.updateSalesTax(mProfile.SalesTax.toDouble())
-        (requireActivity() as CustomerHomeActivity).mModel.updateServiceCharges(mProfile.ServiceCharges.toDouble())
+        val deliveryCharges=if (mProfile.Delivery.size>0){
+            mProfile.Delivery[0].DeliveryCharges.toDouble()
+        }
+        else{
+            0.0
+        }
+        (requireActivity() as CustomerHomeActivity).mModel.updateServiceCharges(deliveryCharges)
     }
 
     override fun onViewClicked(updatedMenuList: ArrayList<Menu>) {

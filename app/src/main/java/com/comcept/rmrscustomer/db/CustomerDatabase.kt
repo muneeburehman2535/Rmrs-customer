@@ -10,7 +10,7 @@ import com.comcept.rmrscustomer.db.dao.CartDao
 import com.comcept.rmrscustomer.db.dao.FavouriteDao
 import com.comcept.rmrscustomer.db.dataclass.Favourite
 
-@Database(entities = [Favourite::class, Cart::class], version = 1,exportSchema = false)
+@Database(entities = [Favourite::class, Cart::class], version = 2,exportSchema = false)
 abstract class CustomerDatabase:RoomDatabase(){
 
 
@@ -38,8 +38,8 @@ abstract class CustomerDatabase:RoomDatabase(){
                     instance = Room.databaseBuilder(
                         context.applicationContext,
                         CustomerDatabase::class.java,
-                        "customer-database"
-                    )
+                        "customer-database")
+                        .addMigrations(DatabaseMigrations.MIGRATION_1_2)
                         .fallbackToDestructiveMigration()
                         .build()
                     // Assign INSTANCE to the newly created database.

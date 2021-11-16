@@ -11,5 +11,7 @@ data class MenuOrdered(
         val Quantity:String,
         val Description:String,
         val Variant:Variant,
-        val isVariant:Boolean
+        val isVariant:Boolean,
+        val Deal:Boolean,
+        val isReady:Boolean
 )

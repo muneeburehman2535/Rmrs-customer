@@ -219,8 +219,10 @@ class CartFragment : Fragment(),View.OnClickListener,CartItemAdapter.UpdateItemQ
                 variant.DiscountPrice=0
             }
 
+            val isDeal= cartList[index].is_deal==1
+
             val menuOrdered=MenuOrdered(cartList[index].menu_id,cartList[index].item_name,cartList[index].item_price
-                ,cartList[index].quantity,cartList[index].description, variant,cartList[index].is_variant.toBoolean())
+                ,cartList[index].quantity,cartList[index].description, variant,cartList[index].is_variant.toBoolean(),isDeal,false)
             menuOrdered.Variant.Quantity=cartList[index].quantity.toInt()
             menuOrderedList.add(menuOrdered)
 

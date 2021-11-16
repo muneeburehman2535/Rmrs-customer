@@ -55,7 +55,7 @@ class OrderDetailIItemsAdapter(itemContext: Context,private var menuOrderedList:
 //        val txtDesc=itemView.findViewById<TextView>(R.id.txt_other_item_name_ciod)!!
     }
 
-    fun updateList(menuOrderedList: ArrayList<MenuOrdered>){
+    fun updateList(menuOrderedList: ArrayList< MenuOrdered>){
         this.menuOrderedList=menuOrderedList
         notifyDataSetChanged()
     }
