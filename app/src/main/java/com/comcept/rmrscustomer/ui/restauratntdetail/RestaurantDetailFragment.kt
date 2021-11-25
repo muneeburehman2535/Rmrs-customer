@@ -314,7 +314,7 @@ class RestaurantDetailFragment : Fragment() ,TabsAdapter.ViewClickListener,View.
 
             }
             else{
-              //  AppGlobal.showDialog(getString(R.string.title_alert),it.data.description,requireContext())
+                AppGlobal.showDialog(getString(R.string.title_alert),it.data[0].error,requireContext())
             }
         })
     }

@@ -11,6 +11,7 @@
     </data>
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/layout_card_deals_ld"
         android:layout_width="@dimen/img_size_xl"
         android:layout_height="wrap_content"
         app:cardCornerRadius="@dimen/margin_avg"

@@ -117,6 +117,12 @@ class ReservationActivity : AppCompatActivity(), View.OnClickListener, DatePicke
         {
             msg="${msg}Enter customer mobile number. \n"
         }
+        else{
+            if(mBinding.edtxtCustomerPhnNoAr.text.toString().length<11||mBinding.edtxtCustomerPhnNoAr.text.toString().length>13){
+                msg="${msg}Enter valid mobile number. \n"
+            }
+        }
+
 
         if (TextUtils.isEmpty(mBinding.edtxtPeopleNoAr.text.toString().trim()))
         {

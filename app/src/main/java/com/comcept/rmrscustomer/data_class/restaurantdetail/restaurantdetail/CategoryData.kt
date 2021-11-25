@@ -6,5 +6,6 @@ data class CategoryData(
     val CategoryID:String,
     val RestaurantID:String,
     val CategoryName:String,
-    val __v:String
+    val __v:String,
+    val error:String
 )

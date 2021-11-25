@@ -50,6 +50,7 @@ class ReviewFragment : Fragment(),View.OnClickListener {
         progressDialog=AppGlobal.setProgressDialog(requireActivity())
         getRestaurantId()
         mBinding.btnSubmitReview.setOnClickListener(this)
+        mBinding.edtxtCustomerName.setText(AppGlobal.readString(requireActivity(),AppGlobal.customerName,""))
     }
 
     private fun getRestaurantId(){
