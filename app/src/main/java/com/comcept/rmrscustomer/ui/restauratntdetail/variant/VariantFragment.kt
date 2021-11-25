@@ -136,7 +136,11 @@ class VariantFragment : Fragment(),VariantAdapter.MenuSelectionListener,View.OnC
         mBinding.txtTitleItemDescFv.text=menuItem.Description
         mBinding.txtTitleTotalItemPriceFv.text=AppGlobal.mCurrency+AppGlobal.roundTwoPlaces(variantList[0].CalculatedPrice.toDouble())
         mBinding.txtQuantityFv.text=itemQuantity.toString()
-        val mVariantType="${getString(R.string.title_choose)} ${menuItem.MenuCategory}"
+        var menuItemName=""
+        for (index in 0 until menuItem.MenuCategory.size){
+            menuItemName=menuItem.MenuCategory[index].CategoryName
+        }
+        val mVariantType="${getString(R.string.title_choose)} ${menuItemName}"
         //mBinding.txtTitleVariantTypeFv.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_CAP_WORDS
         mBinding.txtTitleVariantTypeFv.text=mVariantType.capitalize(
             Locale.getDefault())

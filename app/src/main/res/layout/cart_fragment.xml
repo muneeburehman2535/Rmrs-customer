@@ -50,7 +50,6 @@
                             android:textColor="@color/colorAccent"
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/img_location_cf"
-
                             android:layout_marginTop="@dimen/margin_xl"
                             android:layout_marginStart="@dimen/margin_l"/>
                         <TextView
@@ -264,9 +263,10 @@
                             android:id="@+id/btn_pay_to_proceed"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/button_background"
+                            android:background="@drawable/button_background_avg"
                             android:text="@string/title_proceed_to_pay"
                             android:textAllCaps="false"
+                            android:textSize="@dimen/text_size_xsmall"
                             android:textColor="@color/white"
                             android:paddingTop="@dimen/padding_avg"
                             android:paddingBottom="@dimen/padding_avg"

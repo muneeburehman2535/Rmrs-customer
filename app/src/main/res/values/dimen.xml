@@ -8,7 +8,7 @@
     <dimen name="img_size_normal">150dp</dimen>
     <dimen name="img_average">24dp</dimen>
     <dimen name="btn_size">43dp</dimen>
-    <dimen name="slider_image_size">140dp</dimen>
+    <dimen name="slider_image_size">120dp</dimen>
 
     <dimen name="img_size_average">110dp</dimen>
     <dimen name="img_size_l">130dp</dimen>
@@ -39,5 +39,5 @@
     <dimen name="text_size_l">24sp</dimen>
     <dimen name="text_size_xl">40sp</dimen>
     <dimen name="text_size">26sp</dimen>
-    <dimen name="text_size_average">20sp</dimen>
+    <dimen name="text_size_average">14sp</dimen>
 </resources>

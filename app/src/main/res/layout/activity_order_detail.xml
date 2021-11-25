@@ -202,8 +202,8 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     android:layout_marginTop="@dimen/margin_xl"
-                    android:layout_marginStart="@dimen/margin_xl"
-                    android:layout_marginEnd="@dimen/margin_xl"/>
+                    android:layout_marginStart="@dimen/margin_l"
+                    android:layout_marginEnd="@dimen/margin_l"/>
 
 
                 <androidx.recyclerview.widget.RecyclerView
