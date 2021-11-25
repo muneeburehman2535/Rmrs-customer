@@ -14,11 +14,17 @@ import com.bumptech.glide.Glide
 import com.comcept.rmrscustomer.R
 import com.comcept.rmrscustomer.data_class.home.restaurants.Deals
 import com.comcept.rmrscustomer.databinding.LayoutDealsBinding
+import com.comcept.rmrscustomer.ui.home.DealsListener
 import com.comcept.rmrscustomer.utilities.AppGlobal
 
 class DealsAdapter(private val requireContext: Context,private var dealsList: ArrayList<Deals>) : RecyclerView.Adapter<DealsAdapter.ViewHolder>() {
 
 
+    private lateinit var dealsListener: DealsListener
+
+    fun setDealClickListener(dealsListener: DealsListener) {
+        this.dealsListener = dealsListener
+    }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DealsAdapter.ViewHolder {
 //        val contactView=LayoutInflater.from(parent.context).inflate(R.layout.layout_deals,parent,false)
 //        return ViewHolder(contactView)
@@ -42,6 +48,9 @@ class DealsAdapter(private val requireContext: Context,private var dealsList: Ar
         holder.bind(dealsList[position])
         holder.binding.txtPointsLdeals.text = "(${dealsList[position].rating_count})"
         AppGlobal.loadImageIntoGlide(dealsList[position].Image, holder.binding.imgProfileDeals,requireContext)
+        holder.binding.layoutCardDealsLd.setOnClickListener {
+            dealsListener.onDealClickListener(position)
+        }
 
     }
 

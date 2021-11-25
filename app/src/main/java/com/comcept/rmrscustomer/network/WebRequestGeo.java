@@ -82,4 +82,10 @@ public interface WebRequestGeo {
 
     @GET("/customer/getLuckyDrawPoints/?")
     Call<ResponseBody> getLuckyDrawPoints(@Query("CustomerID") String CustomerID);
+
+    @GET("/customer/category-list/?")
+    Call<ResponseBody>getRestaurantCategories(@Query("restaurantid") String restaurantID);
+
+    @GET("/customer/deals/?")
+    Call<ResponseBody>getDealsData(@Query("RestaurantID") String restaurantID);
 }

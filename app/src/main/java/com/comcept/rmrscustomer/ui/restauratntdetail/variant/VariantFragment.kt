@@ -191,6 +191,11 @@ class VariantFragment : Fragment(),VariantAdapter.MenuSelectionListener,View.OnC
     }
 
     private fun addItemToCart() {
+        val isDeal=if (menuItem.isDeal){
+            1
+        }else{
+            0
+        }
         val cart = Cart(menuItem.RestaurantID
             , restaurantName
             , menuItem.MenuName
@@ -204,7 +209,9 @@ class VariantFragment : Fragment(),VariantAdapter.MenuSelectionListener,View.OnC
             ,AppGlobal.readString(requireActivity(),AppGlobal.restaurantAddress,"")
             ,AppGlobal.readString(requireActivity(),AppGlobal.restaurantImage,"")
             ,Gson().toJson(variantList[variantPosition]).toString()
-            ,variantList[variantPosition].VariantID,menuItem.isVariant.toString())
+            ,variantList[variantPosition].VariantID
+            ,menuItem.isVariant.toString()
+            ,isDeal)
         viewModel.insertCartItem(cart)
         updateCartBadge()
     }

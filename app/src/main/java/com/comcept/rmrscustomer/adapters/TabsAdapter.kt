@@ -5,10 +5,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.comcept.rmrscustomer.data_class.restaurantdetail.Menu
+import com.comcept.rmrscustomer.data_class.restaurantdetail.restaurantdetail.CategoryData
 import com.comcept.rmrscustomer.ui.restauratntdetail.menudetail.MenuDetailFragment
 
 
-class TabsAdapter(manager: FragmentManager, var context: Activity, var totalTabs: Int, private val menuList: ArrayList<Menu>,private val tabList: ArrayList<String>,private var isNem:Boolean) : FragmentPagerAdapter(manager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT)
+class TabsAdapter(manager: FragmentManager, var context: Activity, var totalTabs: Int, private val menuList: ArrayList<Menu>,private val menuCategoryList:ArrayList<CategoryData>,private val tabList: ArrayList<String>,private var isNem:Boolean) : FragmentPagerAdapter(manager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT)
 {
 
     var fragment: Fragment? = null
@@ -35,16 +36,41 @@ class TabsAdapter(manager: FragmentManager, var context: Activity, var totalTabs
         for (index in 0 until menuList.size)
         {
             if (isNem){
-                if (menuList[index].MenuCategory==tabList[0]&&position==0)
-                {
-                    updatedMenuList.add(menuList[index])
+
+                if (menuList[index].isDeal){
+                    if (tabList[0]=="Deals"&&position==0){
+                        updatedMenuList.add(menuList[index])
+                    }
                 }
+                else{
+                    val categoryList=menuList[index].MenuCategory
+                    for (ind in 0 until categoryList.size){
+
+                        if (categoryList[ind].CategoryName==tabList[0]&&position==0)
+                        {
+                            updatedMenuList.add(menuList[index])
+                        }
+                    }
+                }
+
+
             }
             else{
-                if (menuList[index].MenuCategory==tabList[position-1])
-                {
-                    updatedMenuList.add(menuList[index])
+                if (menuList[index].isDeal){
+                    if (tabList[0]=="Deals"){
+                        updatedMenuList.add(menuList[index])
+                    }
                 }
+                else{
+                    val categoryList=menuList[index].MenuCategory
+                    for (ind in 0 until categoryList.size){
+                        if (categoryList[ind].CategoryName==tabList[position-1])
+                        {
+                            updatedMenuList.add(menuList[index])
+                        }
+                    }
+                }
+
             }
 
         }

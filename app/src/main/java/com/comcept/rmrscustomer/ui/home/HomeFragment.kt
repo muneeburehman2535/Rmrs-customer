@@ -35,7 +35,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class HomeFragment : Fragment() ,View.OnClickListener,RestaurantAdapter.AddToFavouriteListener,RestaurantAdapter.ViewClickListener{
+class HomeFragment : Fragment() ,View.OnClickListener,RestaurantAdapter.AddToFavouriteListener,RestaurantAdapter.ViewClickListener,DealsListener{
 
     private lateinit var homeViewModel: HomeViewModel
     private lateinit var mBinding: FragmentHomeBinding
@@ -213,7 +213,8 @@ class HomeFragment : Fragment() ,View.OnClickListener,RestaurantAdapter.AddToFav
             false
         )
         mBinding.rvDeals.adapter = dealsAdapter
-        setRecyclerViewListener(mBinding.rvDeals, "deals")
+        dealsAdapter.setDealClickListener(this)
+        //setRecyclerViewListener(mBinding.rvDeals, "deals")
     }
 
     /*
@@ -291,6 +292,26 @@ class HomeFragment : Fragment() ,View.OnClickListener,RestaurantAdapter.AddToFav
 
 
 
+    }
+
+    override fun onDealClickListener(position: Int) {
+        (activity as CustomerHomeActivity).mModel.updateRestaurantId(dealsList[position].RestaurantID)
+        AppGlobal.writeString(
+            requireActivity(),
+            AppGlobal.restaurantId,
+            dealsList[position].RestaurantID
+        )
+        (activity as CustomerHomeActivity).mModel.updateRestaurantName(dealsList[position].name)
+        (activity as CustomerHomeActivity).changeToolbarName(
+            getString(R.string.title_restaurants),
+            isProfileMenuVisible = false,
+            locationVisibility = false,
+            isMenuVisibility = true
+        )
+        (activity as CustomerHomeActivity).loadNewFragment(
+            RestaurantDetailFragment(),
+            "restaurant_detail"
+        )
     }
 
     /**************************************************************************************************************************/
@@ -446,6 +467,8 @@ class HomeFragment : Fragment() ,View.OnClickListener,RestaurantAdapter.AddToFav
             }
         })
     }
+
+
 
 
 }

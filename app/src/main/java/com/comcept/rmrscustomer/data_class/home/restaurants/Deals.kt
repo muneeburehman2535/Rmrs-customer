@@ -7,5 +7,6 @@ data class Deals(
     val rating:String,
     val rating_count:String,
     val discount:String,
-    val Image:String
+    val Image:String,
+    val RestaurantID:String
 )

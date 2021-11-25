@@ -94,7 +94,7 @@ class  CheckoutFragment : Fragment(),View.OnClickListener {
 
     /*
   * Get Restaurants Data API Method
-  * */
+   * */
     private fun checkoutOrder(){
         progressDialog.setLabel("Please Wait")
         progressDialog.show()

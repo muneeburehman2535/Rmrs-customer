@@ -40,4 +40,6 @@ data class Cart(
         val variant_id:String,
         @ColumnInfo(name = "is_variant")
         val is_variant:String,
+        @ColumnInfo(name="is_deal")
+        val is_deal:Int
 )
