@@ -447,6 +447,7 @@ class HomeFragment : Fragment() ,View.OnClickListener,RestaurantAdapter.AddToFav
    * Get Restaurants Data API Method
    * */
     private fun getRestaurantsList(categoryID: String,Latitude:Double,Longitude:Double){
+
         progressDialog.setLabel("Please Wait")
         progressDialog.show()
         homeViewModel.getRestaurantsResponse(categoryID,Latitude,Longitude).observe(requireActivity(), {
@@ -459,11 +460,8 @@ class HomeFragment : Fragment() ,View.OnClickListener,RestaurantAdapter.AddToFav
                 dealsAdapter.updateList(dealsList)
 
             } else {
-                AppGlobal.showDialog(
-                    getString(R.string.title_alert),
-                    it.data.description,
-                    requireContext()
-                )
+                //AppGlobal.showDialog(getString(R.string.title_alert), it.data.description, requireContext())
+//                AppGlobal.showDialog(getString(R.string.title_alert),"Customer ", requireContext())
             }
         })
     }

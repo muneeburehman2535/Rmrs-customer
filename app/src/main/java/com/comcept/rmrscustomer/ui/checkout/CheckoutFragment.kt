@@ -24,6 +24,7 @@ class  CheckoutFragment : Fragment(),View.OnClickListener {
     private lateinit var progressDialog: KProgressHUD
     private lateinit var orderCheckout:Checkout
     private lateinit var  databaseCreator: CustomerDatabase
+    private var storeId=15597
 
     companion object {
         fun newInstance() = CheckoutFragment()
@@ -90,6 +91,16 @@ class  CheckoutFragment : Fragment(),View.OnClickListener {
             }
         }
     }
+
+
+//    val emailaddres = AppGlobal.customerEmail
+//
+//    private fun easyPiasa(){
+//
+//        var sampleString = "amount=${orderCheckout.TotalAmount}&emailAddress=${emailaddres}&expiryDate=${""}&merchantPaymentMethod=MA_PAYMENT_METHOD&mobileNum=${orderCheckout.MobileNumber}&orderRefNum=${orderCheckout.}"
+//    }
+
+
 
 
     /*
