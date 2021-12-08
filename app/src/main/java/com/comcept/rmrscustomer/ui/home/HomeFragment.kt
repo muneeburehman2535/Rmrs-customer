@@ -461,7 +461,7 @@ class HomeFragment : Fragment() ,View.OnClickListener,RestaurantAdapter.AddToFav
 
             } else {
                 //AppGlobal.showDialog(getString(R.string.title_alert), it.data.description, requireContext())
-//                AppGlobal.showDialog(getString(R.string.title_alert),"Customer ", requireContext())
+                AppGlobal.showDialog(getString(R.string.title_alert),"Restaurant not found in this category ", requireContext())
             }
         })
     }
