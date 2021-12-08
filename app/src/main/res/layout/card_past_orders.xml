@@ -53,7 +53,7 @@
                     android:textStyle="bold"
                     android:text="@{past_order_binding.restaurantName}"
                     android:fontFamily="@font/montserrat_bold"
-                    android:textSize="@dimen/text_size_avg"
+                    android:textSize="@dimen/text_size_average"
                     android:textColor="@color/text_color"
                     android:layout_marginTop="@dimen/margin_l"
                     android:layout_marginEnd="@dimen/margin_xl"

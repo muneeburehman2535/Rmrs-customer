@@ -92,6 +92,7 @@
                     android:textColor="@color/text_color"
                     app:layout_constraintTop_toBottomOf="@+id/line_seprator_variant_fragment"
                     app:layout_constraintStart_toStartOf="parent"
+
                     android:layout_marginTop="@dimen/margin_avg"
                     android:layout_marginStart="@dimen/margin_l"/>
 

@@ -100,7 +100,7 @@
             <LinearLayout
                 android:id="@+id/layout_image_slider"
                 android:layout_width="match_parent"
-                android:layout_height="140dp"
+                android:layout_height="@dimen/slider_image_size"
                 android:orientation="vertical"
                 app:layout_constraintTop_toBottomOf="@+id/layout_search_home"
                 android:layout_marginTop="@dimen/margin_small"

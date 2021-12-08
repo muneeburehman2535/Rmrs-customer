@@ -145,7 +145,7 @@
                     android:layout_marginStart="@dimen/margin_xxxl"
                     android:layout_marginTop="@dimen/margin_xxxxl"
                     android:layout_marginEnd="@dimen/margin_xxxl"
-                    android:background="@drawable/small_button_background"
+                    android:background="@drawable/button_background_avg"
                     android:paddingTop="@dimen/padding_xl"
                     android:paddingBottom="@dimen/padding_xl"
                     android:text="@string/title_place_reservation"
