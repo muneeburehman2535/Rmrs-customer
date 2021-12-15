@@ -467,7 +467,6 @@ class HomeFragment : Fragment() ,View.OnClickListener,RestaurantAdapter.AddToFav
                     dealsAdapter.updateList(dealsList)
                 }
 
-
             } else {
                 //AppGlobal.showDialog(getString(R.string.title_alert), it.data.description, requireContext())
                 AppGlobal.showDialog(getString(R.string.title_alert),"Restaurant not found in this category ", requireContext())

@@ -7,5 +7,5 @@ data class Variant(
     var DiscountPrice:Int,
     var isChecked:Boolean,
     var Quantity:Int,
-    val VariantID:String
+    var VariantID:String
 )
