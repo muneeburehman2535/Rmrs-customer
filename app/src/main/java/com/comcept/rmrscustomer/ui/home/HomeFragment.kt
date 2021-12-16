@@ -423,14 +423,14 @@ class HomeFragment : Fragment() ,View.OnClickListener,RestaurantAdapter.AddToFav
                         categoriesList[0].isClicked = true
                         categoryAdapter.updateCategoryList(categoriesList)
                         if (categoriesList.size > 0) {
+
                             getRestaurantsList(categoriesList[0].CategoryID, mLatitude!!, mLongitude!!)
+
                         }
                     }
                     else{
                         progressDialog.dismiss()
                     }
-
-
 
                 } else {
                     AppGlobal.showDialog(
@@ -448,20 +448,32 @@ class HomeFragment : Fragment() ,View.OnClickListener,RestaurantAdapter.AddToFav
    * */
     private fun getRestaurantsList(categoryID: String,Latitude:Double,Longitude:Double){
 
+
+//        val longitude = 71.461624
+//        val latitude = 33.994957
+
         progressDialog.setLabel("Please Wait")
         progressDialog.show()
         homeViewModel.getRestaurantsResponse(categoryID,Latitude,Longitude).observe(requireActivity(), {
             progressDialog.dismiss()
             if (it.Message == "Success") {
 
+
                 restaurantsList = it.data.restaurants
-                dealsList = it.data.deals
-                checkRestaurantById()
-                dealsAdapter.updateList(dealsList)
+
+                if (restaurantsList.size>0){
+                    dealsList = it.data.deals
+                    checkRestaurantById()
+                    dealsAdapter.updateList(dealsList)
+                }
 
             } else {
                 //AppGlobal.showDialog(getString(R.string.title_alert), it.data.description, requireContext())
                 AppGlobal.showDialog(getString(R.string.title_alert),"Restaurant not found in this category ", requireContext())
+                restaurantsList.clear()
+                dealsList.clear()
+                restaurantsAdapter.updateRestaurantsList(restaurantsList)
+                dealsAdapter.updateList(dealsList)
             }
         })
     }

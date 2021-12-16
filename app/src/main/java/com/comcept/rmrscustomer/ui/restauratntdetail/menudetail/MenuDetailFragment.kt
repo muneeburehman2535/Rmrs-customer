@@ -31,6 +31,7 @@ import com.comcept.rmrscustomer.utilities.AppGlobal
 import com.comcept.rmrscustomer.utilities.RecyclerItemClickListener
 import dagger.hilt.android.AndroidEntryPoint
 import org.json.JSONObject
+import timber.log.Timber
 import kotlin.properties.Delegates
 
 @AndroidEntryPoint
@@ -239,6 +240,13 @@ class MenuDetailFragment : Fragment() {
             0
         }
 
+
+        if (!menu.isVariant){
+
+            menu.Variant[0].VariantID
+
+        }
+
         val cart = Cart(menu.RestaurantID
             , restaurantName
             , menu.MenuName
@@ -256,6 +264,7 @@ class MenuDetailFragment : Fragment() {
             , menu.isVariant.toString()
             ,isDeal)
 
+        Timber.d("${Gson().toJson(cart)}")
         viewModel.insertCartItem(cart)
 
         updateCartBadge()

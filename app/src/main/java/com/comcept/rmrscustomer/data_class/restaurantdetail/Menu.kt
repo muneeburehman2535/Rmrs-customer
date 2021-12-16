@@ -7,7 +7,7 @@ data class Menu(
         val MenuName:String,
         val CalculatedPrice:Float,
         val MenuCategory:ArrayList<MenuDataArray>,
-        val Discount:Float,
+        val Discount:Float?,
         val RestaurantID:String,
         val MenuAvailable:Boolean,
         val Description:String,

@@ -81,6 +81,7 @@ class RestaurantDetailFragment : Fragment() ,TabsAdapter.ViewClickListener,View.
         super.onViewCreated(view, savedInstanceState)
         progressDialog=AppGlobal.setProgressDialog(requireActivity())
         setBlurBackgroundImage()
+        menuList= arrayListOf()
         mBinding.imgRestaurantFrd.clipToOutline=true
         //setTabLayout()
         getRestaurantId()
@@ -329,25 +330,29 @@ class RestaurantDetailFragment : Fragment() ,TabsAdapter.ViewClickListener,View.
                 dealsList= arrayListOf()
                 dealsList=it.data
                 if (dealsList.size>0){
-                    menuList= arrayListOf()
-                    for (index in 0 until dealsList.size){
-                        menuList.add(
-                            Menu(""
-                                ,dealsList[index].DealID
-                                ,dealsList[index].DealName
-                                ,dealsList[index].DealPrice,
-                                arrayListOf(),(0).toFloat()
-                                ,dealsList[index].RestaurantID
-                                ,true
-                                ,dealsList[index].Description
-                                ,dealsList[index].DealPrice
-                                ,dealsList[index].Image
-                                ,0
-                                ,dealsList[index].Variant
-                                , isVariant = false
-                                , isDeal = true
-                            ))
-                    }
+
+                   if (dealsList[0].DealID!=null){
+                       menuList= arrayListOf()
+                       for (index in 0 until dealsList.size){
+                           menuList.add(
+                               Menu(""
+                                   ,dealsList[index].DealID
+                                   ,dealsList[index].DealName
+                                   ,dealsList[index].DealPrice,
+                                   arrayListOf(),(0).toFloat()
+                                   ,dealsList[index].RestaurantID
+                                   ,true
+                                   ,dealsList[index].Description
+                                   ,dealsList[index].DealPrice
+                                   ,dealsList[index].Image
+                                   ,0
+                                   ,dealsList[index].Variant
+                                   , isVariant = false
+                                   , isDeal = true
+                               ))
+                       }
+                   }
+
                     getRestaurantDetail()
 
                 }
@@ -358,7 +363,7 @@ class RestaurantDetailFragment : Fragment() ,TabsAdapter.ViewClickListener,View.
 
             }
             else{
-              //  AppGlobal.showDialog(getString(R.string.title_alert),it.data.description,requireContext())
+                AppGlobal.showDialog(getString(R.string.title_alert),"No Deal Found",requireContext())
             }
         })
     }

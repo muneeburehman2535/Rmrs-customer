@@ -19,6 +19,7 @@ import com.comcept.rmrscustomer.data_class.cart.Cart
 import com.comcept.rmrscustomer.data_class.checkout.Checkout
 import com.comcept.rmrscustomer.data_class.checkout.Delivery
 import com.comcept.rmrscustomer.data_class.checkout.MenuOrdered
+import com.comcept.rmrscustomer.data_class.restaurantdetail.Menu
 import com.comcept.rmrscustomer.data_class.restaurantdetail.RestaurantDetailResponse
 import com.comcept.rmrscustomer.data_class.restaurantdetail.Variant
 import com.comcept.rmrscustomer.databinding.CartFragmentBinding
@@ -34,6 +35,7 @@ class CartFragment : Fragment(),View.OnClickListener,CartItemAdapter.UpdateItemQ
     private lateinit var mBinding:CartFragmentBinding
     private lateinit var cartList:ArrayList<Cart>
     private lateinit var cartItemAdapter:CartItemAdapter
+    private lateinit var menuList:ArrayList<Menu>
 
     private var mSalesTax="0"
     private var mItemTotalAmount="0"
@@ -73,6 +75,7 @@ class CartFragment : Fragment(),View.OnClickListener,CartItemAdapter.UpdateItemQ
         databaseCreator= CustomerDatabase.getInstance(requireActivity())
         mSalesTax=AppGlobal.readString(requireActivity(),AppGlobal.salesTax,"0")
         mServicesCharges=AppGlobal.readString(requireActivity(),AppGlobal.serviceCharges,"0")
+        menuList = arrayListOf()
         setCartList()
         setDealsAdapter()
         getRestaurantId()
@@ -217,7 +220,11 @@ class CartFragment : Fragment(),View.OnClickListener,CartItemAdapter.UpdateItemQ
                 variant.ItemPrice=(0.0).toFloat()
                 variant.Quantity=0
                 variant.DiscountPrice=0
+                variant.VariantID=cartList[0].variant_id
             }
+//            if (!cartList[index].is_variant.toBoolean()){
+//                variant.VariantID=""
+//            }
 
             val isDeal= cartList[index].is_deal==1
 
