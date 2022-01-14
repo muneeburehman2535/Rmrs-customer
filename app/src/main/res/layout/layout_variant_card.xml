@@ -5,7 +5,7 @@
     <data>
         <variable
             name="variant_binding"
-            type="com.teletaleem.rmrs_customer.data_class.restaurantdetail.Variant" />
+            type="com.comcept.rmrscustomer.data_class.restaurantdetail.Variant" />
 
     </data>
 

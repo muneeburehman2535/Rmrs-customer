@@ -7,26 +7,42 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:519994687640:android:f9b9c49d7c4727bc1050ed",
+        "mobilesdk_app_id": "1:519994687640:android:194fac957909e9801050ed",
         "android_client_info": {
-          "package_name": "com.teletaleem.rmrs_customer"
+          "package_name": "com.comcept.rmrscustomer"
         }
       },
       "oauth_client": [
         {
-          "client_id": "519994687640-lld15t7nqk0cpopd6l7iohk7vb5uoko4.apps.googleusercontent.com",
+          "client_id": "519994687640-1nmpl9sejpls64ifi810faf8sq89vdj2.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.teletaleem.rmrs_customer",
-            "certificate_hash": "d6ed29bdc2812e3f1f922050ae907903bb73ab57"
+            "package_name": "com.comcept.rmrscustomer",
+            "certificate_hash": "df1959a6db060a55515c66cc51b3f43d98b78ddb"
           }
         },
         {
-          "client_id": "519994687640-n4auca2026srctkuqheso46f6g8gpqr6.apps.googleusercontent.com",
+          "client_id": "519994687640-5m74ajg3r948ls5s2roeh9podfvadao5.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.teletaleem.rmrs_customer",
-            "certificate_hash": "df1959a6db060a55515c66cc51b3f43d98b78ddb"
+            "package_name": "com.comcept.rmrscustomer",
+            "certificate_hash": "5d85c81abcbca1d4647438a4bf816b41c3b20fcc"
+          }
+        },
+        {
+          "client_id": "519994687640-7h00olttvp8jbjn1nch7qnreigqt8j35.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.comcept.rmrscustomer",
+            "certificate_hash": "6282ff9767bf12e903ed81a9329d557b281d0891"
+          }
+        },
+        {
+          "client_id": "519994687640-vfm4vljs8pemache260gh3t8d6l6383s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.comcept.rmrscustomer",
+            "certificate_hash": "d6ed29bdc2812e3f1f922050ae907903bb73ab57"
           }
         },
         {
@@ -36,7 +52,7 @@
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDuvFY98SoqVE13WehzpevmD6bZVgBcspo"
+          "current_key": "AIzaSyD6DWfBziYi7fIxE_YZe0fD3M_1aWiRJDI"
         }
       ],
       "services": {

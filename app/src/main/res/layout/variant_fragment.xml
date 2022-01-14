@@ -4,7 +4,7 @@
     <data>
         <variable
             name="variant_view_model"
-            type="com.teletaleem.rmrs_customer.ui.restauratntdetail.variant.VariantViewModel" />
+            type="com.comcept.rmrscustomer.ui.restauratntdetail.variant.VariantViewModel" />
     </data>
 
     <RelativeLayout
@@ -92,6 +92,7 @@
                     android:textColor="@color/text_color"
                     app:layout_constraintTop_toBottomOf="@+id/line_seprator_variant_fragment"
                     app:layout_constraintStart_toStartOf="parent"
+
                     android:layout_marginTop="@dimen/margin_avg"
                     android:layout_marginStart="@dimen/margin_l"/>
 

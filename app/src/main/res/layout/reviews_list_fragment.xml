@@ -5,7 +5,7 @@
     <data>
         <variable
             name="review_list_view_model"
-            type="com.teletaleem.rmrs_customer.ui.review.ReviewViewModel" />
+            type="com.comcept.rmrscustomer.ui.review.ReviewViewModel" />
     </data>
     <LinearLayout
         android:id="@+id/layout_parent_rlf"

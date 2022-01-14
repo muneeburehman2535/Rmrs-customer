@@ -8,7 +8,7 @@
 
         <variable
             name="restaurant_binding"
-            type="com.teletaleem.rmrs_customer.data_class.home.restaurants.Restaurants" />
+            type="com.comcept.rmrscustomer.data_class.home.restaurants.Restaurants" />
     </data>
 
 
@@ -33,7 +33,7 @@
                 android:id="@+id/img_profile"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/img_size_normal"
-                android:src="@drawable/placeholder"
+                android:src="@drawable/error_placeholder"
                 android:scaleType="fitXY"
                 binding:loadRestaurantImage="@{restaurant_binding.image}"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -50,6 +50,7 @@
                 android:textAppearance="?android:textAppearanceMedium"
                 android:textColor="@color/text_color_restaurant"
                 android:textStyle="bold"
+                android:textSize="@dimen/text_size_average"
                 android:fontFamily="@font/montserrat_bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/img_rating_lrestaurant"
@@ -73,6 +74,7 @@
                 app:layout_constraintEnd_toStartOf="@+id/img_rating_lrestaurant"
                 app:layout_constraintHorizontal_weight="10"
                 android:layout_marginEnd="@dimen/margin_small"
+                android:textSize="@dimen/text_size_average"
                 android:maxLines="1"
                 android:ellipsize="end"
                 android:layout_marginStart="@dimen/margin_avg"
@@ -86,6 +88,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="36dp"
+                android:textSize="@dimen/text_size_average"
                 android:text="@{restaurant_binding.ratingCount}"
                 android:fontFamily="@font/montserrat_bold"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -99,6 +102,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/margin_small"
                 android:layout_marginBottom="36dp"
+                android:textSize="@dimen/text_size_average"
                 android:text="@{restaurant_binding.rating}"
                 android:fontFamily="@font/montserrat_bold"
                 android:textColor="@color/text_color"
@@ -110,9 +114,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_star"
+
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/txt_rating_lrestaurant"
-                android:layout_marginBottom="36dp"
+                android:layout_marginBottom="40dp"
                 android:layout_marginEnd="@dimen/margin_small" />
 
             <RelativeLayout

@@ -7,7 +7,7 @@
     <data>
         <variable
             name="restaurantDetail_binding"
-            type="com.teletaleem.rmrs_customer.data_class.restaurantdetail.Menu" />
+            type="com.comcept.rmrscustomer.data_class.restaurantdetail.Menu" />
 
     </data>
 
@@ -27,7 +27,7 @@
                 android:id="@+id/img_menu_crd"
                 android:layout_width="@dimen/img_size_average"
                 android:layout_height="@dimen/img_size_average"
-                app:srcCompat="@drawable/library_placeholder"
+                app:srcCompat="@drawable/upload_photo_placeholder"
                 android:background="@drawable/rounded_corner_image_layout"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

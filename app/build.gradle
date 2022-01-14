@@ -11,11 +11,11 @@ android {
     kapt { generateStubs = true }
 
     defaultConfig {
-        applicationId "com.teletaleem.rmrs_customer"
+        applicationId "com.comcept.rmrscustomer"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 1
-        versionName "1.0.10"
+        versionCode 5
+        versionName "1.0.5"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         renderscriptTargetApi 30

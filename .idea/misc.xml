@@ -3,46 +3,21 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/TaleTaleem/rmrs-customer/app/src/main/res/drawable/button_background.xml" value="0.2890625" />
-        <entry key="..\:/TaleTaleem/rmrs-customer/app/src/main/res/drawable/ic_splash.xml" value="0.2890625" />
-        <entry key="..\:/TaleTaleem/rmrs-customer/app/src/main/res/drawable/rounded_corner_image_layout.xml" value="0.37083333333333335" />
-        <entry key="..\:/TaleTaleem/rmrs-customer/app/src/main/res/layout/activity_confirm_otp.xml" value="0.3546875" />
-        <entry key="..\:/TaleTaleem/rmrs-customer/app/src/main/res/layout/activity_customer_home.xml" value="0.33" />
-        <entry key="..\:/TaleTaleem/rmrs-customer/app/src/main/res/layout/activity_login.xml" value="0.182518115942029" />
-        <entry key="..\:/TaleTaleem/rmrs-customer/app/src/main/res/layout/activity_order_detail.xml" value="0.3546875" />
-        <entry key="..\:/TaleTaleem/rmrs-customer/app/src/main/res/layout/activity_registration.xml" value="0.17300724637681159" />
-        <entry key="..\:/TaleTaleem/rmrs-customer/app/src/main/res/layout/activity_splash.xml" value="0.1933876811594203" />
-        <entry key="..\:/TaleTaleem/rmrs-customer/app/src/main/res/layout/app_bar_main.xml" value="0.7640671273445212" />
-        <entry key="..\:/TaleTaleem/rmrs-customer/app/src/main/res/layout/card_layout_restaurant.xml" value="0.3546875" />
-        <entry key="..\:/TaleTaleem/rmrs-customer/app/src/main/res/layout/card_restaurant_detail.xml" value="0.3546875" />
-        <entry key="..\:/TaleTaleem/rmrs-customer/app/src/main/res/layout/checkout_fragment.xml" value="0.3546875" />
-        <entry key="..\:/TaleTaleem/rmrs-customer/app/src/main/res/layout/fragment_home.xml" value="0.3546875" />
-        <entry key="..\:/TaleTaleem/rmrs-customer/app/src/main/res/layout/layout_card_item_card.xml" value="0.3546875" />
-        <entry key="..\:/TaleTaleem/rmrs-customer/app/src/main/res/layout/layout_restaurant.xml" value="0.3546875" />
-        <entry key="..\:/TaleTaleem/rmrs-customer/app/src/main/res/layout/menu_detail_fragment.xml" value="0.3546875" />
-        <entry key="..\:/TaleTaleem/rmrs-customer/app/src/main/res/layout/nav_header_main.xml" value="0.21603260869565216" />
-        <entry key="..\:/TaleTaleem/rmrs-customer/app/src/main/res/layout/restaurant_detail_fragment.xml" value="0.3546875" />
+        <entry key="..\:/teletaleem/Rmrs-customer/app/src/main/res/layout/checkout_fragment.xml" value="0.184765625" />
         <entry key="..\:/teletaleem/android-project/rmrs-customer/app/src/main/res/drawable-xxxhdpi/layout_background_lite.xml" value="0.18854166666666666" />
-        <entry key="..\:/teletaleem/android-project/rmrs-customer/app/src/main/res/drawable/default_selected_dot.xml" value="0.22592592592592592" />
-        <entry key="..\:/teletaleem/android-project/rmrs-customer/app/src/main/res/drawable/default_unselected_dot.xml" value="0.22592592592592592" />
-        <entry key="..\:/teletaleem/android-project/rmrs-customer/app/src/main/res/drawable/ic_add.xml" value="0.21388888888888888" />
+        <entry key="..\:/teletaleem/android-project/rmrs-customer/app/src/main/res/drawable/ic_add.xml" value="0.25729166666666664" />
         <entry key="..\:/teletaleem/android-project/rmrs-customer/app/src/main/res/drawable/ic_minus.xml" value="0.1" />
         <entry key="..\:/teletaleem/android-project/rmrs-customer/app/src/main/res/drawable/ic_plus.xml" value="0.18854166666666666" />
-        <entry key="..\:/teletaleem/android-project/rmrs-customer/app/src/main/res/drawable/ic_shopping_cart.xml" value="0.22592592592592592" />
-        <entry key="..\:/teletaleem/android-project/rmrs-customer/app/src/main/res/drawable/ic_star.xml" value="0.22592592592592592" />
         <entry key="..\:/teletaleem/android-project/rmrs-customer/app/src/main/res/drawable/iminus.xml" value="0.18854166666666666" />
-        <entry key="..\:/teletaleem/android-project/rmrs-customer/app/src/main/res/layout/activity_customer_home.xml" value="0.25" />
+        <entry key="..\:/teletaleem/android-project/rmrs-customer/app/src/main/res/layout/activity_customer_home.xml" value="0.14447463768115942" />
         <entry key="..\:/teletaleem/android-project/rmrs-customer/app/src/main/res/layout/activity_order_detail.xml" value="0.11727456940222898" />
-        <entry key="..\:/teletaleem/android-project/rmrs-customer/app/src/main/res/layout/app_bar_main.xml" value="0.33" />
         <entry key="..\:/teletaleem/android-project/rmrs-customer/app/src/main/res/layout/card_current_orders.xml" value="0.24114583333333334" />
         <entry key="..\:/teletaleem/android-project/rmrs-customer/app/src/main/res/layout/card_items_order_details.xml" value="0.24114583333333334" />
         <entry key="..\:/teletaleem/android-project/rmrs-customer/app/src/main/res/layout/card_layout_restaurant.xml" value="0.18" />
         <entry key="..\:/teletaleem/android-project/rmrs-customer/app/src/main/res/layout/card_past_orders.xml" value="0.24114583333333334" />
         <entry key="..\:/teletaleem/android-project/rmrs-customer/app/src/main/res/layout/card_restaurant_detail.xml" value="0.24114583333333334" />
         <entry key="..\:/teletaleem/android-project/rmrs-customer/app/src/main/res/layout/cart_fragment.xml" value="0.1" />
-        <entry key="..\:/teletaleem/android-project/rmrs-customer/app/src/main/res/layout/checkout_fragment.xml" value="0.1607638888888889" />
-        <entry key="..\:/teletaleem/android-project/rmrs-customer/app/src/main/res/layout/filter_search_fragment.xml" value="0.1272644927536232" />
-        <entry key="..\:/teletaleem/android-project/rmrs-customer/app/src/main/res/layout/fragment_home.xml" value="0.33" />
+        <entry key="..\:/teletaleem/android-project/rmrs-customer/app/src/main/res/layout/fragment_home.xml" value="0.14447463768115942" />
         <entry key="..\:/teletaleem/android-project/rmrs-customer/app/src/main/res/layout/layout_card_item_card.xml" value="0.33" />
         <entry key="..\:/teletaleem/android-project/rmrs-customer/app/src/main/res/layout/layout_cart_card.xml" value="0.1" />
         <entry key="..\:/teletaleem/android-project/rmrs-customer/app/src/main/res/layout/layout_category.xml" value="0.15760869565217392" />
@@ -60,7 +35,32 @@
         <entry key="..\:/teletaleem/android-project/rmrs-customer/app/src/main/res/layout/simple_search_fragment.xml" value="0.18" />
         <entry key="..\:/teletaleem/android-project/rmrs-customer/app/src/main/res/layout/variant_fragment.xml" value="0.18" />
         <entry key="..\:/teletaleem/android-project/rmrs-customer/app/src/main/res/menu/activity_main_drawer.xml" value="0.24114583333333334" />
-        <entry key="..\:/teletaleem/android-project/rmrs-customer/app/src/main/res/menu/customer_home.xml" value="0.24114583333333334" />
+        <entry key="..\:/usamaprojects/android-projects/office/teletaleem/Rmrs-customer/app/src/main/res/layout/activity_confirm_otp.xml" value="0.255078125" />
+        <entry key="..\:/usamaprojects/android-projects/office/teletaleem/Rmrs-customer/app/src/main/res/layout/activity_customer_home.xml" value="0.254296875" />
+        <entry key="..\:/usamaprojects/android-projects/office/teletaleem/Rmrs-customer/app/src/main/res/layout/activity_registration.xml" value="0.25" />
+        <entry key="..\:/usamaprojects/android-projects/office/teletaleem/Rmrs-customer/app/src/main/res/layout/activity_splash.xml" value="0.255078125" />
+        <entry key="..\:/usamaprojects/android-projects/office/teletaleem/Rmrs-customer/app/src/main/res/layout/app_bar_main.xml" value="0.255078125" />
+        <entry key="..\:/usamaprojects/android-projects/office/teletaleem/Rmrs-customer/app/src/main/res/layout/card_items_order_details.xml" value="0.184765625" />
+        <entry key="..\:/usamaprojects/android-projects/office/teletaleem/Rmrs-customer/app/src/main/res/layout/card_layout_restaurant.xml" value="0.184765625" />
+        <entry key="..\:/usamaprojects/android-projects/office/teletaleem/Rmrs-customer/app/src/main/res/layout/card_past_orders.xml" value="0.184765625" />
+        <entry key="..\:/usamaprojects/android-projects/office/teletaleem/Rmrs-customer/app/src/main/res/layout/card_restaurant_detail.xml" value="0.255078125" />
+        <entry key="..\:/usamaprojects/android-projects/office/teletaleem/Rmrs-customer/app/src/main/res/layout/cart_fragment.xml" value="0.255078125" />
+        <entry key="..\:/usamaprojects/android-projects/office/teletaleem/Rmrs-customer/app/src/main/res/layout/checkout_fragment.xml" value="0.254296875" />
+        <entry key="..\:/usamaprojects/android-projects/office/teletaleem/Rmrs-customer/app/src/main/res/layout/content_main.xml" value="0.254296875" />
+        <entry key="..\:/usamaprojects/android-projects/office/teletaleem/Rmrs-customer/app/src/main/res/layout/fragment_slideshow.xml" value="0.255078125" />
+        <entry key="..\:/usamaprojects/android-projects/office/teletaleem/Rmrs-customer/app/src/main/res/layout/layout_cart_card.xml" value="0.255078125" />
+        <entry key="..\:/usamaprojects/android-projects/office/teletaleem/Rmrs-customer/app/src/main/res/layout/layout_category.xml" value="0.184765625" />
+        <entry key="..\:/usamaprojects/android-projects/office/teletaleem/Rmrs-customer/app/src/main/res/layout/layout_deals.xml" value="0.140234375" />
+        <entry key="..\:/usamaprojects/android-projects/office/teletaleem/Rmrs-customer/app/src/main/res/layout/layout_dialog.xml" value="0.255078125" />
+        <entry key="..\:/usamaprojects/android-projects/office/teletaleem/Rmrs-customer/app/src/main/res/layout/layout_favourite.xml" value="0.255078125" />
+        <entry key="..\:/usamaprojects/android-projects/office/teletaleem/Rmrs-customer/app/src/main/res/layout/layout_filter.xml" value="0.255078125" />
+        <entry key="..\:/usamaprojects/android-projects/office/teletaleem/Rmrs-customer/app/src/main/res/layout/layout_restaurant.xml" value="0.255078125" />
+        <entry key="..\:/usamaprojects/android-projects/office/teletaleem/Rmrs-customer/app/src/main/res/layout/layout_variant_card.xml" value="0.184765625" />
+        <entry key="..\:/usamaprojects/android-projects/office/teletaleem/Rmrs-customer/app/src/main/res/layout/nav_header_main.xml" value="0.255078125" />
+        <entry key="..\:/usamaprojects/android-projects/office/teletaleem/Rmrs-customer/app/src/main/res/layout/restaurant_detail_fragment.xml" value="0.254296875" />
+        <entry key="..\:/usamaprojects/android-projects/office/teletaleem/Rmrs-customer/app/src/main/res/menu/activity_main_drawer.xml" value="0.254296875" />
+        <entry key="..\:/usamaprojects/office/androidprojects/teletaleem/rmrs-customer/app/src/main/res/layout/layout_deals.xml" value="0.21240942028985507" />
+        <entry key="..\:/usamaprojects/office/androidprojects/teletaleem/rmrs-customer/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1375" />
       </map>
     </option>
   </component>

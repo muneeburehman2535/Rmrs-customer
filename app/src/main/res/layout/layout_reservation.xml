@@ -7,7 +7,7 @@
 
         <variable
             name="reservation_binding"
-            type="com.teletaleem.rmrs_customer.data_class.reservation.Result" />
+            type="com.comcept.rmrscustomer.data_class.reservation.Result" />
     </data>
 
     <androidx.cardview.widget.CardView

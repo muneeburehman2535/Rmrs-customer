@@ -5,7 +5,7 @@
     <data>
         <variable
             name="item_order_detail_binding"
-            type="com.teletaleem.rmrs_customer.data_class.checkout.MenuOrdered" />
+            type="com.comcept.rmrscustomer.data_class.checkout.MenuOrdered" />
 
     </data>
 
@@ -24,7 +24,7 @@
             android:fontFamily="@font/montserrat_bold"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="@dimen/margin_avg"
+            android:layout_marginStart="@dimen/margin_l"
             android:layout_marginTop="@dimen/margin_xl" />
 
         <TextView
@@ -70,8 +70,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="@dimen/margin_xl"
-            android:layout_marginStart="@dimen/margin_xxxl"
-            android:layout_marginEnd="@dimen/margin_xxxl" />
+            android:layout_marginStart="@dimen/margin_l"
+            android:layout_marginEnd="@dimen/margin_l" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

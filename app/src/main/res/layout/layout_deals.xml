@@ -7,10 +7,11 @@
 
         <variable
             name="deals_binding"
-            type="com.teletaleem.rmrs_customer.data_class.home.restaurants.Deals" />
+            type="com.comcept.rmrscustomer.data_class.home.restaurants.Deals" />
     </data>
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/layout_card_deals_ld"
         android:layout_width="@dimen/img_size_xl"
         android:layout_height="wrap_content"
         app:cardCornerRadius="@dimen/margin_avg"
@@ -28,9 +29,9 @@
                 android:id="@+id/img_profile_deals"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
-                android:src="@drawable/background"
+                android:src="@drawable/error_placeholder"
                 android:scaleType="fitXY"
-                binding:loadDealsImage="@{deals_binding.image}"
+                binding:loadRestaurantImage="@{deals_binding.image}"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
@@ -40,10 +41,10 @@
                 android:text="@{deals_binding.discount}"
                 android:textColor="@color/white"
                 android:background="@drawable/deals_background"
-                android:textSize="@dimen/text_size_small"
+                android:textSize="@dimen/text_size_xsmall"
                 android:paddingTop="@dimen/padding_small"
                 android:paddingBottom="@dimen/padding_small"
-                android:paddingStart="@dimen/padding_l"
+                android:paddingStart="@dimen/padding_avg"
                 android:paddingEnd="@dimen/padding_avg"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -51,7 +52,7 @@
 
             <TextView
                 android:id="@+id/txt_name_ldeals"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="@{deals_binding.name}"
                 android:textStyle="bold"
@@ -62,6 +63,7 @@
                 android:textSize="@dimen/text_size_small"
                 app:layout_constraintTop_toBottomOf="@+id/img_profile_deals"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/img_rating_ldeals"
                 android:layout_marginStart="@dimen/margin_small"
                 android:layout_marginTop="@dimen/margin_avg" />
 
@@ -114,7 +116,7 @@
                 android:src="@drawable/ic_star"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/txt_rating_ldeals"
-                android:layout_marginBottom="36dp"
+                android:layout_marginBottom="40dp"
                 android:layout_marginEnd="@dimen/margin_small" />
 
 

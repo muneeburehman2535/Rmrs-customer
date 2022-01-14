@@ -8,7 +8,7 @@
     <data>
         <variable
             name="login_view_model"
-            type="com.teletaleem.rmrs_customer.ui.login.LoginViewModel" />
+            type="com.comcept.rmrscustomer.ui.login.LoginViewModel" />
     </data>
 
     <ScrollView

@@ -6,7 +6,7 @@
     <data>
         <variable
             name="simple_search_view_model"
-            type="com.teletaleem.rmrs_customer.ui.search.simple_search.SimpleSearchViewModel" />
+            type="com.comcept.rmrscustomer.ui.search.simple_search.SimpleSearchViewModel" />
     </data>
     <LinearLayout
         android:id="@+id/layout_parent_ssf"

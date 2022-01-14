@@ -6,7 +6,7 @@
     <data>
         <variable
             name="cart_binding"
-            type="com.teletaleem.rmrs_customer.data_class.cart.Cart" />
+            type="com.comcept.rmrscustomer.data_class.cart.Cart" />
     </data>
 
     <androidx.cardview.widget.CardView
