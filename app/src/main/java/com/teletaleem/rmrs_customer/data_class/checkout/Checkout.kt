@@ -10,7 +10,6 @@ data class Checkout(
         val CustomerID:String,
         val CustomerName:String,
         val TotalAmount:Float,
-
         val SalesTax:Float,
         val Status:String,
         val MenuOrdered:ArrayList<MenuOrdered>,

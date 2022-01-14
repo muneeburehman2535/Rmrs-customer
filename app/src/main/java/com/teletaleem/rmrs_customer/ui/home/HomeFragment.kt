@@ -14,7 +14,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.models.SlideModel
+import com.google.gson.Gson
 import com.kaopiz.kprogresshud.KProgressHUD
+import com.squareup.moshi.Json
 import com.teletaleem.rmrs_customer.R
 import com.teletaleem.rmrs_customer.adapters.CategoriesAdapter
 import com.teletaleem.rmrs_customer.adapters.DealsAdapter
@@ -32,6 +34,7 @@ import com.teletaleem.rmrs_customer.ui.search.simple_search.SimpleSearchFragment
 import com.teletaleem.rmrs_customer.utilities.AppGlobal
 import com.teletaleem.rmrs_customer.utilities.RecyclerItemClickListener
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 
 @AndroidEntryPoint
@@ -409,6 +412,7 @@ class HomeFragment : Fragment() ,View.OnClickListener,RestaurantAdapter.AddToFav
         progressDialog.setLabel("Please Wait")
         progressDialog.show()
         homeViewModel.getRestaurantsResponse(categoryID).observe(requireActivity(), {
+
             progressDialog.dismiss()
             if (it.Message == "Success") {
 
