@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Teletaleem/rmrs-customer/app/src/main/res/layout/activity_splash.xml" value="0.24635416666666668" />
         <entry key="..\:/teletaleem/Rmrs-customer/app/src/main/res/layout/checkout_fragment.xml" value="0.184765625" />
         <entry key="..\:/teletaleem/android-project/rmrs-customer/app/src/main/res/drawable-xxxhdpi/layout_background_lite.xml" value="0.18854166666666666" />
         <entry key="..\:/teletaleem/android-project/rmrs-customer/app/src/main/res/drawable/ic_add.xml" value="0.25729166666666664" />
@@ -62,7 +63,7 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="false" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
