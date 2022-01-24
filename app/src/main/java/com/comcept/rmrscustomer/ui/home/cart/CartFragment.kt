@@ -220,7 +220,7 @@ class CartFragment : Fragment(),View.OnClickListener,CartItemAdapter.UpdateItemQ
                 variant.ItemPrice=(0.0).toFloat()
                 variant.Quantity=0
                 variant.DiscountPrice=0
-                variant.VariantID=cartList[0].variant_id
+                variant.VariantID=cartList[index].variant_id
             }
 //            if (!cartList[index].is_variant.toBoolean()){
 //                variant.VariantID=""
@@ -228,8 +228,15 @@ class CartFragment : Fragment(),View.OnClickListener,CartItemAdapter.UpdateItemQ
 
             val isDeal= cartList[index].is_deal==1
 
-            val menuOrdered=MenuOrdered(cartList[index].menu_id,cartList[index].item_name,cartList[index].item_price
-                ,cartList[index].quantity,cartList[index].description, variant,cartList[index].is_variant.toBoolean(),isDeal,false)
+            val menuOrdered=MenuOrdered(
+                cartList[index].menu_id,
+                cartList[index].item_name,
+                cartList[index].item_price
+                ,cartList[index].quantity,
+                cartList[index].description,
+                variant,cartList[index].is_variant.toBoolean(),
+                isDeal,
+                false)
             menuOrdered.Variant.Quantity=cartList[index].quantity.toInt()
             menuOrderedList.add(menuOrdered)
 
