@@ -49,6 +49,7 @@ class MenuDetailFragment : Fragment() {
     private var mServiceCharges by Delegates.notNull<Double>()
 
 
+
     private lateinit var viewModel: MenuDetailViewModel
 
     companion object{
@@ -229,11 +230,10 @@ class MenuDetailFragment : Fragment() {
         alertDialog.show()
     }
 
-    private fun insertItemToCart(
-        menu: Menu,
-        txtItemQuantity: TextView
-    ) {
+    private fun insertItemToCart(menu: Menu, txtItemQuantity: TextView) {
 
+        var variantID = ""
+        Timber.d("menu:${menu}")
         val isDeal=if (menu.isDeal){
             1
         }else{
@@ -241,10 +241,14 @@ class MenuDetailFragment : Fragment() {
         }
 
 
-        if (!menu.isVariant){
+         variantID = if (!menu.isVariant){
 
             menu.Variant[0].VariantID
 
+        }
+        else{
+
+            ""
         }
 
         val cart = Cart(menu.RestaurantID
@@ -260,7 +264,8 @@ class MenuDetailFragment : Fragment() {
             ,AppGlobal.readString(requireActivity(),AppGlobal.restaurantAddress,"")
             ,AppGlobal.readString(requireActivity(),AppGlobal.restaurantImage,"")
             ,Gson().toJson(JSONObject()).toString()
-            ,menu.Variant[0].VariantID
+            ,variantID
+//            ,menu.Variant[0].VariantID
             , menu.isVariant.toString()
             ,isDeal)
 

@@ -14,7 +14,6 @@ data class Cart(
         val restaurant_name:String,
         @ColumnInfo(name = "item_name")
         val item_name:String,
-
         @ColumnInfo(name = "menu_id")
         val menu_id:String,
         @ColumnInfo(name = "item_desc")

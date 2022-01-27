@@ -2,6 +2,8 @@ package com.comcept.rmrscustomer.ui.reservation.myreservation
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -22,6 +24,9 @@ class MyReservationsFragment : Fragment() {
     private lateinit var reservationList:ArrayList<Result>
     private lateinit var myReservationsAdapter: MyReservationsAdapter
     private lateinit var progressDialog: KProgressHUD
+    private var handler: Handler = Handler()
+    private var runnable: Runnable? = null
+    private var delay = 2000
 
     companion object {
         fun newInstance() = MyReservationsFragment()
@@ -48,9 +53,23 @@ class MyReservationsFragment : Fragment() {
             AppGlobal.snackBar(mBinding.layoutParentFmr,getString(R.string.err_no_internet),AppGlobal.SHORT)
         }
 
+    }
+
+    override fun onResume() {
+
+
+        handler.postDelayed(Runnable {
+            handler.postDelayed(runnable!!, delay.toLong())
+            delayApiCall(AppGlobal.readString(requireActivity(),AppGlobal.customerId,"0"))
+        }.also { runnable = it }, delay.toLong())
+        super.onResume()
 
     }
 
+    override fun onPause() {
+        super.onPause()
+        handler.removeCallbacks(runnable!!)
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         progressDialog=AppGlobal.setProgressDialog(requireActivity())
@@ -102,6 +121,32 @@ class MyReservationsFragment : Fragment() {
 //                    it.data.description,
 //                    requireContext()
 //                )
+            }
+        })
+    }
+
+    private fun delayApiCall(customerId: String){
+        viewModel.getReviewListResponse(customerId).observe(requireActivity(), {
+            progressDialog.dismiss()
+            if (it.Message == "Success") {
+                reservationList=it.data.result
+                if (reservationList.size>0)
+                {
+                    mBinding.rvReservationFrag.visibility=View.VISIBLE
+                    mBinding.imgNotFoundFmr.visibility=View.GONE
+                    reservationList.reverse()
+                    myReservationsAdapter.updateReservationList(reservationList)
+                }
+                else{
+                    mBinding.rvReservationFrag.visibility=View.GONE
+                    mBinding.imgNotFoundFmr.visibility=View.VISIBLE
+                }
+
+
+            } else {
+                mBinding.rvReservationFrag.visibility=View.GONE
+                mBinding.imgNotFoundFmr.visibility=View.VISIBLE
+
             }
         })
     }

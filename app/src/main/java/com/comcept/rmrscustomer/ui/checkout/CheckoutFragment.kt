@@ -16,7 +16,9 @@ import com.comcept.rmrscustomer.db.CustomerDatabase
 import com.comcept.rmrscustomer.ui.home.CustomerHomeActivity
 import com.comcept.rmrscustomer.ui.review.ReviewFragment
 import com.comcept.rmrscustomer.utilities.AppGlobal
+import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 @AndroidEntryPoint
 class  CheckoutFragment : Fragment(),View.OnClickListener {
@@ -111,7 +113,11 @@ class  CheckoutFragment : Fragment(),View.OnClickListener {
         progressDialog.show()
         viewModel.getCheckoutResponse(orderCheckout).observe(requireActivity(), {
             progressDialog.dismiss()
+
+
             if (it.Message == "Success") {
+
+                Timber.d("CheckoutData: ${Gson().toJson(it.data)}")
                 emptyCartRecord()
                 (activity as CustomerHomeActivity?)?.changeToolbarName(getString(R.string.title_review), isProfileMenuVisible = false, locationVisibility = false,isMenuVisibility = false)
                 (activity as CustomerHomeActivity?)?.loadNewFragment(
