@@ -4,8 +4,15 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Teletaleem/rmrs-customer/app/src/main/res/layout/activity_customer_home.xml" value="0.30052083333333335" />
+        <entry key="..\:/Teletaleem/rmrs-customer/app/src/main/res/layout/activity_login.xml" value="0.3175925925925926" />
         <entry key="..\:/Teletaleem/rmrs-customer/app/src/main/res/layout/activity_splash.xml" value="0.24635416666666668" />
+        <entry key="..\:/Teletaleem/rmrs-customer/app/src/main/res/layout/card_current_orders.xml" value="0.359375" />
+        <entry key="..\:/Teletaleem/rmrs-customer/app/src/main/res/layout/card_past_orders.xml" value="0.35384615384615387" />
         <entry key="..\:/Teletaleem/rmrs-customer/app/src/main/res/layout/card_restaurant_detail.xml" value="0.18645833333333334" />
+        <entry key="..\:/Teletaleem/rmrs-customer/app/src/main/res/layout/cart_fragment.xml" value="0.359375" />
+        <entry key="..\:/Teletaleem/rmrs-customer/app/src/main/res/layout/checkout_fragment.xml" value="0.359375" />
+        <entry key="..\:/Teletaleem/rmrs-customer/app/src/main/res/layout/my_orders_fragment.xml" value="0.359375" />
+        <entry key="..\:/Teletaleem/rmrs-customer/app/src/main/res/layout/update_password_fragment.xml" value="0.359375" />
         <entry key="..\:/teletaleem/Rmrs-customer/app/src/main/res/layout/checkout_fragment.xml" value="0.184765625" />
         <entry key="..\:/teletaleem/android-project/rmrs-customer/app/src/main/res/drawable-xxxhdpi/layout_background_lite.xml" value="0.18854166666666666" />
         <entry key="..\:/teletaleem/android-project/rmrs-customer/app/src/main/res/drawable/ic_add.xml" value="0.25729166666666664" />
