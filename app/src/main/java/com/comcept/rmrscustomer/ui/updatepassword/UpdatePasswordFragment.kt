@@ -28,11 +28,12 @@ class UpdatePasswordFragment : Fragment(),View.OnClickListener {
     private lateinit var viewModel: UpdatePasswordViewModel
 
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?,
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?,
     ): View {
 
-        mBinding=DataBindingUtil.inflate(inflater,R.layout.update_password_fragment,container,false)
+        mBinding =
+            DataBindingUtil.inflate(inflater, R.layout.update_password_fragment, container, false)
         return mBinding.root
     }
 
@@ -54,24 +55,47 @@ class UpdatePasswordFragment : Fragment(),View.OnClickListener {
    * 1:- Password
    * 2:- Confirm Password
    * */
-    private fun checkCredentials(){
-        mAwesomeValidation.addValidation(mBinding.edtxtPasswordUpf,"(?=.*[a-z])(?=.*[A-Z])(?=.*[\\d])(?=.*[~`!@#\\$%\\^&\\*\\(\\)\\-_\\+=\\{\\}\\[\\]\\|\\;:\"<>,./\\?]).{8,}",getString(R.string.err_password))
-        mAwesomeValidation.addValidation(mBinding.edtxtConfirmPasswordUpf,mBinding.edtxtPasswordUpf,getString(R.string.err_password_confirmation))
+    private fun checkCredentials() {
+        mAwesomeValidation.addValidation(
+            mBinding.edtxtOldPassword,
+            "(?=.*[a-z])(?=.*[A-Z])(?=.*[\\d])(?=.*[~`!@#\\$%\\^&\\*\\(\\)\\-_\\+=\\{\\}\\[\\]\\|\\;:\"<>,./\\?]).{8,}",
+            getString(R.string.err_old_password)
+        )
+
+        mAwesomeValidation.addValidation(
+            mBinding.edtxtPasswordUpf,
+            "(?=.*[a-z])(?=.*[A-Z])(?=.*[\\d])(?=.*[~`!@#\\$%\\^&\\*\\(\\)\\-_\\+=\\{\\}\\[\\]\\|\\;:\"<>,./\\?]).{8,}",
+            getString(R.string.err_password)
+        )
+        mAwesomeValidation.addValidation(
+            mBinding.edtxtConfirmPasswordUpf,
+            mBinding.edtxtPasswordUpf,
+            getString(R.string.err_password_confirmation)
+        )
     }
 
     override fun onClick(v: View?) {
-        when(v?.id){
-            R.id.btn_update_upf->{
+        when (v?.id) {
+            R.id.btn_update_upf -> {
                 checkCredentials()
-                if (mAwesomeValidation.validate())
-                {
-                    val updatePassword=UpdatePassword(AppGlobal.readString(requireActivity(),AppGlobal.customerId,"0"),mBinding.edtxtPasswordUpf.text.toString())
-                    if (AppGlobal.isInternetAvailable(requireActivity()))
-                    {
+                if (mAwesomeValidation.validate()) {
+                    val updatePassword = UpdatePassword(
+                        AppGlobal.readString(
+                            requireActivity(),
+                            AppGlobal.customerId,
+                            "0"
+                        ),
+                        mBinding.edtxtPasswordUpf.text.toString(),
+                        mBinding.edtxtOldPassword.text.toString()
+                    )
+                    if (AppGlobal.isInternetAvailable(requireActivity())) {
                         updatePasswordResult((updatePassword))
-                    }
-                    else{
-                        AppGlobal.snackBar(mBinding.layoutParentUpf,getString(R.string.err_no_internet),AppGlobal.SHORT)
+                    } else {
+                        AppGlobal.snackBar(
+                            mBinding.layoutParentUpf,
+                            getString(R.string.err_no_internet),
+                            AppGlobal.SHORT
+                        )
                     }
 
                 }
@@ -87,7 +111,7 @@ class UpdatePasswordFragment : Fragment(),View.OnClickListener {
     /*
     * Update Password API Method
     * */
-    private fun updatePasswordResult(updatePassword: UpdatePassword){
+    private fun updatePasswordResult(updatePassword: UpdatePassword) {
         progressDialog.setLabel("Please Wait")
         progressDialog.show()
         viewModel.updatePasswordResponse(updatePassword).observe(requireActivity(), {
@@ -96,9 +120,13 @@ class UpdatePasswordFragment : Fragment(),View.OnClickListener {
                 AppGlobal.showDialog(getString(R.string.title_alert),it.data.description,requireActivity())
                 mBinding.edtxtPasswordUpf.text?.clear()
                 mBinding.edtxtConfirmPasswordUpf.text?.clear()
-            }
-            else{
-                AppGlobal.showDialog(getString(R.string.title_alert),it.data.description,requireActivity())
+                mBinding.edtxtOldPassword.text?.clear()
+            } else {
+                AppGlobal.showDialog(
+                    getString(R.string.title_alert),
+                    it.data.description,
+                    requireActivity()
+                )
             }
         })
     }

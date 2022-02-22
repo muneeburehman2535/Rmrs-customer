@@ -14,6 +14,7 @@ import com.comcept.rmrscustomer.data_class.checkout.Checkout
 import com.comcept.rmrscustomer.databinding.CheckoutFragmentBinding
 import com.comcept.rmrscustomer.db.CustomerDatabase
 import com.comcept.rmrscustomer.ui.home.CustomerHomeActivity
+import com.comcept.rmrscustomer.ui.home.HomeFragment
 import com.comcept.rmrscustomer.ui.review.ReviewFragment
 import com.comcept.rmrscustomer.utilities.AppGlobal
 import com.google.gson.Gson
@@ -117,8 +118,8 @@ class  CheckoutFragment : Fragment(),View.OnClickListener {
                 emptyCartRecord()
                 (activity as CustomerHomeActivity?)?.changeToolbarName(getString(R.string.title_review), isProfileMenuVisible = false, locationVisibility = false,isMenuVisibility = false)
                 (activity as CustomerHomeActivity?)?.loadNewFragment(
-                        ReviewFragment(),
-                        "review"
+                    HomeFragment(),
+                        "home"
                 )
 
             } else {

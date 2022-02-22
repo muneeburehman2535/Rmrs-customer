@@ -36,6 +36,8 @@ class PastOrdersAdapter(context: Context,private var pastOrdersList:ArrayList<Pa
         if (pastOrdersList[position].MenuOrdered.size!=0)
         {
             holder.binding.txtMenuCpo.text=pastOrdersList[position].MenuOrdered[0].Description
+
+
         }
 
         val dateArr=pastOrdersList[position].OrderDate.split("T")
