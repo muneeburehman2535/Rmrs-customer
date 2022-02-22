@@ -79,7 +79,7 @@ class MyReservationsFragment : Fragment() {
         progressDialog.show()
         viewModel.getReviewListResponse(customerId).observe(requireActivity(), {
             progressDialog.dismiss()
-            if (it.Message == "Success") {
+            if (it!=null&&it.Message == "Success") {
                 reservationList=it.data.result
                 if (reservationList.size>0)
                 {

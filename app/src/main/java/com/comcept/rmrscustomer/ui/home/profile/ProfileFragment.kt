@@ -104,7 +104,7 @@ class ProfileFragment : Fragment(),View.OnClickListener {
         val profile= Profile(AppGlobal.readString(requireActivity(),AppGlobal.customerId,"0"),mBinding.txtNumberAp.text?.trim().toString(), mBinding.txtNameAp.text?.trim().toString())
         viewModel.updateProfileResponse(profile).observe(this, {
             progressDialog.dismiss()
-            if (it.Message=="Success")
+            if (it!=null&&it.Message=="Success")
             {
                 AppGlobal.writeString(requireActivity(),AppGlobal.customerName, it.data.result.Name)
                 AppGlobal.writeString(requireActivity(),AppGlobal.customerMobile,it.data.result.MobileNumber)

@@ -184,7 +184,7 @@ class MyOrdersFragment : Fragment() {
         viewModel.getMyOrdersResponse(customerId).observe(requireActivity(), {
             progressDialog.dismiss()
             //refreshList()
-            if (it.Message == "Success") {
+            if (it!=null&&it.Message == "Success") {
 
                 currentOrderList = it.data.CurrentOrder
                 pastOrderList = it.data.PastOrders

@@ -147,7 +147,7 @@ class SimpleSearchFragment : Fragment() {
         progressDialog.show()
         viewModel.getSearchResponse(searchQuery).observe(requireActivity(), {
             progressDialog.dismiss()
-            if (it.Message=="Success"){
+            if (it!=null&&it.Message=="Success"){
                 searchResultList=it.data.result
                 if(searchResultList.size>0){
                     mBinding.rvSearch.visibility=View.VISIBLE

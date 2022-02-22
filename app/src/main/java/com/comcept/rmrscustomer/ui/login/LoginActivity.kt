@@ -105,7 +105,7 @@ class LoginActivity : AppCompatActivity(),View.OnClickListener {
         val login=Login(mBinding.edtxtEmailAl.text.trim().toString(), mBinding.edtxtPasswordAl.text?.trim().toString())
         mViewModel.getLoginResponse(login).observe(this, {
             progressDialog.dismiss()
-            if (it.Message=="Success")
+            if (it!=null&&it.Message=="Success")
             {
                 AppGlobal.writeString(this,AppGlobal.tokenId, it.data.Token)
                 AppGlobal.writeString(this,AppGlobal.customerId,it.data.CustomerID)

@@ -92,7 +92,7 @@ class UpdatePasswordFragment : Fragment(),View.OnClickListener {
         progressDialog.show()
         viewModel.updatePasswordResponse(updatePassword).observe(requireActivity(), {
             progressDialog.dismiss()
-            if (it.Message=="Success"){
+            if (it!=null&&it.Message=="Success"){
                 AppGlobal.showDialog(getString(R.string.title_alert),it.data.description,requireActivity())
                 mBinding.edtxtPasswordUpf.text?.clear()
                 mBinding.edtxtConfirmPasswordUpf.text?.clear()
