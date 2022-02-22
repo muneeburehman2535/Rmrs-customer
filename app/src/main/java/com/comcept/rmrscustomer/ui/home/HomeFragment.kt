@@ -438,7 +438,9 @@ class HomeFragment : Fragment(), View.OnClickListener, RestaurantAdapter.AddToFa
                     categoriesList = it.data.categories
                     if (categoriesList.size > 0) {
 
+
                         categoriesList[0].isClicked = true
+
                         categoryAdapter.updateCategoryList(categoriesList)
                         if (categoriesList.size > 0) {
 
