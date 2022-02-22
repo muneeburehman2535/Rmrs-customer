@@ -16,7 +16,9 @@ import com.comcept.rmrscustomer.db.CustomerDatabase
 import com.comcept.rmrscustomer.ui.home.CustomerHomeActivity
 import com.comcept.rmrscustomer.ui.review.ReviewFragment
 import com.comcept.rmrscustomer.utilities.AppGlobal
+import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 @AndroidEntryPoint
 class  CheckoutFragment : Fragment(),View.OnClickListener {
