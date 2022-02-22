@@ -394,6 +394,7 @@ class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItem
     //                                          Get Location Section
     /**************************************************************************************************************************/
 
+    @SuppressLint("MissingPermission")
     private fun getLocation() {
         if (ActivityCompat.checkSelfPermission(
                 this, Manifest.permission.ACCESS_FINE_LOCATION

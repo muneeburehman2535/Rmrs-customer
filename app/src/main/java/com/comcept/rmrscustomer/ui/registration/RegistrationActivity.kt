@@ -87,23 +87,26 @@ class RegistrationActivity : AppCompatActivity(),View.OnClickListener {
         val emailMobileVerification=EmailMobileVerification(mBinding.edtxtEmailAr.text.trim().toString(), mBinding.edtxtMobileAl.text.trim().toString())
         Timber.d(Gson().toJson(emailMobileVerification))
         mViewModel.getEmailMobileResponse(emailMobileVerification).observe(this, {
-            if (it!=null)
+           Timber.d("Message: ${it!!.Message}")
+
+            if (!it.data.Email&&!it.data.MobileNumber)
             {
-                if (!it.data.Email&&!it.data.MobileNumber)
+                if (AppGlobal.isInternetAvailable(this))
                 {
-                    if (AppGlobal.isInternetAvailable(this))
-                    {
-                        sendOTP()
-                    }
-                    else{
-                        AppGlobal.snackBar(mBinding.layoutParentReg,getString(R.string.err_no_internet),AppGlobal.LONG)
-                    }
+                    sendOTP()
                 }
-                else {
-                    progressDialog.dismiss()
-                    AppGlobal.showDialog(getString(R.string.title_alert),it.data.description,this)
+                else{
+                    AppGlobal.snackBar(mBinding.layoutParentReg,getString(R.string.err_no_internet),AppGlobal.LONG)
                 }
             }
+            else {
+                progressDialog.dismiss()
+                AppGlobal.showDialog(getString(R.string.title_alert),it.data.description,this)
+            }
+//            if (it!=null)
+//            {
+//
+//            }
 
         })
     }
