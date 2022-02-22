@@ -32,32 +32,32 @@ import com.comcept.rmrscustomer.ui.search.simple_search.SimpleSearchFragment
 import com.comcept.rmrscustomer.utilities.AppGlobal
 import com.comcept.rmrscustomer.utilities.RecyclerItemClickListener
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 
 @AndroidEntryPoint
-class HomeFragment : Fragment() ,View.OnClickListener,RestaurantAdapter.AddToFavouriteListener,RestaurantAdapter.ViewClickListener,DealsListener{
+class HomeFragment : Fragment(), View.OnClickListener, RestaurantAdapter.AddToFavouriteListener,
+    RestaurantAdapter.ViewClickListener, DealsListener {
 
     private lateinit var homeViewModel: HomeViewModel
     private lateinit var mBinding: FragmentHomeBinding
     private lateinit var progressDialog: KProgressHUD
 
-    private lateinit var categoryAdapter:CategoriesAdapter
-    private lateinit var restaurantsAdapter:RestaurantAdapter
+    private lateinit var categoryAdapter: CategoriesAdapter
+    private lateinit var restaurantsAdapter: RestaurantAdapter
     private lateinit var dealsAdapter: DealsAdapter
 
-    private lateinit var categoriesList:ArrayList<Categories>
-    private lateinit var restaurantsList:ArrayList<Restaurants>
-    private lateinit var dealsList:ArrayList<Deals>
+    private lateinit var categoriesList: ArrayList<Categories>
+    private lateinit var restaurantsList: ArrayList<Restaurants>
+    private lateinit var dealsList: ArrayList<Deals>
 
-    private lateinit var  databaseCreator: CustomerDatabase
-
-
-    private  var restaurantId:String="0"
-    private lateinit var mActivity:Activity
-    private var mLatitude:Double? =33.6624748
-    private var mLongitude:Double? = 73.0560211
+    private lateinit var databaseCreator: CustomerDatabase
 
 
+    private var restaurantId: String = "0"
+    private lateinit var mActivity: Activity
+    private var mLatitude: Double? = 33.6624748
+    private var mLongitude: Double? = 73.0560211
 
 
     override fun onCreateView(
@@ -74,10 +74,10 @@ class HomeFragment : Fragment() ,View.OnClickListener,RestaurantAdapter.AddToFav
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
-        mBinding.homeViewModel=homeViewModel
-        progressDialog=AppGlobal.setProgressDialog(requireActivity())
+        mBinding.homeViewModel = homeViewModel
+        progressDialog = AppGlobal.setProgressDialog(requireActivity())
 
-        mActivity=requireActivity()
+        mActivity = requireActivity()
 
         setCategoryAdapter()
         setRestaurantAdapter()
@@ -95,17 +95,23 @@ class HomeFragment : Fragment() ,View.OnClickListener,RestaurantAdapter.AddToFav
         super.onCreate(savedInstanceState)
         getCartRecord()
     }
-    private fun getLocation(){
-        (activity as CustomerHomeActivity?)?.mModel?.mLatitude?.observe(viewLifecycleOwner, Observer {
-            mLatitude=it
-            getLongitude(mLatitude!!)
-        })
+
+    private fun getLocation() {
+        (activity as CustomerHomeActivity?)?.mModel?.mLatitude?.observe(
+            viewLifecycleOwner,
+            Observer {
+                mLatitude = it
+                getLongitude(mLatitude!!)
+            })
     }
+
     private fun getLongitude(mLatitude: Double) {
-        (activity as CustomerHomeActivity?)?.mModel?.mLongitude?.observe(viewLifecycleOwner, Observer {
-            mLongitude=it
-            getCategoriesList()
-        })
+        (activity as CustomerHomeActivity?)?.mModel?.mLongitude?.observe(
+            viewLifecycleOwner,
+            Observer {
+                mLongitude = it
+                getCategoriesList()
+            })
     }
 
     override fun onResume() {
@@ -117,7 +123,13 @@ class HomeFragment : Fragment() ,View.OnClickListener,RestaurantAdapter.AddToFav
 //            true,
 //            false
 //        )
-        (requireActivity() as CustomerHomeActivity).getLuckyDrawPoints(AppGlobal.readString(requireActivity(), AppGlobal.customerId, "0"))
+        (requireActivity() as CustomerHomeActivity).getLuckyDrawPoints(
+            AppGlobal.readString(
+                requireActivity(),
+                AppGlobal.customerId,
+                "0"
+            )
+        )
     }
 
 
@@ -127,8 +139,7 @@ class HomeFragment : Fragment() ,View.OnClickListener,RestaurantAdapter.AddToFav
     }
 
     override fun onClick(v: View?) {
-        when(v?.id)
-        {
+        when (v?.id) {
             R.id.img_filter_home -> {
                 (activity as CustomerHomeActivity?)?.changeToolbarName(
                     getString(R.string.title_filter),
@@ -162,7 +173,7 @@ class HomeFragment : Fragment() ,View.OnClickListener,RestaurantAdapter.AddToFav
     /**************************************************************************************************************************/
 
 
-    fun autoImageSlider(){
+    fun autoImageSlider() {
         val imageSlider = mBinding.imageSlider
         val imageList = ArrayList<SlideModel>()
 
@@ -178,7 +189,7 @@ class HomeFragment : Fragment() ,View.OnClickListener,RestaurantAdapter.AddToFav
     /**************************************************************************************************************************/
 
     private fun setCategoryAdapter() {
-        categoriesList= arrayListOf()
+        categoriesList = arrayListOf()
         categoryAdapter = CategoriesAdapter(requireContext(), categoriesList)
         mBinding.rvCategories.layoutManager = LinearLayoutManager(
             context,
@@ -191,7 +202,7 @@ class HomeFragment : Fragment() ,View.OnClickListener,RestaurantAdapter.AddToFav
     }
 
     private fun setRestaurantAdapter() {
-        restaurantsList= arrayListOf()
+        restaurantsList = arrayListOf()
         restaurantsAdapter = RestaurantAdapter(requireContext(), restaurantsList)
         mBinding.rvRestaurants.layoutManager = LinearLayoutManager(
             context,
@@ -205,7 +216,7 @@ class HomeFragment : Fragment() ,View.OnClickListener,RestaurantAdapter.AddToFav
     }
 
     private fun setDealsAdapter() {
-        dealsList= arrayListOf()
+        dealsList = arrayListOf()
         dealsAdapter = DealsAdapter(requireContext(), dealsList)
         mBinding.rvDeals.layoutManager = LinearLayoutManager(
             context,
@@ -220,8 +231,7 @@ class HomeFragment : Fragment() ,View.OnClickListener,RestaurantAdapter.AddToFav
     /*
     * Set Click listener on Recycler view
     * */
-    private fun setRecyclerViewListener(recyclerView: RecyclerView, source: String)
-    {
+    private fun setRecyclerViewListener(recyclerView: RecyclerView, source: String) {
         recyclerView.addOnItemTouchListener(
             RecyclerItemClickListener(
                 requireContext(),
@@ -238,7 +248,8 @@ class HomeFragment : Fragment() ,View.OnClickListener,RestaurantAdapter.AddToFav
                             categoriesList[position].isClicked = true
                             categoryAdapter.updateCategoryList(categoriesList)
 
-                            getRestaurantsList(categoriesList[position].CategoryID,
+                            getRestaurantsList(
+                                categoriesList[position].CategoryID,
                                 mLatitude!!, mLongitude!!
                             )
                         }
@@ -255,7 +266,8 @@ class HomeFragment : Fragment() ,View.OnClickListener,RestaurantAdapter.AddToFav
 
     override fun onAddToFavouriteClick(position: Int) {
 
-        val favouriteLiveData=databaseCreator.favouriteDao.fetchFavouriteRecord(restaurantsList[position].RestaurantID)
+        val favouriteLiveData =
+            databaseCreator.favouriteDao.fetchFavouriteRecord(restaurantsList[position].RestaurantID)
 
         favouriteLiveData.observe(requireActivity(), Observer {
 
@@ -291,7 +303,6 @@ class HomeFragment : Fragment() ,View.OnClickListener,RestaurantAdapter.AddToFav
         )
 
 
-
     }
 
     override fun onDealClickListener(position: Int) {
@@ -318,15 +329,15 @@ class HomeFragment : Fragment() ,View.OnClickListener,RestaurantAdapter.AddToFav
     //                                          Room Database Section
     /**************************************************************************************************************************/
 
-    private fun checkRestaurantById(){
-        if (activity!=null){
-            val favouriteLiveData=databaseCreator.favouriteDao.findRestaurants()
+    private fun checkRestaurantById() {
+        if (activity != null) {
+            val favouriteLiveData = databaseCreator.favouriteDao.findRestaurants()
 
             favouriteLiveData.observe(requireActivity(), Observer {
 
                 val favouriteList = it as ArrayList<Favourite>
 
-                if (favouriteList.size>0) {
+                if (favouriteList.size > 0) {
                     for (index in 0 until restaurantsList.size) {
                         for (ind in 0 until favouriteList.size) {
                             if (restaurantsList[index].RestaurantID == favouriteList[ind].restaurant_id) {
@@ -346,10 +357,9 @@ class HomeFragment : Fragment() ,View.OnClickListener,RestaurantAdapter.AddToFav
     }
 
 
-    private fun addToFavourite(position: Int, favouriteLiveData: LiveData<MutableList<Favourite>>)
-    {
+    private fun addToFavourite(position: Int, favouriteLiveData: LiveData<MutableList<Favourite>>) {
         favouriteLiveData.removeObservers(requireActivity())
-        val mFavourite=Favourite(
+        val mFavourite = Favourite(
             restaurantsList[position].RestaurantID,
             restaurantsList[position].RestaurantName,
             restaurantsList[position].Address,
@@ -358,14 +368,16 @@ class HomeFragment : Fragment() ,View.OnClickListener,RestaurantAdapter.AddToFav
             restaurantsList[position].Image
         )
         homeViewModel.insertFavourite(mFavourite)
-        restaurantsList[position].isFavourite=true
+        restaurantsList[position].isFavourite = true
         restaurantsAdapter.updateRestaurantsList(restaurantsList)
     }
 
-    private fun deleteFavourite(position: Int, favouriteLiveData: LiveData<MutableList<Favourite>>)
-    {
+    private fun deleteFavourite(
+        position: Int,
+        favouriteLiveData: LiveData<MutableList<Favourite>>
+    ) {
         favouriteLiveData.removeObservers(requireActivity())
-        val mFavourite=Favourite(
+        val mFavourite = Favourite(
             restaurantsList[position].RestaurantID,
             restaurantsList[position].RestaurantName,
             restaurantsList[position].Address,
@@ -374,7 +386,7 @@ class HomeFragment : Fragment() ,View.OnClickListener,RestaurantAdapter.AddToFav
             restaurantsList[position].Image
         )
         homeViewModel.deleteFavouriteRecord(mFavourite)
-        restaurantsList[position].isFavourite=false
+        restaurantsList[position].isFavourite = false
         restaurantsAdapter.updateRestaurantsList(restaurantsList)
 
     }
@@ -388,13 +400,19 @@ class HomeFragment : Fragment() ,View.OnClickListener,RestaurantAdapter.AddToFav
     //                                    3:- Delete Item from Room Database
     /*****************************************************************************************************************************/
 
-    private fun getCartRecord(){
-        databaseCreator= CustomerDatabase.getInstance(requireActivity())
-        val cartLiveData=databaseCreator.cartDao.fetch(AppGlobal.readString(requireActivity(),AppGlobal.restaurantId,"0"))
+    private fun getCartRecord() {
+        databaseCreator = CustomerDatabase.getInstance(requireActivity())
+        val cartLiveData = databaseCreator.cartDao.fetch(
+            AppGlobal.readString(
+                requireActivity(),
+                AppGlobal.restaurantId,
+                "0"
+            )
+        )
 
         cartLiveData.observe(requireActivity(), Observer {
 
-           val cartList= it as ArrayList<Cart>
+            val cartList = it as ArrayList<Cart>
             (requireActivity() as CustomerHomeActivity).updateBottomNavigationCount(cartList.size)
             cartLiveData.removeObservers(requireActivity())
 
@@ -409,26 +427,31 @@ class HomeFragment : Fragment() ,View.OnClickListener,RestaurantAdapter.AddToFav
     /*
    * Get Categories API Method
    * */
-    private fun getCategoriesList(){
+    private fun getCategoriesList() {
         progressDialog.setLabel("Please Wait")
         progressDialog.show()
         activity?.let {
             homeViewModel.getCategoryResponse().observe(it, {
                 //progressDialog.dismiss()
 
-                if (it.Message == "Success") {
+                if (it != null && it.Message == "Success") {
                     categoriesList = it.data.categories
-                    if (categoriesList.size>0){
+                    if (categoriesList.size > 0) {
+
 
                         categoriesList[0].isClicked = true
+
                         categoryAdapter.updateCategoryList(categoriesList)
                         if (categoriesList.size > 0) {
 
-                            getRestaurantsList(categoriesList[0].CategoryID, mLatitude!!, mLongitude!!)
+                            getRestaurantsList(
+                                categoriesList[0].CategoryID,
+                                mLatitude!!,
+                                mLongitude!!
+                            )
 
                         }
-                    }
-                    else{
+                    } else {
                         progressDialog.dismiss()
                     }
 
@@ -446,7 +469,7 @@ class HomeFragment : Fragment() ,View.OnClickListener,RestaurantAdapter.AddToFav
     /*
    * Get Restaurants Data API Method
    * */
-    private fun getRestaurantsList(categoryID: String,Latitude:Double,Longitude:Double){
+    private fun getRestaurantsList(categoryID: String, Latitude: Double, Longitude: Double) {
 
 
 //        val longitude = 71.461624
@@ -454,31 +477,34 @@ class HomeFragment : Fragment() ,View.OnClickListener,RestaurantAdapter.AddToFav
 
         progressDialog.setLabel("Please Wait")
         progressDialog.show()
-        homeViewModel.getRestaurantsResponse(categoryID,Latitude,Longitude).observe(requireActivity(), {
-            progressDialog.dismiss()
-            if (it.Message == "Success") {
+        homeViewModel.getRestaurantsResponse(categoryID, Latitude, Longitude)
+            .observe(requireActivity(), {
+                progressDialog.dismiss()
+                if (it.Message == "Success") {
 
 
-                restaurantsList = it.data.restaurants
+                    restaurantsList = it.data.restaurants
 
-                if (restaurantsList.size>0){
-                    dealsList = it.data.deals
-                    checkRestaurantById()
+                    if (restaurantsList.size > 0) {
+                        dealsList = it.data.deals
+                        checkRestaurantById()
+                        dealsAdapter.updateList(dealsList)
+                    }
+
+                } else {
+                    //AppGlobal.showDialog(getString(R.string.title_alert), it.data.description, requireContext())
+                    AppGlobal.showDialog(
+                        getString(R.string.title_alert),
+                        "Restaurant not found in this category ",
+                        requireContext()
+                    )
+                    restaurantsList.clear()
+                    dealsList.clear()
+                    restaurantsAdapter.updateRestaurantsList(restaurantsList)
                     dealsAdapter.updateList(dealsList)
                 }
-
-            } else {
-                //AppGlobal.showDialog(getString(R.string.title_alert), it.data.description, requireContext())
-                AppGlobal.showDialog(getString(R.string.title_alert),"Restaurant not found in this category ", requireContext())
-                restaurantsList.clear()
-                dealsList.clear()
-                restaurantsAdapter.updateRestaurantsList(restaurantsList)
-                dealsAdapter.updateList(dealsList)
-            }
-        })
+            })
     }
-
-
 
 
 }

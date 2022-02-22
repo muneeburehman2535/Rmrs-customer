@@ -16,12 +16,11 @@ import com.comcept.rmrscustomer.data_class.updatepassword.UpdatePassword
 import com.comcept.rmrscustomer.databinding.UpdatePasswordFragmentBinding
 import com.comcept.rmrscustomer.utilities.AppGlobal
 
-class UpdatePasswordFragment : Fragment(), View.OnClickListener {
+class UpdatePasswordFragment : Fragment(),View.OnClickListener {
 
-    private lateinit var mBinding: UpdatePasswordFragmentBinding
+    private lateinit var mBinding:UpdatePasswordFragmentBinding
     private lateinit var progressDialog: KProgressHUD
     private val mAwesomeValidation = AwesomeValidation(ValidationStyle.BASIC)
-
     companion object {
         fun newInstance() = UpdatePasswordFragment()
     }
@@ -41,12 +40,12 @@ class UpdatePasswordFragment : Fragment(), View.OnClickListener {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(UpdatePasswordViewModel::class.java)
-        mBinding.updatePasswordViewModel = viewModel
+        mBinding.updatePasswordViewModel=viewModel
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        progressDialog = AppGlobal.setProgressDialog(requireActivity())
+        progressDialog= AppGlobal.setProgressDialog(requireActivity())
         mBinding.btnUpdateUpf.setOnClickListener(this)
     }
 
@@ -117,12 +116,8 @@ class UpdatePasswordFragment : Fragment(), View.OnClickListener {
         progressDialog.show()
         viewModel.updatePasswordResponse(updatePassword).observe(requireActivity(), {
             progressDialog.dismiss()
-            if (it.Message == "Success") {
-                AppGlobal.showDialog(
-                    getString(R.string.title_alert),
-                    it.data.description,
-                    requireActivity()
-                )
+            if (it!=null&&it.Message=="Success"){
+                AppGlobal.showDialog(getString(R.string.title_alert),it.data.description,requireActivity())
                 mBinding.edtxtPasswordUpf.text?.clear()
                 mBinding.edtxtConfirmPasswordUpf.text?.clear()
                 mBinding.edtxtOldPassword.text?.clear()

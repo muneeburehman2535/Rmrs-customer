@@ -54,12 +54,12 @@
                             android:layout_height="@dimen/img_size_l"
                             android:layout_marginStart="@dimen/margin_xl"
                             android:layout_marginTop="@dimen/margin_l"
-                            android:scaleType="fitXY"
+                            android:layout_marginBottom="@dimen/margin_l"
                             android:background="@drawable/rounded_corner_image_layout"
+                            android:scaleType="fitXY"
                             android:src="@drawable/library_placeholder"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            android:layout_marginBottom="@dimen/margin_l"/>
+                            app:layout_constraintTop_toTopOf="parent" />
 
                         <LinearLayout
                             android:layout_width="match_parent"

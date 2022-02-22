@@ -23,10 +23,10 @@ import com.comcept.rmrscustomer.utilities.AppGlobal
 class ReviewsListFragment : Fragment() {
 
     private lateinit var viewModel: ReviewViewModel
-    private lateinit var mBinding:ReviewsListFragmentBinding
+    private lateinit var mBinding: ReviewsListFragmentBinding
     private lateinit var reviewListAdapter: ReviewListAdapter
-    private lateinit var reviewList:ArrayList<Data>
-    private lateinit var restaurantId:String
+    private lateinit var reviewList: ArrayList<Data>
+    private lateinit var restaurantId: String
     private lateinit var progressDialog: KProgressHUD
 
 
@@ -34,43 +34,47 @@ class ReviewsListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        mBinding=DataBindingUtil.inflate(inflater,R.layout.reviews_list_fragment,container,false)
+        mBinding =
+            DataBindingUtil.inflate(inflater, R.layout.reviews_list_fragment, container, false)
         return mBinding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(ReviewViewModel::class.java)
-        progressDialog=AppGlobal.setProgressDialog(requireActivity())
+        progressDialog = AppGlobal.setProgressDialog(requireActivity())
         setRecyclerViewAdapter()
         getRestaurantId()
     }
 
-    private fun getRestaurantId()
-    {
+    private fun getRestaurantId() {
 //        (activity as CustomerHomeActivity?)?.mModel?.restaurantID?.observe(viewLifecycleOwner, Observer {
 //            this.restaurantId=it
 //
 //            getRestaurantDetail(restaurantId)
 //        })
-        restaurantId=AppGlobal.readString(requireActivity(),AppGlobal.restaurantId,"")
-        if (AppGlobal.isInternetAvailable(requireActivity()))
-        {
+        restaurantId = AppGlobal.readString(requireActivity(), AppGlobal.restaurantId, "")
+        if (AppGlobal.isInternetAvailable(requireActivity())) {
             getRestaurantDetail(restaurantId)
-        }
-        else{
-            AppGlobal.snackBar(mBinding.layoutParentRlf,getString(R.string.err_no_internet),AppGlobal.SHORT)
+        } else {
+            AppGlobal.snackBar(
+                mBinding.layoutParentRlf,
+                getString(R.string.err_no_internet),
+                AppGlobal.SHORT
+            )
         }
 
     }
 
-    private fun setRecyclerViewAdapter(){
-        reviewList= arrayListOf()
-        reviewListAdapter= ReviewListAdapter(reviewList)
-        val layoutManager=LinearLayoutManager(requireActivity(),LinearLayoutManager.VERTICAL,
-            false)
-        mBinding.rvReviews.layoutManager=layoutManager
-        mBinding.rvReviews.adapter=reviewListAdapter
+    private fun setRecyclerViewAdapter() {
+        reviewList = arrayListOf()
+        reviewListAdapter = ReviewListAdapter(reviewList)
+        val layoutManager = LinearLayoutManager(
+            requireActivity(), LinearLayoutManager.VERTICAL,
+            false
+        )
+        mBinding.rvReviews.layoutManager = layoutManager
+        mBinding.rvReviews.adapter = reviewListAdapter
     }
 
 
@@ -78,24 +82,21 @@ class ReviewsListFragment : Fragment() {
    * Login API Method
    * */
     @SuppressLint("SetTextI18n")
-    private fun getRestaurantDetail(restaurantID: String){
+    private fun getRestaurantDetail(restaurantID: String) {
         progressDialog.setLabel("Please Wait")
         progressDialog.show()
         viewModel.getReviewListResponse(restaurantID).observe(requireActivity(), {
             progressDialog.dismiss()
-            if (it.Message=="Success")
-            {
-                reviewList=it.data
-                mBinding.txtReviewTotal.text="${reviewList.size} Reviews"
-                if (reviewList.size>0)
-                {
-                    mBinding.layoutReviewList.visibility=View.VISIBLE
-                    mBinding.layoutNotFoundRlf.visibility=View.GONE
+            if (it != null && it.Message == "Success") {
+                reviewList = it.data
+                mBinding.txtReviewTotal.text = "${reviewList.size} Reviews"
+                if (reviewList.size > 0) {
+                    mBinding.layoutReviewList.visibility = View.VISIBLE
+                    mBinding.layoutNotFoundRlf.visibility = View.GONE
                     reviewListAdapter.updateReviewList(reviewList)
-                }
-                else{
-                    mBinding.layoutReviewList.visibility=View.GONE
-                    mBinding.layoutNotFoundRlf.visibility=View.VISIBLE
+                } else {
+                    mBinding.layoutReviewList.visibility = View.GONE
+                    mBinding.layoutNotFoundRlf.visibility = View.VISIBLE
                 }
 
             }

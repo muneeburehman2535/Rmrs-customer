@@ -37,6 +37,8 @@ class CategoriesAdapter(private val context: Context,private var categoriesList:
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
         holder.bind(categoriesList[position])
+
+
         holder.binding.layoutCategory.background = ContextCompat.getDrawable(mContext,R.drawable.curved_rectengle_layout_background_light)
         holder.binding.txtLcategory.setTextColor(R.color.colorAccent)
         //holder.binding.layout_category.background=ContextCompat.getDrawable(mContext,R.drawable.curved_rectengle_layout_background_light)
@@ -50,6 +52,8 @@ class CategoriesAdapter(private val context: Context,private var categoriesList:
             holder.binding.txtLcategory.setTextColor(context.getColor(R.color.colorAccent))
         }
         holder.binding.txtLcategory.text=categoriesList[position].CategoryName
+
+
 
     }
 

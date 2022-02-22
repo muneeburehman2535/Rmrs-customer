@@ -771,7 +771,7 @@ class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItem
 
         mViewModel.updateFcmTokenResponse(fcmNotification).observe(this, {
             progressDialog.dismiss()
-            if (it.Message == "Success") {
+            if (it!=null&&it.Message == "Success") {
                 Timber.d("Updated Token: ${it.data.result.Token}")
 
             }
@@ -784,8 +784,8 @@ class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItem
 
         mViewModel.getLuckyDrawPointsResponse(customerID).observe(this, {
             progressDialog.dismiss()
-            if (it.Message == "Success") {
-                Timber.d("Updated Token: ${it.data.LuckyDrawPoints.toString()}")
+            if (it!=null&&it.Message == "Success") {
+                Timber.d("Updated Token: ${it.data.LuckyDrawPoints}")
                 txtLuckyDrawPoints.text = "${getString(R.string.title_lucky_points)} ${AppGlobal.roundTwoPlaces(it.data.LuckyDrawPoints.toDouble())} "
             }
         })

@@ -183,7 +183,7 @@ class ReservationActivity : AppCompatActivity(), View.OnClickListener, DatePicke
         progressDialog.show()
         mViewModel.getReviewResponse(reservation).observe(this, {
             progressDialog.dismiss()
-            if (it.Message=="Success")
+            if (it!=null&&it.Message=="Success")
             {
                 AppGlobal.showDialogWithCloseActivity(getString(R.string.title_alert),it.data.description,this)
             }

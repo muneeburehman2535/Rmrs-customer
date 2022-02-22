@@ -109,7 +109,7 @@ class ReviewFragment : Fragment(),View.OnClickListener {
         progressDialog.show()
         viewModel.getReviewResponse(review).observe(requireActivity(), {
             progressDialog.dismiss()
-            if (it.Message=="Sucess")
+            if (it!=null&&it.Message=="Sucess")
             {
                // AppGlobal.showDialog(getString(R.string.title_alert),it.data.description,requireContext())
                 val alertDialog = AlertDialog.Builder(requireActivity())
