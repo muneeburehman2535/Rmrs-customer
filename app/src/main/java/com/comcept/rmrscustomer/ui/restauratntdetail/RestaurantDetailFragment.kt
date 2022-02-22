@@ -197,9 +197,7 @@ class RestaurantDetailFragment : Fragment() ,TabsAdapter.ViewClickListener,View.
                 Timber.d(text.toString())
             }
             override fun onTabUnselected(tab: TabLayout.Tab) {}
-            override fun onTabReselected(tab: TabLayout.Tab) {
-
-            }
+            override fun onTabReselected(tab: TabLayout.Tab) {}
         })
         adapter.updateNewKey(false)
     }
