@@ -25,6 +25,12 @@
             android:id="@+id/nav_favourite"
             android:icon="@drawable/ic_heart"
             android:title="@string/menu_favourite"/>
+
+
+        <item
+            android:id="@+id/nav_verify"
+            android:icon="@drawable/ic_heart"
+            android:title="verify Invoice"/>
         <item
             android:id="@+id/nav_profile"
             android:icon="@drawable/ic_user"

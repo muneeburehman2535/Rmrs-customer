@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="verify_invoice_view_model"
+            type="com.comcept.rmrscustomer.ui.home.verifyInvoice.VerifyInvoiceViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_parent_upf"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.home.verifyInvoice.VerifyInvoiceFragment">
+
+
+        <TextView
+            android:id="@+id/invoicetxt"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:text="Invoice ID"
+            app:layout_constraintBottom_toBottomOf="@+id/invoiveid"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/invoiveid"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_xxl"
+            android:layout_marginTop="@dimen/margin_xl"
+            android:layout_marginEnd="@dimen/margin_xxl"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/invoicetxt"
+
+            tools:ignore="MissingConstraints">
+
+            <EditText
+                android:id="@+id/edtxt_invoice_id"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:drawablePadding="16dp"
+
+                android:inputType="textEmailAddress"
+                android:maxLines="1"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:textSize="16sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <TextView
+            android:id="@+id/resturant_txt"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:text="Restaurant ID"
+            app:layout_constraintBottom_toBottomOf="@+id/resturant_id"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/resturant_id" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/resturant_id"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_xxl"
+            android:layout_marginTop="@dimen/margin_xl"
+            android:layout_marginEnd="@dimen/margin_xxl"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/resturant_txt"
+            app:layout_constraintTop_toBottomOf="@+id/invoiveid"
+            tools:ignore="MissingConstraints">
+
+            <EditText
+                android:id="@+id/edtxt_resturant_id"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:drawablePadding="16dp"
+
+                android:inputType="textEmailAddress"
+                android:maxLines="1"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:textSize="16sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <Button
+            android:id="@+id/btn_verify_al"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_xxxl"
+            android:layout_marginTop="@dimen/margin_xxl"
+            android:layout_marginEnd="@dimen/margin_xxxl"
+            android:background="@drawable/button_background"
+            android:paddingTop="@dimen/padding_l"
+            android:paddingBottom="@dimen/padding_l"
+            android:text="Verify"
+            android:textAppearance="?android:textAppearanceMedium"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/resturant_id" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
