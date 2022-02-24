@@ -14,7 +14,8 @@ data class PastOrdersDataClass(
     val SalesTax:Float,
     val Status:String,
     val OrderDate:String,
-    val __v:Int
+    val __v:Int,
+    val CancelReason:String
 )
 
 
