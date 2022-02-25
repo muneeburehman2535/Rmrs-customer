@@ -18,10 +18,7 @@ class VerifyInvoiceFragment : Fragment(), View.OnClickListener {
     private lateinit var progressDialog: KProgressHUD
 
     lateinit var mbinding: FragmentVerifyInvoiceBinding
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
 
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -90,18 +87,33 @@ class VerifyInvoiceFragment : Fragment(), View.OnClickListener {
         progressDialog.show()
         viewModel.verifyInvoiceResponse(verifyInvoice).observe(requireActivity(), {
             progressDialog.dismiss()
-            if (it != null && it.Message == "Success") {
-                AppGlobal.showDialog(
-                    getString(R.string.title_alert),
-                    it.data.CustomerID.toString(),
-                    requireActivity()
-                )
+            if (it != null && it.message == "Success") {
+//                AppGlobal.showDialog(
+//                    getString(R.string.title_alert),
+//                    it.data.CustomerID.toString(),
+//                    requireActivity()
+//                )
+
+                mbinding.restaurantNameTxt.text = it.data.RestaurantName
+                mbinding.InvoiceIdTxt.text = it.data.InvoiceID
+                mbinding.dateTxt.text = it.data.InvoiceCreated
+                mbinding.servicesChargesTxt.text = it.data.ServiceCharges.toString()
+                mbinding.totalEnTxt.text = it.data.SubTotal.toString()
+                mbinding.saleTaxTxt.text = it.data.SalesTax.toString()
+                mbinding.totalInTxt.text = it.data.TotalAmount.toString()
+
+                val discount =
+                    ((it.data.Discount?.AmountBeforeDiscount)?.times((it.data.Discount?.DiscountPercentage!!))
+                        ?.div(100))?.toDouble()
+                mbinding.discountTxt.text = discount.toString()
+                mbinding.discountTotalTxt.text = it.data.Discount?.AmountAfterDiscount.toString()
+
                 mbinding.edtxtResturantId.text?.clear()
                 mbinding.edtxtInvoiceId.text?.clear()
             } else {
                 AppGlobal.showDialog(
                     getString(R.string.title_alert),
-                    it.data.Id.toString(),
+                    it.message,
                     requireActivity()
                 )
             }
