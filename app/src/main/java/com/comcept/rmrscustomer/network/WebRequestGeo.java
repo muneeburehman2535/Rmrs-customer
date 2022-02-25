@@ -14,6 +14,7 @@ import com.comcept.rmrscustomer.data_class.reservation.Reservation;
 import com.comcept.rmrscustomer.data_class.review.Review;
 import com.comcept.rmrscustomer.data_class.send_otp.SendOTP;
 import com.comcept.rmrscustomer.data_class.updatepassword.UpdatePassword;
+import com.comcept.rmrscustomer.data_class.verifyInvoice.VerifyInvoice;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -88,4 +89,7 @@ public interface WebRequestGeo {
 
     @GET("/customer/deals/?")
     Call<ResponseBody>getDealsData(@Query("RestaurantID") String restaurantID);
+
+    @POST("/customer/getinvoice")
+    Call<ResponseBody> verifyInvoice(@Body VerifyInvoice verifyInvoice);
 }

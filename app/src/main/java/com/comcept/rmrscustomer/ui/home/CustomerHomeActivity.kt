@@ -49,6 +49,7 @@ import com.comcept.rmrscustomer.shared_view_models.SharedViewModel
 import com.comcept.rmrscustomer.ui.home.cart.CartFragment
 import com.comcept.rmrscustomer.ui.home.favourite.FavouriteFragment
 import com.comcept.rmrscustomer.ui.home.profile.ProfileFragment
+import com.comcept.rmrscustomer.ui.home.verifyInvoice.VerifyInvoiceFragment
 import com.comcept.rmrscustomer.ui.login.LoginActivity
 import com.comcept.rmrscustomer.ui.myorders.MyOrdersFragment
 import com.comcept.rmrscustomer.ui.reservation.myreservation.MyReservationsFragment
@@ -61,55 +62,54 @@ import java.util.*
 
 
 @AndroidEntryPoint
-class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelectedListener {
+class CustomerHomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
-    private lateinit var mBinding:ActivityCustomerHomeBinding
-    private lateinit var mViewModel:CustomerHomeViewModel
+    private lateinit var mBinding: ActivityCustomerHomeBinding
+    private lateinit var mViewModel: CustomerHomeViewModel
     private lateinit var mNavigation: BottomNavigationView
-    private lateinit var drawerLayout:DrawerLayout
-    lateinit var txtToolbarName:TextView
-    private lateinit var mToolbarLayout:LinearLayout
-    private lateinit var mToolbar:Toolbar
-    private  var locationMenu:MenuItem?=null
-    var editProfileMenu:MenuItem?=null
-    lateinit var infoMenu:MenuItem
-    var mCurrentLocation:String=""
+    private lateinit var drawerLayout: DrawerLayout
+    lateinit var txtToolbarName: TextView
+    private lateinit var mToolbarLayout: LinearLayout
+    private lateinit var mToolbar: Toolbar
+    private var locationMenu: MenuItem? = null
+    var editProfileMenu: MenuItem? = null
+    lateinit var infoMenu: MenuItem
+    var mCurrentLocation: String = ""
     private val pLACE_PICKER_REQUEST = 4
-    private lateinit var fields:List<Place.Field>
-    lateinit var mModel:SharedViewModel
-    private lateinit var  databaseCreator: CustomerDatabase
-    private  var restaurantId:String="0"
+    private lateinit var fields: List<Place.Field>
+    lateinit var mModel: SharedViewModel
+    private lateinit var databaseCreator: CustomerDatabase
+    private var restaurantId: String = "0"
     var locationManager: LocationManager? = null
     var latitude: String? = null
-    var longitude:String? = null
+    var longitude: String? = null
     private val REQUEST_LOCATION = 1
-    var mContext=this
+    var mContext = this
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var progressDialog: KProgressHUD
     var deviceName = Build.MODEL
-    var deviceId=Build.ID
-    private lateinit var txtLuckyDrawPoints:TextView
-    private lateinit var txtCustomerName:TextView
+    var deviceId = Build.ID
+    private lateinit var txtLuckyDrawPoints: TextView
+    private lateinit var txtCustomerName: TextView
 
-    var mLatitude:Double = 0.0
-    var mLongitude:Double = 0.0
-
+    var mLatitude: Double = 0.0
+    var mLongitude: Double = 0.0
 
 
     @SuppressLint("HardwareIds")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mBinding=DataBindingUtil.setContentView(this, R.layout.activity_customer_home)
+        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_customer_home)
         mModel = ViewModelProvider(this).get(SharedViewModel::class.java)
-        mViewModel=ViewModelProvider(this).get(CustomerHomeViewModel::class.java)
-        databaseCreator= CustomerDatabase.getInstance(this)
+        mViewModel = ViewModelProvider(this).get(CustomerHomeViewModel::class.java)
+        databaseCreator = CustomerDatabase.getInstance(this)
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
-        progressDialog=AppGlobal.setProgressDialog(this)
+        progressDialog = AppGlobal.setProgressDialog(this)
 
         val headerView: View = mBinding.navView.getHeaderView(0)
-        txtLuckyDrawPoints=headerView.findViewById(R.id.txt_lucky_draw_points_home)
-        txtCustomerName=headerView.findViewById(R.id.txt_customer_name_home)
-        txtCustomerName.text=AppGlobal.readString(this,AppGlobal.customerName,"")
+        txtLuckyDrawPoints = headerView.findViewById(R.id.txt_lucky_draw_points_home)
+        txtCustomerName = headerView.findViewById(R.id.txt_customer_name_home)
+        txtCustomerName.text = AppGlobal.readString(this, AppGlobal.customerName, "")
         val deviceID = Settings.Secure.getString(
             this.contentResolver,
             Settings.Secure.ANDROID_ID
@@ -163,8 +163,8 @@ class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItem
     private fun setDrawableLayout() {
         mToolbar = findViewById(R.id.toolbar)
         mToolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.colorAccent))
-        txtToolbarName=findViewById(R.id.txt_location_home)
-        mToolbarLayout=findViewById(R.id.layout_home_toolbar)
+        txtToolbarName = findViewById(R.id.txt_location_home)
+        mToolbarLayout = findViewById(R.id.layout_home_toolbar)
         setSupportActionBar(mToolbar)
 
         drawerLayout = findViewById<DrawerLayout>(R.id.drawer_layout)
@@ -178,7 +178,7 @@ class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItem
 
     // Method to Set Bottom Navigation Layout
     private fun setBottomNavigationView() {
-        mNavigation= findViewById<BottomNavigationView>(R.id.bottomNavigationView)
+        mNavigation = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
 
         mNavigation.setOnNavigationItemSelectedListener(BottomNavigationView.OnNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
@@ -252,18 +252,19 @@ class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItem
             }
         })
     }
-     fun setToolbarTitle(
-         title: String,
-         fragment: Fragment,
-         isProfileMenuVisible: Boolean,
-         toolbarVisibility: Int,
-         locationVisibility: Boolean,
-         isMenuVisibility: Boolean
-     ){
+
+    fun setToolbarTitle(
+        title: String,
+        fragment: Fragment,
+        isProfileMenuVisible: Boolean,
+        toolbarVisibility: Int,
+        locationVisibility: Boolean,
+        isMenuVisibility: Boolean
+    ) {
         locationMenu?.isVisible = locationVisibility
         mToolbarLayout.visibility = toolbarVisibility
-         infoMenu.isVisible=isMenuVisibility
-        mToolbar.title =title
+        infoMenu.isVisible = isMenuVisibility
+        mToolbar.title = title
         editProfileMenu?.isVisible = isProfileMenuVisible
         replaceNewFragment(fragment)
     }
@@ -274,11 +275,11 @@ class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItem
         toolbarVisibility: Int,
         locationVisibility: Boolean,
         isMenuVisibility: Boolean
-    ){
+    ) {
         locationMenu?.isVisible = locationVisibility
         mToolbarLayout.visibility = toolbarVisibility
-        infoMenu.isVisible=isMenuVisibility
-        mToolbar.title =title
+        infoMenu.isVisible = isMenuVisibility
+        mToolbar.title = title
         editProfileMenu?.isVisible = isProfileMenuVisible
 
     }
@@ -288,16 +289,16 @@ class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItem
         isProfileMenuVisible: Boolean,
         toolbarVisibility: Int,
         locationVisibility: Boolean
-    ){
+    ) {
         locationMenu?.isVisible = locationVisibility
         mToolbarLayout.visibility = toolbarVisibility
-        mToolbar.title =title
+        mToolbar.title = title
         editProfileMenu?.isVisible = isProfileMenuVisible
     }
 
-    fun updateToolbarAddress(){
-        mToolbarLayout.visibility=View.VISIBLE
-        txtToolbarName.text=mCurrentLocation
+    fun updateToolbarAddress() {
+        mToolbarLayout.visibility = View.VISIBLE
+        txtToolbarName.text = mCurrentLocation
     }
 
     @RequiresApi(Build.VERSION_CODES.M)
@@ -305,9 +306,9 @@ class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItem
         // Inflate the menu; this adds items to the action bar if it is present.
         val inflater = menuInflater
         inflater.inflate(R.menu.customer_home, menu)
-        locationMenu=menu.findItem(R.id.action_location)
-        editProfileMenu=menu.findItem(R.id.action_edit)
-        infoMenu=menu.findItem(R.id.action_info)
+        locationMenu = menu.findItem(R.id.action_location)
+        editProfileMenu = menu.findItem(R.id.action_edit)
+        infoMenu = menu.findItem(R.id.action_info)
         val spanString = SpannableString(editProfileMenu?.title.toString())
         spanString.setSpan(
             ForegroundColorSpan(getColor(R.color.colorAccent)),
@@ -320,8 +321,7 @@ class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItem
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId)
-        {
+        when (item.itemId) {
             android.R.id.home -> drawerLayout.openDrawer(GravityCompat.START)
             R.id.action_location -> {
                 checkPermissionForLocation(Manifest.permission.ACCESS_FINE_LOCATION)
@@ -345,9 +345,8 @@ class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItem
         return super.onOptionsItemSelected(item)
     }
 
-    fun updateBottomNavigationCount(quantity: Int)
-    {
-        mNavigation.getOrCreateBadge(R.id.cart).number=quantity
+    fun updateBottomNavigationCount(quantity: Int) {
+        mNavigation.getOrCreateBadge(R.id.cart).number = quantity
     }
 
     fun changeToolbarName(
@@ -355,23 +354,21 @@ class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItem
         isProfileMenuVisible: Boolean,
         locationVisibility: Boolean,
         isMenuVisibility: Boolean
-    )
-    {
-       //Toolbar.title=""
+    ) {
+        //Toolbar.title=""
         mToolbar.title = toolbarName
-        if (locationMenu!=null&&editProfileMenu!=null){
+        if (locationMenu != null && editProfileMenu != null) {
             locationMenu?.isVisible = locationVisibility
             editProfileMenu?.isVisible = isProfileMenuVisible
         }
 
-        infoMenu.isVisible=isMenuVisibility
-
+        infoMenu.isVisible = isMenuVisibility
 
 
     }
 
     private fun getCartRecord(restaurantId: String) {
-        val cartLiveData=databaseCreator.cartDao.fetch(restaurantId)
+        val cartLiveData = databaseCreator.cartDao.fetch(restaurantId)
         cartLiveData.observe(this, androidx.lifecycle.Observer {
             if (it != null) {
                 val cartArray = it as ArrayList<Cart>
@@ -382,12 +379,11 @@ class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItem
 
     }
 
-    private fun getRestaurantId(){
+    private fun getRestaurantId() {
 
-        restaurantId=AppGlobal.readString(this, AppGlobal.restaurantId, "0")
+        restaurantId = AppGlobal.readString(this, AppGlobal.restaurantId, "0")
         getCartRecord(restaurantId)
     }
-
 
 
     /**************************************************************************************************************************/
@@ -400,7 +396,8 @@ class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItem
                 this, Manifest.permission.ACCESS_FINE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
                 this, Manifest.permission.ACCESS_COARSE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED) {
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
             ActivityCompat.requestPermissions(
                 this,
                 arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
@@ -419,17 +416,17 @@ class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItem
 //                Toast.makeText(this, "Unable to find location.", Toast.LENGTH_SHORT).show()
 //            }
             fusedLocationClient.lastLocation
-                    .addOnSuccessListener { location: Location? ->
-                        if (location!=null){
-                            getAddress(location.latitude, location.longitude)
-                            mLatitude =  location.latitude
-                            mLongitude = location.longitude
-                            mModel.updateLatitude(mLatitude)
-                            mModel.updateLongitude(mLongitude)
+                .addOnSuccessListener { location: Location? ->
+                    if (location != null) {
+                        getAddress(location.latitude, location.longitude)
+                        mLatitude = location.latitude
+                        mLongitude = location.longitude
+                        mModel.updateLatitude(mLatitude)
+                        mModel.updateLongitude(mLongitude)
 
-                        }
-                        // Got last known location. In some rare situations this can be null.
                     }
+                    // Got last known location. In some rare situations this can be null.
+                }
 
         }
     }
@@ -455,19 +452,20 @@ class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItem
         val addresses: List<Address>
         val geocoder = Geocoder(this, Locale.getDefault())
 
-        addresses = geocoder.getFromLocation(latitude, longitude, 1) 
+        addresses = geocoder.getFromLocation(latitude, longitude, 1)
 
 
-        val address: String = addresses[0].getAddressLine(0) // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+        val address: String =
+            addresses[0].getAddressLine(0) // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
         AppGlobal.showToast(address, this)
-        mCurrentLocation=address
-        txtToolbarName.text=mCurrentLocation
+        mCurrentLocation = address
+        txtToolbarName.text = mCurrentLocation
         AppGlobal.writeString(this, AppGlobal.customerAddress, mCurrentLocation)
 
 //        val city: String = addresses[0].locality
 //        val state: String = addresses[0].adminArea
 //        val country: String = addresses[0].countryName
-       // val postalCode: String = addresses[0].postalCode
+        // val postalCode: String = addresses[0].postalCode
         //val knownName: String = addresses[0].featureName
     }
 
@@ -477,7 +475,11 @@ class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItem
 
     private fun checkPermissionForLocation(accessFineLocation: String) {
         try {
-            if (ContextCompat.checkSelfPermission(this, accessFineLocation) != PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(
+                    this,
+                    accessFineLocation
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
                 ActivityCompat.requestPermissions(
                     this,
                     arrayOf(accessFineLocation),
@@ -537,7 +539,7 @@ class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItem
                     val currentLatitude: Double = data.getDoubleExtra(MapUtility.LATITUDE, 0.0)
                     val currentLongitude: Double = data.getDoubleExtra(MapUtility.LONGITUDE, 0.0)
                     val completeAddress: Bundle? = data.getBundleExtra("fullAddress")
-                    mCurrentLocation=completeAddress!!.getString("addressline2").toString()
+                    mCurrentLocation = completeAddress!!.getString("addressline2").toString()
 
 
                     mLatitude = currentLatitude
@@ -546,7 +548,7 @@ class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItem
                     mModel.updateLongitude(mLongitude)
 
 
-                    txtToolbarName.text=mCurrentLocation
+                    txtToolbarName.text = mCurrentLocation
                     AppGlobal.writeString(this, AppGlobal.customerAddress, mCurrentLocation)
                     //Timber.d("Location: ${completeAddress!!.getString("addressline2")+"\t"+completeAddress.getString("city")}")
                 }
@@ -557,16 +559,15 @@ class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItem
     }
 
 
-
     /********************************************************************************************************************/
     //                                          Fragments Attachments Section
     /*******************************************************************************************************************/
 
     private fun loadFragment(fragment: Fragment?) {
         supportFragmentManager.beginTransaction()
-        .setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right)
-                .add(R.id.nav_host_fragment, fragment!!)
-                .commit()
+            .setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right)
+            .add(R.id.nav_host_fragment, fragment!!)
+            .commit()
     }
 
     private fun replaceNewFragment(fragment: Fragment?) {
@@ -592,8 +593,7 @@ class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItem
             .commit()
     }
 
-    fun removeFragment()
-    {
+    fun removeFragment() {
         supportFragmentManager.popBackStack()
     }
 
@@ -601,12 +601,13 @@ class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItem
         val fm: FragmentManager = supportFragmentManager
 
         for (entry in 0 until fm.backStackEntryCount) {
-           Timber.d("Found fragment: " + fm.getBackStackEntryAt(entry).name)
+            Timber.d("Found fragment: " + fm.getBackStackEntryAt(entry).name)
             fm.popBackStack()
         }
 
     }
-    fun getNewCallerFragment(){
+
+    fun getNewCallerFragment() {
         val fm: FragmentManager = supportFragmentManager
 
         for (entry in 0 until fm.backStackEntryCount) {
@@ -615,9 +616,8 @@ class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItem
     }
 
 
-
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        return when(item.itemId) {
+        return when (item.itemId) {
             R.id.nav_home -> {
 //                locationMenu.isVisible = true
 //                mToolbarLayout.visibility = View.VISIBLE
@@ -725,6 +725,25 @@ class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItem
                 mBinding.drawerLayout.closeDrawers()
                 return true
             }
+
+            R.id.nav_verify -> {
+//                locationMenu.isVisible = false
+//                mToolbarLayout.visibility = View.GONE
+//                mToolbar.title = getString(R.string.title_toolbar_profile)
+//                editProfileMenu.isVisible = true
+//                replaceNewFragment(ProfileFragment())
+
+                setToolbarTitle(
+                    "Verify Invoice",
+                    VerifyInvoiceFragment(),
+                    true,
+                    View.GONE,
+                    false,
+                    isMenuVisibility = false
+                )
+                mBinding.drawerLayout.closeDrawers()
+                return true
+            }
             R.id.nav_update_password -> {
                 locationMenu?.isVisible = false
                 mToolbarLayout.visibility = View.GONE
@@ -750,12 +769,12 @@ class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItem
                 this.finish()
                 return true
             }
-            else-> false
+            else -> false
         }
     }
 
-    companion object{
-        val mContext=this
+    companion object {
+        val mContext = this
     }
 
     /**************************************************************************************************************************/
@@ -765,28 +784,29 @@ class CustomerHomeActivity : AppCompatActivity(),NavigationView.OnNavigationItem
     /*
    * Get Categories API Method
    * */
-    private fun updateFcmToken(fcmNotification: FcmNotification){
+    private fun updateFcmToken(fcmNotification: FcmNotification) {
         progressDialog.setLabel("Please Wait")
         progressDialog.show()
 
         mViewModel.updateFcmTokenResponse(fcmNotification).observe(this, {
             progressDialog.dismiss()
-            if (it!=null&&it.Message == "Success") {
+            if (it != null && it.Message == "Success") {
                 Timber.d("Updated Token: ${it.data.result.Token}")
 
             }
         })
     }
 
-    fun getLuckyDrawPoints(customerID: String){
+    fun getLuckyDrawPoints(customerID: String) {
         progressDialog.setLabel("Please Wait")
         progressDialog.show()
 
         mViewModel.getLuckyDrawPointsResponse(customerID).observe(this, {
             progressDialog.dismiss()
-            if (it!=null&&it.Message == "Success") {
+            if (it != null && it.Message == "Success") {
                 Timber.d("Updated Token: ${it.data.LuckyDrawPoints}")
-                txtLuckyDrawPoints.text = "${getString(R.string.title_lucky_points)} ${AppGlobal.roundTwoPlaces(it.data.LuckyDrawPoints.toDouble())} "
+                txtLuckyDrawPoints.text =
+                    "${getString(R.string.title_lucky_points)} ${AppGlobal.roundTwoPlaces(it.data.LuckyDrawPoints.toDouble())} "
             }
         })
     }
