@@ -56,6 +56,7 @@ class AppGlobal {
 
         //   https://Customer.teletaleem.com
         //   https://Cust-be.khatir.pk:4443
+        //   http://192.168.0.76:5000
 
         /*****************************************************Base URLs********************************************************/
         var HOME_BASE_URL = if ("PRODUCTION" == BUILD) "https://customer-prod.k8s.teletaleem.com" else "https://Customer.teletaleem.com"

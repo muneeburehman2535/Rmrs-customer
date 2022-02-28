@@ -61,6 +61,11 @@ class ReservationActivity : AppCompatActivity(), View.OnClickListener, DatePicke
         mBinding.btnReservationAr.setOnClickListener(this)
         txtToolbarText.setText(R.string.title_reservation)
 
+
+
+        mBinding.edtxtCustomerNameAr.setText(AppGlobal.readString(this,AppGlobal.customerName,"0"))
+        mBinding.edtxtCustomerPhnNoAr.setText(AppGlobal.readString(this,AppGlobal.customerMobile,"0"))
+
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
