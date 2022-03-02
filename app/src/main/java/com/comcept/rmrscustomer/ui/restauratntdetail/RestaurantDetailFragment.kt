@@ -37,11 +37,11 @@ import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
 @AndroidEntryPoint
-class RestaurantDetailFragment : Fragment() ,TabsAdapter.ViewClickListener,View.OnClickListener{
-    private lateinit var mBinding:RestaurantDetailFragmentBinding
-    private lateinit var menuList:ArrayList<Menu>
-    private lateinit var categoryList:ArrayList<CategoryData>
-    private lateinit var dealsList:ArrayList<DealsData>
+class RestaurantDetailFragment : Fragment(), TabsAdapter.ViewClickListener, View.OnClickListener {
+    private lateinit var mBinding: RestaurantDetailFragmentBinding
+    private lateinit var menuList: ArrayList<Menu>
+    private lateinit var categoryList: ArrayList<CategoryData>
+    private lateinit var dealsList: ArrayList<DealsData>
 
     companion object {
         fun newInstance() = RestaurantDetailFragment()
@@ -49,7 +49,7 @@ class RestaurantDetailFragment : Fragment() ,TabsAdapter.ViewClickListener,View.
 
     private lateinit var viewModel: RestaurantDetailViewModel
     private lateinit var progressDialog: KProgressHUD
-    private lateinit var restaurantId:String
+    private lateinit var restaurantId: String
     private var gps: GPSTracker? = null
     private lateinit var restaurantDetailResponse: RestaurantDetailResponse
 
@@ -57,7 +57,7 @@ class RestaurantDetailFragment : Fragment() ,TabsAdapter.ViewClickListener,View.
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        mBinding=DataBindingUtil.inflate(
+        mBinding = DataBindingUtil.inflate(
             inflater,
             R.layout.restaurant_detail_fragment,
             container,
@@ -70,19 +70,19 @@ class RestaurantDetailFragment : Fragment() ,TabsAdapter.ViewClickListener,View.
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(RestaurantDetailViewModel::class.java)
 
-        mBinding.restaurantDetailViewModel=viewModel
+        mBinding.restaurantDetailViewModel = viewModel
         mBinding.fabRestaurantDetail.setOnClickListener(View.OnClickListener {
-            startActivity(Intent(requireActivity(),ReservationActivity::class.java))
+            startActivity(Intent(requireActivity(), ReservationActivity::class.java))
         })
 
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        progressDialog=AppGlobal.setProgressDialog(requireActivity())
+        progressDialog = AppGlobal.setProgressDialog(requireActivity())
         setBlurBackgroundImage()
-        menuList= arrayListOf()
-        mBinding.imgRestaurantFrd.clipToOutline=true
+        menuList = arrayListOf()
+        mBinding.imgRestaurantFrd.clipToOutline = true
         //setTabLayout()
         getRestaurantId()
         setViewClickListener()
@@ -95,17 +95,16 @@ class RestaurantDetailFragment : Fragment() ,TabsAdapter.ViewClickListener,View.
     }
 
     override fun onClick(v: View?) {
-        when(v?.id)
-        {
-            R.id.txt_distance_frd->{
+        when (v?.id) {
+            R.id.txt_distance_frd -> {
 
                 getLatLong()
             }
-            R.id.img_restaurant_frd->{
+            R.id.img_restaurant_frd -> {
                 (activity as CustomerHomeActivity).changeToolbarName(
                     getString(R.string.title_reviews),
                     isProfileMenuVisible = false,
-                    locationVisibility = false,isMenuVisibility = false
+                    locationVisibility = false, isMenuVisibility = false
                 )
                 (activity as CustomerHomeActivity).loadNewFragment(
                     ReviewsListFragment(),
@@ -120,82 +119,94 @@ class RestaurantDetailFragment : Fragment() ,TabsAdapter.ViewClickListener,View.
         (activity as CustomerHomeActivity).changeToolbarName(
             getString(R.string.title_restaurants),
             isProfileMenuVisible = false,
-            locationVisibility = false,isMenuVisibility = true
+            locationVisibility = false, isMenuVisibility = true
         )
-        (requireActivity()as CustomerHomeActivity).infoMenu.isVisible=true
+        (requireActivity() as CustomerHomeActivity).infoMenu.isVisible = true
     }
 
     private fun setTabLayout() {
-        val tabList= arrayListOf<String>()
+        val tabList = arrayListOf<String>()
+        tabList.add("All")
         tabList.add("Deals")
-        for (index in 0 until categoryList.size)
-        {
-            if (index==0)
-            {
+        for (index in 0 until categoryList.size) {
+            if (index == 1) {
                 tabList.add(categoryList[index].CategoryName)
-            }
-            else{
-                var isMenuFound=false
-                for (ind in 0 until tabList.size)
-                {
-                    if (tabList[ind] == categoryList[index].CategoryName)
-                    {
-                       isMenuFound=true
+            } else {
+                var isMenuFound = false
+                for (ind in 0 until tabList.size) {
+                    if (tabList[ind] == categoryList[index].CategoryName) {
+                        isMenuFound = true
                     }
                 }
-                if (!isMenuFound)
-                {
+                if (!isMenuFound) {
                     tabList.add(categoryList[index].CategoryName)
                 }
 
             }
 
         }
-        for( index in 0 until tabList.size)
-        {
+        for (index in 0 until tabList.size) {
             mBinding.layoutTabRdf.addTab(mBinding.layoutTabRdf.newTab().setText(tabList[index]));
         }
 
         mBinding.layoutTabRdf.tabGravity = TabLayout.GRAVITY_FILL
-        val adapter = TabsAdapter( childFragmentManager,requireActivity(), mBinding.layoutTabRdf.tabCount,menuList,categoryList,tabList,true)
+        val adapter = TabsAdapter(
+            childFragmentManager,
+            requireActivity(),
+            mBinding.layoutTabRdf.tabCount,
+            menuList,
+            categoryList,
+            tabList,
+            true
+        )
         adapter.setViewClickListener(this)
         mBinding.viewpagerRdf.adapter = adapter
-        mBinding.viewpagerRdf.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(mBinding.layoutTabRdf))
+        mBinding.viewpagerRdf.addOnPageChangeListener(
+            TabLayout.TabLayoutOnPageChangeListener(
+                mBinding.layoutTabRdf
+            )
+        )
         mBinding.layoutTabRdf.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 mBinding.viewpagerRdf.currentItem = tab.position
-                val text=tab.text.toString()
+                val text = tab.text.toString()
 
-                val updatedMenuList= arrayListOf<Menu>()
+                val updatedMenuList = arrayListOf<Menu>()
 
-                if (tab.position==0){
-                    for (index in 0 until menuList.size)
-                    {
-                       if (menuList[index].isDeal){
-                           updatedMenuList.add(menuList[index])
-                       }
+
+                if (tab.position == 0) {
+                    for (index in 0 until menuList.size) {
+
+                        updatedMenuList.add(menuList[index])
+
 
                     }
-                }
-                else{
-                    for (index in 0 until menuList.size)
-                    {
-                        val categoryArray=menuList[index].MenuCategory
-                        for (ind in 0 until categoryArray.size){
-                            if (categoryArray[ind].CategoryName==text)
-                            {
+                } else
+                    if (tab.position == 1) {
+                        for (index in 0 until menuList.size) {
+                            if (menuList[index].isDeal) {
                                 updatedMenuList.add(menuList[index])
                             }
-                        }
 
+                        }
+                    } else {
+                        for (index in 0 until menuList.size) {
+                            val categoryArray = menuList[index].MenuCategory
+                            for (ind in 0 until categoryArray.size) {
+                                if (categoryArray[ind].CategoryName == text) {
+                                    updatedMenuList.add(menuList[index])
+                                }
+                            }
+
+                        }
                     }
-                }
 
 
                 (activity as CustomerHomeActivity).mModel.updateMenuList(updatedMenuList)
 
                 Timber.d(text.toString())
             }
+
             override fun onTabUnselected(tab: TabLayout.Tab) {}
             override fun onTabReselected(tab: TabLayout.Tab) {}
         })
@@ -203,24 +214,29 @@ class RestaurantDetailFragment : Fragment() ,TabsAdapter.ViewClickListener,View.
     }
 
     private fun setBlurBackgroundImage() {
-        val originalBitmap = BitmapFactory.decodeResource(resources, R.drawable.photo_1552566626_52f8b828add9)
+        val originalBitmap =
+            BitmapFactory.decodeResource(resources, R.drawable.photo_1552566626_52f8b828add9)
         val blurredBitmap = BlurBuilder.blur(context, originalBitmap)
         mBinding.layoutBackgroungFrd.background = BitmapDrawable(resources, blurredBitmap)
 
     }
-    private fun getRestaurantId()
-    {
-        (activity as CustomerHomeActivity?)?.mModel?.restaurantID?.observe(viewLifecycleOwner, Observer {
-            this.restaurantId=it
-            if (AppGlobal.isInternetAvailable(requireActivity()))
-            {
-                getRestaurantCategory()
 
-            }
-            else{
-                AppGlobal.snackBar(mBinding.layoutParentRdf,getString(R.string.err_no_internet),AppGlobal.SHORT)
-            }
-        })
+    private fun getRestaurantId() {
+        (activity as CustomerHomeActivity?)?.mModel?.restaurantID?.observe(
+            viewLifecycleOwner,
+            Observer {
+                this.restaurantId = it
+                if (AppGlobal.isInternetAvailable(requireActivity())) {
+                    getRestaurantCategory()
+
+                } else {
+                    AppGlobal.snackBar(
+                        mBinding.layoutParentRdf,
+                        getString(R.string.err_no_internet),
+                        AppGlobal.SHORT
+                    )
+                }
+            })
     }
 
     /*
@@ -232,7 +248,12 @@ class RestaurantDetailFragment : Fragment() ,TabsAdapter.ViewClickListener,View.
         if (gps!!.canGetLocation()) {
             val latitude: Double = gps!!.latitude
             val longitude: Double = gps!!.longitude
-            AppGlobal.startGMapIntent(requireActivity(), restaurantDetailResponse.data.profile[0].Address, latitude, longitude)
+            AppGlobal.startGMapIntent(
+                requireActivity(),
+                restaurantDetailResponse.data.profile[0].Address,
+                latitude,
+                longitude
+            )
 
             // \n is for new line
             //Toast.makeText(context, "Your Location is - \nLat: " + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
@@ -251,54 +272,71 @@ class RestaurantDetailFragment : Fragment() ,TabsAdapter.ViewClickListener,View.
     /*
     * Login API Method
     * */
-    private fun getRestaurantDetail(){
+    private fun getRestaurantDetail() {
         progressDialog.setLabel("Please Wait")
         progressDialog.show()
         viewModel.getRestaurantDetailResponse(restaurantId).observe(requireActivity(), {
             progressDialog.dismiss()
-            if (it.Message=="Success")
-            {
-                val menuArray=it.data.menu
+            if (it.Message == "Success") {
+                val menuArray = it.data.menu
 
-                for (index in 0 until menuArray.size){
-                    val menu=menuArray[index]
-                    menu.isDeal=false
+                for (index in 0 until menuArray.size) {
+                    val menu = menuArray[index]
+                    menu.isDeal = false
                     menuList.add(menu)
                 }
 
                 Timber.d("menu list: ${Gson().toJson(menuList)}")
 
-                if (menuList.size>0){
+                if (menuList.size > 0) {
                     setTabLayout()
                     (activity as CustomerHomeActivity).mModel.updateRatingCount(it.data.profile[0].RatingCount)
                     (activity as CustomerHomeActivity).mModel.updateSumOfRating(it.data.profile[0].SumofRating)
-                    AppGlobal.writeString(requireActivity(),AppGlobal.ownerId,it.data.profile[0].OwnerID)
-                    AppGlobal.writeString(requireActivity(),AppGlobal.restaurantName,it.data.profile[0].RestaurantName)
-                    AppGlobal.writeString(requireActivity(),AppGlobal.restaurantAddress,it.data.profile[0].Address)
-                    AppGlobal.writeString(requireActivity(),AppGlobal.restaurantImage,it.data.profile[0].Image)
-                    restaurantDetailResponse=it
+                    AppGlobal.writeString(
+                        requireActivity(),
+                        AppGlobal.ownerId,
+                        it.data.profile[0].OwnerID
+                    )
+                    AppGlobal.writeString(
+                        requireActivity(),
+                        AppGlobal.restaurantName,
+                        it.data.profile[0].RestaurantName
+                    )
+                    AppGlobal.writeString(
+                        requireActivity(),
+                        AppGlobal.restaurantAddress,
+                        it.data.profile[0].Address
+                    )
+                    AppGlobal.writeString(
+                        requireActivity(),
+                        AppGlobal.restaurantImage,
+                        it.data.profile[0].Image
+                    )
+                    restaurantDetailResponse = it
                     setViews()
                     //(activity as CustomerHomeActivity).mModel.updateMenuList(menuList)
                 }
 
-            }
-            else{
-                AppGlobal.showDialog(getString(R.string.title_alert),it.data.description,requireContext())
+            } else {
+                AppGlobal.showDialog(
+                    getString(R.string.title_alert),
+                    it.data.description,
+                    requireContext()
+                )
             }
         })
     }
 
-    private fun getRestaurantCategory(){
+    private fun getRestaurantCategory() {
         progressDialog.setLabel("Please Wait")
         progressDialog.show()
         viewModel.getRestaurantCategoryResponse(restaurantId).observe(requireActivity(), {
             progressDialog.dismiss()
-            if (it.message=="Success")
-            {
-                categoryList=it.data
-                if (categoryList.size>0){
+            if (it.message == "Success") {
+                categoryList = it.data
+                if (categoryList.size > 0) {
                     //setTabLayout()
-                        getRestaurantDeals()
+                    getRestaurantDeals()
                     //getRestaurantDetail()
 //                    (activity as CustomerHomeActivity).mModel.updateRatingCount(it.data.profile[0].RatingCount)
 //                    (activity as CustomerHomeActivity).mModel.updateSumOfRating(it.data.profile[0].SumofRating)
@@ -311,76 +349,82 @@ class RestaurantDetailFragment : Fragment() ,TabsAdapter.ViewClickListener,View.
                     //(activity as CustomerHomeActivity).mModel.updateMenuList(menuList)
                 }
 
-            }
-            else{
-                AppGlobal.showDialog(getString(R.string.title_alert),it.data[0].error,requireContext())
+            } else {
+                AppGlobal.showDialog(
+                    getString(R.string.title_alert),
+                    it.data[0].error,
+                    requireContext()
+                )
             }
         })
     }
 
-    private fun getRestaurantDeals(){
+    private fun getRestaurantDeals() {
         progressDialog.setLabel("Please Wait")
         progressDialog.show()
         viewModel.getRestaurantDealsResponse(restaurantId).observe(requireActivity(), {
             progressDialog.dismiss()
-            if (it.message=="Success")
-            {
-                dealsList= arrayListOf()
-                dealsList=it.data
-                if (dealsList.size>0){
+            if (it.message == "Success") {
+                dealsList = arrayListOf()
+                dealsList = it.data
+                if (dealsList.size > 0) {
 
-                   if (dealsList[0].DealID!=null){
-                       menuList= arrayListOf()
-                       for (index in 0 until dealsList.size){
-                           menuList.add(
-                               Menu(""
-                                   ,dealsList[index].DealID
-                                   ,dealsList[index].DealName
-                                   ,dealsList[index].DealPrice,
-                                   arrayListOf(),(0).toFloat()
-                                   ,dealsList[index].RestaurantID
-                                   ,true
-                                   ,dealsList[index].Description
-                                   ,dealsList[index].DealPrice
-                                   ,dealsList[index].Image
-                                   ,0
-                                   ,dealsList[index].Variant
-                                   , isVariant = false
-                                   , isDeal = true
-                               ))
-                       }
-                   }
+                    if (dealsList[0].DealID != null) {
+                        menuList = arrayListOf()
+                        for (index in 0 until dealsList.size) {
+                            menuList.add(
+                                Menu(
+                                    "",
+                                    dealsList[index].DealID,
+                                    dealsList[index].DealName,
+                                    dealsList[index].DealPrice,
+                                    arrayListOf(),
+                                    (0).toFloat(),
+                                    dealsList[index].RestaurantID,
+                                    true,
+                                    dealsList[index].Description,
+                                    dealsList[index].DealPrice,
+                                    dealsList[index].Image,
+                                    0,
+                                    dealsList[index].Variant,
+                                    isVariant = false,
+                                    isDeal = true
+                                )
+                            )
+                        }
+                    }
 
                     getRestaurantDetail()
 
-                }
-                else{
-                    menuList= arrayListOf()
+                } else {
+                    menuList = arrayListOf()
                     getRestaurantDeals()
                 }
 
-            }
-            else{
-                AppGlobal.showDialog(getString(R.string.title_alert),"No Deal Found",requireContext())
+            } else {
+                AppGlobal.showDialog(
+                    getString(R.string.title_alert),
+                    "No Deal Found",
+                    requireContext()
+                )
             }
         })
     }
 
     @SuppressLint("SetTextI18n")
     private fun setViews() {
-        val mProfile=restaurantDetailResponse.data.profile[0]
-        mBinding.txtRestaurantNameFrd.text=mProfile.RestaurantName
-        mBinding.txtRestaurantRatingFrd.text=mProfile.Rating.toString()
-        mBinding.rbRatingFrd.rating=mProfile.Rating.toFloat()
-        mBinding.rbRatingFrd.numStars=5
-        mBinding.txtTotalRestaurantRatingFrd.text="(${mProfile.RatingCount})"
-        mBinding.txtDistanceFrd.text="${mProfile.Address}, ${mProfile.City}."
-        AppGlobal.loadImageIntoGlide(mProfile.Image,mBinding.imgRestaurantFrd,requireActivity())
+        val mProfile = restaurantDetailResponse.data.profile[0]
+        mBinding.txtRestaurantNameFrd.text = mProfile.RestaurantName
+        mBinding.txtRestaurantRatingFrd.text = mProfile.Rating.toString()
+        mBinding.rbRatingFrd.rating = mProfile.Rating.toFloat()
+        mBinding.rbRatingFrd.numStars = 5
+        mBinding.txtTotalRestaurantRatingFrd.text = "(${mProfile.RatingCount})"
+        mBinding.txtDistanceFrd.text = "${mProfile.Address}, ${mProfile.City}."
+        AppGlobal.loadImageIntoGlide(mProfile.Image, mBinding.imgRestaurantFrd, requireActivity())
         (requireActivity() as CustomerHomeActivity).mModel.updateSalesTax(mProfile.SalesTax.toDouble())
-        val deliveryCharges=if (mProfile.Delivery.size>0){
+        val deliveryCharges = if (mProfile.Delivery.size > 0) {
             mProfile.Delivery[0].DeliveryCharges.toDouble()
-        }
-        else{
+        } else {
             0.0
         }
         (requireActivity() as CustomerHomeActivity).mModel.updateServiceCharges(deliveryCharges)
@@ -389,7 +433,6 @@ class RestaurantDetailFragment : Fragment() ,TabsAdapter.ViewClickListener,View.
     override fun onViewClicked(updatedMenuList: ArrayList<Menu>) {
         (requireActivity() as CustomerHomeActivity).mModel.updateMenuList(updatedMenuList)
     }
-
 
 
 }
