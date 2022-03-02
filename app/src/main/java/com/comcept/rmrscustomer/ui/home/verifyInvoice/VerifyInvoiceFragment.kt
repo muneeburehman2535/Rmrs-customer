@@ -85,7 +85,7 @@ class VerifyInvoiceFragment : Fragment(), View.OnClickListener {
     private fun verifyInvoiceResult(verifyInvoice: VerifyInvoice) {
         progressDialog.setLabel("Please Wait")
         progressDialog.show()
-        viewModel.verifyInvoiceResponse(verifyInvoice).observe(requireActivity(), {
+        viewModel.verifyInvoiceResponse(verifyInvoice).observe(requireActivity(), { it ->
             progressDialog.dismiss()
             if (it != null && it.message == "Success") {
 //                AppGlobal.showDialog(
@@ -94,28 +94,36 @@ class VerifyInvoiceFragment : Fragment(), View.OnClickListener {
 //                    requireActivity()
 //                )
 
-                mbinding.restaurantNameTxt.text = it.data.RestaurantName
-                mbinding.InvoiceIdTxt.text = it.data.InvoiceID
-                mbinding.dateTxt.text = it.data.InvoiceCreated
-                mbinding.servicesChargesTxt.text = it.data.ServiceCharges.toString()
-                mbinding.totalEnTxt.text = it.data.SubTotal.toString()
-                mbinding.saleTaxTxt.text = it.data.SalesTax.toString()
-                mbinding.totalInTxt.text = it.data.TotalAmount.toString()
 
-                val discount =
-                    ((it.data.Discount?.AmountBeforeDiscount)?.times((it.data.Discount?.DiscountPercentage!!))
-                        ?.div(100))?.toDouble()
-                mbinding.discountTxt.text = discount.toString()
-                mbinding.discountTotalTxt.text = it.data.Discount?.AmountAfterDiscount.toString()
+                it.data?.let {
+                    mbinding.restaurantNameTxt.text = it.RestaurantName
+                    mbinding.InvoiceIdTxt.text = it.InvoiceID
+                    mbinding.dateTxt.text = it.InvoiceCreated
+                    mbinding.servicesChargesTxt.text = it.ServiceCharges.toString()
+                    mbinding.totalEnTxt.text = it.SubTotal.toString()
+                    mbinding.saleTaxTxt.text = it.SalesTax.toString()
+                    mbinding.totalInTxt.text = it.TotalAmount.toString()
 
-                mbinding.edtxtResturantId.text?.clear()
-                mbinding.edtxtInvoiceId.text?.clear()
+                    val discount =
+                        ((it.Discount?.AmountBeforeDiscount)?.times((it.Discount?.DiscountPercentage!!))
+                            ?.div(100))?.toDouble()
+                    mbinding.discountTxt.text = discount.toString()
+                    mbinding.discountTotalTxt.text = it.Discount?.AmountAfterDiscount.toString()
+
+                    mbinding.edtxtResturantId.text?.clear()
+                    mbinding.edtxtInvoiceId.text?.clear()
+                }
+
             } else {
-                AppGlobal.showDialog(
-                    getString(R.string.title_alert),
-                    it.message,
-                    requireActivity()
-                )
+
+
+                it.message?.let { it1 ->
+                    AppGlobal.showDialog(
+                        getString(R.string.title_alert),
+                        it1,
+                        requireActivity()
+                    )
+                }
             }
         })
     }

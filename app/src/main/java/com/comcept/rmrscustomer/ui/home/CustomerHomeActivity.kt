@@ -736,7 +736,7 @@ class CustomerHomeActivity : AppCompatActivity(), NavigationView.OnNavigationIte
                 setToolbarTitle(
                     "Verify Invoice",
                     VerifyInvoiceFragment(),
-                    true,
+                    false,
                     View.GONE,
                     false,
                     isMenuVisibility = false
@@ -810,4 +810,30 @@ class CustomerHomeActivity : AppCompatActivity(), NavigationView.OnNavigationIte
             }
         })
     }
+
+
+    override fun onBackPressed() {
+
+        if (supportFragmentManager.backStackEntryCount == 0) {
+            val builder = AlertDialog.Builder(this)
+            builder.setMessage("Are you sure you want to exit?")
+                .setCancelable(false)
+                .setPositiveButton(
+                    "Yes"
+                ) { _, _ -> super.onBackPressed() }
+                .setNegativeButton(
+                    "No"
+                ) { dialog, _ -> dialog.cancel() }
+            val alert = builder.create()
+            alert.show()
+
+        } else {
+
+            super.onBackPressed()
+
+        }
+
+    }
+
+
 }
