@@ -12,6 +12,9 @@ import com.comcept.rmrscustomer.data_class.verifyInvoice.VerifyInvoice
 import com.comcept.rmrscustomer.databinding.FragmentVerifyInvoiceBinding
 import com.comcept.rmrscustomer.utilities.AppGlobal
 import com.kaopiz.kprogresshud.KProgressHUD
+import java.text.ParseException
+import java.text.SimpleDateFormat
+import java.util.*
 
 class VerifyInvoiceFragment : Fragment(), View.OnClickListener {
     private lateinit var viewModel: VerifyInvoiceViewModel
@@ -98,7 +101,13 @@ class VerifyInvoiceFragment : Fragment(), View.OnClickListener {
                 it.data?.let {
                     mbinding.restaurantNameTxt.text = it.RestaurantName
                     mbinding.InvoiceIdTxt.text = it.InvoiceID
-                    mbinding.dateTxt.text = it.InvoiceCreated
+
+
+                    val dateArr = it.InvoiceCreated!!.split("T")
+
+                    mbinding.dateTxt.text = dateArr[0]
+
+
                     mbinding.servicesChargesTxt.text = it.ServiceCharges.toString()
                     mbinding.totalEnTxt.text = it.SubTotal.toString()
                     mbinding.saleTaxTxt.text = it.SalesTax.toString()

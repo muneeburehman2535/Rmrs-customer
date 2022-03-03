@@ -25,8 +25,7 @@
             android:text="Invoice ID"
             app:layout_constraintBottom_toBottomOf="@+id/invoiveid"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/invoiveid"
-            />
+            app:layout_constraintTop_toTopOf="@+id/invoiveid" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/invoiveid"
@@ -35,23 +34,23 @@
             android:layout_marginStart="@dimen/margin_xxl"
             android:layout_marginTop="@dimen/margin_xl"
             android:layout_marginEnd="@dimen/margin_xxl"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:background="@drawable/border_button_background"
 
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/invoicetxt"
             app:layout_constraintTop_toTopOf="parent"
-android:background="@drawable/border_button_background"
             tools:ignore="MissingConstraints">
 
             <EditText
                 android:id="@+id/edtxt_invoice_id"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="@color/transparent"
                 android:drawablePadding="16dp"
-android:background="@color/transparent"
-                android:paddingStart="15dp"
-
                 android:inputType="textEmailAddress"
+
                 android:maxLines="1"
+                android:paddingStart="15dp"
                 android:textAppearance="?android:textAppearanceMedium"
                 android:textSize="16sp" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -74,18 +73,18 @@ android:background="@color/transparent"
             android:layout_marginStart="@dimen/margin_xxl"
             android:layout_marginTop="@dimen/margin_xl"
             android:layout_marginEnd="@dimen/margin_xxl"
+            android:background="@drawable/border_button_background"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/resturant_txt"
             app:layout_constraintTop_toBottomOf="@+id/invoiveid"
-            tools:ignore="MissingConstraints"
-            android:background="@drawable/border_button_background">
+            tools:ignore="MissingConstraints">
 
             <EditText
                 android:id="@+id/edtxt_resturant_id"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="@color/transparent"
                 android:drawablePadding="16dp"
-android:background="@color/transparent"
                 android:inputType="textEmailAddress"
                 android:maxLines="1"
                 android:paddingStart="15dp"
@@ -333,7 +332,6 @@ android:background="@color/transparent"
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
                 >
 
                 <TextView
@@ -364,7 +362,7 @@ android:background="@color/transparent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/montserrat_bold"
-                    android:text="Discounted Totalm :"
+                    android:text="Discounted Total :"
                     android:textColor="@color/black" />
 
                 <TextView
