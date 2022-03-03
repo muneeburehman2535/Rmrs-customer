@@ -162,9 +162,15 @@ class CartFragment : Fragment(), View.OnClickListener, CartItemAdapter.UpdateIte
         for (index in 0 until cartList.size) {
 
             mItemTotalAmount =
-                (mItemTotalAmount.toDouble() + (cartList[index].original_price.toDouble() * cartList[index].quantity.toDouble())).toString()
+                (mItemTotalAmount.toDouble() + (cartList[index].quantity?.let {
+                    cartList[index].original_price?.toDouble()
+                        ?.times(it.toDouble())
+                }!!)).toString()
             mDiscountTotal =
-                (mDiscountTotal.toDouble() + (cartList[index].item_price.toDouble() * cartList[index].quantity.toDouble())).toString()
+                (mDiscountTotal.toDouble() + (cartList[index].quantity?.let {
+                    cartList[index].item_price?.toDouble()
+                        ?.times(it.toDouble())
+                }!!)).toString()
 
         }
         mTotalDiscountedAmount = if (mItemTotalAmount.toDouble() > mDiscountTotal.toDouble()) {
@@ -230,7 +236,7 @@ class CartFragment : Fragment(), View.OnClickListener, CartItemAdapter.UpdateIte
                 variant.ItemPrice = (0.0).toFloat()
                 variant.Quantity = 0
                 variant.DiscountPrice = 0
-                variant.VariantID = cartList[index].variant_id
+                variant.VariantID = cartList[index].variant_id.toString()
             }
 //            if (!cartList[index].is_variant.toBoolean()){
 //                variant.VariantID=""
@@ -238,41 +244,61 @@ class CartFragment : Fragment(), View.OnClickListener, CartItemAdapter.UpdateIte
 
             val isDeal = cartList[index].is_deal == 1
 
-            val menuOrdered = MenuOrdered(
-                cartList[index].menu_id,
-                cartList[index].item_name,
-                cartList[index].item_price, cartList[index].quantity,
-                cartList[index].description,
-                variant, cartList[index].is_variant.toBoolean(),
-                isDeal,
-                false
-            )
-            menuOrdered.Variant.Quantity = cartList[index].quantity.toInt()
-            menuOrderedList.add(menuOrdered)
+            val menuOrdered = cartList[index].menu_id?.let {
+                cartList[index].item_name?.let { it1 ->
+                    cartList[index].item_price?.let { it2 ->
+                        cartList[index].quantity?.let { it3 ->
+                            cartList[index].description?.let { it4 ->
+                                MenuOrdered(
+                                    it,
+                                    it1,
+                                    it2, it3,
+                                    it4,
+                                    variant, cartList[index].is_variant.toBoolean(),
+                                    isDeal,
+                                    false
+                                )
+                            }
+                        }
+                    }
+                }
+            }
+            if (menuOrdered != null) {
+                menuOrdered.Variant.Quantity = cartList[index].quantity?.toInt() ?: 0
+            }
+            if (menuOrdered != null) {
+                menuOrderedList.add(menuOrdered)
+            }
 
         }
-        val mCheckout = Checkout(
-            cartList[0].restaurant_id,
-            cartList[0].restaurant_name,
-            true,
-            AppGlobal.readString(requireActivity(), AppGlobal.customerId, ""),
-            AppGlobal.readString(requireActivity(), AppGlobal.customerName, ""),
-            mTotalAmount.toFloat(),
-            mSalesTaxAmount.toFloat(),
-            "New_Order",
-            menuOrderedList,
-            Delivery(),
-            ownerId,
-            mDiscountTotal.toFloat(),
-            mServicesCharges.toFloat(),
-            "",
-            "",
-            "",
-            "",
-            AppGlobal.readString(requireActivity(), AppGlobal.customerMobile, "0")
-        )
+        val mCheckout = cartList[0].restaurant_id?.let {
+            cartList[0].restaurant_name?.let { it1 ->
+                Checkout(
+                    it,
+                    it1,
+                    true,
+                    AppGlobal.readString(requireActivity(), AppGlobal.customerId, ""),
+                    AppGlobal.readString(requireActivity(), AppGlobal.customerName, ""),
+                    mTotalAmount.toFloat(),
+                    mSalesTaxAmount.toFloat(),
+                    "New_Order",
+                    menuOrderedList,
+                    Delivery(),
+                    ownerId,
+                    mDiscountTotal.toFloat(),
+                    mServicesCharges.toFloat(),
+                    "",
+                    "",
+                    "",
+                    "",
+                    AppGlobal.readString(requireActivity(), AppGlobal.customerMobile, "0")
+                )
+            }
+        }
         Timber.d("Checkout data: ${Gson().toJson(mCheckout)}")
-        (activity as CustomerHomeActivity).mModel.updateCheckout(mCheckout)
+        if (mCheckout != null) {
+            (activity as CustomerHomeActivity).mModel.updateCheckout(mCheckout)
+        }
         redirectCheckout()
     }
 

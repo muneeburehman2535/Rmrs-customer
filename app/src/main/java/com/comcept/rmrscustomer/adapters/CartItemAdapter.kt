@@ -51,7 +51,7 @@ class CartItemAdapter(requireContext: Context, private var cartList:ArrayList<Ca
         holder.bind(cartList[position])
 //        holder.txtItemName.text=cartList[position].item_name
 //        holder.txtItemDesc.text=cartList[position].item_desc
-        holder.binding.txtItemPriceLcic.text=AppGlobal.mCurrency+AppGlobal.roundTwoPlaces(cartList[position].item_price.toDouble())
+        holder.binding.txtItemPriceLcic.text=AppGlobal.mCurrency+AppGlobal.roundTwoPlaces(cartList[position].item_price?.toDouble())
         holder.binding.txtQuantityLcic.text=cartList[position].quantity
         if (cartList[position].is_variant.toBoolean())
         {
@@ -64,10 +64,12 @@ class CartItemAdapter(requireContext: Context, private var cartList:ArrayList<Ca
 
 
         holder.binding.txtMinusLcic.setOnClickListener(View.OnClickListener {
-            updateItemQuantityListener.onUpdateItemQuantityClick(cartList[position].quantity.toInt()-1,position)
+            updateItemQuantityListener.onUpdateItemQuantityClick(cartList[position].quantity?.toInt()
+                ?.minus(1),position)
         })
         holder.binding.txtPlusLcic.setOnClickListener(View.OnClickListener {
-            updateItemQuantityListener.onUpdateItemQuantityClick(cartList[position].quantity.toInt()+1,position)
+            updateItemQuantityListener.onUpdateItemQuantityClick(cartList[position].quantity?.toInt()
+                ?.plus(1),position)
 
         })
 
