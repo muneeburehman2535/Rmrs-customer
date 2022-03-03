@@ -1,24 +1,18 @@
 package com.comcept.rmrscustomer.ui.restauratntdetail
 
-import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.google.android.material.tabs.TabLayout
-import com.kaopiz.kprogresshud.KProgressHUD
+import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import com.comcept.rmrscustomer.R
 import com.comcept.rmrscustomer.adapters.TabsAdapter
 import com.comcept.rmrscustomer.data_class.restaurantdetail.Menu
@@ -32,9 +26,12 @@ import com.comcept.rmrscustomer.ui.review.restaurantreviews.ReviewsListFragment
 import com.comcept.rmrscustomer.utilities.AppGlobal
 import com.comcept.rmrscustomer.utilities.BlurBuilder
 import com.comcept.rmrscustomer.utilities.GPSTracker
+import com.google.android.material.tabs.TabLayout
 import com.google.gson.Gson
+import com.kaopiz.kprogresshud.KProgressHUD
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
+
 
 @AndroidEntryPoint
 class RestaurantDetailFragment : Fragment(), TabsAdapter.ViewClickListener, View.OnClickListener {
@@ -121,6 +118,10 @@ class RestaurantDetailFragment : Fragment(), TabsAdapter.ViewClickListener, View
             isProfileMenuVisible = false,
             locationVisibility = false, isMenuVisibility = true
         )
+
+
+
+
         (requireActivity() as CustomerHomeActivity).infoMenu.isVisible = true
     }
 
@@ -166,6 +167,12 @@ class RestaurantDetailFragment : Fragment(), TabsAdapter.ViewClickListener, View
                 mBinding.layoutTabRdf
             )
         )
+
+
+
+
+
+
         mBinding.layoutTabRdf.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 mBinding.viewpagerRdf.currentItem = tab.position
@@ -286,6 +293,8 @@ class RestaurantDetailFragment : Fragment(), TabsAdapter.ViewClickListener, View
                     menuList.add(menu)
                 }
 
+
+
                 Timber.d("menu list: ${Gson().toJson(menuList)}")
 
                 if (menuList.size > 0) {
@@ -314,6 +323,13 @@ class RestaurantDetailFragment : Fragment(), TabsAdapter.ViewClickListener, View
                     )
                     restaurantDetailResponse = it
                     setViews()
+
+                    val updatedMenuList = arrayListOf<Menu>()
+
+                    for (index in 0 until menuList.size) {
+                        updatedMenuList.add(menuList[index])
+                    }
+                    (activity as CustomerHomeActivity).mModel.updateMenuList(updatedMenuList)
                     //(activity as CustomerHomeActivity).mModel.updateMenuList(menuList)
                 }
 

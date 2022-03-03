@@ -25,12 +25,13 @@
             android:text="Invoice ID"
             app:layout_constraintBottom_toBottomOf="@+id/invoiveid"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@+id/invoiveid"
+            />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/invoiveid"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_marginStart="@dimen/margin_xxl"
             android:layout_marginTop="@dimen/margin_xl"
             android:layout_marginEnd="@dimen/margin_xxl"
@@ -38,7 +39,7 @@
 
             app:layout_constraintStart_toEndOf="@+id/invoicetxt"
             app:layout_constraintTop_toTopOf="parent"
-
+android:background="@drawable/border_button_background"
             tools:ignore="MissingConstraints">
 
             <EditText
@@ -46,6 +47,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:drawablePadding="16dp"
+android:background="@color/transparent"
+                android:paddingStart="15dp"
 
                 android:inputType="textEmailAddress"
                 android:maxLines="1"
@@ -67,23 +70,25 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/resturant_id"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_marginStart="@dimen/margin_xxl"
             android:layout_marginTop="@dimen/margin_xl"
             android:layout_marginEnd="@dimen/margin_xxl"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/resturant_txt"
             app:layout_constraintTop_toBottomOf="@+id/invoiveid"
-            tools:ignore="MissingConstraints">
+            tools:ignore="MissingConstraints"
+            android:background="@drawable/border_button_background">
 
             <EditText
                 android:id="@+id/edtxt_resturant_id"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:drawablePadding="16dp"
-
+android:background="@color/transparent"
                 android:inputType="textEmailAddress"
                 android:maxLines="1"
+                android:paddingStart="15dp"
                 android:textAppearance="?android:textAppearanceMedium"
                 android:textSize="16sp" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -125,13 +130,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/montserrat_bold"
-                    android:text="Restaurant:"
+                    android:text="Restaurant :"
                     android:textColor="@color/black" />
 
                 <TextView
                     android:id="@+id/restaurant_name_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
                     android:fontFamily="@font/montserrat_bold"
                     android:text=""
                     android:textColor="@color/button_background_color" />
@@ -147,15 +153,17 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/montserrat_bold"
-                    android:text="Invoice ID:"
+                    android:text="Invoice ID :"
                     android:textColor="@color/black" />
 
                 <TextView
                     android:id="@+id/Invoice_id_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
                     android:fontFamily="@font/montserrat_bold"
                     android:text=""
+
                     android:textColor="@color/button_background_color" />
             </LinearLayout>
         </LinearLayout>
@@ -181,15 +189,17 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/montserrat_bold"
-                    android:text="Date:"
+                    android:text="Date :"
                     android:textColor="@color/black" />
 
                 <TextView
                     android:id="@+id/date_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
                     android:fontFamily="@font/montserrat_bold"
                     android:text=""
+
                     android:textColor="@color/button_background_color" />
             </LinearLayout>
 
@@ -214,15 +224,17 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/montserrat_bold"
-                    android:text="Services Charges:"
+                    android:text="Services Charges :"
                     android:textColor="@color/black" />
 
                 <TextView
                     android:id="@+id/services_charges_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
                     android:fontFamily="@font/montserrat_bold"
                     android:text=""
+
                     android:textColor="@color/button_background_color" />
             </LinearLayout>
 
@@ -236,14 +248,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/montserrat_bold"
-                    android:text="Total(Tax exclusive value)"
+                    android:text="Total(Tax exclusive value) :"
                     android:textColor="@color/black" />
 
                 <TextView
                     android:id="@+id/total_en_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
                     android:fontFamily="@font/montserrat_bold"
+
                     android:text=""
                     android:textColor="@color/button_background_color" />
             </LinearLayout>
@@ -267,15 +281,17 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/montserrat_bold"
-                    android:text="Sale Tax:"
+                    android:text="Sale Tax :"
                     android:textColor="@color/black" />
 
                 <TextView
                     android:id="@+id/sale_tax_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
                     android:fontFamily="@font/montserrat_bold"
                     android:text=""
+
                     android:textColor="@color/button_background_color" />
             </LinearLayout>
 
@@ -289,15 +305,17 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/montserrat_bold"
-                    android:text="Total(Tax inclusive value)"
+                    android:text="Total(Tax inclusive value) :"
                     android:textColor="@color/black" />
 
                 <TextView
                     android:id="@+id/total_in_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
                     android:fontFamily="@font/montserrat_bold"
                     android:text=""
+
                     android:textColor="@color/button_background_color" />
             </LinearLayout>
         </LinearLayout>
@@ -322,15 +340,17 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/montserrat_bold"
-                    android:text="Discount:"
+                    android:text="Discount :"
                     android:textColor="@color/black" />
 
                 <TextView
                     android:id="@+id/discount_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
                     android:fontFamily="@font/montserrat_bold"
                     android:text=""
+
                     android:textColor="@color/button_background_color" />
             </LinearLayout>
 
@@ -344,15 +364,17 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/montserrat_bold"
-                    android:text="Discounted Total"
+                    android:text="Discounted Totalm :"
                     android:textColor="@color/black" />
 
                 <TextView
                     android:id="@+id/discount_total_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
                     android:fontFamily="@font/montserrat_bold"
                     android:text=""
+
                     android:textColor="@color/button_background_color" />
             </LinearLayout>
         </LinearLayout>

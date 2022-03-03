@@ -9,7 +9,7 @@ import com.comcept.rmrscustomer.data_class.restaurantdetail.restaurantdetail.Cat
 import com.comcept.rmrscustomer.ui.restauratntdetail.menudetail.MenuDetailFragment
 
 
-class TabsAdapter(manager: FragmentManager, var context: Activity, var totalTabs: Int, private val menuList: ArrayList<Menu>,private val menuCategoryList:ArrayList<CategoryData>,private val tabList: ArrayList<String>,private var isNem:Boolean) : FragmentPagerAdapter(manager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT)
+class TabsAdapter (manager: FragmentManager, var context: Activity, var totalTabs: Int, private val menuList: ArrayList<Menu>,private val menuCategoryList:ArrayList<CategoryData>,private val tabList: ArrayList<String>,private var isNem:Boolean) : FragmentPagerAdapter(manager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT)
 {
 
     var fragment: Fragment? = null
