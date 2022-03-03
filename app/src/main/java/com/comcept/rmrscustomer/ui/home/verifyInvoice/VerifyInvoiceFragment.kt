@@ -116,7 +116,6 @@ class VerifyInvoiceFragment : Fragment(), View.OnClickListener {
 
             } else {
 
-
                 it.message?.let { it1 ->
                     AppGlobal.showDialog(
                         getString(R.string.title_alert),
