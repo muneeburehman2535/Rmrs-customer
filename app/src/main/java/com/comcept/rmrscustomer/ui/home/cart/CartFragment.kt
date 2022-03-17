@@ -163,7 +163,7 @@ class CartFragment : Fragment(), View.OnClickListener, CartItemAdapter.UpdateIte
 
             mItemTotalAmount =
                 (mItemTotalAmount.toDouble() + (cartList[index].quantity?.let {
-                    cartList[index].original_price?.toDouble()
+                    cartList[index].item_price?.toDouble()
                         ?.times(it.toDouble())
                 }!!)).toString()
             mDiscountTotal =
