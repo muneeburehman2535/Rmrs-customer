@@ -798,6 +798,11 @@ class CustomerHomeActivity : AppCompatActivity(), NavigationView.OnNavigationIte
     }
 
     fun getLuckyDrawPoints(customerID: String) {
+        if (progressDialog.isShowing){
+
+            progressDialog.dismiss()
+
+        }
         progressDialog.setLabel("Please Wait")
         progressDialog.show()
 

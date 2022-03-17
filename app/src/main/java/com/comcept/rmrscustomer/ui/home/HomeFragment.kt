@@ -428,6 +428,12 @@ class HomeFragment : Fragment(), View.OnClickListener, RestaurantAdapter.AddToFa
    * Get Categories API Method
    * */
     private fun getCategoriesList() {
+
+        if (progressDialog.isShowing){
+
+            progressDialog.dismiss()
+
+        }
         progressDialog.setLabel("Please Wait")
         progressDialog.show()
         activity?.let {
@@ -474,7 +480,11 @@ class HomeFragment : Fragment(), View.OnClickListener, RestaurantAdapter.AddToFa
 
 //        val longitude = 71.461624
 //        val latitude = 33.994957
+        if (progressDialog.isShowing){
 
+            progressDialog.dismiss()
+
+        }
         progressDialog.setLabel("Please Wait")
         progressDialog.show()
         homeViewModel.getRestaurantsResponse(categoryID, Latitude, Longitude)
