@@ -45,6 +45,7 @@ import com.comcept.rmrscustomer.data_class.cart.Cart
 import com.comcept.rmrscustomer.data_class.fcm.FcmNotification
 import com.comcept.rmrscustomer.databinding.ActivityCustomerHomeBinding
 import com.comcept.rmrscustomer.db.CustomerDatabase
+import com.comcept.rmrscustomer.repository.Response
 import com.comcept.rmrscustomer.shared_view_models.SharedViewModel
 import com.comcept.rmrscustomer.ui.home.cart.CartFragment
 import com.comcept.rmrscustomer.ui.home.favourite.FavouriteFragment
@@ -785,15 +786,44 @@ class CustomerHomeActivity : AppCompatActivity(), NavigationView.OnNavigationIte
    * Get Categories API Method
    * */
     private fun updateFcmToken(fcmNotification: FcmNotification) {
-        progressDialog.setLabel("Please Wait")
-        progressDialog.show()
+
 
         mViewModel.updateFcmTokenResponse(fcmNotification).observe(this, {
-            progressDialog.dismiss()
-            if (it != null && it.Message == "Success") {
-                Timber.d("Updated Token: ${it.data.result.Token}")
+
+
+            when(it){
+
+                is Response.Loading ->{
+                    progressDialog.setLabel("Please Wait")
+                    progressDialog.show()
+
+                }
+
+                is Response.Success ->{
+
+
+                    it.data?.let {
+
+                        progressDialog.dismiss()
+                        if (it != null && it.Message == "Success") {
+                            Timber.d("Updated Token: ${it.data.result.Token}")
+
+                        }
+                    }
+
+                }
+
+                is Response.Error ->{
+
+
+                    progressDialog.dismiss()
+                }
+
 
             }
+
+
+
         })
     }
 
@@ -803,16 +833,44 @@ class CustomerHomeActivity : AppCompatActivity(), NavigationView.OnNavigationIte
             progressDialog.dismiss()
 
         }
-        progressDialog.setLabel("Please Wait")
-        progressDialog.show()
+
 
         mViewModel.getLuckyDrawPointsResponse(customerID).observe(this, {
-            progressDialog.dismiss()
-            if (it != null && it.Message == "Success") {
-                Timber.d("Updated Token: ${it.data.LuckyDrawPoints}")
-                txtLuckyDrawPoints.text =
-                    "${getString(R.string.title_lucky_points)} ${AppGlobal.roundTwoPlaces(it.data.LuckyDrawPoints.toDouble())} "
+
+
+            when(it){
+
+
+                is Response.Loading ->{
+                    progressDialog.setLabel("Please Wait")
+                    progressDialog.show()
+                }
+
+
+                is Response.Success ->{
+
+
+                   it.data?.let {
+
+                       progressDialog.dismiss()
+                       if (it != null && it.Message == "Success") {
+                           Timber.d("Updated Token: ${it.data.LuckyDrawPoints}")
+                           txtLuckyDrawPoints.text =
+                               "${getString(R.string.title_lucky_points)} ${AppGlobal.roundTwoPlaces(it.data.LuckyDrawPoints.toDouble())} "
+                       }
+
+                   }
+
+                }
+
+                is Response.Error ->{
+
+                    progressDialog.dismiss()
+
+                }
+
             }
+
         })
     }
 

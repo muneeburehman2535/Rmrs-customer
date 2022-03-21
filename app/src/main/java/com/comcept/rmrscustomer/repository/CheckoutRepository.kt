@@ -16,11 +16,13 @@ import timber.log.Timber
 
 class CheckoutRepository {
 
-    private lateinit var checkoutResponseLiveData: MutableLiveData<CheckoutResponse>
+    private lateinit var checkoutResponseLiveData: MutableLiveData<com.comcept.rmrscustomer.repository.Response<CheckoutResponse>>
 
-    fun getCheckoutResponseLiveData(checkout:Checkout): LiveData<CheckoutResponse> {
-        checkoutResponseLiveData=MutableLiveData<CheckoutResponse>()
+    fun getCheckoutResponseLiveData(checkout:Checkout): LiveData<com.comcept.rmrscustomer.repository.Response<CheckoutResponse>> {
+        checkoutResponseLiveData=MutableLiveData<com.comcept.rmrscustomer.repository.Response<CheckoutResponse>>()
         Timber.d("Checkout API: ${Gson().toJson(checkout)}")
+
+        checkoutResponseLiveData.postValue(com.comcept.rmrscustomer.repository.Response.Loading())
         RetrofitClass.getHomeInstance()?.getHomeRequestsInstance()?.checkoutUser(checkout)?.enqueue(object : Callback<ResponseBody?> {
             override fun onResponse(call: Call<ResponseBody?>, response: Response<ResponseBody?>) {
                 var restaurantsResponse: CheckoutResponse?=null
@@ -33,11 +35,15 @@ class CheckoutRepository {
 
                 }
                 Timber.d(Gson().toJson(restaurantsResponse).toString())
-                checkoutResponseLiveData.postValue(restaurantsResponse)
+                checkoutResponseLiveData.postValue(com.comcept.rmrscustomer.repository.Response.Success(restaurantsResponse))
             }
 
             override fun onFailure(call: Call<ResponseBody?>, t: Throwable) {
                 Timber.e("Error: ${t.message.toString()}")
+
+                checkoutResponseLiveData.postValue(com.comcept.rmrscustomer.repository.Response.Error(t.message.toString()))
+
+
             }
         })
         return checkoutResponseLiveData

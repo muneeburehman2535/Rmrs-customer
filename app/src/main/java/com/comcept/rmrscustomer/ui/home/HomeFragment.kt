@@ -26,6 +26,7 @@ import com.comcept.rmrscustomer.data_class.home.restaurants.Restaurants
 import com.comcept.rmrscustomer.databinding.FragmentHomeBinding
 import com.comcept.rmrscustomer.db.CustomerDatabase
 import com.comcept.rmrscustomer.db.dataclass.Favourite
+import com.comcept.rmrscustomer.repository.Response
 import com.comcept.rmrscustomer.ui.restauratntdetail.RestaurantDetailFragment
 import com.comcept.rmrscustomer.ui.search.filter_search.FilterSearchFragment
 import com.comcept.rmrscustomer.ui.search.simple_search.SimpleSearchFragment
@@ -429,47 +430,68 @@ class HomeFragment : Fragment(), View.OnClickListener, RestaurantAdapter.AddToFa
    * */
     private fun getCategoriesList() {
 
-        if (progressDialog.isShowing){
+//        if (progressDialog.isShowing){
+//
+//            progressDialog.dismiss()
+//
+//        }
 
-            progressDialog.dismiss()
-
-        }
-        progressDialog.setLabel("Please Wait")
-        progressDialog.show()
-        activity?.let {
-            homeViewModel.getCategoryResponse().observe(it, {
-                //progressDialog.dismiss()
-
-                if (it != null && it.Message == "Success") {
-                    categoriesList = it.data.categories
-                    if (categoriesList.size > 0) {
+        homeViewModel.getCategoryResponse().observe(requireActivity(), {
 
 
-                        categoriesList[0].isClicked = true
+            when (it) {
 
-                        categoryAdapter.updateCategoryList(categoriesList)
-                        if (categoriesList.size > 0) {
+                is Response.Loading -> {
 
-                            getRestaurantsList(
-                                categoriesList[0].CategoryID,
-                                mLatitude!!,
-                                mLongitude!!
+                    progressDialog.setLabel("Please Wait")
+                    progressDialog.show()
+                }
+
+                is Response.Success -> {
+
+                    it.data?.let {
+                        if (it != null && it.Message == "Success") {
+                            categoriesList = it.data.categories
+                            if (categoriesList.size > 0) {
+
+
+                                categoriesList[0].isClicked = true
+
+                                categoryAdapter.updateCategoryList(categoriesList)
+                                if (categoriesList.size > 0) {
+
+                                    getRestaurantsList(
+                                        categoriesList[0].CategoryID,
+                                        mLatitude!!,
+                                        mLongitude!!
+                                    )
+
+                                }
+                            } else {
+                                progressDialog.dismiss()
+                            }
+
+                        } else {
+                            AppGlobal.showDialog(
+                                getString(R.string.title_alert),
+                                it.data.description,
+                                requireContext()
                             )
-
                         }
-                    } else {
-                        progressDialog.dismiss()
                     }
 
-                } else {
+                }
+
+                is Response.Error -> {
                     AppGlobal.showDialog(
                         getString(R.string.title_alert),
-                        it.data.description,
+                        it.message.toString(),
                         requireContext()
                     )
                 }
-            })
-        }
+            }
+
+        })
     }
 
     /*
@@ -480,40 +502,75 @@ class HomeFragment : Fragment(), View.OnClickListener, RestaurantAdapter.AddToFa
 
 //        val longitude = 71.461624
 //        val latitude = 33.994957
-        if (progressDialog.isShowing){
+        if (progressDialog.isShowing) {
 
             progressDialog.dismiss()
 
         }
-        progressDialog.setLabel("Please Wait")
-        progressDialog.show()
+
+
         homeViewModel.getRestaurantsResponse(categoryID, Latitude, Longitude)
             .observe(requireActivity(), {
-                progressDialog.dismiss()
-                if (it.Message == "Success") {
 
 
-                    restaurantsList = it.data.restaurants
+                when (it) {
 
-                    if (restaurantsList.size > 0) {
-                        dealsList = it.data.deals
-                        checkRestaurantById()
-                        dealsAdapter.updateList(dealsList)
+                    is Response.Loading -> {
+
+                        progressDialog.setLabel("Please Wait")
+                        progressDialog.show()
+
                     }
 
-                } else {
-                    //AppGlobal.showDialog(getString(R.string.title_alert), it.data.description, requireContext())
-                    AppGlobal.showDialog(
-                        getString(R.string.title_alert),
-                        "Restaurant not found in this category ",
-                        requireContext()
-                    )
-                    restaurantsList.clear()
-                    dealsList.clear()
-                    restaurantsAdapter.updateRestaurantsList(restaurantsList)
-                    dealsAdapter.updateList(dealsList)
+                    is Response.Success -> {
+
+                        it.data?.let {
+                            progressDialog.dismiss()
+                            if (it.Message == "Success") {
+
+
+                                restaurantsList = it.data.restaurants
+
+                                if (restaurantsList.size > 0) {
+                                    dealsList = it.data.deals
+                                    checkRestaurantById()
+                                    dealsAdapter.updateList(dealsList)
+                                }
+
+                            } else {
+                                //AppGlobal.showDialog(getString(R.string.title_alert), it.data.description, requireContext())
+                                AppGlobal.showDialog(
+                                    getString(R.string.title_alert),
+                                    "Restaurant not found in this category ",
+                                    requireContext()
+                                )
+                                restaurantsList.clear()
+                                dealsList.clear()
+                                restaurantsAdapter.updateRestaurantsList(restaurantsList)
+                                dealsAdapter.updateList(dealsList)
+                            }
+                        }
+
+                    }
+
+
+                    is Response.Error -> {
+
+                        AppGlobal.showDialog(
+                            getString(R.string.title_alert),
+                            "Restaurant not found in this category ",
+                            requireContext()
+                        )
+
+
+                    }
+
+
                 }
+
             })
+
+
     }
 
 
