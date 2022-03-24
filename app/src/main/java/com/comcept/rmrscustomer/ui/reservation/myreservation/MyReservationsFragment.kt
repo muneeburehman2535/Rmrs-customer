@@ -16,6 +16,7 @@ import com.comcept.rmrscustomer.adapters.MyReservationsAdapter
 import com.comcept.rmrscustomer.adapters.PastOrdersAdapter
 import com.comcept.rmrscustomer.data_class.reservation.Result
 import com.comcept.rmrscustomer.databinding.MyReservationsFragmentBinding
+import com.comcept.rmrscustomer.repository.Response
 import com.comcept.rmrscustomer.utilities.AppGlobal
 
 class MyReservationsFragment : Fragment() {
@@ -94,60 +95,102 @@ class MyReservationsFragment : Fragment() {
 * Get My Reservation API Method
 * */
     private fun getMyReservationsList(customerId: String){
-        progressDialog.setLabel("Please Wait")
-        progressDialog.show()
+
         viewModel.getReviewListResponse(customerId).observe(requireActivity(), {
-            progressDialog.dismiss()
-            if (it!=null&&it.Message == "Success") {
-                reservationList=it.data.result
-                if (reservationList.size>0)
-                {
-                    mBinding.rvReservationFrag.visibility=View.VISIBLE
-                    mBinding.imgNotFoundFmr.visibility=View.GONE
-                    reservationList.reverse()
-                    myReservationsAdapter.updateReservationList(reservationList)
-                }
-                else{
-                    mBinding.rvReservationFrag.visibility=View.GONE
-                    mBinding.imgNotFoundFmr.visibility=View.VISIBLE
+
+
+            when(it){
+
+
+                is Response.Loading ->{
+                    progressDialog.setLabel("Please Wait")
+                    progressDialog.show()
                 }
 
 
-            } else {
-                mBinding.rvReservationFrag.visibility=View.GONE
-                mBinding.imgNotFoundFmr.visibility=View.VISIBLE
-//                AppGlobal.showDialog(
-//                    getString(R.string.title_alert),
-//                    it.data.description,
-//                    requireContext()
-//                )
+                is Response.Success ->{
+                    it.data?.let {
+                        progressDialog.dismiss()
+                        if (it!=null&&it.Message == "Success") {
+                            reservationList=it.data.result
+                            if (reservationList.size>0)
+                            {
+                                mBinding.rvReservationFrag.visibility=View.VISIBLE
+                                mBinding.imgNotFoundFmr.visibility=View.GONE
+                                reservationList.reverse()
+                                myReservationsAdapter.updateReservationList(reservationList)
+                            }
+                            else{
+                                mBinding.rvReservationFrag.visibility=View.GONE
+                                mBinding.imgNotFoundFmr.visibility=View.VISIBLE
+                            }
+
+
+                        } else {
+                            mBinding.rvReservationFrag.visibility=View.GONE
+                            mBinding.imgNotFoundFmr.visibility=View.VISIBLE
+
+                        }
+                    }
+                }
+
+                is Response.Error ->{
+
+                    progressDialog.dismiss()
+                }
+
             }
+
+
+
         })
     }
 
     private fun delayApiCall(customerId: String){
         viewModel.getReviewListResponse(customerId).observe(requireActivity(), {
-            progressDialog.dismiss()
-            if (it.Message == "Success") {
-                reservationList=it.data.result
-                if (reservationList.size>0)
-                {
-                    mBinding.rvReservationFrag.visibility=View.VISIBLE
-                    mBinding.imgNotFoundFmr.visibility=View.GONE
-                    reservationList.reverse()
-                    myReservationsAdapter.updateReservationList(reservationList)
-                }
-                else{
-                    mBinding.rvReservationFrag.visibility=View.GONE
-                    mBinding.imgNotFoundFmr.visibility=View.VISIBLE
-                }
 
 
-            } else {
-                mBinding.rvReservationFrag.visibility=View.GONE
-                mBinding.imgNotFoundFmr.visibility=View.VISIBLE
+            when(it){
+
+                is Response.Loading ->{
+
+                }
+
+                is Response.Success ->{
+
+                    it.data?.let {
+                        progressDialog.dismiss()
+                        if (it.Message == "Success") {
+                            reservationList=it.data.result
+                            if (reservationList.size>0)
+                            {
+                                mBinding.rvReservationFrag.visibility=View.VISIBLE
+                                mBinding.imgNotFoundFmr.visibility=View.GONE
+                                reservationList.reverse()
+                                myReservationsAdapter.updateReservationList(reservationList)
+                            }
+                            else{
+                                mBinding.rvReservationFrag.visibility=View.GONE
+                                mBinding.imgNotFoundFmr.visibility=View.VISIBLE
+                            }
+
+
+                        } else {
+                            mBinding.rvReservationFrag.visibility=View.GONE
+                            mBinding.imgNotFoundFmr.visibility=View.VISIBLE
+
+                        }
+
+                    }
+
+                }
+
+                is Response.Error ->{
+                    progressDialog.dismiss()
+                }
 
             }
+
         })
     }
 

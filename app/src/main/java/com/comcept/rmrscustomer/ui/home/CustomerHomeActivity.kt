@@ -849,50 +849,58 @@ class CustomerHomeActivity : AppCompatActivity(), NavigationView.OnNavigationIte
     }
 
     fun getLuckyDrawPoints(customerID: String) {
-        if (progressDialog.isShowing){
-
-            progressDialog.dismiss()
-
-        }
 
 
-        mViewModel.getLuckyDrawPointsResponse(customerID).observe(this, {
+        uiScope.launch {
 
-
-            when(it){
-
-
-                is Response.Loading ->{
-                    progressDialog.setLabel("Please Wait")
-                    progressDialog.show()
-                }
-
-
-                is Response.Success ->{
-
-
-                   it.data?.let {
-
-                       progressDialog.dismiss()
-                       if (it != null && it.Message == "Success") {
-                           Timber.d("Updated Token: ${it.data.LuckyDrawPoints}")
-                           txtLuckyDrawPoints.text =
-                               "${getString(R.string.title_lucky_points)} ${AppGlobal.roundTwoPlaces(it.data.LuckyDrawPoints.toDouble())} "
-                       }
-
-                   }
-
-                }
-
-                is Response.Error ->{
-
-                    progressDialog.dismiss()
-
-                }
+            if (progressDialog.isShowing){
+                progressDialog.dismiss()
 
             }
 
-        })
+
+            mViewModel.getLuckyDrawPointsResponse(customerID).observe(this@CustomerHomeActivity, {
+
+
+                when(it){
+
+
+                    is Response.Loading ->{
+                        progressDialog.setLabel("Please Wait")
+                        progressDialog.show()
+                    }
+
+
+                    is Response.Success ->{
+
+
+                        it.data?.let {
+
+                            progressDialog.dismiss()
+                            if (it != null && it.Message == "Success") {
+                                Timber.d("Updated Token: ${it.data.LuckyDrawPoints}")
+                                txtLuckyDrawPoints.text =
+                                    "${getString(R.string.title_lucky_points)} ${AppGlobal.roundTwoPlaces(it.data.LuckyDrawPoints.toDouble())} "
+                            }
+
+                        }
+
+                    }
+
+                    is Response.Error ->{
+
+                        progressDialog.dismiss()
+
+                    }
+
+                }
+
+            })
+        }
+
+
+
+
     }
 
 

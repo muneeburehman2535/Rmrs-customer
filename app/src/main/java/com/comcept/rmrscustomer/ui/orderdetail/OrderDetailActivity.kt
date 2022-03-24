@@ -13,6 +13,7 @@ import com.comcept.rmrscustomer.adapters.OrderDetailIItemsAdapter
 import com.comcept.rmrscustomer.data_class.checkout.MenuOrdered
 import com.comcept.rmrscustomer.data_class.checkout.checkout_response.Data
 import com.comcept.rmrscustomer.databinding.ActivityOrderDetailBinding
+import com.comcept.rmrscustomer.repository.Response
 import com.comcept.rmrscustomer.utilities.AppGlobal
 
 
@@ -90,25 +91,43 @@ class OrderDetailActivity : AppCompatActivity(),View.OnClickListener {
   * Get Restaurants Data API Method
   * */
     private fun getMyOrdersList(customerId: String, orderId: String){
-        progressDialog.setLabel("Please Wait")
-        progressDialog.show()
+
         mViewModel.getOrderDetailResponse(customerId, orderId).observe(this, {
-            progressDialog.dismiss()
-            if (it!=null){
-                if (it.Message == "Success") {
-                    menuOrderedList=it.data.MenuOrdered
-                    orderDetailIItemsAdapter.updateList(menuOrderedList)
 
-                    setViews(it.data)
+           when(it){
 
-                } else {
-                    AppGlobal.showDialog(
-                            getString(R.string.title_alert),
-                            it.data.description,
-                            this
-                    )
-                }
-            }
+               is Response.Loading ->{
+                   progressDialog.setLabel("Please Wait")
+                   progressDialog.show()
+               }
+
+               is Response.Success ->{
+
+                   it.data?.let {
+                       progressDialog.dismiss()
+                       if (it!=null){
+                           if (it.Message == "Success") {
+                               menuOrderedList=it.data.MenuOrdered
+                               orderDetailIItemsAdapter.updateList(menuOrderedList)
+
+                               setViews(it.data)
+
+                           } else {
+                               AppGlobal.showDialog(
+                                   getString(R.string.title_alert),
+                                   it.data.description,
+                                   this
+                               )
+                           }
+                       }
+
+                   }
+               }
+
+               is Response.Error ->{
+                   progressDialog.dismiss()
+               }
+           }
 
         })
     }

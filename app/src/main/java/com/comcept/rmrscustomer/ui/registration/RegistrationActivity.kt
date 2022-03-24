@@ -16,6 +16,7 @@ import com.comcept.rmrscustomer.data_class.send_otp.SendOTP
 import com.comcept.rmrscustomer.data_class.email_mobile.EmailMobileVerification
 import com.comcept.rmrscustomer.data_class.registration.Registration
 import com.comcept.rmrscustomer.databinding.ActivityRegistrationBinding
+import com.comcept.rmrscustomer.repository.Response
 import com.comcept.rmrscustomer.ui.otpverification.ConfirmOtpActivity
 import com.comcept.rmrscustomer.utilities.AppGlobal
 import timber.log.Timber
@@ -83,30 +84,50 @@ class RegistrationActivity : AppCompatActivity(),View.OnClickListener {
     * Verify email and mobile number API method
     * */
     private fun verifyEmailMobile(){
-        progressDialog.setLabel("Please Wait").show()
+
         val emailMobileVerification=EmailMobileVerification(mBinding.edtxtEmailAr.text.trim().toString(), mBinding.edtxtMobileAl.text.trim().toString())
         Timber.d(Gson().toJson(emailMobileVerification))
         mViewModel.getEmailMobileResponse(emailMobileVerification).observe(this, {
-           Timber.d("Message: ${it!!.Message}")
 
-            if (!it.data.Email&&!it.data.MobileNumber)
-            {
-                if (AppGlobal.isInternetAvailable(this))
-                {
-                    sendOTP()
+
+            when(it){
+
+
+                is Response.Loading ->{
+
+                    progressDialog.setLabel("Please Wait").show()
                 }
-                else{
-                    AppGlobal.snackBar(mBinding.layoutParentReg,getString(R.string.err_no_internet),AppGlobal.LONG)
+
+                is Response.Success ->{
+
+                    it.data?.let {
+
+                        Timber.d("Message: ${it!!.Message}")
+
+                        if (!it.data.Email&&!it.data.MobileNumber)
+                        {
+                            if (AppGlobal.isInternetAvailable(this))
+                            {
+                                sendOTP()
+                            }
+                            else{
+                                AppGlobal.snackBar(mBinding.layoutParentReg,getString(R.string.err_no_internet),AppGlobal.LONG)
+                            }
+                        }
+                        else {
+                            progressDialog.dismiss()
+                            AppGlobal.showDialog(getString(R.string.title_alert),it.data.description,this)
+                        }
+                    }
+
                 }
+
+
+                is Response.Error ->{
+                    progressDialog.dismiss()
+                }
+
             }
-            else {
-                progressDialog.dismiss()
-                AppGlobal.showDialog(getString(R.string.title_alert),it.data.description,this)
-            }
-//            if (it!=null)
-//            {
-//
-//            }
 
         })
     }
@@ -118,22 +139,47 @@ class RegistrationActivity : AppCompatActivity(),View.OnClickListener {
         val sendOtp=SendOTP(mBinding.edtxtEmailAr.text.trim().toString(), mBinding.edtxtMobileAl.text.trim().toString())
         Timber.d(Gson().toJson(sendOtp))
         mViewModel.getOTPResponse(sendOtp).observe(this, {
-            progressDialog.dismiss()
-            if (it?.data?.status == true)
-            {
-                startActivity(Intent(this, ConfirmOtpActivity::class.java).putExtra("registration",Registration(
-                    mBinding.edtxtNameAr.text.toString().trim(),
-                    mBinding.edtxtEmailAr.text.toString().trim(),
-                    mBinding.edtxtCnicAr.text.toString().trim(),
-                    mBinding.edtxtMobileAl.text.toString().trim(),
-                    mBinding.edtxtPhnAl.text.toString().trim(),
-                    mBinding.edtxtPasswordAl.text.toString().trim(),
-                    mBinding.edtxtAddressAl.text.toString().trim())))
-            }
-            else
-            {
-                AppGlobal.showDialog(getString(R.string.title_alert), it?.data?.description.toString(),this)
-            }
+
+
+           when(it){
+
+
+               is Response.Loading ->{
+
+               }
+
+
+               is Response.Success ->{
+
+                   it.data?.let {
+
+                       progressDialog.dismiss()
+                       if (it?.data?.status == true)
+                       {
+                           startActivity(Intent(this, ConfirmOtpActivity::class.java).putExtra("registration",Registration(
+                               mBinding.edtxtNameAr.text.toString().trim(),
+                               mBinding.edtxtEmailAr.text.toString().trim(),
+                               mBinding.edtxtCnicAr.text.toString().trim(),
+                               mBinding.edtxtMobileAl.text.toString().trim(),
+                               mBinding.edtxtPhnAl.text.toString().trim(),
+                               mBinding.edtxtPasswordAl.text.toString().trim(),
+                               mBinding.edtxtAddressAl.text.toString().trim())))
+                       }
+                       else
+                       {
+                           AppGlobal.showDialog(getString(R.string.title_alert), it?.data?.description.toString(),this)
+                       }
+
+                   }
+               }
+
+
+
+               is Response.Error ->{
+                   progressDialog.dismiss()
+               }
+
+           }
 
         })
     }

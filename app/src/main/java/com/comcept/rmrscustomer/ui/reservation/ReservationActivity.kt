@@ -18,6 +18,7 @@ import com.comcept.rmrscustomer.R
 import com.comcept.rmrscustomer.data_class.reservation.Reservation
 import com.comcept.rmrscustomer.data_class.review.Review
 import com.comcept.rmrscustomer.databinding.ActivityReservationBinding
+import com.comcept.rmrscustomer.repository.Response
 import com.comcept.rmrscustomer.utilities.AppGlobal
 import java.util.*
 
@@ -184,17 +185,35 @@ class ReservationActivity : AppCompatActivity(), View.OnClickListener, DatePicke
     * Reservation API Method
     * */
     private fun addRestaurantDetail(reservation: Reservation){
-        progressDialog.setLabel("Please Wait")
-        progressDialog.show()
+
         mViewModel.getReviewResponse(reservation).observe(this, {
-            progressDialog.dismiss()
-            if (it!=null&&it.Message=="Success")
-            {
-                AppGlobal.showDialogWithCloseActivity(getString(R.string.title_alert),it.data.description,this)
+
+            when(it){
+
+                is Response.Loading ->{
+                    progressDialog.setLabel("Please Wait")
+                    progressDialog.show()
+                }
+                is Response.Success ->{
+                    it.data?.let {
+                        progressDialog.dismiss()
+                        if (it!=null&&it.Message=="Success")
+                        {
+                            AppGlobal.showDialogWithCloseActivity(getString(R.string.title_alert),it.data.description,this)
+                        }
+                        else{
+                            AppGlobal.showDialog(getString(R.string.title_alert),it.data.description,this)
+                        }
+                    }
+
+
+                }
+
+                is Response.Error ->{
+                    progressDialog.dismiss()
+                }
             }
-            else{
-                AppGlobal.showDialog(getString(R.string.title_alert),it.data.description,this)
-            }
+
         })
     }
 }
