@@ -61,8 +61,11 @@ class HomeFragment : Fragment(), View.OnClickListener, RestaurantAdapter.AddToFa
 
     private var restaurantId: String = "0"
     private lateinit var mActivity: Activity
-    private var mLatitude: Double? = 33.6624748
-    private var mLongitude: Double? = 73.0560211
+    private var mLatitude: Double? = 0.00
+    private var mLongitude: Double? = 0.00
+
+//    private var mLatitude: Double? = 33.6624748
+//    private var mLongitude: Double? = 73.0560211
 
     val job = Job()
     private val uiScope = CoroutineScope(Dispatchers.Main + job)
@@ -257,10 +260,16 @@ class HomeFragment : Fragment(), View.OnClickListener, RestaurantAdapter.AddToFa
                             categoriesList[position].isClicked = true
                             categoryAdapter.updateCategoryList(categoriesList)
 
-                            getRestaurantsList(
-                                categoriesList[position].CategoryID,
-                                mLatitude!!, mLongitude!!
-                            )
+                            if(mLatitude!! <=0.00 && mLongitude!!<=0.00){
+                                AppGlobal.showToast("Please enable your location",requireActivity())
+                            }
+                            else{
+                                getRestaurantsList(
+                                    categoriesList[position].CategoryID,
+                                    mLatitude!!, mLongitude!!
+                                )
+                            }
+
                         }
 
                     }
@@ -470,11 +479,18 @@ class HomeFragment : Fragment(), View.OnClickListener, RestaurantAdapter.AddToFa
                                     categoryAdapter.updateCategoryList(categoriesList)
                                     if (categoriesList.size > 0) {
 
-                                        getRestaurantsList(
-                                            categoriesList[0].CategoryID,
-                                            mLatitude!!,
-                                            mLongitude!!
-                                        )
+                                        if(mLatitude!! <=0.00 && mLongitude!!<=0.00){
+                                            AppGlobal.showToast("Please enable your location",requireActivity())
+                                            progressDialog.dismiss()
+                                        }
+                                        else{
+                                            getRestaurantsList(
+                                                categoriesList[0].CategoryID,
+                                                mLatitude!!,
+                                                mLongitude!!
+                                            )
+                                        }
+
 
                                     }
                                 } else {

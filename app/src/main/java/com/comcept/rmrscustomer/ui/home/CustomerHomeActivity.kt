@@ -526,6 +526,7 @@ class CustomerHomeActivity : AppCompatActivity(), NavigationView.OnNavigationIte
                     pickLocation()
                 } else {
                     AppGlobal.showToast("Location Permission Denied.", applicationContext)
+                    AppGlobal.showDialog("Location Alert!","Please Enable Your Location for better Results",this)
 
                 }
             }
@@ -535,6 +536,7 @@ class CustomerHomeActivity : AppCompatActivity(), NavigationView.OnNavigationIte
                     getLocation()
                 } else {
                     AppGlobal.showToast("Location Permission Denied.", applicationContext)
+                    AppGlobal.showDialog("Location Alert!","Please Enable Your Location for better Results",this)
 
                 }
             }
