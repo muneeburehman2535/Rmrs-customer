@@ -23,6 +23,4 @@ data class  Checkout(
         var OrderType:String,
         val MobileNumber:String
 
-
-
 )
