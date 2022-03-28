@@ -8,6 +8,7 @@ import androidx.lifecycle.LiveData
 import com.comcept.rmrscustomer.data_class.login.Login
 import com.comcept.rmrscustomer.data_class.login.LoginResponse
 import com.comcept.rmrscustomer.repository.LoginRepository
+import com.comcept.rmrscustomer.repository.Response
 
 class LoginViewModel(application: Application):AndroidViewModel(application) {
     @SuppressLint("StaticFieldLeak")
@@ -15,7 +16,7 @@ class LoginViewModel(application: Application):AndroidViewModel(application) {
     private var loginRepository: LoginRepository = LoginRepository()
 
 
-    fun getLoginResponse(login:Login):LiveData<LoginResponse>{
+    fun getLoginResponse(login:Login):LiveData<Response<LoginResponse>>{
         return loginRepository.getLoginResponseLiveData(login)
     }
 }

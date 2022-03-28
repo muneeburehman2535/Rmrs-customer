@@ -16,10 +16,10 @@ class SearchRepository  {
 
     private lateinit var searchResponseLiveData: MutableLiveData<SearchResponse>
 
-    fun getSearchResponseLiveData(searchQuery: String): LiveData<SearchResponse> {
+    fun getSearchResponseLiveData(searchQuery: String,Latitude:Double,Longitude:Double): LiveData<SearchResponse> {
         searchResponseLiveData= MutableLiveData<SearchResponse>()
         //Timber.d("Checkout API: ${Gson().toJson(searchQuery)}")
-        RetrofitClass.getHomeInstance()?.getHomeRequestsInstance()?.getSearchList(searchQuery)?.enqueue(object :
+        RetrofitClass.getHomeInstance()?.getHomeRequestsInstance()?.getSearchList(searchQuery,Latitude,Longitude)?.enqueue(object :
             Callback<ResponseBody?> {
             override fun onResponse(call: Call<ResponseBody?>, response: Response<ResponseBody?>) {
                 var searchResponse: SearchResponse?=null

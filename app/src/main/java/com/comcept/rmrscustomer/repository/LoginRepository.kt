@@ -17,11 +17,14 @@ import timber.log.Timber
 
 class LoginRepository {
 
-    private lateinit var loginResponseLiveData: MutableLiveData<LoginResponse>
+    private lateinit var loginResponseLiveData: MutableLiveData<com.comcept.rmrscustomer.repository.Response<LoginResponse>>
     //private val retrofitClass:RetrofitClass= RetrofitClass().getHomeRequestsInstance()!!
 
-    fun getLoginResponseLiveData(login: Login):LiveData<LoginResponse> {
-        loginResponseLiveData=MutableLiveData<LoginResponse>()
+    fun getLoginResponseLiveData(login: Login):LiveData<com.comcept.rmrscustomer.repository.Response<LoginResponse>> {
+        loginResponseLiveData=MutableLiveData<com.comcept.rmrscustomer.repository.Response<LoginResponse>>()
+
+        loginResponseLiveData.postValue(com.comcept.rmrscustomer.repository.Response.Loading())
+
         RetrofitClass.getHomeInstance()?.getHomeRequestsInstance()?.login(login)?.enqueue(object : Callback<ResponseBody?> {
             override fun onResponse(call: Call<ResponseBody?>, response: Response<ResponseBody?>) {
                 var loginResponse: LoginResponse?=null
@@ -34,11 +37,13 @@ class LoginRepository {
 
                 }
                 Timber.d(Gson().toJson(loginResponse).toString())
-                loginResponseLiveData.postValue(loginResponse)
+                loginResponseLiveData.postValue(com.comcept.rmrscustomer.repository.Response.Success(loginResponse))
             }
 
             override fun onFailure(call: Call<ResponseBody?>, t: Throwable) {
                Timber.e("Error: ${t.message.toString()}")
+
+                loginResponseLiveData.postValue(com.comcept.rmrscustomer.repository.Response.Error(t.message.toString()))
             }
         })
         return loginResponseLiveData

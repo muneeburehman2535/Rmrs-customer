@@ -16,6 +16,7 @@ import com.comcept.rmrscustomer.R
 import com.comcept.rmrscustomer.data_class.login.Login
 import com.comcept.rmrscustomer.data_class.profile.Profile
 import com.comcept.rmrscustomer.databinding.ProfileFragmentBinding
+import com.comcept.rmrscustomer.repository.Response
 import com.comcept.rmrscustomer.ui.home.CustomerHomeActivity
 import com.comcept.rmrscustomer.utilities.AppGlobal
 
@@ -99,32 +100,61 @@ class ProfileFragment : Fragment(),View.OnClickListener {
     * Login API Method
     * */
     private fun updateUser(){
-        progressDialog.setLabel("Please Wait")
-        progressDialog.show()
+
         val profile= Profile(AppGlobal.readString(requireActivity(),AppGlobal.customerId,"0"),mBinding.txtNumberAp.text?.trim().toString(), mBinding.txtNameAp.text?.trim().toString())
         viewModel.updateProfileResponse(profile).observe(this, {
-            progressDialog.dismiss()
-            if (it!=null&&it.Message=="Success")
-            {
-                AppGlobal.writeString(requireActivity(),AppGlobal.customerName, it.data.result.Name)
-                AppGlobal.writeString(requireActivity(),AppGlobal.customerMobile,it.data.result.MobileNumber)
-                mBinding.btnUpdatePf.visibility=View.GONE
 
-                mBinding.txtNameAp.isEnabled=false
-                //mBinding.txtNameAp.requestFocus()
-                mBinding.txtNameAp.setBackgroundResource(0)
-                mBinding.txtNumberAp.isEnabled=false
-                mBinding.txtNumberAp.setBackgroundResource(0)
-                (requireActivity() as CustomerHomeActivity).editProfileMenu?.isVisible=true
+           when(it){
 
 
-                //AppGlobal.writeString(this,AppGlobal.customerId,"ai0anPGypI")
-                // AppGlobal.startNewActivity(this, CustomerHomeActivity::class.java)
-                //finishAffinity()
-            }
-            else{
-                AppGlobal.showDialog(getString(R.string.title_alert),it.data.description,requireActivity())
-            }
+               is Response.Loading ->{
+                   progressDialog.setLabel("Please Wait")
+                   progressDialog.show()
+               }
+
+
+               is Response.Success ->{
+
+                   it.data?.let {
+                       progressDialog.dismiss()
+                       if (it!=null&&it.Message=="Success")
+                       {
+                           AppGlobal.writeString(requireActivity(),AppGlobal.customerName, it.data.result.Name)
+                           AppGlobal.writeString(requireActivity(),AppGlobal.customerMobile,it.data.result.MobileNumber)
+                           mBinding.btnUpdatePf.visibility=View.GONE
+
+                           mBinding.txtNameAp.isEnabled=false
+                           //mBinding.txtNameAp.requestFocus()
+                           mBinding.txtNameAp.setBackgroundResource(0)
+                           mBinding.txtNumberAp.isEnabled=false
+                           mBinding.txtNumberAp.setBackgroundResource(0)
+                           (requireActivity() as CustomerHomeActivity).editProfileMenu?.isVisible=true
+
+
+                           //AppGlobal.writeString(this,AppGlobal.customerId,"ai0anPGypI")
+                           // AppGlobal.startNewActivity(this, CustomerHomeActivity::class.java)
+                           //finishAffinity()
+                       }
+                       else{
+                           AppGlobal.showDialog(getString(R.string.title_alert),it.data.description,requireActivity())
+                       }
+
+
+                   }
+
+
+               }
+
+
+               is Response.Error ->{
+
+                   progressDialog.dismiss()
+                   AppGlobal.showDialog(getString(R.string.title_alert),it.message.toString(),requireActivity())
+               }
+
+           }
+
+
         })
     }
 

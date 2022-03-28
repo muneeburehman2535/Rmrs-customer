@@ -137,6 +137,7 @@ class MyReservationsFragment : Fragment() {
                 is Response.Error ->{
 
                     progressDialog.dismiss()
+                    AppGlobal.showDialog("Alert",it.message.toString(),requireActivity())
                 }
 
             }
@@ -187,6 +188,7 @@ class MyReservationsFragment : Fragment() {
 
                 is Response.Error ->{
                     progressDialog.dismiss()
+                    AppGlobal.showDialog("Alert",it.message.toString(),requireActivity())
                 }
 
             }

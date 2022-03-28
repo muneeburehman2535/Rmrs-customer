@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.comcept.rmrscustomer.R
 import com.comcept.rmrscustomer.data_class.verifyInvoice.VerifyInvoice
 import com.comcept.rmrscustomer.databinding.FragmentVerifyInvoiceBinding
+import com.comcept.rmrscustomer.repository.Response
 import com.comcept.rmrscustomer.utilities.AppGlobal
 import com.kaopiz.kprogresshud.KProgressHUD
 import java.text.ParseException
@@ -86,11 +87,22 @@ class VerifyInvoiceFragment : Fragment(), View.OnClickListener {
 
 
     private fun verifyInvoiceResult(verifyInvoice: VerifyInvoice) {
-        progressDialog.setLabel("Please Wait")
-        progressDialog.show()
+
         viewModel.verifyInvoiceResponse(verifyInvoice).observe(requireActivity(), { it ->
-            progressDialog.dismiss()
-            if (it != null && it.message == "Success") {
+
+
+            when(it){
+
+                is Response.Loading ->{
+
+                    progressDialog.setLabel("Please Wait")
+                    progressDialog.show()
+                }
+
+                is Response.Success ->{
+                    progressDialog.dismiss()
+                    it.data?.let {
+                        if (it != null && it.message == "Success") {
 //                AppGlobal.showDialog(
 //                    getString(R.string.title_alert),
 //                    it.data.CustomerID.toString(),
@@ -98,46 +110,57 @@ class VerifyInvoiceFragment : Fragment(), View.OnClickListener {
 //                )
 
 
-                it.data?.let {
-                    mbinding.restaurantNameTxt.text = it.RestaurantName
-                    mbinding.InvoiceIdTxt.text = it.InvoiceID
+                            it.data?.let {
+                                mbinding.restaurantNameTxt.text = it.RestaurantName
+                                mbinding.InvoiceIdTxt.text = it.InvoiceID
 
 
-                    val dateArr = it.InvoiceCreated!!.split("T")
+                                val dateArr = it.InvoiceCreated!!.split("T")
 
-                    mbinding.dateTxt.text = dateArr[0]
+                                mbinding.dateTxt.text = dateArr[0]
 
 
-                    mbinding.servicesChargesTxt.text = it.ServiceCharges.toString()
-                    mbinding.totalEnTxt.text = it.SubTotal.toString()
-                    mbinding.saleTaxTxt.text = it.SalesTax.toString()
-                    mbinding.totalInTxt.text = it.TotalAmount.toString()
+                                mbinding.servicesChargesTxt.text = it.ServiceCharges.toString()
+                                mbinding.totalEnTxt.text = it.SubTotal.toString()
+                                mbinding.saleTaxTxt.text = it.SalesTax.toString()
+                                mbinding.totalInTxt.text = it.TotalAmount.toString()
 
-                    val discount =
-                        ((it.Discount?.AmountBeforeDiscount)?.times((it.Discount?.DiscountPercentage!!))
-                            ?.div(100))?.toDouble()
-                    mbinding.discountTxt.text = discount.toString()
-                    mbinding.discountTotalTxt.text = it.Discount?.AmountAfterDiscount.toString()
+                                val discount =
+                                    ((it.Discount?.AmountBeforeDiscount)?.times((it.Discount?.DiscountPercentage!!))
+                                        ?.div(100))?.toDouble()
+                                mbinding.discountTxt.text = discount.toString()
+                                mbinding.discountTotalTxt.text = it.Discount?.AmountAfterDiscount.toString()
 
-                    mbinding.edtxtResturantId.text?.clear()
-                    mbinding.edtxtInvoiceId.text?.clear()
+                                mbinding.edtxtResturantId.text?.clear()
+                                mbinding.edtxtInvoiceId.text?.clear()
+                            }
+
+                        } else {
+
+                            AppGlobal.showDialog(
+                                getString(R.string.title_alert),
+                                "Data Not Found Please Check Your IDs",
+                                requireActivity()
+                            )
+
+                        }
+                    }
+
                 }
 
-            } else {
+                is Response.Error ->{
 
-                AppGlobal.showDialog(
-                    getString(R.string.title_alert),
-                    "Data Not Found Please Check Your IDs",
-                    requireActivity()
-                )
-//                it.message?.let { it1 ->
-//                    AppGlobal.showDialog(
-//                        getString(R.string.title_alert),
-//                        it1,
-//                        requireActivity()
-//                    )
-//                }
+                    progressDialog.dismiss()
+                    AppGlobal.showDialog(
+                        getString(R.string.title_alert), it.message.toString(),
+                        requireActivity()
+                    )
+
+                }
             }
+
+
+
         })
     }
 

@@ -11,6 +11,7 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -32,6 +33,8 @@ class SimpleSearchFragment : Fragment() {
     private lateinit var searchResultList:ArrayList<Restaurants>
     private lateinit var progressDialog: KProgressHUD
     private lateinit var searchResultAdapter:SearchResultAdapter
+    private var mLatitude: Double? = 0.00
+    private var mLongitude: Double? = 0.00
     companion object {
         fun newInstance() = SimpleSearchFragment()
     }
@@ -49,7 +52,42 @@ class SimpleSearchFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         searchResultList= arrayListOf()
+
     }
+
+
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        progressDialog=AppGlobal.setProgressDialog(requireActivity())
+        getLocation()
+
+
+
+    }
+
+    private fun getLocation() {
+        (activity as CustomerHomeActivity?)?.mModel?.mLatitude?.observe(
+            viewLifecycleOwner,
+            Observer {
+                mLatitude = it
+                getLongitude(mLatitude!!)
+            })
+    }
+
+    private fun getLongitude(mLatitude: Double) {
+        (activity as CustomerHomeActivity?)?.mModel?.mLongitude?.observe(
+            viewLifecycleOwner,
+            Observer {
+                mLongitude = it
+
+            })
+    }
+    override fun onResume() {
+        super.onResume()
+        (activity as CustomerHomeActivity?)?.changeToolbarName(getString(R.string.hint_search_food), isProfileMenuVisible = false, locationVisibility = true,isMenuVisibility = false)
+    }
+
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -61,7 +99,13 @@ class SimpleSearchFragment : Fragment() {
                 if (v.text.toString().length >= 3) {
                     if (AppGlobal.isInternetAvailable(requireActivity()))
                     {
-                        getSearchResult(v.text.toString())
+                        if(mLatitude!! <=0.00 && mLongitude!!<=0.00){
+                            AppGlobal.showToast("Please enable your location",requireActivity())
+                        }
+                        else{
+                            getSearchResult(v.text.toString(),mLatitude!!, mLongitude!!)
+                        }
+
                     }
                     else{
                         AppGlobal.snackBar(mBinding.layoutParentSsf,getString(R.string.err_no_internet),AppGlobal.SHORT)
@@ -75,22 +119,6 @@ class SimpleSearchFragment : Fragment() {
         })
 
     }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        progressDialog=AppGlobal.setProgressDialog(requireActivity())
-
-
-
-
-    }
-
-    override fun onResume() {
-        super.onResume()
-        (activity as CustomerHomeActivity?)?.changeToolbarName(getString(R.string.hint_search_food), isProfileMenuVisible = false, locationVisibility = true,isMenuVisibility = false)
-    }
-
-
 
     private fun setSearchResultAdapter() {
 
@@ -142,10 +170,10 @@ class SimpleSearchFragment : Fragment() {
     /*
     * Search API Method
     * */
-    private fun getSearchResult(searchQuery: String){
+    private fun getSearchResult(searchQuery: String,Latitude:Double,Longitude:Double){
         progressDialog.setLabel("Please Wait")
         progressDialog.show()
-        viewModel.getSearchResponse(searchQuery).observe(requireActivity(), {
+        viewModel.getSearchResponse(searchQuery,Latitude,Longitude).observe(requireActivity(), {
             progressDialog.dismiss()
             if (it!=null&&it.Message=="Success"){
                 searchResultList=it.data.result

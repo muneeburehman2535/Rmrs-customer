@@ -18,11 +18,14 @@ import timber.log.Timber
 class VerifyInvoiceRepository {
 
 
-    private lateinit var verifyInvoiceResponseLiveData: MutableLiveData<VerifyInvoiceResponse>
+    private lateinit var verifyInvoiceResponseLiveData: MutableLiveData<com.comcept.rmrscustomer.repository.Response<VerifyInvoiceResponse>>
     //private val retrofitClass:RetrofitClass= RetrofitClass().getHomeRequestsInstance()!!
 
-    fun getInvoiceResponseLiveData(verifyInvoice: VerifyInvoice): LiveData<VerifyInvoiceResponse> {
-        verifyInvoiceResponseLiveData = MutableLiveData<VerifyInvoiceResponse>()
+    fun getInvoiceResponseLiveData(verifyInvoice: VerifyInvoice): LiveData<com.comcept.rmrscustomer.repository.Response<VerifyInvoiceResponse>> {
+        verifyInvoiceResponseLiveData = MutableLiveData<com.comcept.rmrscustomer.repository.Response<VerifyInvoiceResponse>>()
+
+        verifyInvoiceResponseLiveData.postValue(com.comcept.rmrscustomer.repository.Response.Loading())
+
         RetrofitClass.getHomeInstance()?.getHomeRequestsInstance()?.verifyInvoice(verifyInvoice)?.enqueue(object :
             Callback<ResponseBody?> {
             override fun onResponse(call: Call<ResponseBody?>, response: Response<ResponseBody?>) {
@@ -40,11 +43,13 @@ class VerifyInvoiceRepository {
 
                 }
                 Timber.d(Gson().toJson("Update Password: @{verifyInvoiceResponse)}"))
-                verifyInvoiceResponseLiveData.postValue(verifyInvoiceResponse)
+                verifyInvoiceResponseLiveData.postValue(com.comcept.rmrscustomer.repository.Response.Success(verifyInvoiceResponse))
+
             }
 
             override fun onFailure(call: Call<ResponseBody?>, t: Throwable) {
                 Timber.e("Error: ${t.message.toString()}")
+                verifyInvoiceResponseLiveData.postValue(com.comcept.rmrscustomer.repository.Response.Error(t.message.toString()))
             }
         })
         return verifyInvoiceResponseLiveData

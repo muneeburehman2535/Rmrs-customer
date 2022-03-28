@@ -154,7 +154,7 @@ class  CheckoutFragment : Fragment(),View.OnClickListener {
                     is Response.Error ->{
 
                         progressDialog.dismiss()
-                        AppGlobal.showDialog(getString(R.string.title_alert), "Checkout Failure ", requireActivity())
+                        AppGlobal.showDialog(getString(R.string.title_alert),it.message.toString(), requireActivity())
 
                     }
                 }

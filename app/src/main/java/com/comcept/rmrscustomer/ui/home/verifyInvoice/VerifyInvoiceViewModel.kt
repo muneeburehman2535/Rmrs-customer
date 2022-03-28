@@ -7,6 +7,7 @@ import com.comcept.rmrscustomer.data_class.updatepassword.UpdatePassword
 import com.comcept.rmrscustomer.data_class.updatepassword.UpdatePasswordResponse
 import com.comcept.rmrscustomer.data_class.verifyInvoice.VerifyInvoice
 import com.comcept.rmrscustomer.data_class.verifyInvoice.VerifyInvoiceResponse
+import com.comcept.rmrscustomer.repository.Response
 import com.comcept.rmrscustomer.repository.UpdatePasswordRepository
 import com.comcept.rmrscustomer.repository.VerifyInvoiceRepository
 
@@ -17,7 +18,7 @@ class VerifyInvoiceViewModel(application: Application) : AndroidViewModel(applic
 
 
 
-    fun verifyInvoiceResponse(verifyInvoice: VerifyInvoice): LiveData<VerifyInvoiceResponse> {
+    fun verifyInvoiceResponse(verifyInvoice: VerifyInvoice): LiveData<Response<VerifyInvoiceResponse>> {
         return verifyInvoiceRepository.getInvoiceResponseLiveData(verifyInvoice)
     }
 

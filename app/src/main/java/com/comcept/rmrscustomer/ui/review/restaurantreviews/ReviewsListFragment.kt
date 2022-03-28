@@ -16,9 +16,14 @@ import com.comcept.rmrscustomer.adapters.ReviewListAdapter
 import com.comcept.rmrscustomer.data_class.review.Data
 import com.comcept.rmrscustomer.data_class.review.Review
 import com.comcept.rmrscustomer.databinding.ReviewsListFragmentBinding
+import com.comcept.rmrscustomer.repository.Response
 import com.comcept.rmrscustomer.ui.home.CustomerHomeActivity
 import com.comcept.rmrscustomer.ui.review.ReviewViewModel
 import com.comcept.rmrscustomer.utilities.AppGlobal
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 
 class ReviewsListFragment : Fragment() {
 
@@ -28,6 +33,11 @@ class ReviewsListFragment : Fragment() {
     private lateinit var reviewList: ArrayList<Data>
     private lateinit var restaurantId: String
     private lateinit var progressDialog: KProgressHUD
+
+
+
+    val job  = Job()
+    private val uiScope = CoroutineScope(Dispatchers.Main+job)
 
 
     override fun onCreateView(
@@ -83,27 +93,57 @@ class ReviewsListFragment : Fragment() {
    * */
     @SuppressLint("SetTextI18n")
     private fun getRestaurantDetail(restaurantID: String) {
-        progressDialog.setLabel("Please Wait")
-        progressDialog.show()
-        viewModel.getReviewListResponse(restaurantID).observe(requireActivity(), {
-            progressDialog.dismiss()
-            if (it != null && it.Message == "Success") {
-                reviewList = it.data
-                mBinding.txtReviewTotal.text = "${reviewList.size} Reviews"
-                if (reviewList.size > 0) {
-                    mBinding.layoutReviewList.visibility = View.VISIBLE
-                    mBinding.layoutNotFoundRlf.visibility = View.GONE
-                    reviewListAdapter.updateReviewList(reviewList)
-                } else {
-                    mBinding.layoutReviewList.visibility = View.GONE
-                    mBinding.layoutNotFoundRlf.visibility = View.VISIBLE
-                }
 
-            }
+
+        uiScope.launch {
+            viewModel.getReviewListResponse(restaurantID).observe(requireActivity(), {
+
+                when(it){
+
+                    is Response.Loading ->{
+                        progressDialog.setLabel("Please Wait")
+                        progressDialog.show()
+
+                    }
+
+                    is Response.Success ->{
+
+                        it.data?.let {
+                            progressDialog.dismiss()
+                            if (it != null && it.Message == "Success") {
+                                reviewList = it.data
+                                mBinding.txtReviewTotal.text = "${reviewList.size} Reviews"
+                                if (reviewList.size > 0) {
+                                    mBinding.layoutReviewList.visibility = View.VISIBLE
+                                    mBinding.layoutNotFoundRlf.visibility = View.GONE
+                                    reviewListAdapter.updateReviewList(reviewList)
+                                } else {
+                                    mBinding.layoutReviewList.visibility = View.GONE
+                                    mBinding.layoutNotFoundRlf.visibility = View.VISIBLE
+                                }
+
+                            }
 //            else{
 //                AppGlobal.showDialog(getString(R.string.title_alert),it.data.description,requireContext())
 //            }
-        })
+                        }
+
+                    }
+
+
+                    is Response.Error ->{
+
+                        progressDialog.dismiss()
+                        AppGlobal.showDialog(getString(R.string.title_alert),it.message.toString(),requireContext())
+                    }
+
+                }
+
+
+            })
+        }
+
+
     }
 
 }

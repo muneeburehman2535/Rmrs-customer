@@ -17,11 +17,14 @@ import timber.log.Timber
 
 class ProfileRepository {
 
-    private lateinit var profileResponseLiveData: MutableLiveData<ProfileResponse>
+    private lateinit var profileResponseLiveData: MutableLiveData<com.comcept.rmrscustomer.repository.Response<ProfileResponse>>
     //private val retrofitClass:RetrofitClass= RetrofitClass().getHomeRequestsInstance()!!
 
-    fun getProfileResponseLiveData(profile: Profile): LiveData<ProfileResponse> {
-        profileResponseLiveData= MutableLiveData<ProfileResponse>()
+    fun getProfileResponseLiveData(profile: Profile): LiveData<com.comcept.rmrscustomer.repository.Response<ProfileResponse>> {
+        profileResponseLiveData= MutableLiveData<com.comcept.rmrscustomer.repository.Response<ProfileResponse>>()
+
+        profileResponseLiveData.postValue(com.comcept.rmrscustomer.repository.Response.Loading())
+
         RetrofitClass.getHomeInstance()?.getHomeRequestsInstance()?.updateCustomerProfile(profile)?.enqueue(object :
             Callback<ResponseBody?> {
             override fun onResponse(call: Call<ResponseBody?>, response: Response<ResponseBody?>) {
@@ -35,11 +38,12 @@ class ProfileRepository {
 
                 }
                 Timber.d(Gson().toJson(profileResponse).toString())
-                profileResponseLiveData.postValue(profileResponse)
+                profileResponseLiveData.postValue(com.comcept.rmrscustomer.repository.Response.Success(profileResponse))
             }
 
             override fun onFailure(call: Call<ResponseBody?>, t: Throwable) {
                 Timber.e("Error: ${t.message.toString()}")
+                profileResponseLiveData.postValue(com.comcept.rmrscustomer.repository.Response.Error(t.message.toString()))
             }
         })
         return profileResponseLiveData

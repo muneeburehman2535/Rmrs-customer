@@ -10,7 +10,7 @@ import com.comcept.rmrscustomer.repository.SearchRepository
 class SimpleSearchViewModel : ViewModel() {
     private var searchRepository: SearchRepository = SearchRepository()
 
-    fun getSearchResponse(searchQuery: String): LiveData<SearchResponse> {
-        return searchRepository.getSearchResponseLiveData(searchQuery)
+    fun getSearchResponse(searchQuery: String,Latitude:Double,Longitude:Double): LiveData<SearchResponse> {
+        return searchRepository.getSearchResponseLiveData(searchQuery,Latitude,Longitude)
     }
 }
