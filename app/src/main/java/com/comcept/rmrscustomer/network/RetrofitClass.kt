@@ -21,7 +21,7 @@ class RetrofitClass {
         fun getGeoInstance(): RetrofitClass? {
             if (geoInstance == null) {
                 geoInstance = RetrofitClass()
-                val client = OkHttpClient.Builder().connectTimeout(5, TimeUnit.MINUTES).readTimeout(5, TimeUnit.MINUTES).writeTimeout(5, TimeUnit.MINUTES).build().newBuilder()
+                val client = OkHttpClient.Builder().connectTimeout(1, TimeUnit.MINUTES).readTimeout(1, TimeUnit.MINUTES).writeTimeout(1, TimeUnit.MINUTES).build().newBuilder()
                 val loggingInterceptor = HttpLoggingInterceptor()
                 loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
                 client.addInterceptor(loggingInterceptor)
@@ -35,7 +35,7 @@ class RetrofitClass {
         fun getHomeInstance(): RetrofitClass? {
             if (homeInstance == null) {
                 homeInstance = RetrofitClass()
-                val client = OkHttpClient.Builder().connectTimeout(5, TimeUnit.MINUTES).readTimeout(5, TimeUnit.MINUTES).writeTimeout(5, TimeUnit.MINUTES).build().newBuilder()
+                val client = OkHttpClient.Builder().connectTimeout(1, TimeUnit.MINUTES).readTimeout(1, TimeUnit.MINUTES).writeTimeout(1, TimeUnit.MINUTES).build().newBuilder()
                 val loggingInterceptor = HttpLoggingInterceptor()
                 loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
                 client.addInterceptor(loggingInterceptor)

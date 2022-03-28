@@ -8,6 +8,7 @@ import com.comcept.rmrscustomer.data_class.checkout.Checkout
 import com.comcept.rmrscustomer.data_class.checkout.checkout_response.CheckoutResponse
 import com.comcept.rmrscustomer.repository.CheckoutRepository
 import com.comcept.rmrscustomer.db.repository.RoomDBRepository
+import com.comcept.rmrscustomer.repository.Response
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -19,7 +20,7 @@ class CheckoutViewModel
 
     private var homeRepository: CheckoutRepository = CheckoutRepository()
 
-    fun getCheckoutResponse(checkout: Checkout): LiveData<CheckoutResponse> {
+    fun getCheckoutResponse(checkout: Checkout): LiveData<Response<CheckoutResponse>> {
         return homeRepository.getCheckoutResponseLiveData(checkout)
     }
 

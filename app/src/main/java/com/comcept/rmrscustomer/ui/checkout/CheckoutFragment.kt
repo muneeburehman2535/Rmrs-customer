@@ -13,12 +13,17 @@ import com.comcept.rmrscustomer.R
 import com.comcept.rmrscustomer.data_class.checkout.Checkout
 import com.comcept.rmrscustomer.databinding.CheckoutFragmentBinding
 import com.comcept.rmrscustomer.db.CustomerDatabase
+import com.comcept.rmrscustomer.repository.Response
 import com.comcept.rmrscustomer.ui.home.CustomerHomeActivity
 import com.comcept.rmrscustomer.ui.home.HomeFragment
 import com.comcept.rmrscustomer.ui.review.ReviewFragment
 import com.comcept.rmrscustomer.utilities.AppGlobal
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import timber.log.Timber
 
 @AndroidEntryPoint
@@ -32,6 +37,9 @@ class  CheckoutFragment : Fragment(),View.OnClickListener {
     companion object {
         fun newInstance() = CheckoutFragment()
     }
+
+    val job = Job()
+    private val uiScope = CoroutineScope(Dispatchers.Main + job)
 
     private lateinit var viewModel: CheckoutViewModel
 
@@ -110,22 +118,54 @@ class  CheckoutFragment : Fragment(),View.OnClickListener {
   * Get Restaurants Data API Method
    * */
     private fun checkoutOrder(){
-        progressDialog.setLabel("Please Wait")
-        progressDialog.show()
-        viewModel.getCheckoutResponse(orderCheckout).observe(requireActivity(), {
-            progressDialog.dismiss()
-            if (it!=null&&it.Message == "Success") {
-                emptyCartRecord()
-                (activity as CustomerHomeActivity?)?.changeToolbarName(getString(R.string.title_review), isProfileMenuVisible = false, locationVisibility = false,isMenuVisibility = false)
-                (activity as CustomerHomeActivity?)?.loadNewFragment(
-                    HomeFragment(),
-                        "home"
-                )
 
-            } else {
-                AppGlobal.showDialog(getString(R.string.title_alert), it.data.description, requireActivity())
-            }
-        })
+
+        uiScope.launch {
+
+            viewModel.getCheckoutResponse(orderCheckout).observe(requireActivity(), {
+
+                when(it){
+
+
+                    is Response.Loading ->{
+                        progressDialog.setLabel("Please Wait")
+                        progressDialog.show()
+                    }
+
+                    is Response.Success ->{
+
+                        it.data?.let {
+                            progressDialog.dismiss()
+                            if (it!=null&&it.Message == "Success") {
+                                emptyCartRecord()
+                                (activity as CustomerHomeActivity?)?.changeToolbarName(getString(R.string.title_review), isProfileMenuVisible = false, locationVisibility = false,isMenuVisibility = false)
+                                (activity as CustomerHomeActivity?)?.loadNewFragment(
+                                    HomeFragment(),
+                                    "home"
+                                )
+
+                            } else {
+                                AppGlobal.showDialog(getString(R.string.title_alert), it.data.description, requireActivity())
+                            }
+
+                        }
+
+                    }
+                    is Response.Error ->{
+
+                        progressDialog.dismiss()
+                        AppGlobal.showDialog(getString(R.string.title_alert), "Checkout Failure ", requireActivity())
+
+                    }
+                }
+            })
+
+        }
+
+
+
+
+
     }
 
     private fun emptyCartRecord() {

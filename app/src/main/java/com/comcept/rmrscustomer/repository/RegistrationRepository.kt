@@ -21,20 +21,22 @@ import timber.log.Timber
 
 class RegistrationRepository {
 
-    private lateinit var emailMobileResponseLiveData: MutableLiveData<EmailMobileVerificationResponse>
+    private lateinit var emailMobileResponseLiveData: MutableLiveData<com.comcept.rmrscustomer.repository.Response<EmailMobileVerificationResponse>>
     private lateinit var registrationResponseLiveData: MutableLiveData<RegistrationResponse>
-    private lateinit var otpResponseLiveData: MutableLiveData<SendOTPResponse>
+    private lateinit var otpResponseLiveData: MutableLiveData<com.comcept.rmrscustomer.repository.Response<SendOTPResponse>>
     private val retrofitClass: WebRequestGeo? = RetrofitClass.getHomeInstance()?.getHomeRequestsInstance()
 
 
     /*
     * Email and Mobile Number Verification API Call Method
     * */
-    fun sendEmailMobileVerificationRequest(emailMobileVerification: EmailMobileVerification): LiveData<EmailMobileVerificationResponse?> {
+    fun sendEmailMobileVerificationRequest(emailMobileVerification: EmailMobileVerification): LiveData<com.comcept.rmrscustomer.repository.Response<EmailMobileVerificationResponse>> {
 
         Timber.d(Gson().toJson(emailMobileVerification))
 
-        emailMobileResponseLiveData= MutableLiveData<EmailMobileVerificationResponse>()
+        emailMobileResponseLiveData= MutableLiveData<com.comcept.rmrscustomer.repository.Response<EmailMobileVerificationResponse>>()
+
+        emailMobileResponseLiveData.postValue(com.comcept.rmrscustomer.repository.Response.Loading())
         RetrofitClass.getHomeInstance()?.getHomeRequestsInstance()?.verifyEmailMobile(emailMobileVerification)?.enqueue(object : Callback<ResponseBody?> {
             override fun onResponse(call: Call<ResponseBody?>, response: Response<ResponseBody?>) {
                 var emailMobileResponse:EmailMobileVerificationResponse?=null
@@ -47,11 +49,13 @@ class RegistrationRepository {
                 }
 
                 Timber.d("Email : ${Gson().toJson(emailMobileResponse).toString()}")
-                emailMobileResponseLiveData.postValue(emailMobileResponse)
+                emailMobileResponseLiveData.postValue(com.comcept.rmrscustomer.repository.Response.Success(emailMobileResponse))
             }
 
             override fun onFailure(call: Call<ResponseBody?>, t: Throwable) {
                Timber.e(t.message.toString())
+                emailMobileResponseLiveData.postValue(com.comcept.rmrscustomer.repository.Response.Error(t.message.toString()))
+
             }
         })
         return emailMobileResponseLiveData
@@ -60,11 +64,14 @@ class RegistrationRepository {
     /*
     * Send OTP API Call Method
     * */
-    fun sendOtpRequest(sendOTP: SendOTP): LiveData<SendOTPResponse?> {
+    fun sendOtpRequest(sendOTP: SendOTP): LiveData<com.comcept.rmrscustomer.repository.Response<SendOTPResponse>> {
 
         Timber.d(Gson().toJson(sendOTP))
 
-        otpResponseLiveData= MutableLiveData<SendOTPResponse>()
+        otpResponseLiveData= MutableLiveData<com.comcept.rmrscustomer.repository.Response<SendOTPResponse>>()
+
+        otpResponseLiveData.postValue(com.comcept.rmrscustomer.repository.Response.Loading())
+
         RetrofitClass.getHomeInstance()?.getHomeRequestsInstance()?.sendOTP(sendOTP)?.enqueue(object : Callback<ResponseBody?> {
             override fun onResponse(call: Call<ResponseBody?>, response: Response<ResponseBody?>) {
                 var otpResponse: SendOTPResponse?=null
@@ -77,11 +84,12 @@ class RegistrationRepository {
 
                 }
                 Timber.d("Send OTP Response: ${Gson().toJson(otpResponse).toString()}")
-                otpResponseLiveData.postValue(otpResponse)
+                otpResponseLiveData.postValue(com.comcept.rmrscustomer.repository.Response.Success(otpResponse))
             }
 
             override fun onFailure(call: Call<ResponseBody?>, t: Throwable) {
                 Timber.e(t.message.toString())
+                otpResponseLiveData.postValue(com.comcept.rmrscustomer.repository.Response.Error(t.message.toString()))
             }
         })
         return otpResponseLiveData

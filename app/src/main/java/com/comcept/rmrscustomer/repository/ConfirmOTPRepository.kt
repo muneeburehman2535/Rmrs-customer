@@ -20,20 +20,23 @@ import timber.log.Timber
 
 class ConfirmOTPRepository {
 
-    private lateinit var otpVerificationResponseLiveData: MutableLiveData<OTPVerificationResponse>
-    private lateinit var registrationResponseLiveData: MutableLiveData<RegistrationResponse>
-    private lateinit var otpResponseLiveData: MutableLiveData<SendOTPResponse>
+    private lateinit var otpVerificationResponseLiveData: MutableLiveData<com.comcept.rmrscustomer.repository.Response<OTPVerificationResponse>>
+    private lateinit var registrationResponseLiveData: MutableLiveData<com.comcept.rmrscustomer.repository.Response<RegistrationResponse>>
+    private lateinit var otpResponseLiveData: MutableLiveData<com.comcept.rmrscustomer.repository.Response<SendOTPResponse>>
 
 
 
     /*
     * Send OTP API Call Method
     * */
-    fun sendOtpVerificationRequest(confirmOtp: ConfirmOtp): LiveData<OTPVerificationResponse?> {
+    fun sendOtpVerificationRequest(confirmOtp: ConfirmOtp): LiveData<com.comcept.rmrscustomer.repository.Response<OTPVerificationResponse>> {
 
         Timber.d(Gson().toJson(confirmOtp))
 
-        otpVerificationResponseLiveData= MutableLiveData<OTPVerificationResponse>()
+        otpVerificationResponseLiveData= MutableLiveData<com.comcept.rmrscustomer.repository.Response<OTPVerificationResponse>>()
+
+        otpVerificationResponseLiveData.postValue(com.comcept.rmrscustomer.repository.Response.Loading())
+
         RetrofitClass.getHomeInstance()?.getHomeRequestsInstance()?.verifyOtp(confirmOtp)?.enqueue(object : Callback<ResponseBody?> {
             override fun onResponse(call: Call<ResponseBody?>, response: Response<ResponseBody?>) {
                 var otpResponse: OTPVerificationResponse?=null
@@ -46,11 +49,12 @@ class ConfirmOTPRepository {
 
                 }
                 Timber.d("OTP Verification: ${Gson().toJson(otpResponse)}")
-                otpVerificationResponseLiveData.postValue(otpResponse)
+                otpVerificationResponseLiveData.postValue(com.comcept.rmrscustomer.repository.Response.Success(otpResponse))
             }
 
             override fun onFailure(call: Call<ResponseBody?>, t: Throwable) {
                 Timber.e(t.message.toString())
+                otpVerificationResponseLiveData.postValue(com.comcept.rmrscustomer.repository.Response.Error(t.message.toString()))
             }
         })
         return otpVerificationResponseLiveData
@@ -60,8 +64,11 @@ class ConfirmOTPRepository {
     /*
     * Registration API Call Method
     * */
-    fun sendSignUpResponseLiveData(registration: Registration): LiveData<RegistrationResponse?> {
-        registrationResponseLiveData= MutableLiveData<RegistrationResponse>()
+    fun sendSignUpResponseLiveData(registration: Registration): LiveData<com.comcept.rmrscustomer.repository.Response<RegistrationResponse>> {
+        registrationResponseLiveData= MutableLiveData<com.comcept.rmrscustomer.repository.Response<RegistrationResponse>>()
+
+        registrationResponseLiveData.postValue(com.comcept.rmrscustomer.repository.Response.Loading())
+
         RetrofitClass.getHomeInstance()?.getHomeRequestsInstance()?.signUpUser(registration)?.enqueue(object : Callback<ResponseBody?> {
             override fun onResponse(call: Call<ResponseBody?>, response: Response<ResponseBody?>) {
                 var signUpResponse: RegistrationResponse?=null
@@ -74,11 +81,12 @@ class ConfirmOTPRepository {
 
                 }
                 Timber.d("Registration: ${Gson().toJson(signUpResponse)}")
-                registrationResponseLiveData.postValue(signUpResponse)
+                registrationResponseLiveData.postValue(com.comcept.rmrscustomer.repository.Response.Success(signUpResponse))
             }
 
             override fun onFailure(call: Call<ResponseBody?>, t: Throwable) {
                 //loginResponseLiveData.postValue()
+                registrationResponseLiveData.postValue(com.comcept.rmrscustomer.repository.Response.Error(t.message.toString()))
             }
         })
         return registrationResponseLiveData
@@ -87,11 +95,14 @@ class ConfirmOTPRepository {
     /*
    * Send OTP API Call Method
    * */
-    fun sendOtpRequest(sendOTP: SendOTP): LiveData<SendOTPResponse?> {
+    fun sendOtpRequest(sendOTP: SendOTP): LiveData<com.comcept.rmrscustomer.repository.Response<SendOTPResponse>> {
 
         Timber.d(Gson().toJson(sendOTP))
 
-        otpResponseLiveData= MutableLiveData<SendOTPResponse>()
+        otpResponseLiveData= MutableLiveData<com.comcept.rmrscustomer.repository.Response<SendOTPResponse>>()
+
+        otpResponseLiveData.postValue(com.comcept.rmrscustomer.repository.Response.Loading())
+
         RetrofitClass.getHomeInstance()?.getHomeRequestsInstance()?.sendOTP(sendOTP)?.enqueue(object : Callback<ResponseBody?> {
             override fun onResponse(call: Call<ResponseBody?>, response: Response<ResponseBody?>) {
                 var otpResponse: SendOTPResponse?=null
@@ -104,11 +115,12 @@ class ConfirmOTPRepository {
 
                 }
                 Timber.d("Send OTP Response: ${Gson().toJson(otpResponse).toString()}")
-                otpResponseLiveData.postValue(otpResponse)
+                otpResponseLiveData.postValue(com.comcept.rmrscustomer.repository.Response.Success(otpResponse))
             }
 
             override fun onFailure(call: Call<ResponseBody?>, t: Throwable) {
                 Timber.e(t.message.toString())
+                otpResponseLiveData.postValue(com.comcept.rmrscustomer.repository.Response.Error(t.message.toString()))
             }
         })
         return otpResponseLiveData

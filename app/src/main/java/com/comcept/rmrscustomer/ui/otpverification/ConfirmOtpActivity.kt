@@ -15,6 +15,7 @@ import com.comcept.rmrscustomer.data_class.confirm_otp.ConfirmOtp
 import com.comcept.rmrscustomer.data_class.registration.Registration
 import com.comcept.rmrscustomer.data_class.send_otp.SendOTP
 import com.comcept.rmrscustomer.databinding.ActivityConfirmOtpBinding
+import com.comcept.rmrscustomer.repository.Response
 import com.comcept.rmrscustomer.ui.home.CustomerHomeActivity
 import com.comcept.rmrscustomer.utilities.AppGlobal
 import timber.log.Timber
@@ -115,30 +116,60 @@ class ConfirmOtpActivity : AppCompatActivity() ,View.OnClickListener{
 
 
     private fun sendOTPVerificationCall(){
-        progressDialog.setLabel("Please Wait").show()
+
         val confirmOtp= ConfirmOtp(
                 registration.Email,
                 mOTPCode
         )
         Timber.d(Gson().toJson(confirmOtp))
         mViewModel.getOTPVerificationResponse(confirmOtp).observe(this, {
-            if (it?.data?.status == true) {
+
+            when(it){
 
 
-                if (AppGlobal.isInternetAvailable(this)) {
-                    sendRegistrationCall()
-                } else {
-                    AppGlobal.snackBar(mBinding.layoutParentAcotp, getString(R.string.err_no_internet), AppGlobal.LONG)
+                is Response.Loading ->{
+                    progressDialog.setLabel("Please Wait").show()
                 }
-            } else {
-                progressDialog.dismiss()
-                AppGlobal.showDialog(
+
+                is Response.Success ->{
+
+                    it.data?.let {
+
+                        if (it?.data?.status == true) {
+
+
+                            if (AppGlobal.isInternetAvailable(this)) {
+                                sendRegistrationCall()
+                            } else {
+                                AppGlobal.snackBar(mBinding.layoutParentAcotp, getString(R.string.err_no_internet), AppGlobal.LONG)
+                            }
+                        } else {
+                            progressDialog.dismiss()
+                            AppGlobal.showDialog(
+                                getString(R.string.title_alert),
+                                it?.data?.description.toString(),
+                                this
+                            )
+                            mBinding.edTxtOtpAco.setOTP("")
+                        }
+                    }
+
+                }
+
+                is Response.Error ->{
+
+                    progressDialog.dismiss()
+                    AppGlobal.showDialog(
                         getString(R.string.title_alert),
-                        it?.data?.description.toString(),
+                      "OTP Verification Failure",
                         this
-                )
-                mBinding.edTxtOtpAco.setOTP("")
+                    )
+                }
+
             }
+
+
+
 
         })
     }
@@ -146,22 +177,49 @@ class ConfirmOtpActivity : AppCompatActivity() ,View.OnClickListener{
     private fun sendRegistrationCall(){
 
         mViewModel.getSignUpResponse(registration).observe(this, {
-            progressDialog.dismiss()
-            if (it?.data?.Token != null) {
 
-                AppGlobal.writeString(this,AppGlobal.tokenId, it.data.Token)
-                AppGlobal.writeString(this,AppGlobal.customerId,it.data.CustomerID)
-                AppGlobal.writeString(this,AppGlobal.customerName,it.data.Name)
-                AppGlobal.writeString(this,AppGlobal.customerEmail,it.data.Email)
-                AppGlobal.writeString(this,AppGlobal.customerMobile,it.data.MobileNumber)
-                AppGlobal.startNewActivity(this, CustomerHomeActivity::class.java)
-                finishAffinity()
-            } else {
-                AppGlobal.showDialog(
+
+            when(it){
+
+                is Response.Loading ->{
+
+                }
+
+
+                is Response.Success ->{
+                    it.data?.let {
+
+                        progressDialog.dismiss()
+                        if (it?.data?.Token != null) {
+
+                            AppGlobal.writeString(this,AppGlobal.tokenId, it.data.Token)
+                            AppGlobal.writeString(this,AppGlobal.customerId,it.data.CustomerID)
+                            AppGlobal.writeString(this,AppGlobal.customerName,it.data.Name)
+                            AppGlobal.writeString(this,AppGlobal.customerEmail,it.data.Email)
+                            AppGlobal.writeString(this,AppGlobal.customerMobile,it.data.MobileNumber)
+                            AppGlobal.startNewActivity(this, CustomerHomeActivity::class.java)
+                            finishAffinity()
+                        } else {
+                            AppGlobal.showDialog(
+                                getString(R.string.title_alert),
+                                it?.data?.description.toString(),
+                                this
+                            )
+                        }
+
+                    }
+                }
+
+
+                is Response.Error ->{
+
+                    progressDialog.dismiss()
+                    AppGlobal.showDialog(
                         getString(R.string.title_alert),
-                        it?.data?.description.toString(),
+                        "SIgnUp Failure",
                         this
-                )
+                    )
+                }
             }
 
         })
@@ -171,15 +229,39 @@ class ConfirmOtpActivity : AppCompatActivity() ,View.OnClickListener{
    * Send OTP Method
    * */
     private fun sendOTP(){
-        progressDialog.setLabel("Please Wait").show()
+
         val sendOtp= SendOTP(registration.Email, registration.MobileNumber)
         Timber.d(Gson().toJson(sendOtp))
         mViewModel.getOTPResponse(sendOtp).observe(this, {
-            progressDialog.dismiss()
 
-            AppGlobal.snackBar(mBinding.layoutParentAcotp, it?.data?.description.toString(), AppGlobal.SHORT)
-            reverseTimer(300)
+           when(it){
 
+               is Response.Loading ->{
+                   progressDialog.setLabel("Please Wait").show()
+               }
+
+               is Response.Success ->{
+                   it.data?.let {
+                       progressDialog.dismiss()
+
+                       AppGlobal.snackBar(mBinding.layoutParentAcotp, it?.data?.description.toString(), AppGlobal.SHORT)
+                       reverseTimer(300)
+                   }
+
+
+               }
+
+               is Response.Error ->{
+
+                   progressDialog.dismiss()
+                   AppGlobal.showDialog(
+                       getString(R.string.title_alert),
+                       "OTP Failure",
+                       this
+                   )
+
+               }
+           }
 
         })
     }

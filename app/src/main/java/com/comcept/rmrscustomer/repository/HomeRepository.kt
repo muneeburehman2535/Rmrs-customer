@@ -19,13 +19,16 @@ import timber.log.Timber
 
 class HomeRepository {
 
-    private lateinit var categoryResponseLiveData: MutableLiveData<CategoryResponse>
-    private lateinit var restaurantResponseLiveData: MutableLiveData<RestaurantsResponse>
-    private lateinit var fcmResponseLiveData: MutableLiveData<FCMTokenResponse>
-    private lateinit var luckyDrawPointsResponseLiveData: MutableLiveData<LuckyDrawPointsResponse>
+    private lateinit var categoryResponseLiveData: MutableLiveData<com.comcept.rmrscustomer.repository.Response<CategoryResponse>>
+    private lateinit var restaurantResponseLiveData: MutableLiveData<com.comcept.rmrscustomer.repository.Response<RestaurantsResponse>>
+    private lateinit var fcmResponseLiveData: MutableLiveData<com.comcept.rmrscustomer.repository.Response<FCMTokenResponse>>
+    private lateinit var luckyDrawPointsResponseLiveData: MutableLiveData<com.comcept.rmrscustomer.repository.Response<LuckyDrawPointsResponse>>
 
-    fun getLoginResponseLiveData(): LiveData<CategoryResponse> {
-        categoryResponseLiveData=MutableLiveData<CategoryResponse>()
+    fun getLoginResponseLiveData(): LiveData<com.comcept.rmrscustomer.repository.Response<CategoryResponse>> {
+        categoryResponseLiveData=MutableLiveData<com.comcept.rmrscustomer.repository.Response<CategoryResponse>>()
+
+        categoryResponseLiveData.postValue(com.comcept.rmrscustomer.repository.Response.Loading())
+
         RetrofitClass.getHomeInstance()?.getHomeRequestsInstance()?.categoriesList?.enqueue(object : Callback<ResponseBody?> {
             override fun onResponse(call: Call<ResponseBody?>, response: Response<ResponseBody?>) {
                 var categoryResponse: CategoryResponse?=null
@@ -38,19 +41,22 @@ class HomeRepository {
 
                 }
                 Timber.d(Gson().toJson(categoryResponse).toString())
-                categoryResponseLiveData.postValue(categoryResponse)
+                categoryResponseLiveData.postValue(com.comcept.rmrscustomer.repository.Response.Success(categoryResponse))
             }
 
             override fun onFailure(call: Call<ResponseBody?>, t: Throwable) {
                 Timber.e("Error: ${t.message.toString()}")
+                categoryResponseLiveData.postValue(com.comcept.rmrscustomer.repository.Response.Error(t.message.toString()))
             }
         })
         return categoryResponseLiveData
     }
 
+    fun getRestaurantResponseLiveData(categoryId:String,Latitude:Double,Longitude:Double): LiveData<com.comcept.rmrscustomer.repository.Response<RestaurantsResponse>> {
+        restaurantResponseLiveData=MutableLiveData<com.comcept.rmrscustomer.repository.Response<RestaurantsResponse>>()
 
-    fun getRestaurantResponseLiveData(categoryId:String,Latitude:Double,Longitude:Double): LiveData<RestaurantsResponse> {
-        restaurantResponseLiveData=MutableLiveData<RestaurantsResponse>()
+        restaurantResponseLiveData.postValue(com.comcept.rmrscustomer.repository.Response.Loading())
+
         RetrofitClass.getHomeInstance()?.getHomeRequestsInstance()?.getHomeData(categoryId,Latitude,Longitude)?.enqueue(object : Callback<ResponseBody?> {
             override fun onResponse(call: Call<ResponseBody?>, response: Response<ResponseBody?>) {
                 var restaurantsResponse: RestaurantsResponse?=null
@@ -64,18 +70,21 @@ class HomeRepository {
                 }
                 Timber.d(Gson().toJson(restaurantsResponse).toString())
                 Log.d("HomeResponse","${Gson().toJson(restaurantsResponse).toString()}")
-                restaurantResponseLiveData.postValue(restaurantsResponse)
+                restaurantResponseLiveData.postValue(com.comcept.rmrscustomer.repository.Response.Success(restaurantsResponse))
             }
 
             override fun onFailure(call: Call<ResponseBody?>, t: Throwable) {
                 Timber.e("Error: ${t.message.toString()}")
+                restaurantResponseLiveData.postValue(com.comcept.rmrscustomer.repository.Response.Error(t.message.toString()))
             }
         })
         return restaurantResponseLiveData
     }
 
-    fun updateFCMTokenResponseLiveData(fcmNotification: FcmNotification): LiveData<FCMTokenResponse> {
-        fcmResponseLiveData=MutableLiveData<FCMTokenResponse>()
+    fun updateFCMTokenResponseLiveData(fcmNotification: FcmNotification): LiveData<com.comcept.rmrscustomer.repository.Response<FCMTokenResponse>> {
+        fcmResponseLiveData=MutableLiveData<com.comcept.rmrscustomer.repository.Response<FCMTokenResponse>>()
+        fcmResponseLiveData.postValue(com.comcept.rmrscustomer.repository.Response.Loading())
+
         RetrofitClass.getHomeInstance()?.getHomeRequestsInstance()?.updateFCMToken(fcmNotification)?.enqueue(object : Callback<ResponseBody?> {
             override fun onResponse(call: Call<ResponseBody?>, response: Response<ResponseBody?>) {
                 var fcmTokenResponse: FCMTokenResponse?=null
@@ -88,18 +97,22 @@ class HomeRepository {
 
                 }
                 Timber.d(Gson().toJson(fcmTokenResponse).toString())
-                fcmResponseLiveData.postValue(fcmTokenResponse)
+                fcmResponseLiveData.postValue(com.comcept.rmrscustomer.repository.Response.Success(fcmTokenResponse))
             }
 
             override fun onFailure(call: Call<ResponseBody?>, t: Throwable) {
                 Timber.e("Error: ${t.message.toString()}")
+                fcmResponseLiveData.postValue(com.comcept.rmrscustomer.repository.Response.Error(t.message.toString()))
             }
         })
         return fcmResponseLiveData
     }
 
-    fun luckyDrawPointsResponseLiveData(customerID:String): LiveData<LuckyDrawPointsResponse> {
-        luckyDrawPointsResponseLiveData=MutableLiveData<LuckyDrawPointsResponse>()
+    fun luckyDrawPointsResponseLiveData(customerID:String): LiveData<com.comcept.rmrscustomer.repository.Response<LuckyDrawPointsResponse>> {
+        luckyDrawPointsResponseLiveData=MutableLiveData<com.comcept.rmrscustomer.repository.Response<LuckyDrawPointsResponse>>()
+
+        luckyDrawPointsResponseLiveData.postValue(com.comcept.rmrscustomer.repository.Response.Loading())
+
         RetrofitClass.getHomeInstance()?.getHomeRequestsInstance()?.getLuckyDrawPoints(customerID)?.enqueue(object : Callback<ResponseBody?> {
             override fun onResponse(call: Call<ResponseBody?>, response: Response<ResponseBody?>) {
                 var luckyDrawPointsResponse: LuckyDrawPointsResponse?=null
@@ -112,11 +125,12 @@ class HomeRepository {
 
                 }
                 Timber.d(Gson().toJson(luckyDrawPointsResponse).toString())
-                luckyDrawPointsResponseLiveData.postValue(luckyDrawPointsResponse)
+                luckyDrawPointsResponseLiveData.postValue(com.comcept.rmrscustomer.repository.Response.Success(luckyDrawPointsResponse))
             }
 
             override fun onFailure(call: Call<ResponseBody?>, t: Throwable) {
                 Timber.e("Error: ${t.message.toString()}")
+                luckyDrawPointsResponseLiveData.postValue(com.comcept.rmrscustomer.repository.Response.Error(t.message.toString()))
             }
         })
         return luckyDrawPointsResponseLiveData

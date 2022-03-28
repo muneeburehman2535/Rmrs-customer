@@ -18,6 +18,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -45,6 +46,7 @@ import com.comcept.rmrscustomer.data_class.cart.Cart
 import com.comcept.rmrscustomer.data_class.fcm.FcmNotification
 import com.comcept.rmrscustomer.databinding.ActivityCustomerHomeBinding
 import com.comcept.rmrscustomer.db.CustomerDatabase
+import com.comcept.rmrscustomer.repository.Response
 import com.comcept.rmrscustomer.shared_view_models.SharedViewModel
 import com.comcept.rmrscustomer.ui.home.cart.CartFragment
 import com.comcept.rmrscustomer.ui.home.favourite.FavouriteFragment
@@ -57,7 +59,12 @@ import com.comcept.rmrscustomer.ui.review.restaurantreviews.ReviewsListFragment
 import com.comcept.rmrscustomer.ui.updatepassword.UpdatePasswordFragment
 import com.comcept.rmrscustomer.utilities.AppGlobal
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import timber.log.Timber
+import java.io.IOException
 import java.util.*
 
 
@@ -92,8 +99,13 @@ class CustomerHomeActivity : AppCompatActivity(), NavigationView.OnNavigationIte
     private lateinit var txtLuckyDrawPoints: TextView
     private lateinit var txtCustomerName: TextView
 
+
     var mLatitude: Double = 0.0
     var mLongitude: Double = 0.0
+
+
+    val job = Job()
+    private val uiScope = CoroutineScope(Dispatchers.Main + job)
 
 
     @SuppressLint("HardwareIds")
@@ -105,6 +117,7 @@ class CustomerHomeActivity : AppCompatActivity(), NavigationView.OnNavigationIte
         databaseCreator = CustomerDatabase.getInstance(this)
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         progressDialog = AppGlobal.setProgressDialog(this)
+
 
         val headerView: View = mBinding.navView.getHeaderView(0)
         txtLuckyDrawPoints = headerView.findViewById(R.id.txt_lucky_draw_points_home)
@@ -392,43 +405,40 @@ class CustomerHomeActivity : AppCompatActivity(), NavigationView.OnNavigationIte
 
     @SuppressLint("MissingPermission")
     private fun getLocation() {
-        if (ActivityCompat.checkSelfPermission(
-                this, Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                this, Manifest.permission.ACCESS_COARSE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            ActivityCompat.requestPermissions(
-                this,
-                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-                REQUEST_LOCATION
-            )
-        } else {
-            //val locationGPS: Location? = locationManager?.getLastKnownLocation(LocationManager.GPS_PROVIDER)
-//            if (locationGPS != null) {
-//                val lat: Double = locationGPS.getLatitude()
-//                val longi: Double = locationGPS.getLongitude()
-//                latitude = lat.toString()
-//                longitude = longi.toString()
-//                getAddress(latitude!!.toDouble(), longitude!!.toDouble())
 
-//            } else {
-//                Toast.makeText(this, "Unable to find location.", Toast.LENGTH_SHORT).show()
-//            }
-            fusedLocationClient.lastLocation
-                .addOnSuccessListener { location: Location? ->
-                    if (location != null) {
-                        getAddress(location.latitude, location.longitude)
-                        mLatitude = location.latitude
-                        mLongitude = location.longitude
-                        mModel.updateLatitude(mLatitude)
-                        mModel.updateLongitude(mLongitude)
+        uiScope.launch {
 
+
+            if (ActivityCompat.checkSelfPermission(
+                    this@CustomerHomeActivity, Manifest.permission.ACCESS_FINE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                    this@CustomerHomeActivity, Manifest.permission.ACCESS_COARSE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                ActivityCompat.requestPermissions(
+                    this@CustomerHomeActivity,
+                    arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                    REQUEST_LOCATION
+                )
+            } else {
+                fusedLocationClient.lastLocation
+                    .addOnSuccessListener { location: Location? ->
+                        if (location != null) {
+                            getAddress(location.latitude, location.longitude)
+                            mLatitude = location.latitude
+                            mLongitude = location.longitude
+                            mModel.updateLatitude(mLatitude)
+                            mModel.updateLongitude(mLongitude)
+
+                        }
+                        // Got last known location. In some rare situations this can be null.
                     }
-                    // Got last known location. In some rare situations this can be null.
-                }
+
+            }
 
         }
+
+
     }
 
     private fun onGPS() {
@@ -449,24 +459,36 @@ class CustomerHomeActivity : AppCompatActivity(), NavigationView.OnNavigationIte
     }
 
     private fun getAddress(latitude: Double, longitude: Double) {
-        val addresses: List<Address>
-        val geocoder = Geocoder(this, Locale.getDefault())
 
-        addresses = geocoder.getFromLocation(latitude, longitude, 1)
+        uiScope.launch{
 
 
-        val address: String =
-            addresses[0].getAddressLine(0) // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
-        AppGlobal.showToast(address, this)
-        mCurrentLocation = address
-        txtToolbarName.text = mCurrentLocation
-        AppGlobal.writeString(this, AppGlobal.customerAddress, mCurrentLocation)
+            val addresses: List<Address>
+            val geocoder = Geocoder(this@CustomerHomeActivity, Locale.getDefault())
 
-//        val city: String = addresses[0].locality
-//        val state: String = addresses[0].adminArea
-//        val country: String = addresses[0].countryName
-        // val postalCode: String = addresses[0].postalCode
-        //val knownName: String = addresses[0].featureName
+            try {
+                addresses = geocoder.getFromLocation(latitude, longitude, 1)
+                val address: String =
+                    addresses[0].getAddressLine(0) // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+                AppGlobal.showToast(address, this@CustomerHomeActivity)
+                mCurrentLocation = address
+                txtToolbarName.text = mCurrentLocation
+                AppGlobal.writeString(this@CustomerHomeActivity, AppGlobal.customerAddress, mCurrentLocation)
+            }
+            catch (e:IOException){
+                when{
+                    e.message == "grpc failed" ->{
+                        Toast.makeText(this@CustomerHomeActivity, "GRPC Failed", Toast.LENGTH_SHORT).show()
+                    }
+                    else -> throw e
+                }
+            }
+
+
+
+
+        }
+
     }
 
     /*******************************************************************************************************************/
@@ -504,6 +526,7 @@ class CustomerHomeActivity : AppCompatActivity(), NavigationView.OnNavigationIte
                     pickLocation()
                 } else {
                     AppGlobal.showToast("Location Permission Denied.", applicationContext)
+                    AppGlobal.showDialog("Location Alert!","Please Enable Your Location for better Results",this)
 
                 }
             }
@@ -513,6 +536,7 @@ class CustomerHomeActivity : AppCompatActivity(), NavigationView.OnNavigationIte
                     getLocation()
                 } else {
                     AppGlobal.showToast("Location Permission Denied.", applicationContext)
+                    AppGlobal.showDialog("Location Alert!","Please Enable Your Location for better Results",this)
 
                 }
             }
@@ -785,35 +809,100 @@ class CustomerHomeActivity : AppCompatActivity(), NavigationView.OnNavigationIte
    * Get Categories API Method
    * */
     private fun updateFcmToken(fcmNotification: FcmNotification) {
-        progressDialog.setLabel("Please Wait")
-        progressDialog.show()
+
 
         mViewModel.updateFcmTokenResponse(fcmNotification).observe(this, {
-            progressDialog.dismiss()
-            if (it != null && it.Message == "Success") {
-                Timber.d("Updated Token: ${it.data.result.Token}")
+
+
+            when(it){
+
+                is Response.Loading ->{
+                    progressDialog.setLabel("Please Wait")
+                    progressDialog.show()
+
+                }
+
+                is Response.Success ->{
+
+
+                    it.data?.let {
+
+                        progressDialog.dismiss()
+                        if (it != null && it.Message == "Success") {
+                            Timber.d("Updated Token: ${it.data.result.Token}")
+
+                        }
+                    }
+
+                }
+
+                is Response.Error ->{
+
+
+                    progressDialog.dismiss()
+                }
+
 
             }
+
+
+
         })
     }
 
     fun getLuckyDrawPoints(customerID: String) {
-        if (progressDialog.isShowing){
 
-            progressDialog.dismiss()
 
-        }
-        progressDialog.setLabel("Please Wait")
-        progressDialog.show()
+        uiScope.launch {
 
-        mViewModel.getLuckyDrawPointsResponse(customerID).observe(this, {
-            progressDialog.dismiss()
-            if (it != null && it.Message == "Success") {
-                Timber.d("Updated Token: ${it.data.LuckyDrawPoints}")
-                txtLuckyDrawPoints.text =
-                    "${getString(R.string.title_lucky_points)} ${AppGlobal.roundTwoPlaces(it.data.LuckyDrawPoints.toDouble())} "
+            if (progressDialog.isShowing){
+                progressDialog.dismiss()
+
             }
-        })
+
+
+            mViewModel.getLuckyDrawPointsResponse(customerID).observe(this@CustomerHomeActivity, {
+
+
+                when(it){
+
+
+                    is Response.Loading ->{
+                        progressDialog.setLabel("Please Wait")
+                        progressDialog.show()
+                    }
+
+
+                    is Response.Success ->{
+
+
+                        it.data?.let {
+
+                            progressDialog.dismiss()
+                            if (it != null && it.Message == "Success") {
+                                Timber.d("Updated Token: ${it.data.LuckyDrawPoints}")
+                                txtLuckyDrawPoints.text =
+                                    "${getString(R.string.title_lucky_points)} ${AppGlobal.roundTwoPlaces(it.data.LuckyDrawPoints.toDouble())} "
+                            }
+
+                        }
+
+                    }
+
+                    is Response.Error ->{
+
+                        progressDialog.dismiss()
+
+                    }
+
+                }
+
+            })
+        }
+
+
+
+
     }
 
 
