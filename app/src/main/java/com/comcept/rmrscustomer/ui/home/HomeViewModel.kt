@@ -10,6 +10,7 @@ import com.comcept.rmrscustomer.data_class.home.restaurants.RestaurantsResponse
 import com.comcept.rmrscustomer.db.dataclass.Favourite
 import com.comcept.rmrscustomer.repository.HomeRepository
 import com.comcept.rmrscustomer.db.repository.RoomDBRepository
+import com.comcept.rmrscustomer.repository.Response
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -26,11 +27,11 @@ constructor(application: Application, private val roomDBRepository: RoomDBReposi
     private lateinit var restaurantResponseLiveData: MutableLiveData<RestaurantsResponse>
     var restaurantId:String="0"
 
-    fun getCategoryResponse():LiveData<CategoryResponse>{
+    fun getCategoryResponse():LiveData<Response<CategoryResponse>>{
         return homeRepository.getLoginResponseLiveData()
     }
 
-    fun getRestaurantsResponse(categoryId: String,Latitude:Double,Longitude:Double):LiveData<RestaurantsResponse>{
+    fun getRestaurantsResponse(categoryId: String,Latitude:Double,Longitude:Double):LiveData<Response<RestaurantsResponse>>{
         return homeRepository.getRestaurantResponseLiveData(categoryId,Latitude,Longitude)
     }
 

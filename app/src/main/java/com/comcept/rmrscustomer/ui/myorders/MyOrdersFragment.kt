@@ -17,6 +17,7 @@ import com.comcept.rmrscustomer.adapters.*
 import com.comcept.rmrscustomer.data_class.myorders.currentorders.CurrentOrderDataClass
 import com.comcept.rmrscustomer.data_class.myorders.pastorders.PastOrdersDataClass
 import com.comcept.rmrscustomer.databinding.MyOrdersFragmentBinding
+import com.comcept.rmrscustomer.repository.Response
 import com.comcept.rmrscustomer.ui.orderdetail.OrderDetailActivity
 import com.comcept.rmrscustomer.utilities.AppGlobal
 import com.comcept.rmrscustomer.utilities.RecyclerItemClickListener
@@ -179,36 +180,65 @@ class MyOrdersFragment : Fragment() {
   * Get Restaurants Data API Method
   * */
     private fun getMyOrdersList(customerId: String){
-        progressDialog.setLabel("Please Wait")
-        progressDialog.show()
+
         viewModel.getMyOrdersResponse(customerId).observe(requireActivity(), {
-            progressDialog.dismiss()
-            //refreshList()
-            if (it!=null&&it.Message == "Success") {
 
-                currentOrderList = it.data.CurrentOrder
-                pastOrderList = it.data.PastOrders
-                if (currentOrderList.size>0||pastOrderList.size>0){
-                    mBinding.layoutOrdersList.visibility=View.VISIBLE
-                    mBinding.imgNotFoundFmo.visibility=View.GONE
-                    currentOrderList.reverse()
-                    pastOrderList.reverse()
-                    currentOrderAdapter.updateList(currentOrderList)
-                    pastOrderAdapter.updateList(pastOrderList)
-                }
-                else{
-                    mBinding.layoutOrdersList.visibility=View.GONE
-                    mBinding.imgNotFoundFmo.visibility=View.VISIBLE
+
+            when(it){
+
+                is Response.Loading ->{
+                    progressDialog.setLabel("Please Wait")
+                    progressDialog.show()
                 }
 
+                is Response.Success ->{
 
-            } else {
-                AppGlobal.showDialog(
-                    getString(R.string.title_alert),
-                    it.data.description,
-                    requireContext()
-                )
+                    it.data?.let {
+
+                        progressDialog.dismiss()
+                        //refreshList()
+                        if (it!=null&&it.Message == "Success") {
+
+                            currentOrderList = it.data.CurrentOrder
+                            pastOrderList = it.data.PastOrders
+                            if (currentOrderList.size>0||pastOrderList.size>0){
+                                mBinding.layoutOrdersList.visibility=View.VISIBLE
+                                mBinding.imgNotFoundFmo.visibility=View.GONE
+                                currentOrderList.reverse()
+                                pastOrderList.reverse()
+                                currentOrderAdapter.updateList(currentOrderList)
+                                pastOrderAdapter.updateList(pastOrderList)
+                            }
+                            else{
+                                mBinding.layoutOrdersList.visibility=View.GONE
+                                mBinding.imgNotFoundFmo.visibility=View.VISIBLE
+                            }
+
+
+                        } else {
+                            AppGlobal.showDialog(
+                                getString(R.string.title_alert),
+                                it.data.description,
+                                requireContext()
+                            )
+                        }
+                    }
+                }
+
+
+                is Response.Error ->{
+
+                    progressDialog.dismiss()
+                    AppGlobal.showDialog(
+                        getString(R.string.title_alert),
+                        it.message.toString(),
+                        requireContext()
+                    )
+                }
+
             }
+
+
         })
     }
 
