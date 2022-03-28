@@ -125,13 +125,18 @@ class VerifyInvoiceFragment : Fragment(), View.OnClickListener {
 
             } else {
 
-                it.message?.let { it1 ->
-                    AppGlobal.showDialog(
-                        getString(R.string.title_alert),
-                        it1,
-                        requireActivity()
-                    )
-                }
+                AppGlobal.showDialog(
+                    getString(R.string.title_alert),
+                    "Data Not Found Please Check Your IDs",
+                    requireActivity()
+                )
+//                it.message?.let { it1 ->
+//                    AppGlobal.showDialog(
+//                        getString(R.string.title_alert),
+//                        it1,
+//                        requireActivity()
+//                    )
+//                }
             }
         })
     }

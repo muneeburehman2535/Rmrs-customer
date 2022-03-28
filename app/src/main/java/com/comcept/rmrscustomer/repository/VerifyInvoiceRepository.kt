@@ -23,8 +23,7 @@ class VerifyInvoiceRepository {
 
     fun getInvoiceResponseLiveData(verifyInvoice: VerifyInvoice): LiveData<VerifyInvoiceResponse> {
         verifyInvoiceResponseLiveData = MutableLiveData<VerifyInvoiceResponse>()
-        RetrofitClass.getHomeInstance()?.getHomeRequestsInstance()
-            ?.verifyInvoice(verifyInvoice)?.enqueue(object :
+        RetrofitClass.getHomeInstance()?.getHomeRequestsInstance()?.verifyInvoice(verifyInvoice)?.enqueue(object :
             Callback<ResponseBody?> {
             override fun onResponse(call: Call<ResponseBody?>, response: Response<ResponseBody?>) {
                 var verifyInvoiceResponse: VerifyInvoiceResponse? = null
@@ -36,9 +35,7 @@ class VerifyInvoiceRepository {
                     )
 
                 } else {
-                    Gson().fromJson(
-                        ConvertResponseToString.getString(response),
-                        VerifyInvoiceResponse::class.java
+                    Gson().fromJson(ConvertResponseToString.getString(response), VerifyInvoiceResponse::class.java
                     )
 
                 }

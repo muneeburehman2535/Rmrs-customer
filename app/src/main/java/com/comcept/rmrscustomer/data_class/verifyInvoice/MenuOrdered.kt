@@ -9,7 +9,7 @@ data class MenuOrdered(@SerializedName("Deal"        ) var Deal        : Boolean
                        @SerializedName("MenuID"      ) var MenuID      : String?  = null,
                        @SerializedName("MenuName"    ) var MenuName    : String?  = null,
                        @SerializedName("MenuPrice"   ) var MenuPrice   : String?  = null,
-                       @SerializedName("Quantity"    ) var Quantity    : Int?     = null,
+                       @SerializedName("Quantity"    ) var Quantity    : Float?     = null,
                        @SerializedName("Variant"     ) var Variant     : Variant? = null,
                        @SerializedName("isReady"     ) var isReady     : Boolean? = null,
                        @SerializedName("isVariant"   ) var isVariant   : Boolean? = null)
