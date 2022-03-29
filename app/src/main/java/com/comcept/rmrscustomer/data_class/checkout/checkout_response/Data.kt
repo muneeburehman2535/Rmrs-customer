@@ -21,5 +21,6 @@ data class Data(
         val DeliveryCharges:Float,
         var Comments:String,
         var PaymentMethod:String,
-        val CustomerAddress:String
+        val CustomerAddress:String,
+        val SalesTaxRate:Float,
 )
