@@ -14,6 +14,10 @@ import com.comcept.rmrscustomer.R
 import com.comcept.rmrscustomer.data_class.myorders.currentorders.CurrentOrderDataClass
 import com.comcept.rmrscustomer.databinding.CardCurrentOrdersBinding
 import com.comcept.rmrscustomer.utilities.AppGlobal
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.util.*
+import kotlin.collections.ArrayList
 
 class CurrentOrdersAdapter(private val context: Context,private var currentOrderList:ArrayList<CurrentOrderDataClass>): RecyclerView.Adapter<CurrentOrdersAdapter.ViewHolder>() {
 
@@ -30,7 +34,7 @@ class CurrentOrdersAdapter(private val context: Context,private var currentOrder
     }
 
     @RequiresApi(Build.VERSION_CODES.M)
-    @SuppressLint("SetTextI18n")
+    @SuppressLint("SetTextI18n", "NewApi")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 //        holder.txtOrderName.text=currentOrderList[position].RestaurantName
 //        holder.txtOrderMenu.text=currentOrderList[position].MenuOrdered[0].Description
@@ -48,12 +52,22 @@ class CurrentOrdersAdapter(private val context: Context,private var currentOrder
             holder.binding.txtOrderStatusCco.setTextColor(context.getColor(R.color.colorAccent))
         }
 
+//
+
+
+        var updatedOrderData=""
         val dateArr=currentOrderList[position].OrderDate.split("T")
-        val timeArr=dateArr[1].split(":")
-        holder.binding.txtTimeCco.text="${timeArr[0]}:${timeArr[1]}"
-        holder.binding.txtDateCco.text=dateArr[0]
+        val date=dateArr[0].split("-")
+        val time=dateArr[1].split(":")
+        var calendar=Calendar.getInstance()
+        calendar.timeZone= TimeZone.getTimeZone("GMT")
+        calendar.set(date[0].toInt(),(date[1].toInt()-1),date[2].toInt(),time[0].toInt(),time[1].toInt())
+        updatedOrderData= AppGlobal.dateToTimeStamp(Date(calendar.timeInMillis),"MMM dd, hh:mm a").toString()
+
+
         holder.binding.txtOrderPriceCco.text= AppGlobal.mCurrency+ AppGlobal.roundTwoPlaces(currentOrderList[position].TotalAmount.toDouble())
 
+        holder.binding.txtDateCco.text=updatedOrderData
     }
 
     override fun getItemCount(): Int {

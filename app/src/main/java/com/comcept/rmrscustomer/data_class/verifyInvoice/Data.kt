@@ -24,6 +24,7 @@ data class Data(
     @SerializedName("ReferenceNo") var ReferenceNo: String? = null,
     @SerializedName("Discount") var Discount: Discount? = Discount(),
     @SerializedName("UserPoints") var UserPoints: Float? = null,
+    @SerializedName("DeliveryCharges") var DeliveryCharges: Float? = null,
     @SerializedName("NTNNumber") var NTNNumber: String? = null,
     @SerializedName("__v") var _v: Int? = null,
     @SerializedName("IsIntegrated") var IsIntegrated: Boolean? = null
