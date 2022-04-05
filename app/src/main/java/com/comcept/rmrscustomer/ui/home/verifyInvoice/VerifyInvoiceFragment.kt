@@ -103,11 +103,6 @@ class VerifyInvoiceFragment : Fragment(), View.OnClickListener {
                     progressDialog.dismiss()
                     it.data?.let {
                         if (it != null && it.message == "Success") {
-//                AppGlobal.showDialog(
-//                    getString(R.string.title_alert),
-//                    it.data.CustomerID.toString(),
-//                    requireActivity()
-//                )
 
 
                             it.data?.let {
@@ -150,12 +145,16 @@ class VerifyInvoiceFragment : Fragment(), View.OnClickListener {
 
                 is Response.Error ->{
 
-                    progressDialog.dismiss()
                     AppGlobal.showDialog(
                         getString(R.string.title_alert), it.message.toString(),
                         requireActivity()
                     )
 
+                    if (progressDialog.isShowing) {
+
+                        progressDialog.dismiss()
+
+                    }
                 }
             }
 

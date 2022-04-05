@@ -361,14 +361,11 @@ class RestaurantDetailFragment : Fragment(), TabsAdapter.ViewClickListener, View
 
 
                 is Response.Error ->{
+                    AppGlobal.showDialog(getString(R.string.title_alert), it.message.toString(),requireActivity())
+                    if (progressDialog.isShowing) {
+                        progressDialog.dismiss()
 
-                    progressDialog.dismiss()
-                    AppGlobal.showDialog(
-                        getString(R.string.title_alert),
-                        it.message.toString(),
-                        requireContext()
-                    )
-
+                    }
                 }
 
 
@@ -426,13 +423,11 @@ class RestaurantDetailFragment : Fragment(), TabsAdapter.ViewClickListener, View
 
                 is Response.Error ->{
 
+                    AppGlobal.showDialog(getString(R.string.title_alert), it.message.toString(),requireActivity())
+                    if (progressDialog.isShowing) {
+                        progressDialog.dismiss()
 
-                    progressDialog.dismiss()
-                    AppGlobal.showDialog(
-                        getString(R.string.title_alert),
-                        it.message.toString(),
-                        requireContext()
-                    )
+                    }
                 }
 
 
@@ -514,11 +509,11 @@ class RestaurantDetailFragment : Fragment(), TabsAdapter.ViewClickListener, View
                 is Response.Error ->{
 
 
-                    progressDialog.dismiss()
-                    AppGlobal.showDialog(
-                        getString(R.string.title_alert), it.message.toString(),
-                        requireContext()
-                    )
+                    AppGlobal.showDialog(getString(R.string.title_alert), it.message.toString(),requireActivity())
+                    if (progressDialog.isShowing) {
+                        progressDialog.dismiss()
+
+                    }
 
                 }
 

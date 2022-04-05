@@ -64,7 +64,7 @@ public interface WebRequestGeo {
     Call<ResponseBody> getReviewList(@Query("RestaurantID") String restaurantId);
 
     @GET("/customer/simple_search/?")
-    Call<ResponseBody> getSearchList(@Query("search") String search,@Query("Latitude") Double Latitude,@Query("Longitude") Double Longitude);
+    Call<ResponseBody> getSearchList(@Query("search") String search,@Query("latitude") Double Latitude,@Query("longitude") Double Longitude);
 
     @POST("/customer/reservation")
     Call<ResponseBody> addReservation(@Body Reservation reservation);

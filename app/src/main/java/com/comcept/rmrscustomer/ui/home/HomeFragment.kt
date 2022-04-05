@@ -503,6 +503,11 @@ class HomeFragment : Fragment(), View.OnClickListener, RestaurantAdapter.AddToFa
                                     it.data.description,
                                     requireContext()
                                 )
+                                if (progressDialog.isShowing) {
+
+                                    progressDialog.dismiss()
+
+                                }
                             }
                         }
 
@@ -514,6 +519,11 @@ class HomeFragment : Fragment(), View.OnClickListener, RestaurantAdapter.AddToFa
                             it.message.toString(),
                             requireContext()
                         )
+                        if (progressDialog.isShowing) {
+
+                            progressDialog.dismiss()
+
+                        }
                     }
                 }
 
@@ -527,11 +537,7 @@ class HomeFragment : Fragment(), View.OnClickListener, RestaurantAdapter.AddToFa
    * */
     private fun getRestaurantsList(categoryID: String, Latitude: Double, Longitude: Double) {
 
-        if (progressDialog.isShowing) {
 
-            progressDialog.dismiss()
-
-        }
 
 
         uiScope.launch {
@@ -586,10 +592,15 @@ class HomeFragment : Fragment(), View.OnClickListener, RestaurantAdapter.AddToFa
 
                             AppGlobal.showDialog(
                                 getString(R.string.title_alert),
-                                "Restaurant not found in this category ",
+                                it.message.toString(),
                                 requireContext()
                             )
 
+                            if (progressDialog.isShowing) {
+
+                                progressDialog.dismiss()
+
+                            }
 
                         }
 

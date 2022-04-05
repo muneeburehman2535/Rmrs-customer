@@ -157,13 +157,11 @@ class ConfirmOtpActivity : AppCompatActivity() ,View.OnClickListener{
                 }
 
                 is Response.Error ->{
+                    AppGlobal.showDialog(getString(R.string.title_alert), it.message.toString(),this)
+                    if (progressDialog.isShowing) {
+                        progressDialog.dismiss()
 
-                    progressDialog.dismiss()
-                    AppGlobal.showDialog(
-                        getString(R.string.title_alert),
-                      "OTP Verification Failure",
-                        this
-                    )
+                    }
                 }
 
             }
@@ -212,13 +210,11 @@ class ConfirmOtpActivity : AppCompatActivity() ,View.OnClickListener{
 
 
                 is Response.Error ->{
+                    AppGlobal.showDialog(getString(R.string.title_alert), it.message.toString(),this)
+                    if (progressDialog.isShowing) {
+                        progressDialog.dismiss()
 
-                    progressDialog.dismiss()
-                    AppGlobal.showDialog(
-                        getString(R.string.title_alert),
-                        "SIgnUp Failure",
-                        this
-                    )
+                    }
                 }
             }
 
@@ -253,12 +249,12 @@ class ConfirmOtpActivity : AppCompatActivity() ,View.OnClickListener{
 
                is Response.Error ->{
 
-                   progressDialog.dismiss()
-                   AppGlobal.showDialog(
-                       getString(R.string.title_alert),
-                       "OTP Failure",
-                       this
-                   )
+                   AppGlobal.showDialog(getString(R.string.title_alert), it.message.toString(),this)
+
+                   if (progressDialog.isShowing) {
+                       progressDialog.dismiss()
+
+                   }
 
                }
            }

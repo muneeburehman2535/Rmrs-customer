@@ -145,12 +145,11 @@ class UpdatePasswordFragment : Fragment(),View.OnClickListener {
 
                is Response.Error ->{
 
-                   progressDialog.dismiss()
-                   AppGlobal.showDialog(
-                       getString(R.string.title_alert),
-                       it.message.toString(),
-                       requireActivity()
-                   )
+                   AppGlobal.showDialog(getString(R.string.title_alert), it.message.toString(),requireActivity())
+                   if (progressDialog.isShowing) {
+                       progressDialog.dismiss()
+
+                   }
                }
 
            }
