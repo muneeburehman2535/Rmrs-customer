@@ -125,7 +125,11 @@ class OrderDetailActivity : AppCompatActivity(),View.OnClickListener {
                }
 
                is Response.Error ->{
-                   progressDialog.dismiss()
+                   AppGlobal.showDialog(getString(R.string.title_alert), it.message.toString(),this)
+                   if (progressDialog.isShowing) {
+                       progressDialog.dismiss()
+
+                   }
                }
            }
 

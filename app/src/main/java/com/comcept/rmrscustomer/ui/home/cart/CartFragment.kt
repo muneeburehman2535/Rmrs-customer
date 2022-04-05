@@ -291,7 +291,8 @@ class CartFragment : Fragment(), View.OnClickListener, CartItemAdapter.UpdateIte
                     "",
                     "",
                     "",
-                    AppGlobal.readString(requireActivity(), AppGlobal.customerMobile, "0")
+                    AppGlobal.readString(requireActivity(), AppGlobal.customerMobile, "0"),
+                    mSalesTax.toFloat()
                 )
             }
         }

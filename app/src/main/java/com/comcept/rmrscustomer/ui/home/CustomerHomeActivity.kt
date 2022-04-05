@@ -837,9 +837,13 @@ class CustomerHomeActivity : AppCompatActivity(), NavigationView.OnNavigationIte
                 }
 
                 is Response.Error ->{
+                    AppGlobal.showDialog(getString(R.string.title_alert),it.message.toString(),this)
 
+                    if (progressDialog.isShowing) {
 
-                    progressDialog.dismiss()
+                        progressDialog.dismiss()
+
+                    }
                 }
 
 
@@ -890,8 +894,12 @@ class CustomerHomeActivity : AppCompatActivity(), NavigationView.OnNavigationIte
                     }
 
                     is Response.Error ->{
+                        AppGlobal.showDialog(getString(R.string.title_alert),it.message.toString(),this@CustomerHomeActivity)
+                        if (progressDialog.isShowing) {
 
-                        progressDialog.dismiss()
+                            progressDialog.dismiss()
+
+                        }
 
                     }
 

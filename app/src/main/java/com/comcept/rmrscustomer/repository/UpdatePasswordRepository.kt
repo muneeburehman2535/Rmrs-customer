@@ -15,11 +15,14 @@ import timber.log.Timber
 
 class UpdatePasswordRepository {
 
-    private lateinit var updatePasswordResponseLiveData: MutableLiveData<UpdatePasswordResponse>
+    private lateinit var updatePasswordResponseLiveData: MutableLiveData<com.comcept.rmrscustomer.repository.Response<UpdatePasswordResponse>>
     //private val retrofitClass:RetrofitClass= RetrofitClass().getHomeRequestsInstance()!!
 
-    fun getUpdatePasswordResponseLiveData(updatePassword: UpdatePassword): LiveData<UpdatePasswordResponse> {
-        updatePasswordResponseLiveData= MutableLiveData<UpdatePasswordResponse>()
+    fun getUpdatePasswordResponseLiveData(updatePassword: UpdatePassword): LiveData<com.comcept.rmrscustomer.repository.Response<UpdatePasswordResponse>> {
+        updatePasswordResponseLiveData= MutableLiveData<com.comcept.rmrscustomer.repository.Response<UpdatePasswordResponse>>()
+
+        updatePasswordResponseLiveData.postValue(com.comcept.rmrscustomer.repository.Response.Loading())
+
         RetrofitClass.getHomeInstance()?.getHomeRequestsInstance()?.updateCustomerPassword(updatePassword)?.enqueue(object :
             Callback<ResponseBody?> {
             override fun onResponse(call: Call<ResponseBody?>, response: Response<ResponseBody?>) {
@@ -33,11 +36,12 @@ class UpdatePasswordRepository {
 
                 }
                 Timber.d(Gson().toJson("Update Password: @{updatePasswordResponse)}"))
-                updatePasswordResponseLiveData.postValue(updatePasswordResponse)
+                updatePasswordResponseLiveData.postValue(com.comcept.rmrscustomer.repository.Response.Success(updatePasswordResponse))
             }
 
             override fun onFailure(call: Call<ResponseBody?>, t: Throwable) {
                 Timber.e("Error: ${t.message.toString()}")
+                updatePasswordResponseLiveData.postValue(com.comcept.rmrscustomer.repository.Response.Error(t.message.toString()))
             }
         })
         return updatePasswordResponseLiveData

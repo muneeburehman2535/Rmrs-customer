@@ -13,6 +13,7 @@ import com.kaopiz.kprogresshud.KProgressHUD
 import com.comcept.rmrscustomer.R
 import com.comcept.rmrscustomer.data_class.login.Login
 import com.comcept.rmrscustomer.databinding.ActivityLoginBinding
+import com.comcept.rmrscustomer.repository.Response
 import com.comcept.rmrscustomer.ui.forgotpassword.ForgotPasswordActivity
 import com.comcept.rmrscustomer.ui.home.CustomerHomeActivity
 import com.comcept.rmrscustomer.ui.registration.RegistrationActivity
@@ -100,27 +101,59 @@ class LoginActivity : AppCompatActivity(),View.OnClickListener {
     * Login API Method
     * */
     private fun loginUser(){
-        progressDialog.setLabel("Please Wait")
-        progressDialog.show()
+
         val login=Login(mBinding.edtxtEmailAl.text.trim().toString(), mBinding.edtxtPasswordAl.text?.trim().toString())
         mViewModel.getLoginResponse(login).observe(this, {
-            progressDialog.dismiss()
-            if (it!=null&&it.Message=="Success")
-            {
-                AppGlobal.writeString(this,AppGlobal.tokenId, it.data.Token)
-                AppGlobal.writeString(this,AppGlobal.customerId,it.data.CustomerID)
-                AppGlobal.writeString(this,AppGlobal.customerName,it.data.Name)
-                AppGlobal.writeString(this,AppGlobal.customerEmail,it.data.Email)
-                AppGlobal.writeString(this,AppGlobal.customerMobile,it.data.MobileNumber)
-                AppGlobal.startNewActivity(this, CustomerHomeActivity::class.java)
 
-                //AppGlobal.writeString(this,AppGlobal.customerId,"ai0anPGypI")
-               // AppGlobal.startNewActivity(this, CustomerHomeActivity::class.java)
-                finishAffinity()
+            when(it){
+
+                is Response.Loading ->{
+
+                    progressDialog.setLabel("Please Wait")
+                    progressDialog.show()
+                }
+
+                is Response.Success ->{
+
+                    it.data?.let {
+                        progressDialog.dismiss()
+                        if (it!=null&&it.Message=="Success")
+                        {
+                            AppGlobal.writeString(this,AppGlobal.tokenId, it.data.Token)
+                            AppGlobal.writeString(this,AppGlobal.customerId,it.data.CustomerID)
+                            AppGlobal.writeString(this,AppGlobal.customerName,it.data.Name)
+                            AppGlobal.writeString(this,AppGlobal.customerEmail,it.data.Email)
+                            AppGlobal.writeString(this,AppGlobal.customerMobile,it.data.MobileNumber)
+                            AppGlobal.startNewActivity(this, CustomerHomeActivity::class.java)
+
+                            //AppGlobal.writeString(this,AppGlobal.customerId,"ai0anPGypI")
+                            // AppGlobal.startNewActivity(this, CustomerHomeActivity::class.java)
+                            finishAffinity()
+                        }
+                        else{
+                            AppGlobal.showDialog(getString(R.string.title_alert),it.data.description,this)
+                        }
+
+                    }
+                }
+
+
+                is Response.Error ->{
+
+                    AppGlobal.showDialog(getString(R.string.title_alert),it.message.toString(),this)
+
+                    if (progressDialog.isShowing) {
+
+                        progressDialog.dismiss()
+
+                    }
+                }
+
+
             }
-            else{
-                AppGlobal.showDialog(getString(R.string.title_alert),it.data.description,this)
-            }
+
+
+
         })
     }
 

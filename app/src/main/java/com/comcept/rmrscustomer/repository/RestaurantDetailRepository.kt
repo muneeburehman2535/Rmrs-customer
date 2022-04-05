@@ -17,12 +17,15 @@ import timber.log.Timber
 class RestaurantDetailRepository {
 
 
-    private lateinit var restaurantDetailResponseLiveData: MutableLiveData<RestaurantDetailResponse>
-    private lateinit var restaurantCategoryResponseLiveData: MutableLiveData<RestaurantCategoryResponse>
-    private lateinit var dealsResponseLiveData: MutableLiveData<DealsResponse>
+    private lateinit var restaurantDetailResponseLiveData: MutableLiveData<com.comcept.rmrscustomer.repository.Response<RestaurantDetailResponse>>
+    private lateinit var restaurantCategoryResponseLiveData: MutableLiveData<com.comcept.rmrscustomer.repository.Response<RestaurantCategoryResponse>>
+    private lateinit var dealsResponseLiveData: MutableLiveData<com.comcept.rmrscustomer.repository.Response<DealsResponse>>
 
-    fun getRestaurantDetailResponseLiveData(restaurantId:String): LiveData<RestaurantDetailResponse> {
-        restaurantDetailResponseLiveData= MutableLiveData<RestaurantDetailResponse>()
+    fun getRestaurantDetailResponseLiveData(restaurantId:String): LiveData<com.comcept.rmrscustomer.repository.Response<RestaurantDetailResponse>> {
+        restaurantDetailResponseLiveData= MutableLiveData<com.comcept.rmrscustomer.repository.Response<RestaurantDetailResponse>>()
+
+        restaurantDetailResponseLiveData.postValue(com.comcept.rmrscustomer.repository.Response.Loading())
+
         RetrofitClass.getHomeInstance()?.getHomeRequestsInstance()?.getRestaurantDetail(restaurantId)?.enqueue(object : Callback<ResponseBody?> {
             override fun onResponse(call: Call<ResponseBody?>, response: Response<ResponseBody?>) {
                 var restaurantDetailResponse: RestaurantDetailResponse?=null
@@ -33,18 +36,23 @@ class RestaurantDetailRepository {
                     Gson().fromJson(ConvertResponseToString.getString(response), RestaurantDetailResponse::class.java)
                 }
                 Timber.d(Gson().toJson("Restaurant Detail: $restaurantDetailResponse"))
-                restaurantDetailResponseLiveData.postValue(restaurantDetailResponse)
+                restaurantDetailResponseLiveData.postValue(com.comcept.rmrscustomer.repository.Response.Success(restaurantDetailResponse))
             }
 
             override fun onFailure(call: Call<ResponseBody?>, t: Throwable) {
                 Timber.e("Error: ${t.message.toString()}")
+                restaurantDetailResponseLiveData.postValue(com.comcept.rmrscustomer.repository.Response.Error(t.message.toString()))
+
             }
         })
         return restaurantDetailResponseLiveData
     }
 
-    fun getRestaurantCategoryResponseLiveData(restaurantId:String): LiveData<RestaurantCategoryResponse> {
-        restaurantCategoryResponseLiveData= MutableLiveData<RestaurantCategoryResponse>()
+    fun getRestaurantCategoryResponseLiveData(restaurantId:String): LiveData<com.comcept.rmrscustomer.repository.Response<RestaurantCategoryResponse>> {
+        restaurantCategoryResponseLiveData= MutableLiveData<com.comcept.rmrscustomer.repository.Response<RestaurantCategoryResponse>>()
+
+        restaurantCategoryResponseLiveData.postValue(com.comcept.rmrscustomer.repository.Response.Loading())
+
         RetrofitClass.getHomeInstance()?.getHomeRequestsInstance()?.getRestaurantCategories(restaurantId)?.enqueue(object : Callback<ResponseBody?> {
             override fun onResponse(call: Call<ResponseBody?>, response: Response<ResponseBody?>) {
                 var restaurantCategoryResponse: RestaurantCategoryResponse?=null
@@ -55,18 +63,23 @@ class RestaurantDetailRepository {
                     Gson().fromJson(ConvertResponseToString.getString(response), RestaurantCategoryResponse::class.java)
                 }
                 Timber.d(Gson().toJson("Restaurant Detail: $restaurantCategoryResponse"))
-                restaurantCategoryResponseLiveData.postValue(restaurantCategoryResponse)
+                restaurantCategoryResponseLiveData.postValue(com.comcept.rmrscustomer.repository.Response.Success(restaurantCategoryResponse))
             }
 
             override fun onFailure(call: Call<ResponseBody?>, t: Throwable) {
                 Timber.e("Error: ${t.message.toString()}")
+                restaurantCategoryResponseLiveData.postValue(com.comcept.rmrscustomer.repository.Response.Error(t.message.toString()))
+
             }
         })
         return restaurantCategoryResponseLiveData
     }
 
-    fun getDealsResponseLiveData(restaurantId:String): LiveData<DealsResponse> {
-        dealsResponseLiveData= MutableLiveData<DealsResponse>()
+    fun getDealsResponseLiveData(restaurantId:String): LiveData<com.comcept.rmrscustomer.repository.Response<DealsResponse>> {
+        dealsResponseLiveData= MutableLiveData<com.comcept.rmrscustomer.repository.Response<DealsResponse>>()
+
+        dealsResponseLiveData.postValue(com.comcept.rmrscustomer.repository.Response.Loading())
+
         RetrofitClass.getHomeInstance()?.getHomeRequestsInstance()?.getDealsData(restaurantId)?.enqueue(object : Callback<ResponseBody?> {
             override fun onResponse(call: Call<ResponseBody?>, response: Response<ResponseBody?>) {
                 var dealsResponse: DealsResponse?=null
@@ -77,11 +90,13 @@ class RestaurantDetailRepository {
                     Gson().fromJson(ConvertResponseToString.getString(response), DealsResponse::class.java)
                 }
                 Timber.d(Gson().toJson("Restaurant Detail: $dealsResponse"))
-                dealsResponseLiveData.postValue(dealsResponse)
+                dealsResponseLiveData.postValue(com.comcept.rmrscustomer.repository.Response.Success(dealsResponse))
             }
 
             override fun onFailure(call: Call<ResponseBody?>, t: Throwable) {
                 Timber.e("Error: ${t.message.toString()}")
+                dealsResponseLiveData.postValue(com.comcept.rmrscustomer.repository.Response.Error(t.message.toString()))
+
             }
         })
         return dealsResponseLiveData

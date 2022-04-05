@@ -16,11 +16,14 @@ import timber.log.Timber
 
 class ReviewRepository {
 
-    private lateinit var reviewResponseLiveData: MutableLiveData<ReviewResponse>
-    private lateinit var reviewListResponseLiveData: MutableLiveData<ReviewListResponse>
+    private lateinit var reviewResponseLiveData: MutableLiveData<com.comcept.rmrscustomer.repository.Response<ReviewResponse>>
+    private lateinit var reviewListResponseLiveData: MutableLiveData<com.comcept.rmrscustomer.repository.Response<ReviewListResponse>>
 
-    fun getReviewResponseLiveData(review: Review): LiveData<ReviewResponse> {
-        reviewResponseLiveData= MutableLiveData<ReviewResponse>()
+    fun getReviewResponseLiveData(review: Review): LiveData<com.comcept.rmrscustomer.repository.Response<ReviewResponse>> {
+        reviewResponseLiveData= MutableLiveData<com.comcept.rmrscustomer.repository.Response<ReviewResponse>>()
+
+        reviewResponseLiveData.postValue(com.comcept.rmrscustomer.repository.Response.Loading())
+
         RetrofitClass.getHomeInstance()?.getHomeRequestsInstance()?.submitReview(review)?.enqueue(object : Callback<ResponseBody?> {
             override fun onResponse(call: Call<ResponseBody?>, response: Response<ResponseBody?>) {
                 var reviewResponse: ReviewResponse?=null
@@ -31,18 +34,23 @@ class ReviewRepository {
                     Gson().fromJson(ConvertResponseToString.getString(response), ReviewResponse::class.java)
                 }
                 Timber.d(Gson().toJson("Restaurant Detail: $reviewResponse"))
-                reviewResponseLiveData.postValue(reviewResponse)
+                reviewResponseLiveData.postValue(com.comcept.rmrscustomer.repository.Response.Success(reviewResponse))
             }
 
             override fun onFailure(call: Call<ResponseBody?>, t: Throwable) {
                 Timber.e("Error: ${t.message.toString()}")
+                reviewResponseLiveData.postValue(com.comcept.rmrscustomer.repository.Response.Error(t.message.toString()))
+
             }
         })
         return reviewResponseLiveData
     }
 
-    fun getReviewResponseLiveData(restaurantId:String): LiveData<ReviewListResponse> {
-        reviewListResponseLiveData= MutableLiveData<ReviewListResponse>()
+    fun getReviewResponseLiveData(restaurantId:String): LiveData<com.comcept.rmrscustomer.repository.Response<ReviewListResponse>> {
+        reviewListResponseLiveData= MutableLiveData<com.comcept.rmrscustomer.repository.Response<ReviewListResponse>>()
+
+        reviewListResponseLiveData.postValue(com.comcept.rmrscustomer.repository.Response.Loading())
+
         RetrofitClass.getHomeInstance()?.getHomeRequestsInstance()?.getReviewList(restaurantId)?.enqueue(object : Callback<ResponseBody?> {
             override fun onResponse(call: Call<ResponseBody?>, response: Response<ResponseBody?>) {
                 var reviewResponse: ReviewListResponse?=null
@@ -53,11 +61,12 @@ class ReviewRepository {
                     Gson().fromJson(ConvertResponseToString.getString(response), ReviewListResponse::class.java)
                 }
                 Timber.d(Gson().toJson("Restaurant Detail: $reviewResponse"))
-                reviewListResponseLiveData.postValue(reviewResponse)
+                reviewListResponseLiveData.postValue(com.comcept.rmrscustomer.repository.Response.Success(reviewResponse))
             }
 
             override fun onFailure(call: Call<ResponseBody?>, t: Throwable) {
                 Timber.e("Error: ${t.message.toString()}")
+                reviewListResponseLiveData.postValue(com.comcept.rmrscustomer.repository.Response.Error(t.message.toString()))
             }
         })
         return reviewListResponseLiveData

@@ -3,6 +3,7 @@ package com.comcept.rmrscustomer.data_class.checkout
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
+
 data class  Checkout(
         val RestaurantID:String,
         val RestaurantName:String,
@@ -21,8 +22,7 @@ data class  Checkout(
         var PaymentMethod:String,
         var CustomerAddress:String,
         var OrderType:String,
-        val MobileNumber:String
-
-
+        val MobileNumber:String,
+        val SalesTaxRate:Float
 
 )

@@ -13,9 +13,14 @@ import com.kaopiz.kprogresshud.KProgressHUD
 import com.comcept.rmrscustomer.R
 import com.comcept.rmrscustomer.data_class.review.Review
 import com.comcept.rmrscustomer.databinding.ReviewFragmentBinding
+import com.comcept.rmrscustomer.repository.Response
 import com.comcept.rmrscustomer.ui.home.CustomerHomeActivity
 import com.comcept.rmrscustomer.ui.home.HomeFragment
 import com.comcept.rmrscustomer.utilities.AppGlobal
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 
 class ReviewFragment : Fragment(),View.OnClickListener {
 
@@ -31,6 +36,11 @@ class ReviewFragment : Fragment(),View.OnClickListener {
     private lateinit var restaurantID:String
     private lateinit var mBinding:ReviewFragmentBinding
     private lateinit var progressDialog: KProgressHUD
+
+
+    val job = Job()
+    private val uiScope = CoroutineScope(Dispatchers.Main + Job())
+
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
@@ -105,38 +115,68 @@ class ReviewFragment : Fragment(),View.OnClickListener {
     * Login API Method
     * */
     private fun getRestaurantDetail(review: Review){
-        progressDialog.setLabel("Please Wait")
-        progressDialog.show()
-        viewModel.getReviewResponse(review).observe(requireActivity(), {
-            progressDialog.dismiss()
-            if (it!=null&&it.Message=="Sucess")
-            {
-               // AppGlobal.showDialog(getString(R.string.title_alert),it.data.description,requireContext())
-                val alertDialog = AlertDialog.Builder(requireActivity())
-                alertDialog.setTitle(getString(R.string.title_alert))
-                alertDialog.setMessage(it.data.description)
-                alertDialog.setCancelable(false)
-                alertDialog.setPositiveButton("Ok") { dialog, _ ->
-                    //(requireActivity() as CustomerHomeActivity).getCallerFragment()
-                    (requireActivity() as CustomerHomeActivity).txtToolbarName.text =(requireActivity() as CustomerHomeActivity).mCurrentLocation
-                    //getCallerFragment()
-                    (requireActivity() as CustomerHomeActivity).setToolbarTitle(""
-                        , HomeFragment()
-                        , false
-                        , View.VISIBLE
-                        , true
-                        ,isMenuVisibility = false)
 
-                    dialog.cancel()
+        uiScope.launch {
+            viewModel.getReviewResponse(review).observe(requireActivity(), {
+
+                when(it){
+
+                    is Response.Loading ->{
+                        progressDialog.setLabel("Please Wait")
+                        progressDialog.show()
+
+                    }
+
+                    is Response.Success ->{
+
+                        it.data?.let {
+                            progressDialog.dismiss()
+                            if (it!=null&&it.Message=="Sucess")
+                            {
+                                // AppGlobal.showDialog(getString(R.string.title_alert),it.data.description,requireContext())
+                                val alertDialog = AlertDialog.Builder(requireActivity())
+                                alertDialog.setTitle(getString(R.string.title_alert))
+                                alertDialog.setMessage(it.data.description)
+                                alertDialog.setCancelable(false)
+                                alertDialog.setPositiveButton("Ok") { dialog, _ ->
+                                    //(requireActivity() as CustomerHomeActivity).getCallerFragment()
+                                    (requireActivity() as CustomerHomeActivity).txtToolbarName.text =(requireActivity() as CustomerHomeActivity).mCurrentLocation
+                                    //getCallerFragment()
+                                    (requireActivity() as CustomerHomeActivity).setToolbarTitle(""
+                                        , HomeFragment()
+                                        , false
+                                        , View.VISIBLE
+                                        , true
+                                        ,isMenuVisibility = false)
+
+                                    dialog.cancel()
+                                }
+                                val alertDialog1 = alertDialog.create()
+                                alertDialog1.show()
+
+                            }
+                            else{
+                                AppGlobal.showDialog(getString(R.string.title_alert),it.data.description,requireContext())
+                            }
+                        }
+
+                    }
+
+                    is Response.Error ->{
+
+                        AppGlobal.showDialog(getString(R.string.title_alert), it.message.toString(),requireActivity())
+                        if (progressDialog.isShowing) {
+                            progressDialog.dismiss()
+
+                        }
+                    }
+
                 }
-                val alertDialog1 = alertDialog.create()
-                alertDialog1.show()
 
-            }
-            else{
-                AppGlobal.showDialog(getString(R.string.title_alert),it.data.description,requireContext())
-            }
-        })
+
+            })
+        }
+
     }
 
 

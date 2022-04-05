@@ -210,7 +210,11 @@ class ReservationActivity : AppCompatActivity(), View.OnClickListener, DatePicke
                 }
 
                 is Response.Error ->{
-                    progressDialog.dismiss()
+                    AppGlobal.showDialog(getString(R.string.title_alert), it.message.toString(),this)
+                    if (progressDialog.isShowing) {
+                        progressDialog.dismiss()
+
+                    }
                 }
             }
 

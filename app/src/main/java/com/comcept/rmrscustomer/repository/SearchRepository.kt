@@ -14,12 +14,14 @@ import timber.log.Timber
 
 class SearchRepository  {
 
-    private lateinit var searchResponseLiveData: MutableLiveData<SearchResponse>
+    private lateinit var searchResponseLiveData: MutableLiveData<com.comcept.rmrscustomer.repository.Response<SearchResponse>>
 
-    fun getSearchResponseLiveData(searchQuery: String): LiveData<SearchResponse> {
-        searchResponseLiveData= MutableLiveData<SearchResponse>()
+    fun getSearchResponseLiveData(searchQuery: String,Latitude:Double,Longitude:Double): LiveData<com.comcept.rmrscustomer.repository.Response<SearchResponse>> {
+        searchResponseLiveData= MutableLiveData<com.comcept.rmrscustomer.repository.Response<SearchResponse>>()
         //Timber.d("Checkout API: ${Gson().toJson(searchQuery)}")
-        RetrofitClass.getHomeInstance()?.getHomeRequestsInstance()?.getSearchList(searchQuery)?.enqueue(object :
+
+        searchResponseLiveData.postValue(com.comcept.rmrscustomer.repository.Response.Loading())
+        RetrofitClass.getHomeInstance()?.getHomeRequestsInstance()?.getSearchList(searchQuery,Latitude,Longitude)?.enqueue(object :
             Callback<ResponseBody?> {
             override fun onResponse(call: Call<ResponseBody?>, response: Response<ResponseBody?>) {
                 var searchResponse: SearchResponse?=null
@@ -32,11 +34,12 @@ class SearchRepository  {
 
                 }
                 Timber.d(Gson().toJson(searchResponse).toString())
-                searchResponseLiveData.postValue(searchResponse)
+                searchResponseLiveData.postValue(com.comcept.rmrscustomer.repository.Response.Success(searchResponse))
             }
 
             override fun onFailure(call: Call<ResponseBody?>, t: Throwable) {
                 Timber.e("Error: ${t.message.toString()}")
+                searchResponseLiveData.postValue(com.comcept.rmrscustomer.repository.Response.Error(t.message.toString()))
             }
         })
         return searchResponseLiveData

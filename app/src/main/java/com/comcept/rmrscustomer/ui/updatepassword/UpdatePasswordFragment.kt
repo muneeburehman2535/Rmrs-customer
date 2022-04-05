@@ -14,6 +14,7 @@ import com.kaopiz.kprogresshud.KProgressHUD
 import com.comcept.rmrscustomer.R
 import com.comcept.rmrscustomer.data_class.updatepassword.UpdatePassword
 import com.comcept.rmrscustomer.databinding.UpdatePasswordFragmentBinding
+import com.comcept.rmrscustomer.repository.Response
 import com.comcept.rmrscustomer.utilities.AppGlobal
 
 class UpdatePasswordFragment : Fragment(),View.OnClickListener {
@@ -112,22 +113,48 @@ class UpdatePasswordFragment : Fragment(),View.OnClickListener {
     * Update Password API Method
     * */
     private fun updatePasswordResult(updatePassword: UpdatePassword) {
-        progressDialog.setLabel("Please Wait")
-        progressDialog.show()
+
         viewModel.updatePasswordResponse(updatePassword).observe(requireActivity(), {
-            progressDialog.dismiss()
-            if (it!=null&&it.Message=="Success"){
-                AppGlobal.showDialog(getString(R.string.title_alert),it.data.description,requireActivity())
-                mBinding.edtxtPasswordUpf.text?.clear()
-                mBinding.edtxtConfirmPasswordUpf.text?.clear()
-                mBinding.edtxtOldPassword.text?.clear()
-            } else {
-                AppGlobal.showDialog(
-                    getString(R.string.title_alert),
-                    it.data.description,
-                    requireActivity()
-                )
-            }
+
+           when(it){
+
+
+               is Response.Loading ->{
+                   progressDialog.setLabel("Please Wait")
+                   progressDialog.show()
+
+               }
+               is Response.Success ->{
+
+                   it.data?.let {
+                       progressDialog.dismiss()
+                       if (it!=null&&it.Message=="Success"){
+                           AppGlobal.showDialog(getString(R.string.title_alert),it.data.description,requireActivity())
+                           mBinding.edtxtPasswordUpf.text?.clear()
+                           mBinding.edtxtConfirmPasswordUpf.text?.clear()
+                           mBinding.edtxtOldPassword.text?.clear()
+                       } else {
+                           AppGlobal.showDialog(
+                               getString(R.string.title_alert),
+                               it.data.description,
+                               requireActivity()
+                           )
+                       }
+                   }
+               }
+
+               is Response.Error ->{
+
+                   AppGlobal.showDialog(getString(R.string.title_alert), it.message.toString(),requireActivity())
+                   if (progressDialog.isShowing) {
+                       progressDialog.dismiss()
+
+                   }
+               }
+
+           }
+
+
         })
     }
 

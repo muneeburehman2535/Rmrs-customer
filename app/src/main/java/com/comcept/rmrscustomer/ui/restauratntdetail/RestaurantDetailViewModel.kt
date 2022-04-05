@@ -10,18 +10,19 @@ import com.comcept.rmrscustomer.data_class.restaurantdetail.RestaurantDetailResp
 import com.comcept.rmrscustomer.data_class.restaurantdetail.deals.DealsResponse
 import com.comcept.rmrscustomer.data_class.restaurantdetail.restaurantdetail.RestaurantCategoryResponse
 import com.comcept.rmrscustomer.repository.LoginRepository
+import com.comcept.rmrscustomer.repository.Response
 import com.comcept.rmrscustomer.repository.RestaurantDetailRepository
 
 class RestaurantDetailViewModel(application: Application) : AndroidViewModel(application) {
 
     private var restaurantDetailRepository: RestaurantDetailRepository = RestaurantDetailRepository()
-    fun getRestaurantDetailResponse(restaurantId:String): LiveData<RestaurantDetailResponse> {
+    fun getRestaurantDetailResponse(restaurantId:String): LiveData<Response<RestaurantDetailResponse>> {
         return restaurantDetailRepository.getRestaurantDetailResponseLiveData(restaurantId)
     }
-    fun getRestaurantCategoryResponse(restaurantId:String): LiveData<RestaurantCategoryResponse> {
+    fun getRestaurantCategoryResponse(restaurantId:String): LiveData<Response<RestaurantCategoryResponse>> {
         return restaurantDetailRepository.getRestaurantCategoryResponseLiveData(restaurantId)
     }
-    fun getRestaurantDealsResponse(restaurantId:String): LiveData<DealsResponse> {
+    fun getRestaurantDealsResponse(restaurantId:String): LiveData<Response<DealsResponse>> {
         return restaurantDetailRepository.getDealsResponseLiveData(restaurantId)
     }
 }
