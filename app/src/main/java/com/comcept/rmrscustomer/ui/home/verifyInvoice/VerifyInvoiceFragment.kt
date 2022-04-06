@@ -114,7 +114,8 @@ class VerifyInvoiceFragment : Fragment(), View.OnClickListener {
 
                                 mbinding.dateTxt.text = dateArr[0]
 
-                                if (it.ServiceCharges!! >0.0){
+                                if (it.ServiceCharges!! > 0.0){
+                                    mbinding.serviceChargesTitle.text = "Service Charges"
                                     mbinding.servicesChargesTxt.text = it.ServiceCharges.toString()
                                 }
                                 else{
@@ -159,7 +160,7 @@ class VerifyInvoiceFragment : Fragment(), View.OnClickListener {
 
                             AppGlobal.showDialog(
                                 getString(R.string.title_alert),
-                                "Data Not Found Please Check Your IDs",
+                                "Data Not Found",
                                 requireActivity()
                             )
 
