@@ -122,37 +122,50 @@ class  CheckoutFragment : Fragment(),View.OnClickListener {
 
         uiScope.launch {
 
-            viewModel.getCheckoutResponse(orderCheckout).observe(requireActivity(), {
+            viewModel.getCheckoutResponse(orderCheckout).observe(requireActivity()) {
 
-                when(it){
+                when (it) {
 
 
-                    is Response.Loading ->{
+                    is Response.Loading -> {
                         progressDialog.setLabel("Please Wait")
                         progressDialog.show()
                     }
 
-                    is Response.Success ->{
+                    is Response.Success -> {
 
                         it.data?.let {
                             progressDialog.dismiss()
-                            if (it!=null&&it.Message == "Success") {
+                            if (it != null && it.Message == "Success") {
                                 emptyCartRecord()
-                                (activity as CustomerHomeActivity?)?.changeToolbarName(getString(R.string.title_review), isProfileMenuVisible = false, locationVisibility = false,isMenuVisibility = false)
+                                (activity as CustomerHomeActivity?)?.changeToolbarName(
+                                    getString(R.string.title_review),
+                                    isProfileMenuVisible = false,
+                                    locationVisibility = false,
+                                    isMenuVisibility = false
+                                )
                                 (activity as CustomerHomeActivity?)?.loadNewFragment(
                                     HomeFragment(),
                                     "home"
                                 )
 
                             } else {
-                                AppGlobal.showDialog(getString(R.string.title_alert), it.data.description, requireActivity())
+                                AppGlobal.showDialog(
+                                    getString(R.string.title_alert),
+                                    it.data.description,
+                                    requireActivity()
+                                )
                             }
 
                         }
 
                     }
-                    is Response.Error ->{
-                        AppGlobal.showDialog(getString(R.string.title_alert),it.message.toString(), requireActivity())
+                    is Response.Error -> {
+                        AppGlobal.showDialog(
+                            getString(R.string.title_alert),
+                            it.message.toString(),
+                            requireActivity()
+                        )
                         if (progressDialog.isShowing) {
 
                             progressDialog.dismiss()
@@ -161,7 +174,7 @@ class  CheckoutFragment : Fragment(),View.OnClickListener {
 
                     }
                 }
-            })
+            }
 
         }
 

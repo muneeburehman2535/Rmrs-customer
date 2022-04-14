@@ -221,43 +221,48 @@ class SimpleSearchFragment : Fragment() {
     * */
     private fun getSearchResult(searchQuery: String,Latitude:Double,Longitude:Double){
 
-        viewModel.getSearchResponse(searchQuery,Latitude,Longitude).observe(requireActivity(), {
+        viewModel.getSearchResponse(searchQuery,Latitude,Longitude).observe(requireActivity()) {
 
-            when(it){
+            when (it) {
 
 
-                is Response.Loading ->{
+                is Response.Loading -> {
                     progressDialog.setLabel("Please Wait")
                     progressDialog.show()
                 }
 
-                is Response.Success ->{
+                is Response.Success -> {
 
                     it.data?.let {
                         progressDialog.dismiss()
-                        if (it!=null&&it.Message=="Success"){
-                            searchResultList=it.data.result
-                            if(searchResultList.size>0){
-                                mBinding.rvSearch.visibility=View.VISIBLE
-                                mBinding.layoutNotFoundSsf.visibility=View.GONE
+                        if (it != null && it.Message == "Success") {
+                            searchResultList = it.data.result
+                            if (searchResultList.size > 0) {
+                                mBinding.rvSearch.visibility = View.VISIBLE
+                                mBinding.layoutNotFoundSsf.visibility = View.GONE
                                 searchResultAdapter.updateSearchList(searchResultList)
-                            }
-                            else{
-                                mBinding.rvSearch.visibility=View.GONE
-                                mBinding.layoutNotFoundSsf.visibility=View.VISIBLE
+                            } else {
+                                mBinding.rvSearch.visibility = View.GONE
+                                mBinding.layoutNotFoundSsf.visibility = View.VISIBLE
                             }
 
-                        }
-                        else{
-                            AppGlobal.showDialog(getString(R.string.title_alert),it.data.description,requireActivity())
+                        } else {
+                            AppGlobal.showDialog(
+                                getString(R.string.title_alert),
+                                it.data.description,
+                                requireActivity()
+                            )
                         }
                     }
                 }
 
 
-
-                is Response.Error ->{
-                    AppGlobal.showDialog(getString(R.string.title_alert), it.message.toString(),requireActivity())
+                is Response.Error -> {
+                    AppGlobal.showDialog(
+                        getString(R.string.title_alert),
+                        it.message.toString(),
+                        requireActivity()
+                    )
                     if (progressDialog.isShowing) {
                         progressDialog.dismiss()
 
@@ -267,10 +272,7 @@ class SimpleSearchFragment : Fragment() {
             }
 
 
-
-
-
-        })
+        }
     }
 
 }

@@ -285,7 +285,7 @@ class CartFragment : Fragment(), View.OnClickListener, CartItemAdapter.UpdateIte
                     menuOrderedList,
                     Delivery(),
                     ownerId,
-                    mDiscountTotal.toFloat(),
+                    mDiscountTotal.toFloat() +  mServicesCharges.toFloat() ,
                     mServicesCharges.toFloat(),
                     "",
                     "",

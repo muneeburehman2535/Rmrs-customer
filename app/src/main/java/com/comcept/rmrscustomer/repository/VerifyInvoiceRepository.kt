@@ -8,6 +8,7 @@ import com.comcept.rmrscustomer.data_class.updatepassword.UpdatePasswordResponse
 import com.comcept.rmrscustomer.data_class.verifyInvoice.VerifyInvoice
 import com.comcept.rmrscustomer.data_class.verifyInvoice.VerifyInvoiceResponse
 import com.comcept.rmrscustomer.network.RetrofitClass
+import com.comcept.rmrscustomer.utilities.AppGlobal
 import com.google.gson.Gson
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -38,6 +39,7 @@ class VerifyInvoiceRepository {
                     )
 
                 } else {
+
                     Gson().fromJson(ConvertResponseToString.getString(response), VerifyInvoiceResponse::class.java
                     )
 

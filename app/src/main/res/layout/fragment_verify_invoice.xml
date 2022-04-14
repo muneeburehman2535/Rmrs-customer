@@ -220,6 +220,7 @@
                 android:layout_height="wrap_content">
 
                 <TextView
+                    android:id="@+id/serviceChargesTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/montserrat_bold"
@@ -335,6 +336,8 @@
                 >
 
                 <TextView
+                    android:visibility="gone"
+                    android:id="@+id/titleDiscount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/montserrat_bold"
@@ -342,6 +345,7 @@
                     android:textColor="@color/black" />
 
                 <TextView
+                    android:visibility="gone"
                     android:id="@+id/discount_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -359,6 +363,8 @@
                 android:layout_marginTop="20dp">
 
                 <TextView
+                    android:visibility="gone"
+                    android:id="@+id/titleDiscountedTotal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/montserrat_bold"
@@ -366,6 +372,7 @@
                     android:textColor="@color/black" />
 
                 <TextView
+                    android:visibility="gone"
                     android:id="@+id/discount_total_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

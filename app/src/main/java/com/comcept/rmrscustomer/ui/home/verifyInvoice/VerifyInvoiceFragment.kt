@@ -88,18 +88,18 @@ class VerifyInvoiceFragment : Fragment(), View.OnClickListener {
 
     private fun verifyInvoiceResult(verifyInvoice: VerifyInvoice) {
 
-        viewModel.verifyInvoiceResponse(verifyInvoice).observe(requireActivity(), { it ->
+        viewModel.verifyInvoiceResponse(verifyInvoice).observe(requireActivity()) { it ->
 
 
-            when(it){
+            when (it) {
 
-                is Response.Loading ->{
+                is Response.Loading -> {
 
                     progressDialog.setLabel("Please Wait")
                     progressDialog.show()
                 }
 
-                is Response.Success ->{
+                is Response.Success -> {
                     progressDialog.dismiss()
                     it.data?.let {
                         if (it != null && it.message == "Success") {
@@ -114,17 +114,43 @@ class VerifyInvoiceFragment : Fragment(), View.OnClickListener {
 
                                 mbinding.dateTxt.text = dateArr[0]
 
+                                if (it.ServiceCharges!! > 0.0){
+                                    mbinding.serviceChargesTitle.text = "Service Charges"
+                                    mbinding.servicesChargesTxt.text = it.ServiceCharges.toString()
+                                }
+                                else{
+                                    mbinding.serviceChargesTitle.text = "Delivery Charges"
+                                    mbinding.servicesChargesTxt.text = it.DeliveryCharges.toString()
+                                }
 
-                                mbinding.servicesChargesTxt.text = it.ServiceCharges.toString()
                                 mbinding.totalEnTxt.text = it.SubTotal.toString()
                                 mbinding.saleTaxTxt.text = it.SalesTax.toString()
                                 mbinding.totalInTxt.text = it.TotalAmount.toString()
 
-                                val discount =
-                                    ((it.Discount?.AmountBeforeDiscount)?.times((it.Discount?.DiscountPercentage!!))
-                                        ?.div(100))?.toDouble()
-                                mbinding.discountTxt.text = discount.toString()
-                                mbinding.discountTotalTxt.text = it.Discount?.AmountAfterDiscount.toString()
+                                val discount = it.Discount?.OtherDiscount
+
+                                if (discount != null) {
+                                    if (discount>0){
+
+                                        mbinding.titleDiscount.visibility = View.VISIBLE
+                                        mbinding.discountTxt.visibility = View.VISIBLE
+                                        mbinding.discountTxt.text = discount.toString()
+
+                                        mbinding.titleDiscountedTotal.visibility = View.VISIBLE
+                                        mbinding.discountTotalTxt.visibility = View.VISIBLE
+                                        mbinding.discountTotalTxt.text =
+                                      it.Discount?.AmountAfterDiscount.toString()
+                                    }
+                                    else{
+
+                                    }
+                                }
+//                                val discount =
+//                                    ((it.Discount?.AmountBeforeDiscount)?.times((it.Discount?.DiscountPercentage!!))
+//                                        ?.div(100))?.toDouble()
+//                                mbinding.discountTxt.text = discount.toString()
+//                                mbinding.discountTotalTxt.text =
+//                                    it.Discount?.AmountAfterDiscount.toString()
 
                                 mbinding.edtxtResturantId.text?.clear()
                                 mbinding.edtxtInvoiceId.text?.clear()
@@ -134,7 +160,7 @@ class VerifyInvoiceFragment : Fragment(), View.OnClickListener {
 
                             AppGlobal.showDialog(
                                 getString(R.string.title_alert),
-                                "Data Not Found Please Check Your IDs",
+                                "Data Not Found",
                                 requireActivity()
                             )
 
@@ -143,7 +169,7 @@ class VerifyInvoiceFragment : Fragment(), View.OnClickListener {
 
                 }
 
-                is Response.Error ->{
+                is Response.Error -> {
 
                     AppGlobal.showDialog(
                         getString(R.string.title_alert), it.message.toString(),
@@ -159,8 +185,7 @@ class VerifyInvoiceFragment : Fragment(), View.OnClickListener {
             }
 
 
-
-        })
+        }
     }
 
 
