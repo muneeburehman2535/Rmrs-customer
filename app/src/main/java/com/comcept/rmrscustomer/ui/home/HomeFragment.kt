@@ -455,7 +455,7 @@ class HomeFragment : Fragment(), View.OnClickListener, RestaurantAdapter.AddToFa
         uiScope.launch {
 
 
-            homeViewModel.getCategoryResponse().observe(requireActivity(), {
+            homeViewModel.getCategoryResponse().observe(requireActivity()) {
 
 
                 when (it) {
@@ -479,11 +479,13 @@ class HomeFragment : Fragment(), View.OnClickListener, RestaurantAdapter.AddToFa
                                     categoryAdapter.updateCategoryList(categoriesList)
                                     if (categoriesList.size > 0) {
 
-                                        if(mLatitude!! <=0.00 && mLongitude!!<=0.00){
-                                            AppGlobal.showToast("Please enable your location",requireActivity())
+                                        if (mLatitude!! <= 0.00 && mLongitude!! <= 0.00) {
+                                            AppGlobal.showToast(
+                                                "Please enable your location",
+                                                requireActivity()
+                                            )
                                             progressDialog.dismiss()
-                                        }
-                                        else{
+                                        } else {
                                             getRestaurantsList(
                                                 categoriesList[0].CategoryID,
                                                 mLatitude!!,
@@ -527,7 +529,7 @@ class HomeFragment : Fragment(), View.OnClickListener, RestaurantAdapter.AddToFa
                     }
                 }
 
-            })
+            }
 
         }
     }
@@ -543,8 +545,7 @@ class HomeFragment : Fragment(), View.OnClickListener, RestaurantAdapter.AddToFa
         uiScope.launch {
 
 
-            homeViewModel.getRestaurantsResponse(categoryID, Latitude, Longitude)
-                .observe(requireActivity(), {
+            homeViewModel.getRestaurantsResponse(categoryID, Latitude, Longitude).observe(requireActivity()) {
 
 
                     when (it) {
@@ -607,7 +608,7 @@ class HomeFragment : Fragment(), View.OnClickListener, RestaurantAdapter.AddToFa
 
                     }
 
-                })
+                }
 
         }
 
