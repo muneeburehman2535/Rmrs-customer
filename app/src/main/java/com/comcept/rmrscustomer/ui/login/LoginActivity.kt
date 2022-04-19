@@ -3,7 +3,6 @@ package com.comcept.rmrscustomer.ui.login
 import android.os.Bundle
 import android.util.Patterns
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
@@ -118,7 +117,7 @@ class LoginActivity : AppCompatActivity(),View.OnClickListener {
 
                     it.data?.let {
                         progressDialog.dismiss()
-                        if (it.Message=="Success")
+                        if (it!=null&&it.Message=="Success")
                         {
                             AppGlobal.writeString(this,AppGlobal.tokenId, it.data.Token)
                             AppGlobal.writeString(this,AppGlobal.customerId,it.data.CustomerID)
@@ -132,9 +131,7 @@ class LoginActivity : AppCompatActivity(),View.OnClickListener {
                             finishAffinity()
                         }
                         else{
-
-//                            Toast.makeText(LoginActivity@this, ""+it, Toast.LENGTH_SHORT).show()
-                            AppGlobal.showDialog(getString(R.string.title_alert),it.Message,LoginActivity@this)
+                            AppGlobal.showDialog(getString(R.string.title_alert),it.data.description,this)
                         }
 
                     }
