@@ -10,7 +10,7 @@ import com.comcept.rmrscustomer.db.dao.CartDao
 import com.comcept.rmrscustomer.db.dao.FavouriteDao
 import com.comcept.rmrscustomer.db.dataclass.Favourite
 
-@Database(entities = [Favourite::class, Cart::class], version = 2,exportSchema = false)
+@Database(entities = [Favourite::class, Cart::class], version = 3,exportSchema = false)
 abstract class CustomerDatabase:RoomDatabase(){
 
 

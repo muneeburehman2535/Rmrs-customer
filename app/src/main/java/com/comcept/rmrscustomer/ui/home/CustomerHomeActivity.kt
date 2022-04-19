@@ -7,8 +7,11 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.*
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.provider.Settings
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
@@ -30,7 +33,9 @@ import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
+import com.comcept.rmrscustomer.BuildConfig
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.tasks.OnCompleteListener
@@ -57,15 +62,19 @@ import com.comcept.rmrscustomer.ui.myorders.MyOrdersFragment
 import com.comcept.rmrscustomer.ui.reservation.myreservation.MyReservationsFragment
 import com.comcept.rmrscustomer.ui.review.restaurantreviews.ReviewsListFragment
 import com.comcept.rmrscustomer.ui.updatepassword.UpdatePasswordFragment
+import com.comcept.rmrscustomer.utilities.AlertUtils
 import com.comcept.rmrscustomer.utilities.AppGlobal
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import org.jsoup.Jsoup
 import timber.log.Timber
 import java.io.IOException
 import java.util.*
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
 
 
 @AndroidEntryPoint
@@ -99,6 +108,7 @@ class CustomerHomeActivity : AppCompatActivity(), NavigationView.OnNavigationIte
     private lateinit var txtLuckyDrawPoints: TextView
     private lateinit var txtCustomerName: TextView
 
+    var showUpdate = MutableLiveData<Boolean>().apply { setValue(false) }
 
     var mLatitude: Double = 0.0
     var mLongitude: Double = 0.0
@@ -130,11 +140,15 @@ class CustomerHomeActivity : AppCompatActivity(), NavigationView.OnNavigationIte
         Timber.d("Device Name: ${deviceName} \n Device Id: ${deviceId} \nSecond Device Id: ${deviceID}")
 
 
+
+
+
         setBottomNavigationView()
         setDrawableLayout()
         loadFragment(HomeFragment())
         initializePlacePicker()
 
+        getVersionUpdate()
         locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
         if (!locationManager!!.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             onGPS()
@@ -163,6 +177,24 @@ class CustomerHomeActivity : AppCompatActivity(), NavigationView.OnNavigationIte
             )
             updateFcmToken(fcmNotification)
 
+        })
+
+
+        mBinding.versionNumber.text = "Version: ${BuildConfig.VERSION_NAME}"
+
+
+        showUpdate.observe(this, { value ->
+
+
+            if (value) {
+                AlertUtils.showAlertDialogUpdate(
+                    this,
+                    "Update!",
+                    "We have updated our app with new features and important bug fixes. Please click on the Update button below."
+                ) { _, _ ->
+                    startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(AppGlobal.APP_URL)));
+                }
+            }
         })
 
     }
@@ -914,7 +946,12 @@ class CustomerHomeActivity : AppCompatActivity(), NavigationView.OnNavigationIte
     }
 
 
+
+
     override fun onBackPressed() {
+
+
+
 
         if (supportFragmentManager.backStackEntryCount == 0) {
             val builder = AlertDialog.Builder(this)
@@ -936,6 +973,83 @@ class CustomerHomeActivity : AppCompatActivity(), NavigationView.OnNavigationIte
         }
 
     }
+
+
+    private fun getVersionUpdate(): Unit {
+
+        val executor: ExecutorService = Executors.newSingleThreadExecutor()
+        val handler = Handler(Looper.getMainLooper())
+
+        executor.execute {
+            //Background work here
+
+            var onlineVersion: String? = null
+            try {
+                onlineVersion =
+                    Jsoup.connect(AppGlobal.APP_URL)
+                        .timeout(30000)
+                        .userAgent("Mozilla/5.0 (Windows; U; WindowsNT 5.1; en-US; rv1.8.1.6) Gecko/20070725 Firefox/2.0.0.6")
+                        .referrer("http://www.google.com")
+                        .get()
+                        .select(".hAyfc .htlgb")[7]
+                        .ownText()
+            } catch (e: Exception) {
+            }
+            //onlineVersion="1"
+            onlineVersion?.let { Log.d("newVersion__", it) }
+            val versionName = BuildConfig.VERSION_NAME
+            Log.d("update", "Current version " + versionName + "playstore version " + onlineVersion)
+            if (onlineVersion != null && !onlineVersion.isEmpty()) {
+//                if (Double.valueOf(versionName) < Double.valueOf(onlineVersion)) {
+//                    //show dialog
+//                }
+
+                val splititem= onlineVersion.split(".")
+
+                var   onlineversionCode= splititem[2]
+
+                if (BuildConfig.VERSION_CODE >= onlineversionCode.toInt()) {
+                    //Toast.makeText(context, "not", Toast.LENGTH_SHORT).show();
+
+//                    AlertDialog.Builder builder1 = new AlertDialog.Builder(context);
+//                    builder1.setTitle("Alert!");
+//                    builder1.setMessage("There is new application on play store of Version "+onlineVersion+". Current version is "+versionName);
+//                    builder1.setCancelable(false);
+//
+//                    builder1.setPositiveButton(
+//                            "Update",
+//                            new DialogInterface.OnClickListener() {
+//                                public void onClick(DialogInterface dialog, int id) {
+//                                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.onsitedetail.employee")));
+//                                    dialog.cancel();
+//                                }
+//                            });
+//
+//                    builder1.setNegativeButton(
+//                            "Cancel",
+//                            new DialogInterface.OnClickListener() {
+//                                public void onClick(DialogInterface dialog, int id) {
+//                                    dialog.cancel();
+//                                }
+//                            });
+//
+//                    AlertDialog alert11 = builder1.create();
+//                    alert11.show();
+                } else {
+                    handler.post {
+
+
+
+                        showUpdate.value = true
+                    }
+                    //Toast.makeText(context, "update", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
+
+    }
+
+
 
 
 }

@@ -19,6 +19,7 @@ import com.comcept.rmrscustomer.ui.home.HomeFragment
 import com.comcept.rmrscustomer.ui.review.ReviewFragment
 import com.comcept.rmrscustomer.utilities.AppGlobal
 import com.google.gson.Gson
+import com.squareup.moshi.Json
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -70,6 +71,8 @@ class  CheckoutFragment : Fragment(),View.OnClickListener {
     {
         (activity as CustomerHomeActivity?)?.mModel?.checkout?.observe(viewLifecycleOwner, Observer {
             this.orderCheckout=it
+
+            Timber.d("${Gson().toJson(it)}")
         })
     }
     override fun onResume() {
@@ -122,7 +125,7 @@ class  CheckoutFragment : Fragment(),View.OnClickListener {
 
         uiScope.launch {
 
-            viewModel.getCheckoutResponse(orderCheckout).observe(requireActivity()) {
+            viewModel.getCheckoutResponse(orderCheckout).observe(requireActivity()) { it ->
 
                 when (it) {
 
@@ -136,7 +139,7 @@ class  CheckoutFragment : Fragment(),View.OnClickListener {
 
                         it.data?.let {
                             progressDialog.dismiss()
-                            if (it != null && it.Message == "Success") {
+                            if (it.Message == "Success") {
                                 emptyCartRecord()
                                 (activity as CustomerHomeActivity?)?.changeToolbarName(
                                     getString(R.string.title_review),
@@ -152,7 +155,7 @@ class  CheckoutFragment : Fragment(),View.OnClickListener {
                             } else {
                                 AppGlobal.showDialog(
                                     getString(R.string.title_alert),
-                                    it.data.description,
+                                    it.Message,
                                     requireActivity()
                                 )
                             }

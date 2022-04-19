@@ -38,7 +38,7 @@ class AppGlobal {
         var mCurrency="Rs. "
         val testEmail="usamawajid116@hotmail.com"
         val testPassword="Usama@123"
-
+        const val APP_URL="https://play.google.com/store/apps/details?id=com.comcept.rmrscustomer"
         const val customerId = "customer_id"
         const val tokenId = "token_id"
         const val restaurantId="restaurant_id"
