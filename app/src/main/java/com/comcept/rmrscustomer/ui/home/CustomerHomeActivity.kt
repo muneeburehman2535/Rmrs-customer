@@ -865,36 +865,49 @@ class CustomerHomeActivity : AppCompatActivity(), NavigationView.OnNavigationIte
             }
 
 
-            mViewModel.getLuckyDrawPointsResponse(customerID).observe(this@CustomerHomeActivity, {
+            mViewModel.getLuckyDrawPointsResponse(customerID).observe(this@CustomerHomeActivity) {
 
 
-                when(it){
+                when (it) {
 
 
-                    is Response.Loading ->{
+                    is Response.Loading -> {
                         progressDialog.setLabel("Please Wait")
                         progressDialog.show()
                     }
 
 
-                    is Response.Success ->{
+                    is Response.Success -> {
 
 
                         it.data?.let {
 
                             progressDialog.dismiss()
                             if (it != null && it.Message == "Success") {
-                                Timber.d("Updated Token: ${it.data.LuckyDrawPoints}")
+
+                                it.data.LuckyDrawPoints?.let {
+
+                                    Timber.d("Updated Token: ${it}")
+                                }
+
                                 txtLuckyDrawPoints.text =
-                                    "${getString(R.string.title_lucky_points)} ${AppGlobal.roundTwoPlaces(it.data.LuckyDrawPoints.toDouble())} "
+                                    "${getString(R.string.title_lucky_points)} ${
+                                        AppGlobal.roundTwoPlaces(
+                                            it.data.LuckyDrawPoints?.toDouble()
+                                        )
+                                    } "
                             }
 
                         }
 
                     }
 
-                    is Response.Error ->{
-                        AppGlobal.showDialog(getString(R.string.title_alert),it.message.toString(),this@CustomerHomeActivity)
+                    is Response.Error -> {
+                        AppGlobal.showDialog(
+                            getString(R.string.title_alert),
+                            it.message.toString(),
+                            this@CustomerHomeActivity
+                        )
                         if (progressDialog.isShowing) {
 
                             progressDialog.dismiss()
@@ -905,7 +918,7 @@ class CustomerHomeActivity : AppCompatActivity(), NavigationView.OnNavigationIte
 
                 }
 
-            })
+            }
         }
 
 

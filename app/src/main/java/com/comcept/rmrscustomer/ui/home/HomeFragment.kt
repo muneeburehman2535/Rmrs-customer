@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.denzcoskun.imageslider.constants.ScaleTypes
@@ -216,11 +217,13 @@ class HomeFragment : Fragment(), View.OnClickListener, RestaurantAdapter.AddToFa
     private fun setRestaurantAdapter() {
         restaurantsList = arrayListOf()
         restaurantsAdapter = RestaurantAdapter(requireContext(), restaurantsList)
-        mBinding.rvRestaurants.layoutManager = LinearLayoutManager(
+        mBinding.rvRestaurants.layoutManager = GridLayoutManager(
             context,
+            2,
             LinearLayoutManager.VERTICAL,
             false
         )
+
         mBinding.rvRestaurants.adapter = restaurantsAdapter
         restaurantsAdapter.setAddToFavouriteListener(this)
         restaurantsAdapter.setViewClickListener(this)

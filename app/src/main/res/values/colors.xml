@@ -4,6 +4,7 @@
     <color name="colorPrimary">#ffffff</color>
     <color name="colorPrimaryDark">#3A7B22</color>
     <color name="colorAccent">#3A7B22</color>
+    <color name="color_splash">#BBD72E</color>
 
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>

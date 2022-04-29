@@ -282,18 +282,18 @@ class RestaurantDetailFragment : Fragment(), TabsAdapter.ViewClickListener, View
     * */
     private fun getRestaurantDetail() {
 
-        viewModel.getRestaurantDetailResponse(restaurantId).observe(requireActivity(), {
+        viewModel.getRestaurantDetailResponse(restaurantId).observe(requireActivity()) {
 
 
-            when(it){
+            when (it) {
 
 
-                is Response.Loading ->{
+                is Response.Loading -> {
                     progressDialog.setLabel("Please Wait")
                     progressDialog.show()
                 }
 
-                is Response.Success ->{
+                is Response.Success -> {
 
                     it.data?.let {
 
@@ -343,7 +343,9 @@ class RestaurantDetailFragment : Fragment(), TabsAdapter.ViewClickListener, View
                                 for (index in 0 until menuList.size) {
                                     updatedMenuList.add(menuList[index])
                                 }
-                                (activity as CustomerHomeActivity).mModel.updateMenuList(updatedMenuList)
+                                (activity as CustomerHomeActivity).mModel.updateMenuList(
+                                    updatedMenuList
+                                )
                                 //(activity as CustomerHomeActivity).mModel.updateMenuList(menuList)
                             }
 
@@ -360,8 +362,12 @@ class RestaurantDetailFragment : Fragment(), TabsAdapter.ViewClickListener, View
                 }
 
 
-                is Response.Error ->{
-                    AppGlobal.showDialog(getString(R.string.title_alert), it.message.toString(),requireActivity())
+                is Response.Error -> {
+                    AppGlobal.showDialog(
+                        getString(R.string.title_alert),
+                        it.message.toString(),
+                        requireActivity()
+                    )
                     if (progressDialog.isShowing) {
                         progressDialog.dismiss()
 
@@ -371,24 +377,24 @@ class RestaurantDetailFragment : Fragment(), TabsAdapter.ViewClickListener, View
 
             }
 
-        })
+        }
     }
 
     private fun getRestaurantCategory() {
 
-        viewModel.getRestaurantCategoryResponse(restaurantId).observe(requireActivity(), {
+        viewModel.getRestaurantCategoryResponse(restaurantId).observe(requireActivity()) {
 
-            when(it){
+            when (it) {
 
 
-                is Response.Loading->{
+                is Response.Loading -> {
 
                     progressDialog.setLabel("Please Wait")
                     progressDialog.show()
 
                 }
 
-                is Response.Success ->{
+                is Response.Success -> {
 
                     it.data?.let {
 
@@ -421,9 +427,13 @@ class RestaurantDetailFragment : Fragment(), TabsAdapter.ViewClickListener, View
                 }
 
 
-                is Response.Error ->{
+                is Response.Error -> {
 
-                    AppGlobal.showDialog(getString(R.string.title_alert), it.message.toString(),requireActivity())
+                    AppGlobal.showDialog(
+                        getString(R.string.title_alert),
+                        it.message.toString(),
+                        requireActivity()
+                    )
                     if (progressDialog.isShowing) {
                         progressDialog.dismiss()
 
@@ -434,25 +444,25 @@ class RestaurantDetailFragment : Fragment(), TabsAdapter.ViewClickListener, View
             }
 
 
-        })
+        }
     }
 
     private fun getRestaurantDeals() {
 
-        viewModel.getRestaurantDealsResponse(restaurantId).observe(requireActivity(), {
+        viewModel.getRestaurantDealsResponse(restaurantId).observe(requireActivity()) {
 
 
-            when(it){
+            when (it) {
 
 
-                is Response.Loading ->{
+                is Response.Loading -> {
 
                     progressDialog.setLabel("Please Wait")
                     progressDialog.show()
 
                 }
 
-                is Response.Success ->{
+                is Response.Success -> {
 
                     it.data?.let {
 
@@ -506,10 +516,14 @@ class RestaurantDetailFragment : Fragment(), TabsAdapter.ViewClickListener, View
                 }
 
 
-                is Response.Error ->{
+                is Response.Error -> {
 
 
-                    AppGlobal.showDialog(getString(R.string.title_alert), it.message.toString(),requireActivity())
+                    AppGlobal.showDialog(
+                        getString(R.string.title_alert),
+                        it.message.toString(),
+                        requireActivity()
+                    )
                     if (progressDialog.isShowing) {
                         progressDialog.dismiss()
 
@@ -521,7 +535,7 @@ class RestaurantDetailFragment : Fragment(), TabsAdapter.ViewClickListener, View
             }
 
 
-        })
+        }
     }
 
     @SuppressLint("SetTextI18n")
