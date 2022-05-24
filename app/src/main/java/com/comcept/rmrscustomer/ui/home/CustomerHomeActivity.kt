@@ -811,18 +811,18 @@ class CustomerHomeActivity : AppCompatActivity(), NavigationView.OnNavigationIte
     private fun updateFcmToken(fcmNotification: FcmNotification) {
 
 
-        mViewModel.updateFcmTokenResponse(fcmNotification).observe(this, {
+        mViewModel.updateFcmTokenResponse(fcmNotification).observe(this) {
 
 
-            when(it){
+            when (it) {
 
-                is Response.Loading ->{
+                is Response.Loading -> {
                     progressDialog.setLabel("Please Wait")
                     progressDialog.show()
 
                 }
 
-                is Response.Success ->{
+                is Response.Success -> {
 
 
                     it.data?.let {
@@ -836,8 +836,12 @@ class CustomerHomeActivity : AppCompatActivity(), NavigationView.OnNavigationIte
 
                 }
 
-                is Response.Error ->{
-                    AppGlobal.showDialog(getString(R.string.title_alert),it.message.toString(),this)
+                is Response.Error -> {
+                    AppGlobal.showDialog(
+                        getString(R.string.title_alert),
+                        it.message.toString(),
+                        this
+                    )
 
                     if (progressDialog.isShowing) {
 
@@ -850,8 +854,7 @@ class CustomerHomeActivity : AppCompatActivity(), NavigationView.OnNavigationIte
             }
 
 
-
-        })
+        }
     }
 
     fun getLuckyDrawPoints(customerID: String) {
@@ -883,19 +886,36 @@ class CustomerHomeActivity : AppCompatActivity(), NavigationView.OnNavigationIte
                         it.data?.let {
 
                             progressDialog.dismiss()
-                            if (it != null && it.Message == "Success") {
+                            if (it.Message == "Success") {
 
-                                it.data.LuckyDrawPoints?.let {
 
-                                    Timber.d("Updated Token: ${it}")
+
+                                it.data?.let {
+
+
+                                    it.LuckyDrawPoints?.let {
+
+                                        Timber.d("Updated Token: ${it}")
+                                    }
+
+                                    txtLuckyDrawPoints.text =
+                                        "${getString(R.string.title_lucky_points)} ${
+                                            AppGlobal.roundTwoPlaces(
+                                                it.LuckyDrawPoints?.toDouble()
+                                            )
+                                        } "
                                 }
 
-                                txtLuckyDrawPoints.text =
-                                    "${getString(R.string.title_lucky_points)} ${
-                                        AppGlobal.roundTwoPlaces(
-                                            it.data.LuckyDrawPoints?.toDouble()
-                                        )
-                                    } "
+
+
+
+
+
+
+
+
+
+
                             }
 
                         }

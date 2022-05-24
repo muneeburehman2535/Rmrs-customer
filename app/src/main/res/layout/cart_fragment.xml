@@ -131,14 +131,16 @@
                         <!--Item Total View-->
                         <TextView
                             android:id="@+id/txt_title_item_total_cf"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:text="@string/title_item_total"
                             android:textColor="@color/text_color"
                             android:textStyle="bold"
+                            android:gravity="start"
                             android:fontFamily="@font/montserrat_bold"
                             android:textSize="@dimen/text_size_small"
                             app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/txt_item_total_cf"
                             app:layout_constraintStart_toStartOf="parent"
                             android:layout_marginTop="@dimen/margin_xl"
                             android:layout_marginStart="@dimen/margin_xxxl"/>
@@ -150,6 +152,8 @@
                             android:textStyle="bold"
                             android:fontFamily="@font/montserrat_bold"
                             android:textSize="@dimen/text_size_small"
+                            android:gravity="end"
+                            app:layout_constraintStart_toEndOf="@+id/txt_title_item_total_cf"
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             android:layout_marginTop="@dimen/margin_xl"
@@ -158,12 +162,14 @@
                         <!--Delivery charges View-->
                         <TextView
                             android:id="@+id/txt_title_services_cf"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:text="Delivery Charges"
                             android:textSize="@dimen/text_size_small"
                             app:layout_constraintTop_toBottomOf="@+id/txt_title_item_total_cf"
                             app:layout_constraintStart_toStartOf="parent"
+                            android:gravity="start"
+                            app:layout_constraintEnd_toStartOf="@+id/txt_services_charges_cf"
                             android:layout_marginTop="@dimen/margin_small"
                             android:layout_marginStart="@dimen/margin_xxxl"/>
                         <TextView
@@ -171,6 +177,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textSize="@dimen/text_size_small"
+                            android:gravity="end"
+                            app:layout_constraintStart_toEndOf="@+id/txt_title_services_cf"
                             app:layout_constraintTop_toBottomOf="@+id/txt_item_total_cf"
                             app:layout_constraintEnd_toEndOf="parent"
                             android:layout_marginTop="@dimen/margin_small"
@@ -180,10 +188,12 @@
 
                         <TextView
                             android:id="@+id/txt_title_totel_cf"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:text="Total(Tax exclusive value)"
                             android:textSize="@dimen/text_size_small"
+                            android:gravity="start"
+                            app:layout_constraintEnd_toStartOf="@+id/txt_total_cf"
                             app:layout_constraintTop_toBottomOf="@+id/txt_title_services_cf"
                             app:layout_constraintStart_toStartOf="parent"
                             android:layout_marginTop="@dimen/margin_small"
@@ -193,20 +203,24 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textSize="@dimen/text_size_small"
+                            android:gravity="end"
                             app:layout_constraintTop_toBottomOf="@+id/txt_services_charges_cf"
                             app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/txt_title_totel_cf"
                             android:layout_marginTop="@dimen/margin_small"
                             android:layout_marginEnd="@dimen/margin_xxxl"/>
 
 
                         <TextView
                             android:id="@+id/txt_title_tax_chrg_cf"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:text="@string/title_tax"
                             android:textSize="@dimen/text_size_small"
                             app:layout_constraintTop_toBottomOf="@+id/txt_title_totel_cf"
                             app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/txt_tax_chrg_cf"
+                            android:gravity="start"
                             android:layout_marginTop="@dimen/margin_small"
                             android:layout_marginStart="@dimen/margin_xxxl"/>
                         <TextView
@@ -214,6 +228,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textSize="@dimen/text_size_small"
+                            app:layout_constraintStart_toEndOf="@+id/txt_title_tax_chrg_cf"
+                            android:gravity="end"
                             app:layout_constraintTop_toBottomOf="@+id/txt_total_cf"
                             app:layout_constraintEnd_toEndOf="parent"
                             android:layout_marginTop="@dimen/margin_small"
@@ -223,10 +239,12 @@
                         <!--Tax charges View-->
                         <TextView
                             android:id="@+id/txt_title_grandtotal_cf"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:text="Grand Total(Tax inclusive value)"
                             android:textSize="@dimen/text_size_small"
+                            app:layout_constraintEnd_toStartOf="@+id/txt_grandtotal_cf"
+                            android:gravity="start"
                             app:layout_constraintTop_toBottomOf="@+id/txt_title_tax_chrg_cf"
                             app:layout_constraintStart_toStartOf="parent"
                             android:layout_marginTop="@dimen/margin_small"
@@ -236,6 +254,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textSize="@dimen/text_size_small"
+                            android:gravity="end"
+                            app:layout_constraintStart_toEndOf="@+id/txt_title_grandtotal_cf"
                             app:layout_constraintTop_toBottomOf="@+id/txt_tax_chrg_cf"
                             app:layout_constraintEnd_toEndOf="parent"
                             android:layout_marginTop="@dimen/margin_small"

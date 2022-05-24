@@ -70,6 +70,9 @@ class  CheckoutFragment : Fragment(),View.OnClickListener {
     {
         (activity as CustomerHomeActivity?)?.mModel?.checkout?.observe(viewLifecycleOwner, Observer {
             this.orderCheckout=it
+
+            Timber.d("Checkout API: ${Gson().toJson(it)}")
+
         })
     }
     override fun onResume() {

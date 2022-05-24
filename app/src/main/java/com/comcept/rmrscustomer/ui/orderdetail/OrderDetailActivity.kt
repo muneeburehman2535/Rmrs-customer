@@ -92,48 +92,52 @@ class OrderDetailActivity : AppCompatActivity(),View.OnClickListener {
   * */
     private fun getMyOrdersList(customerId: String, orderId: String){
 
-        mViewModel.getOrderDetailResponse(customerId, orderId).observe(this, {
+        mViewModel.getOrderDetailResponse(customerId, orderId).observe(this) {
 
-           when(it){
+            when (it) {
 
-               is Response.Loading ->{
-                   progressDialog.setLabel("Please Wait")
-                   progressDialog.show()
-               }
+                is Response.Loading -> {
+                    progressDialog.setLabel("Please Wait")
+                    progressDialog.show()
+                }
 
-               is Response.Success ->{
+                is Response.Success -> {
 
-                   it.data?.let {
-                       progressDialog.dismiss()
-                       if (it!=null){
-                           if (it.Message == "Success") {
-                               menuOrderedList=it.data.MenuOrdered
-                               orderDetailIItemsAdapter.updateList(menuOrderedList)
+                    it.data?.let {
+                        progressDialog.dismiss()
+                        if (it != null) {
+                            if (it.Message == "Success") {
+                                menuOrderedList = it.data.MenuOrdered
+                                orderDetailIItemsAdapter.updateList(menuOrderedList)
 
-                               setViews(it.data)
+                                setViews(it.data)
 
-                           } else {
-                               AppGlobal.showDialog(
-                                   getString(R.string.title_alert),
-                                   it.data.description,
-                                   this
-                               )
-                           }
-                       }
+                            } else {
+                                AppGlobal.showDialog(
+                                    getString(R.string.title_alert),
+                                    it.data.description,
+                                    this
+                                )
+                            }
+                        }
 
-                   }
-               }
+                    }
+                }
 
-               is Response.Error ->{
-                   AppGlobal.showDialog(getString(R.string.title_alert), it.message.toString(),this)
-                   if (progressDialog.isShowing) {
-                       progressDialog.dismiss()
+                is Response.Error -> {
+                    AppGlobal.showDialog(
+                        getString(R.string.title_alert),
+                        it.message.toString(),
+                        this
+                    )
+                    if (progressDialog.isShowing) {
+                        progressDialog.dismiss()
 
-                   }
-               }
-           }
+                    }
+                }
+            }
 
-        })
+        }
     }
 
 

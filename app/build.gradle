@@ -14,8 +14,8 @@ android {
         applicationId "com.comcept.rmrscustomer"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 15
-        versionName "1.0.15"
+        versionCode 20
+        versionName "1.0.20"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         renderscriptTargetApi 30
