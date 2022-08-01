@@ -471,7 +471,7 @@ class CustomerHomeActivity : AppCompatActivity(), NavigationView.OnNavigationIte
                 val address: String =
                     addresses[0].getAddressLine(0) // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
                 AppGlobal.showToast(address, this@CustomerHomeActivity)
-                mCurrentLocation = address
+                 mCurrentLocation = address
                 txtToolbarName.text = mCurrentLocation
                 AppGlobal.writeString(this@CustomerHomeActivity, AppGlobal.customerAddress, mCurrentLocation)
             }
@@ -483,9 +483,6 @@ class CustomerHomeActivity : AppCompatActivity(), NavigationView.OnNavigationIte
                     else -> throw e
                 }
             }
-
-
-
 
         }
 
@@ -889,7 +886,6 @@ class CustomerHomeActivity : AppCompatActivity(), NavigationView.OnNavigationIte
                             if (it.Message == "Success") {
 
 
-
                                 it.data?.let {
 
 
@@ -905,14 +901,6 @@ class CustomerHomeActivity : AppCompatActivity(), NavigationView.OnNavigationIte
                                             )
                                         } "
                                 }
-
-
-
-
-
-
-
-
 
 
 

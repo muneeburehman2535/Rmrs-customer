@@ -186,31 +186,41 @@ class ReservationActivity : AppCompatActivity(), View.OnClickListener, DatePicke
     * */
     private fun addRestaurantDetail(reservation: Reservation){
 
-        mViewModel.getReviewResponse(reservation).observe(this, {
+        mViewModel.getReviewResponse(reservation).observe(this) {
 
-            when(it){
+            when (it) {
 
-                is Response.Loading ->{
+                is Response.Loading -> {
                     progressDialog.setLabel("Please Wait")
                     progressDialog.show()
                 }
-                is Response.Success ->{
+                is Response.Success -> {
                     it.data?.let {
                         progressDialog.dismiss()
-                        if (it!=null&&it.Message=="Success")
-                        {
-                            AppGlobal.showDialogWithCloseActivity(getString(R.string.title_alert),it.data.description,this)
-                        }
-                        else{
-                            AppGlobal.showDialog(getString(R.string.title_alert),it.data.description,this)
+                        if (it != null && it.Message == "Success") {
+                            AppGlobal.showDialogWithCloseActivity(
+                                getString(R.string.title_alert),
+                                it.data.description,
+                                this
+                            )
+                        } else {
+                            AppGlobal.showDialog(
+                                getString(R.string.title_alert),
+                                it.data.description,
+                                this
+                            )
                         }
                     }
 
 
                 }
 
-                is Response.Error ->{
-                    AppGlobal.showDialog(getString(R.string.title_alert), it.message.toString(),this)
+                is Response.Error -> {
+                    AppGlobal.showDialog(
+                        getString(R.string.title_alert),
+                        it.message.toString(),
+                        this
+                    )
                     if (progressDialog.isShowing) {
                         progressDialog.dismiss()
 
@@ -218,6 +228,6 @@ class ReservationActivity : AppCompatActivity(), View.OnClickListener, DatePicke
                 }
             }
 
-        })
+        }
     }
 }

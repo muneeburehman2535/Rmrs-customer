@@ -21,8 +21,6 @@ import com.comcept.rmrscustomer.adapters.MenuAdapter
 import com.comcept.rmrscustomer.data_class.cart.Cart
 import com.comcept.rmrscustomer.data_class.cart.SingleCart
 import com.comcept.rmrscustomer.data_class.restaurantdetail.Menu
-import com.comcept.rmrscustomer.data_class.restaurantdetail.Variant
-import com.comcept.rmrscustomer.data_class.restaurantdetail.restaurantdetail.CategoryData
 import com.comcept.rmrscustomer.databinding.MenuDetailFragmentBinding
 import com.comcept.rmrscustomer.db.CustomerDatabase
 import com.comcept.rmrscustomer.ui.home.CustomerHomeActivity
@@ -78,6 +76,7 @@ class MenuDetailFragment : Fragment() {
         viewModel = ViewModelProvider(this).get(MenuDetailViewModel::class.java)
         mBinding.menuDetailViewModel=viewModel
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

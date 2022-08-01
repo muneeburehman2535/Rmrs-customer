@@ -18,79 +18,82 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@+id/btn_reorder_aod">
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <ImageView
                     android:id="@+id/img_background_order_detail"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/img_size_nrml"
-                    android:src="@drawable/photo_1552566626_52f8b828add9"
-                    app:layout_constraintTop_toTopOf="parent"
+                    android:alpha="0.84"
                     android:scaleType="fitXY"
-                    android:alpha="0.84" />
+                    android:src="@drawable/photo_1552566626_52f8b828add9"
+                    app:layout_constraintTop_toTopOf="parent" />
+
                 <TextView
                     android:id="@+id/txt_title_restaurant_name_detail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/text_size_avg"
-                    android:textStyle="bold"
+                    android:layout_marginTop="@dimen/margin_xxxxl"
                     android:fontFamily="@font/montserrat_bold"
                     android:textColor="@color/white"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
+                    android:textSize="@dimen/text_size_avg"
+                    android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_marginTop="@dimen/margin_xxxxl"/>
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
                 <TextView
                     android:id="@+id/txt_title_order_detail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_l"
+                    android:layout_marginTop="@dimen/margin_avg"
+                    android:fontFamily="@font/montserrat_bold"
                     android:text="@string/title_order_detail"
+                    android:textColor="@color/text_color"
                     android:textSize="@dimen/text_size_avg"
                     android:textStyle="bold"
-                    android:fontFamily="@font/montserrat_bold"
-                    android:textColor="@color/text_color"
-                    app:layout_constraintTop_toBottomOf="@+id/img_background_order_detail"
                     app:layout_constraintStart_toStartOf="parent"
-                    android:layout_marginTop="@dimen/margin_avg"
-                    android:layout_marginStart="@dimen/margin_l"/>
+                    app:layout_constraintTop_toBottomOf="@+id/img_background_order_detail" />
 
                 <TextView
                     android:id="@+id/txt_title_order_number"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/title_order_number"
-                    android:textSize="@dimen/text_size_small"
-                    android:textColor="@color/text_color"
-                    app:layout_constraintTop_toBottomOf="@+id/txt_title_order_detail"
-                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginStart="@dimen/margin_l"
                     android:layout_marginTop="@dimen/margin_xl"
-                    android:layout_marginStart="@dimen/margin_l"/>
+                    android:text="@string/title_order_number"
+                    android:textColor="@color/text_color"
+                    android:textSize="@dimen/text_size_small"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_title_order_detail" />
 
                 <TextView
                     android:id="@+id/txt_title_order_from"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/title_order_from"
-                    android:textSize="@dimen/text_size_small"
-                    android:textColor="@color/text_color"
-                    app:layout_constraintTop_toBottomOf="@+id/txt_title_order_number"
-                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginStart="@dimen/margin_l"
                     android:layout_marginTop="@dimen/margin_l"
-                    android:layout_marginStart="@dimen/margin_l"/>
+                    android:text="@string/title_order_from"
+                    android:textColor="@color/text_color"
+                    android:textSize="@dimen/text_size_small"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_title_order_number" />
 
                 <TextView
                     android:id="@+id/txt_title_order_delivery"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/title_delivery_address"
-                    android:textSize="@dimen/text_size_small"
-                    android:textColor="@color/text_color"
-                    app:layout_constraintTop_toBottomOf="@+id/txt_title_order_from"
-                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginStart="@dimen/margin_l"
                     android:layout_marginTop="@dimen/margin_xl"
-                    android:layout_marginStart="@dimen/margin_l"/>
-
+                    android:text="@string/title_delivery_address"
+                    android:textColor="@color/text_color"
+                    android:textSize="@dimen/text_size_small"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_title_order_from" />
 
 
                 <RelativeLayout
@@ -98,222 +101,231 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    app:layout_constraintStart_toEndOf="@+id/txt_title_order_number"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/txt_title_order_detail"
-                    app:layout_constraintHorizontal_weight="10">
+                    app:layout_constraintHorizontal_weight="10"
+                    app:layout_constraintStart_toEndOf="@+id/txt_title_order_number"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_title_order_detail">
+
                     <TextView
                         android:id="@+id/txt_order_number"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textStyle="bold"
-                        android:textSize="@dimen/text_size_small"
-                        android:fontFamily="@font/montserrat_bold"
-                        android:textColor="@color/colorAccent"
                         android:layout_alignParentEnd="true"
                         android:layout_marginTop="@dimen/margin_xl"
-                        android:layout_marginEnd="@dimen/margin_l" />
+                        android:layout_marginEnd="@dimen/margin_l"
+                        android:fontFamily="@font/montserrat_bold"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="@dimen/text_size_small"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/txt_order_from"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="@dimen/text_size_small"
-                        android:textColor="@color/text_color"
-                        android:textStyle="bold"
-                        android:lines="1"
-                        android:ellipsize="end"
                         android:layout_below="@+id/txt_order_number"
                         android:layout_alignParentEnd="true"
                         android:layout_marginTop="@dimen/margin_l"
-                        android:layout_marginEnd="@dimen/margin_l"/>
+                        android:layout_marginEnd="@dimen/margin_l"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:textColor="@color/text_color"
+                        android:textSize="@dimen/text_size_small"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/txt_order_delivery"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="F G Junior Model School 86 Islamabad"
-                        android:textSize="@dimen/text_size_small"
-                        android:textColor="@color/text_color"
-                        android:textStyle="bold"
-                        android:fontFamily="@font/montserrat_bold"
-                        android:textAlignment="textEnd"
                         android:layout_below="@+id/txt_order_from"
                         android:layout_alignParentEnd="true"
-                        android:layout_marginTop="@dimen/margin_xl"
                         android:layout_marginStart="@dimen/margin_l"
-                        android:layout_marginEnd="@dimen/margin_l"/>
+                        android:layout_marginTop="@dimen/margin_xl"
+                        android:layout_marginEnd="@dimen/margin_l"
+                        android:fontFamily="@font/montserrat_bold"
+                        android:text="F G Junior Model School 86 Islamabad"
+                        android:textAlignment="textEnd"
+                        android:textColor="@color/text_color"
+                        android:textSize="@dimen/text_size_small"
+                        android:textStyle="bold" />
                 </RelativeLayout>
 
                 <View
                     android:id="@+id/line_seprator_order_details"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@color/grey"
-                    app:layout_constraintTop_toBottomOf="@+id/layout_order_details"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_marginTop="@dimen/margin_xl"
                     android:layout_marginStart="@dimen/margin_xl"
-                    android:layout_marginEnd="@dimen/margin_xl"/>
+                    android:layout_marginTop="@dimen/margin_xl"
+                    android:layout_marginEnd="@dimen/margin_xl"
+                    android:background="@color/grey"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/layout_order_details" />
 
                 <LinearLayout
                     android:id="@+id/layout_special_ins"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_xl"
                     android:orientation="vertical"
-                    app:layout_constraintTop_toBottomOf="@+id/line_seprator_order_details"
-                    android:layout_marginTop="@dimen/margin_xl">
+                    app:layout_constraintTop_toBottomOf="@+id/line_seprator_order_details">
+
                     <TextView
                         android:id="@+id/txt_title_special_instructions"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_avg"
+                        android:layout_marginEnd="@dimen/margin_avg"
+                        android:fontFamily="@font/montserrat_bold"
                         android:text="@string/title_special_instructions"
                         android:textSize="@dimen/text_size_avg"
-                        android:textStyle="bold"
-                        android:fontFamily="@font/montserrat_bold"
-                        android:layout_marginStart="@dimen/margin_avg"
-                        android:layout_marginEnd="@dimen/margin_avg" />
+                        android:textStyle="bold" />
 
                     <EditText
                         android:id="@+id/edtxt_special_ins_od"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/img_size_normal"
-                        android:background="@drawable/edit_text_background"
-                        android:gravity="top|start"
-                        android:paddingTop="@dimen/padding_l"
-                        android:paddingStart="@dimen/padding_l"
-                        android:paddingEnd="@dimen/padding_avg"
-                        app:layout_constraintTop_toBottomOf="@+id/card_payment_method_fc"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        android:layout_marginTop="@dimen/margin_avg"
                         android:layout_marginStart="@dimen/margin_avg"
+                        android:layout_marginTop="@dimen/margin_avg"
                         android:layout_marginEnd="@dimen/margin_avg"
-                        android:enabled="false"/>
+                        android:background="@drawable/edit_text_background"
+                        android:enabled="false"
+                        android:gravity="top|start"
+                        android:paddingStart="@dimen/padding_l"
+                        android:paddingTop="@dimen/padding_l"
+                        android:paddingEnd="@dimen/padding_avg"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/card_payment_method_fc" />
                 </LinearLayout>
 
                 <View
                     android:id="@+id/line_seprator1_order_details"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@color/grey"
-                    app:layout_constraintTop_toBottomOf="@+id/layout_special_ins"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_marginTop="@dimen/margin_xl"
                     android:layout_marginStart="@dimen/margin_l"
-                    android:layout_marginEnd="@dimen/margin_l"/>
+                    android:layout_marginTop="@dimen/margin_xl"
+                    android:layout_marginEnd="@dimen/margin_l"
+                    android:background="@color/grey"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/layout_special_ins" />
 
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_items_order_detail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@+id/line_seprator1_order_details"
-                    android:layout_marginTop="@dimen/margin_avg"/>
+                    android:layout_marginTop="@dimen/margin_avg"
+                    app:layout_constraintTop_toBottomOf="@+id/line_seprator1_order_details" />
 
-                <TextView
-                    android:id="@+id/txt_title_subtotal_aod"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/title_sub_total"
-                    android:textSize="@dimen/text_size_small"
-                    android:textColor="@color/text_color"
-                    android:textStyle="bold"
-                    app:layout_constraintTop_toBottomOf="@+id/rv_items_order_detail"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:layout_marginTop="@dimen/margin_xl"
-                    android:layout_marginStart="@dimen/margin_l"/>
-                <TextView
-                    android:id="@+id/txt_subtotal_aod"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/text_size_small"
-                    android:textColor="@color/text_color"
-                    app:layout_constraintTop_toBottomOf="@+id/rv_items_order_detail"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_marginTop="@dimen/margin_xl"
-                    android:layout_marginEnd="@dimen/margin_l"/>
-
-                <TextView
-                    android:id="@+id/txt_title_sales_tax_aod"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/title_sales_tax"
-                    android:textSize="@dimen/text_size_small"
-                    android:textColor="@color/text_color"
-                    app:layout_constraintTop_toBottomOf="@+id/txt_title_subtotal_aod"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:layout_marginTop="@dimen/margin_xl"
-                    android:layout_marginStart="@dimen/margin_l"/>
-                <TextView
-                    android:id="@+id/txt_sales_tax_aod"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/text_size_small"
-                    android:textColor="@color/text_color"
-                    app:layout_constraintTop_toBottomOf="@+id/txt_subtotal_aod"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_marginTop="@dimen/margin_xl"
-                    android:layout_marginEnd="@dimen/margin_l"/>
 
                 <TextView
                     android:id="@+id/txt_title_service_charges_aod"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/title_delivery_fee"
-                    android:textSize="@dimen/text_size_small"
-                    android:textColor="@color/text_color"
-                    app:layout_constraintTop_toBottomOf="@+id/txt_title_sales_tax_aod"
-                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginStart="@dimen/margin_l"
                     android:layout_marginTop="@dimen/margin_xl"
-                    android:layout_marginStart="@dimen/margin_l"/>
+                    android:text="@string/title_delivery_fee"
+                    android:textColor="@color/text_color"
+                    android:textSize="@dimen/text_size_small"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/rv_items_order_detail" />
+
                 <TextView
                     android:id="@+id/txt_service_charges_aod"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/text_size_small"
-                    android:textColor="@color/text_color"
-                    app:layout_constraintTop_toBottomOf="@+id/txt_sales_tax_aod"
-                    app:layout_constraintEnd_toEndOf="parent"
                     android:layout_marginTop="@dimen/margin_xl"
-                    android:layout_marginEnd="@dimen/margin_l"/>
+                    android:layout_marginEnd="@dimen/margin_l"
+                    android:textColor="@color/text_color"
+                    android:textSize="@dimen/text_size_small"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/rv_items_order_detail" />
+
+
+                <TextView
+                    android:id="@+id/txt_title_subtotal_aod"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_l"
+                    android:layout_marginTop="@dimen/margin_xl"
+                    android:text="@string/title_sub_total"
+                    android:textColor="@color/text_color"
+                    android:textSize="@dimen/text_size_small"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_title_service_charges_aod" />
+
+                <TextView
+                    android:id="@+id/txt_subtotal_aod"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_xl"
+                    android:layout_marginEnd="@dimen/margin_l"
+                    android:textColor="@color/text_color"
+                    android:textSize="@dimen/text_size_small"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_title_service_charges_aod" />
+
+                <TextView
+                    android:id="@+id/txt_title_sales_tax_aod"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_l"
+                    android:layout_marginTop="@dimen/margin_xl"
+                    android:text="@string/title_sales_tax"
+                    android:textColor="@color/text_color"
+                    android:textSize="@dimen/text_size_small"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_title_subtotal_aod" />
+
+                <TextView
+                    android:id="@+id/txt_sales_tax_aod"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_xl"
+                    android:layout_marginEnd="@dimen/margin_l"
+                    android:textColor="@color/text_color"
+                    android:textSize="@dimen/text_size_small"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_subtotal_aod" />
+
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/layout_total_amount_aod"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@+id/txt_title_service_charges_aod"
                     android:layout_marginTop="@dimen/margin_xxl"
-                    android:background="@color/color_layout_background">
+                    android:background="@color/color_layout_background"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_title_sales_tax_aod">
 
                     <TextView
                         android:id="@+id/txt_title_total_amount_aod"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/title_total"
-                        android:textSize="@dimen/text_size_small"
-                        android:textColor="@color/text_color"
-                        android:textStyle="bold"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        android:layout_marginTop="@dimen/margin_xl"
                         android:layout_marginStart="@dimen/margin_l"
-                        android:layout_marginBottom="@dimen/margin_xl"/>
+                        android:layout_marginTop="@dimen/margin_xl"
+                        android:layout_marginBottom="@dimen/margin_xl"
+                        android:text="@string/title_total"
+                        android:textColor="@color/text_color"
+                        android:textSize="@dimen/text_size_small"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
                     <TextView
                         android:id="@+id/txt_total_amount_aod"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="@dimen/text_size_small"
-                        android:textColor="@color/text_color"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
                         android:layout_marginTop="@dimen/margin_xl"
                         android:layout_marginEnd="@dimen/margin_l"
-                        android:layout_marginBottom="@dimen/margin_xl"/>
+                        android:layout_marginBottom="@dimen/margin_xl"
+                        android:textColor="@color/text_color"
+                        android:textSize="@dimen/text_size_small"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>

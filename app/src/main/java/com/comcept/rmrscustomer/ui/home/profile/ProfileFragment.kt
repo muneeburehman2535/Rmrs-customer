@@ -13,7 +13,6 @@ import com.basgeekball.awesomevalidation.AwesomeValidation
 import com.basgeekball.awesomevalidation.ValidationStyle
 import com.kaopiz.kprogresshud.KProgressHUD
 import com.comcept.rmrscustomer.R
-import com.comcept.rmrscustomer.data_class.login.Login
 import com.comcept.rmrscustomer.data_class.profile.Profile
 import com.comcept.rmrscustomer.databinding.ProfileFragmentBinding
 import com.comcept.rmrscustomer.repository.Response
@@ -102,61 +101,76 @@ class ProfileFragment : Fragment(),View.OnClickListener {
     private fun updateUser(){
 
         val profile= Profile(AppGlobal.readString(requireActivity(),AppGlobal.customerId,"0"),mBinding.txtNumberAp.text?.trim().toString(), mBinding.txtNameAp.text?.trim().toString())
-        viewModel.updateProfileResponse(profile).observe(this, {
+        viewModel.updateProfileResponse(profile).observe(this) {
 
-           when(it){
-
-
-               is Response.Loading ->{
-                   progressDialog.setLabel("Please Wait")
-                   progressDialog.show()
-               }
+            when (it) {
 
 
-               is Response.Success ->{
-
-                   it.data?.let {
-                       progressDialog.dismiss()
-                       if (it!=null&&it.Message=="Success")
-                       {
-                           AppGlobal.writeString(requireActivity(),AppGlobal.customerName, it.data.result.Name)
-                           AppGlobal.writeString(requireActivity(),AppGlobal.customerMobile,it.data.result.MobileNumber)
-                           mBinding.btnUpdatePf.visibility=View.GONE
-
-                           mBinding.txtNameAp.isEnabled=false
-                           //mBinding.txtNameAp.requestFocus()
-                           mBinding.txtNameAp.setBackgroundResource(0)
-                           mBinding.txtNumberAp.isEnabled=false
-                           mBinding.txtNumberAp.setBackgroundResource(0)
-                           (requireActivity() as CustomerHomeActivity).editProfileMenu?.isVisible=true
+                is Response.Loading -> {
+                    progressDialog.setLabel("Please Wait")
+                    progressDialog.show()
+                }
 
 
-                           //AppGlobal.writeString(this,AppGlobal.customerId,"ai0anPGypI")
-                           // AppGlobal.startNewActivity(this, CustomerHomeActivity::class.java)
-                           //finishAffinity()
-                       }
-                       else{
-                           AppGlobal.showDialog(getString(R.string.title_alert),it.data.description,requireActivity())
-                       }
+                is Response.Success -> {
 
-                   }
+                    it.data?.let {
+                        progressDialog.dismiss()
+                        if (it != null && it.Message == "Success") {
+                            AppGlobal.writeString(
+                                requireActivity(),
+                                AppGlobal.customerName,
+                                it.data.result.Name.toString()
+                            )
+                            AppGlobal.writeString(
+                                requireActivity(),
+                                AppGlobal.customerMobile,
+                                it.data.result.MobileNumber.toString()
+                            )
+                            mBinding.btnUpdatePf.visibility = View.GONE
 
-               }
-
-               is Response.Error ->{
-
-                   AppGlobal.showDialog(getString(R.string.title_alert),it.message.toString(),requireActivity())
-                   if (progressDialog.isShowing) {
-
-                       progressDialog.dismiss()
-
-                   }
-               }
-
-           }
+                            mBinding.txtNameAp.isEnabled = false
+                            //mBinding.txtNameAp.requestFocus()
+                            mBinding.txtNameAp.setBackgroundResource(0)
+                            mBinding.txtNumberAp.isEnabled = false
+                            mBinding.txtNumberAp.setBackgroundResource(0)
+                            (requireActivity() as CustomerHomeActivity).editProfileMenu?.isVisible =
+                                true
 
 
-        })
+                            //AppGlobal.writeString(this,AppGlobal.customerId,"ai0anPGypI")
+                            // AppGlobal.startNewActivity(this, CustomerHomeActivity::class.java)
+                            //finishAffinity()
+                        } else {
+                            AppGlobal.showDialog(
+                                getString(R.string.title_alert),
+                                it.data.description,
+                                requireActivity()
+                            )
+                        }
+
+                    }
+
+                }
+
+                is Response.Error -> {
+
+                    AppGlobal.showDialog(
+                        getString(R.string.title_alert),
+                        it.message.toString(),
+                        requireActivity()
+                    )
+                    if (progressDialog.isShowing) {
+
+                        progressDialog.dismiss()
+
+                    }
+                }
+
+            }
+
+
+        }
     }
 
     override fun onClick(v: View?) {

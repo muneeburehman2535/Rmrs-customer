@@ -12,7 +12,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import com.comcept.rmrscustomer.R
 import com.comcept.rmrscustomer.adapters.TabsAdapter
 import com.comcept.rmrscustomer.data_class.restaurantdetail.Menu

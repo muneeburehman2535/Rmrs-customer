@@ -33,15 +33,22 @@ class HomeRepository {
             override fun onResponse(call: Call<ResponseBody?>, response: Response<ResponseBody?>) {
                 var categoryResponse: CategoryResponse?=null
 
-                categoryResponse = if (response.body()==null) {
-                    Gson().fromJson(response.errorBody()?.string(), CategoryResponse::class.java)
+                if (response.code() == 200){
+                    categoryResponse = if (response.body()==null) {
+                        Gson().fromJson(response.errorBody()?.string(), CategoryResponse::class.java)
 
-                } else{
-                    Gson().fromJson(ConvertResponseToString.getString(response), CategoryResponse::class.java)
+                    } else{
+                        Gson().fromJson(ConvertResponseToString.getString(response), CategoryResponse::class.java)
+
+                    }
+                    Timber.d(Gson().toJson(categoryResponse).toString())
+                    categoryResponseLiveData.postValue(com.comcept.rmrscustomer.repository.Response.Success(categoryResponse))
 
                 }
-                Timber.d(Gson().toJson(categoryResponse).toString())
-                categoryResponseLiveData.postValue(com.comcept.rmrscustomer.repository.Response.Success(categoryResponse))
+                else{
+                    categoryResponseLiveData.postValue(com.comcept.rmrscustomer.repository.Response.Error("Error"))
+                }
+
             }
 
             override fun onFailure(call: Call<ResponseBody?>, t: Throwable) {
@@ -61,16 +68,23 @@ class HomeRepository {
             override fun onResponse(call: Call<ResponseBody?>, response: Response<ResponseBody?>) {
                 var restaurantsResponse: RestaurantsResponse?=null
 
-                restaurantsResponse = if (response.body()==null) {
-                    Gson().fromJson(response.errorBody()?.string(), RestaurantsResponse::class.java)
+                if (response.code() == 200){
+                    restaurantsResponse = if (response.body()==null) {
+                        Gson().fromJson(response.errorBody()?.string(), RestaurantsResponse::class.java)
 
-                } else{
-                    Gson().fromJson(ConvertResponseToString.getString(response), RestaurantsResponse::class.java)
+                    } else{
+                        Gson().fromJson(ConvertResponseToString.getString(response), RestaurantsResponse::class.java)
 
+                    }
+                    Timber.d(Gson().toJson(restaurantsResponse).toString())
+                    Log.d("HomeResponse","${Gson().toJson(restaurantsResponse).toString()}")
+                    restaurantResponseLiveData.postValue(com.comcept.rmrscustomer.repository.Response.Success(restaurantsResponse))
                 }
-                Timber.d(Gson().toJson(restaurantsResponse).toString())
-                Log.d("HomeResponse","${Gson().toJson(restaurantsResponse).toString()}")
-                restaurantResponseLiveData.postValue(com.comcept.rmrscustomer.repository.Response.Success(restaurantsResponse))
+
+                else{
+                    restaurantResponseLiveData.postValue(com.comcept.rmrscustomer.repository.Response.Error("Error"))
+                }
+
             }
 
             override fun onFailure(call: Call<ResponseBody?>, t: Throwable) {
@@ -89,15 +103,21 @@ class HomeRepository {
             override fun onResponse(call: Call<ResponseBody?>, response: Response<ResponseBody?>) {
                 var fcmTokenResponse: FCMTokenResponse?=null
 
-                fcmTokenResponse = if (response.body()==null) {
-                    Gson().fromJson(response.errorBody()?.string(), FCMTokenResponse::class.java)
+                if (response.code() == 200){
+                    fcmTokenResponse = if (response.body()==null) {
+                        Gson().fromJson(response.errorBody()?.string(), FCMTokenResponse::class.java)
 
-                } else{
-                    Gson().fromJson(ConvertResponseToString.getString(response), FCMTokenResponse::class.java)
+                    } else{
+                        Gson().fromJson(ConvertResponseToString.getString(response), FCMTokenResponse::class.java)
 
+                    }
+                    Timber.d(Gson().toJson(fcmTokenResponse).toString())
+                    fcmResponseLiveData.postValue(com.comcept.rmrscustomer.repository.Response.Success(fcmTokenResponse))
                 }
-                Timber.d(Gson().toJson(fcmTokenResponse).toString())
-                fcmResponseLiveData.postValue(com.comcept.rmrscustomer.repository.Response.Success(fcmTokenResponse))
+                else{
+                    fcmResponseLiveData.postValue(com.comcept.rmrscustomer.repository.Response.Error("Error"))
+                }
+
             }
 
             override fun onFailure(call: Call<ResponseBody?>, t: Throwable) {
@@ -117,15 +137,29 @@ class HomeRepository {
             override fun onResponse(call: Call<ResponseBody?>, response: Response<ResponseBody?>) {
                 var luckyDrawPointsResponse: LuckyDrawPointsResponse?=null
 
-                luckyDrawPointsResponse = if (response.body()==null) {
-                    Gson().fromJson(response.errorBody()?.string(), LuckyDrawPointsResponse::class.java)
 
-                } else{
-                    Gson().fromJson(ConvertResponseToString.getString(response), LuckyDrawPointsResponse::class.java)
 
+                    if (response.code()==200){
+
+
+                        luckyDrawPointsResponse = if (response.body()==null) {
+                            Gson().fromJson(response.errorBody()?.string(), LuckyDrawPointsResponse::class.java)
+
+                        } else{
+                            Gson().fromJson(ConvertResponseToString.getString(response), LuckyDrawPointsResponse::class.java)
+
+                        }
+
+                        Timber.d(Gson().toJson(luckyDrawPointsResponse).toString())
+                        luckyDrawPointsResponseLiveData.postValue(com.comcept.rmrscustomer.repository.Response.Success(luckyDrawPointsResponse))
+                    }
+
+                else{
+
+                        luckyDrawPointsResponseLiveData.postValue(com.comcept.rmrscustomer.repository.Response.Error("Error"))
                 }
-                Timber.d(Gson().toJson(luckyDrawPointsResponse).toString())
-                luckyDrawPointsResponseLiveData.postValue(com.comcept.rmrscustomer.repository.Response.Success(luckyDrawPointsResponse))
+
+
             }
 
             override fun onFailure(call: Call<ResponseBody?>, t: Throwable) {

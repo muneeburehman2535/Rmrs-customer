@@ -114,48 +114,56 @@ class UpdatePasswordFragment : Fragment(),View.OnClickListener {
     * */
     private fun updatePasswordResult(updatePassword: UpdatePassword) {
 
-        viewModel.updatePasswordResponse(updatePassword).observe(requireActivity(), {
+        viewModel.updatePasswordResponse(updatePassword).observe(requireActivity()) {
 
-           when(it){
-
-
-               is Response.Loading ->{
-                   progressDialog.setLabel("Please Wait")
-                   progressDialog.show()
-
-               }
-               is Response.Success ->{
-
-                   it.data?.let {
-                       progressDialog.dismiss()
-                       if (it!=null&&it.Message=="Success"){
-                           AppGlobal.showDialog(getString(R.string.title_alert),it.data.description,requireActivity())
-                           mBinding.edtxtPasswordUpf.text?.clear()
-                           mBinding.edtxtConfirmPasswordUpf.text?.clear()
-                           mBinding.edtxtOldPassword.text?.clear()
-                       } else {
-                           AppGlobal.showDialog(
-                               getString(R.string.title_alert),
-                               it.data.description,
-                               requireActivity()
-                           )
-                       }
-                   }
-               }
-
-               is Response.Error ->{
-
-                   AppGlobal.showDialog(getString(R.string.title_alert), it.message.toString(),requireActivity())
-                   if (progressDialog.isShowing) {
-                       progressDialog.dismiss()
-
-                   }
-               }
-
-           }
+            when (it) {
 
 
-        })
+                is Response.Loading -> {
+                    progressDialog.setLabel("Please Wait")
+                    progressDialog.show()
+
+                }
+                is Response.Success -> {
+
+                    it.data?.let {
+                        progressDialog.dismiss()
+                        if (it != null && it.Message == "Success") {
+                            AppGlobal.showDialog(
+                                getString(R.string.title_alert),
+                                it.data.description,
+                                requireActivity()
+                            )
+                            mBinding.edtxtPasswordUpf.text?.clear()
+                            mBinding.edtxtConfirmPasswordUpf.text?.clear()
+                            mBinding.edtxtOldPassword.text?.clear()
+                        } else {
+                            AppGlobal.showDialog(
+                                getString(R.string.title_alert),
+                                it.data.description,
+                                requireActivity()
+                            )
+                        }
+                    }
+                }
+
+                is Response.Error -> {
+
+                    AppGlobal.showDialog(
+                        getString(R.string.title_alert),
+                        it.message.toString(),
+                        requireActivity()
+                    )
+                    if (progressDialog.isShowing) {
+                        progressDialog.dismiss()
+
+                    }
+                }
+
+            }
+
+
+        }
     }
 
 

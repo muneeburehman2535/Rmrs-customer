@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.kaopiz.kprogresshud.KProgressHUD
 import com.comcept.rmrscustomer.R
-import com.comcept.rmrscustomer.adapters.CategoriesAdapter
 import com.comcept.rmrscustomer.adapters.FavouriteAdapter
 import com.comcept.rmrscustomer.databinding.FavouriteFragmentBinding
 import com.comcept.rmrscustomer.db.CustomerDatabase

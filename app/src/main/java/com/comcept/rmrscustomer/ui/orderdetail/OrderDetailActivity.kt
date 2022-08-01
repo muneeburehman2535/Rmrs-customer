@@ -15,6 +15,8 @@ import com.comcept.rmrscustomer.data_class.checkout.checkout_response.Data
 import com.comcept.rmrscustomer.databinding.ActivityOrderDetailBinding
 import com.comcept.rmrscustomer.repository.Response
 import com.comcept.rmrscustomer.utilities.AppGlobal
+import com.google.gson.Gson
+import timber.log.Timber
 
 
 class OrderDetailActivity : AppCompatActivity(),View.OnClickListener {
@@ -111,6 +113,7 @@ class OrderDetailActivity : AppCompatActivity(),View.OnClickListener {
                                 orderDetailIItemsAdapter.updateList(menuOrderedList)
 
                                 setViews(it.data)
+                                Timber.d("Checkout API: ${Gson().toJson(it.data)}")
 
                             } else {
                                 AppGlobal.showDialog(

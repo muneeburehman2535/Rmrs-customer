@@ -140,6 +140,9 @@ class  CheckoutFragment : Fragment(),View.OnClickListener {
                         it.data?.let {
                             progressDialog.dismiss()
                             if (it != null && it.Message == "Success") {
+
+                                Timber.d("Checkout API: ${Gson().toJson(it)}")
+
                                 emptyCartRecord()
                                 (activity as CustomerHomeActivity?)?.changeToolbarName(
                                     getString(R.string.title_review),
@@ -155,7 +158,7 @@ class  CheckoutFragment : Fragment(),View.OnClickListener {
                             } else {
                                 AppGlobal.showDialog(
                                     getString(R.string.title_alert),
-                                    it.data.description,
+                                    it.Message,
                                     requireActivity()
                                 )
                             }

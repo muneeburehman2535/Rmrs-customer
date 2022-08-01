@@ -59,7 +59,7 @@ class AppGlobal {
         //   http://192.168.0.76:5000
 
         /*****************************************************Base URLs********************************************************/
-        var HOME_BASE_URL = if ("PRODUCTION" == BUILD) "https://customer-prod.k8s.teletaleem.com" else "https://Cust-be.khatir.pk:4443"
+        var HOME_BASE_URL = if ("PRODUCTION" == BUILD) "https://customer-prod.k8s.teletaleem.com" else "https://Customer.teletaleem.com"
         var HOME_BASE_URL_IMAGE = if ("PRODUCTION" == BUILD) "live-url" else "stage-url"
         const val LOCATION_IQ_URL = "https://us1.locationiq.com/"
 
