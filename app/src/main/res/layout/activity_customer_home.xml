@@ -43,6 +43,7 @@
                     android:layout_height="1dp"
                     android:background="@color/grey"/>
                 <TextView
+                    android:id="@+id/version_number"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/view"

@@ -103,54 +103,44 @@ class LoginActivity : AppCompatActivity(),View.OnClickListener {
     private fun loginUser(){
 
         val login=Login(mBinding.edtxtEmailAl.text.trim().toString(), mBinding.edtxtPasswordAl.text?.trim().toString())
-        mViewModel.getLoginResponse(login).observe(this) {
+        mViewModel.getLoginResponse(login).observe(this, {
 
-            when (it) {
+            when(it){
 
-                is Response.Loading -> {
+                is Response.Loading ->{
 
                     progressDialog.setLabel("Please Wait")
                     progressDialog.show()
                 }
 
-                is Response.Success -> {
+                is Response.Success ->{
 
                     it.data?.let {
                         progressDialog.dismiss()
-                        if (it != null && it.Message == "Success") {
-                            AppGlobal.writeString(this, AppGlobal.tokenId, it.data.Token)
-                            AppGlobal.writeString(this, AppGlobal.customerId, it.data.CustomerID)
-                            AppGlobal.writeString(this, AppGlobal.customerName, it.data.Name)
-                            AppGlobal.writeString(this, AppGlobal.customerEmail, it.data.Email)
-                            AppGlobal.writeString(
-                                this,
-                                AppGlobal.customerMobile,
-                                it.data.MobileNumber
-                            )
+                        if (it!=null&&it.Message=="Success")
+                        {
+                            AppGlobal.writeString(this,AppGlobal.tokenId, it.data.Token)
+                            AppGlobal.writeString(this,AppGlobal.customerId,it.data.CustomerID)
+                            AppGlobal.writeString(this,AppGlobal.customerName,it.data.Name)
+                            AppGlobal.writeString(this,AppGlobal.customerEmail,it.data.Email)
+                            AppGlobal.writeString(this,AppGlobal.customerMobile,it.data.MobileNumber)
                             AppGlobal.startNewActivity(this, CustomerHomeActivity::class.java)
 
                             //AppGlobal.writeString(this,AppGlobal.customerId,"ai0anPGypI")
                             // AppGlobal.startNewActivity(this, CustomerHomeActivity::class.java)
                             finishAffinity()
-                        } else {
-                            AppGlobal.showDialog(
-                                getString(R.string.title_alert),
-                                it.Message,
-                                this
-                            )
+                        }
+                        else{
+                            AppGlobal.showDialog(getString(R.string.title_alert),it.data.description,this)
                         }
 
                     }
                 }
 
 
-                is Response.Error -> {
+                is Response.Error ->{
 
-                    AppGlobal.showDialog(
-                        getString(R.string.title_alert),
-                        it.message.toString(),
-                        this
-                    )
+                    AppGlobal.showDialog(getString(R.string.title_alert),it.message.toString(),this)
 
                     if (progressDialog.isShowing) {
 
@@ -163,7 +153,8 @@ class LoginActivity : AppCompatActivity(),View.OnClickListener {
             }
 
 
-        }
+
+        })
     }
 
 }
