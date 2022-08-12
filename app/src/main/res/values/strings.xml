@@ -71,7 +71,7 @@
     //Cart Strings
     <string name="title_cart">Your Cart</string>
     <string name="title_delivery_location">Delivery Location</string>
-    <string name="title_proceed_to_pay">Proceed to pay</string>
+    <string name="title_proceed_to_pay">Order Confirmation</string>
     <string name="title_item_total">Item Total</string>
     <string name="title_discount_total">Discount Total</string>
     <string name="title_delivery_charges">Delivery charges</string>

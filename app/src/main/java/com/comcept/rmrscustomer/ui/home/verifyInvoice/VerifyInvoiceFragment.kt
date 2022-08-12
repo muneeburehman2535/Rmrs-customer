@@ -78,7 +78,6 @@ class VerifyInvoiceFragment : Fragment(), View.OnClickListener {
                         )
                     }
 
-
                 }
 
             }
@@ -105,7 +104,7 @@ class VerifyInvoiceFragment : Fragment(), View.OnClickListener {
                         if (it != null && it.message == "Success") {
 
 
-                            it.data?.let {
+                            it.data.let {
                                 mbinding.restaurantNameTxt.text = it.RestaurantName
                                 mbinding.InvoiceIdTxt.text = it.InvoiceID
 
@@ -117,8 +116,7 @@ class VerifyInvoiceFragment : Fragment(), View.OnClickListener {
                                 if (it.ServiceCharges!! > 0.0){
                                     mbinding.serviceChargesTitle.text = "Service Charges"
                                     mbinding.servicesChargesTxt.text = it.ServiceCharges.toString()
-                                }
-                                else{
+                                } else{
                                     mbinding.serviceChargesTitle.text = "Delivery Charges"
                                     mbinding.servicesChargesTxt.text = it.DeliveryCharges.toString()
                                 }
@@ -139,18 +137,17 @@ class VerifyInvoiceFragment : Fragment(), View.OnClickListener {
                                         mbinding.titleDiscountedTotal.visibility = View.VISIBLE
                                         mbinding.discountTotalTxt.visibility = View.VISIBLE
                                         mbinding.discountTotalTxt.text =
-                                      it.Discount?.AmountAfterDiscount.toString()
-                                    }
-                                    else{
+                                            it.Discount?.AmountAfterDiscount.toString()
+                                    } else{
 
                                     }
                                 }
-//                                val discount =
-//                                    ((it.Discount?.AmountBeforeDiscount)?.times((it.Discount?.DiscountPercentage!!))
-//                                        ?.div(100))?.toDouble()
-//                                mbinding.discountTxt.text = discount.toString()
-//                                mbinding.discountTotalTxt.text =
-//                                    it.Discount?.AmountAfterDiscount.toString()
+                        //                                val discount =
+                        //                                    ((it.Discount?.AmountBeforeDiscount)?.times((it.Discount?.DiscountPercentage!!))
+                        //                                        ?.div(100))?.toDouble()
+                        //                                mbinding.discountTxt.text = discount.toString()
+                        //                                mbinding.discountTotalTxt.text =
+                        //                                    it.Discount?.AmountAfterDiscount.toString()
 
                                 mbinding.edtxtResturantId.text?.clear()
                                 mbinding.edtxtInvoiceId.text?.clear()
@@ -183,7 +180,6 @@ class VerifyInvoiceFragment : Fragment(), View.OnClickListener {
                     }
                 }
             }
-
 
         }
     }
