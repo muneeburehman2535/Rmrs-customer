@@ -185,9 +185,6 @@ class  CheckoutFragment : Fragment(),View.OnClickListener {
         }
 
 
-
-
-
     }
 
     private fun emptyCartRecord() {

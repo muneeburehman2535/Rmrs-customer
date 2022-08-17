@@ -91,15 +91,7 @@ class HomeFragment : Fragment(), View.OnClickListener, RestaurantAdapter.AddToFa
 
         mActivity = requireActivity()
 
-        setCategoryAdapter()
-        setRestaurantAdapter()
-        setDealsAdapter()
-        setClickListeners()
-        getLocation()
-        autoImageSlider()
-        getCategoriesList()
 
-        mBinding.searchBarHome.inputType = 0x00000000
 
     }
 
@@ -135,6 +127,16 @@ class HomeFragment : Fragment(), View.OnClickListener, RestaurantAdapter.AddToFa
 //            true,
 //            false
 //        )
+
+        setCategoryAdapter()
+        setRestaurantAdapter()
+        setDealsAdapter()
+        setClickListeners()
+        getLocation()
+        autoImageSlider()
+        getCategoriesList()
+
+        mBinding.searchBarHome.inputType = 0x00000000
         (requireActivity() as CustomerHomeActivity).getLuckyDrawPoints(
             AppGlobal.readString(
                 requireActivity(),

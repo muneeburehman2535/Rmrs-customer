@@ -14,8 +14,8 @@ android {
         applicationId "com.comcept.rmrscustomer"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 21
-        versionName "1.0.21"
+        versionCode 22
+        versionName "1.0.22"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         renderscriptTargetApi 30
@@ -120,8 +120,8 @@ dependencies {
     implementation 'com.github.aabhasr1:OtpView:v1.1.2-ktx'
 
     //Location
-    implementation 'com.google.android.gms:play-services-location:18.0.0'
-    implementation 'com.google.android.gms:play-services-maps:17.0.0'
+    implementation 'com.google.android.gms:play-services-location:20.0.0'
+    implementation 'com.google.android.gms:play-services-maps:18.1.0'
     implementation 'com.google.android.libraries.places:places:2.4.0'
 
     implementation 'com.github.shivpujan12:LocationPicker:2.0'
