@@ -341,10 +341,19 @@ class HomeFragment : Fragment(), View.OnClickListener, RestaurantAdapter.AddToFa
             locationVisibility = false,
             isMenuVisibility = true
         )
-        (activity as CustomerHomeActivity).loadNewFragment(
-            RestaurantDetailFragment(),
-            "restaurant_detail"
-        )
+
+//        (activity as CustomerHomeActivity).loadNewFragment(
+//            RestaurantDetailFragment(),
+//            "restaurant_detail")
+
+        val mFragment = RestaurantDetailFragment()
+        val bundle = Bundle()
+        bundle.putBoolean("isDealTrue",true)
+        mFragment.arguments = bundle
+
+        ((requireActivity() as CustomerHomeActivity).loadNewFragment(mFragment,"restaurant_detail"))
+
+
     }
 
     /**************************************************************************************************************************/

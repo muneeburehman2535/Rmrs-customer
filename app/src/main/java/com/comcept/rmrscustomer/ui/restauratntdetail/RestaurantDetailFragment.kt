@@ -39,6 +39,8 @@ class RestaurantDetailFragment : Fragment(), TabsAdapter.ViewClickListener, View
     private lateinit var menuList: ArrayList<Menu>
     private lateinit var categoryList: ArrayList<CategoryData>
     private lateinit var dealsList: ArrayList<DealsData>
+    private lateinit var bundle:Bundle
+    private var checkDeal:Boolean = false
 
     companion object {
         fun newInstance() = RestaurantDetailFragment()
@@ -169,6 +171,28 @@ class RestaurantDetailFragment : Fragment(), TabsAdapter.ViewClickListener, View
         )
 
 
+        if (arguments !=null){
+
+
+            bundle = requireArguments()
+
+            if (bundle!=null) {
+
+
+                checkDeal = bundle.getBoolean("isDealTrue")
+
+                if (checkDeal){
+                    mBinding.viewpagerRdf.currentItem = 1
+                }
+
+                else{
+                    mBinding.viewpagerRdf.currentItem = 0
+                }
+
+
+            }
+        }
+
 
 
 
@@ -210,6 +234,15 @@ class RestaurantDetailFragment : Fragment(), TabsAdapter.ViewClickListener, View
 
 
                 (activity as CustomerHomeActivity).mModel.updateMenuList(updatedMenuList)
+
+
+//                val updatedMenuList = arrayListOf<Menu>()
+//                for (index in 0 until menuList.size) {
+//                    if (menuList[index].isDeal) {
+//                        updatedMenuList.add(menuList[index])
+//                    }
+//
+//                }
 
                 Timber.d(text.toString())
             }
@@ -342,9 +375,12 @@ class RestaurantDetailFragment : Fragment(), TabsAdapter.ViewClickListener, View
                                 for (index in 0 until menuList.size) {
                                     updatedMenuList.add(menuList[index])
                                 }
+
+
                                 (activity as CustomerHomeActivity).mModel.updateMenuList(
                                     updatedMenuList
                                 )
+
                                 //(activity as CustomerHomeActivity).mModel.updateMenuList(menuList)
                             }
 

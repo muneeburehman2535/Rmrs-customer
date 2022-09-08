@@ -8,11 +8,14 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.comcept.rmrscustomer.R
+import com.comcept.rmrscustomer.data_class.verifyInvoice.RestaurantList
 import com.comcept.rmrscustomer.data_class.verifyInvoice.VerifyInvoice
 import com.comcept.rmrscustomer.databinding.FragmentVerifyInvoiceBinding
 import com.comcept.rmrscustomer.repository.Response
 import com.comcept.rmrscustomer.utilities.AppGlobal
+import com.google.gson.Gson
 import com.kaopiz.kprogresshud.KProgressHUD
+import timber.log.Timber
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -20,6 +23,8 @@ import java.util.*
 class VerifyInvoiceFragment : Fragment(), View.OnClickListener {
     private lateinit var viewModel: VerifyInvoiceViewModel
     private lateinit var progressDialog: KProgressHUD
+    private lateinit var bundle:Bundle
+    private lateinit var restaurantList: RestaurantList
 
     lateinit var mbinding: FragmentVerifyInvoiceBinding
 
@@ -37,8 +42,29 @@ class VerifyInvoiceFragment : Fragment(), View.OnClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
+
+
+        if (arguments !=null){
+
+
+            bundle = requireArguments()
+
+            if (bundle!=null){
+
+                restaurantList = bundle.getSerializable("restaurant_detail_items") as RestaurantList
+                Timber.d("Checkout API: ${Gson().toJson(restaurantList)}")
+
+
+                mbinding.edtxtResturantId.isEnabled = false
+                mbinding.edtxtResturantId.setText(restaurantList.RestaurantID)
+
+            }}
+
+
         progressDialog = AppGlobal.setProgressDialog(requireActivity())
         mbinding.btnVerifyAl.setOnClickListener(this)
+
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

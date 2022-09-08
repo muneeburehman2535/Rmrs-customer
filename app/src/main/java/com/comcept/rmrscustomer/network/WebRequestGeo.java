@@ -92,4 +92,7 @@ public interface WebRequestGeo {
 
     @POST("/customer/getinvoice")
     Call<ResponseBody> verifyInvoice(@Body VerifyInvoice verifyInvoice);
+
+    @GET("/customer/restaurant-list")
+    Call<ResponseBody> getRestaurantListInvoice();
 }

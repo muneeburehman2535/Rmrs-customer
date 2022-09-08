@@ -181,37 +181,36 @@ class MyOrdersFragment : Fragment() {
   * */
     private fun getMyOrdersList(customerId: String){
 
-        viewModel.getMyOrdersResponse(customerId).observe(requireActivity(), {
+        viewModel.getMyOrdersResponse(customerId).observe(requireActivity()) {
 
 
-            when(it){
+            when (it) {
 
-                is Response.Loading ->{
+                is Response.Loading -> {
                     progressDialog.setLabel("Please Wait")
                     progressDialog.show()
                 }
 
-                is Response.Success ->{
+                is Response.Success -> {
 
                     it.data?.let {
 
                         progressDialog.dismiss()
                         //refreshList()
-                        if (it!=null&&it.Message == "Success") {
+                        if (it != null && it.Message == "Success") {
 
                             currentOrderList = it.data.CurrentOrder
                             pastOrderList = it.data.PastOrders
-                            if (currentOrderList.size>0||pastOrderList.size>0){
-                                mBinding.layoutOrdersList.visibility=View.VISIBLE
-                                mBinding.imgNotFoundFmo.visibility=View.GONE
+                            if (currentOrderList.size > 0 || pastOrderList.size > 0) {
+                                mBinding.layoutOrdersList.visibility = View.VISIBLE
+                                mBinding.imgNotFoundFmo.visibility = View.GONE
                                 currentOrderList.reverse()
                                 pastOrderList.reverse()
                                 currentOrderAdapter.updateList(currentOrderList)
                                 pastOrderAdapter.updateList(pastOrderList)
-                            }
-                            else{
-                                mBinding.layoutOrdersList.visibility=View.GONE
-                                mBinding.imgNotFoundFmo.visibility=View.VISIBLE
+                            } else {
+                                mBinding.layoutOrdersList.visibility = View.GONE
+                                mBinding.imgNotFoundFmo.visibility = View.VISIBLE
                             }
 
 
@@ -226,9 +225,13 @@ class MyOrdersFragment : Fragment() {
                 }
 
 
-                is Response.Error ->{
+                is Response.Error -> {
 
-                    AppGlobal.showDialog(getString(R.string.title_alert), it.message.toString(),requireContext())
+                    AppGlobal.showDialog(
+                        getString(R.string.title_alert),
+                        it.message.toString(),
+                        requireContext()
+                    )
 
                     if (progressDialog.isShowing) {
 
@@ -240,7 +243,7 @@ class MyOrdersFragment : Fragment() {
             }
 
 
-        })
+        }
     }
 
 }

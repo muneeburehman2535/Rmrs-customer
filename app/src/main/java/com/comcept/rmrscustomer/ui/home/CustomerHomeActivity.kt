@@ -56,6 +56,7 @@ import com.comcept.rmrscustomer.shared_view_models.SharedViewModel
 import com.comcept.rmrscustomer.ui.home.cart.CartFragment
 import com.comcept.rmrscustomer.ui.home.favourite.FavouriteFragment
 import com.comcept.rmrscustomer.ui.home.profile.ProfileFragment
+import com.comcept.rmrscustomer.ui.home.verifyInvoice.RestaurantListInvoiceFragment
 import com.comcept.rmrscustomer.ui.home.verifyInvoice.VerifyInvoiceFragment
 import com.comcept.rmrscustomer.ui.login.LoginActivity
 import com.comcept.rmrscustomer.ui.myorders.MyOrdersFragment
@@ -183,7 +184,7 @@ class CustomerHomeActivity : AppCompatActivity(), NavigationView.OnNavigationIte
         mBinding.versionNumber.text = "Version: ${BuildConfig.VERSION_NAME}"
 
 
-        showUpdate.observe(this, { value ->
+        showUpdate.observe(this) { value ->
 
 
             if (value) {
@@ -195,7 +196,7 @@ class CustomerHomeActivity : AppCompatActivity(), NavigationView.OnNavigationIte
                     startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(AppGlobal.APP_URL)));
                 }
             }
-        })
+        }
 
     }
 
@@ -499,13 +500,23 @@ class CustomerHomeActivity : AppCompatActivity(), NavigationView.OnNavigationIte
             val geocoder = Geocoder(this@CustomerHomeActivity, Locale.getDefault())
 
             try {
+
                 addresses = geocoder.getFromLocation(latitude, longitude, 1)
-                val address: String =
-                    addresses[0].getAddressLine(0) // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
-                AppGlobal.showToast(address, this@CustomerHomeActivity)
-                 mCurrentLocation = address
-                txtToolbarName.text = mCurrentLocation
-                AppGlobal.writeString(this@CustomerHomeActivity, AppGlobal.customerAddress, mCurrentLocation)
+                if (addresses.isEmpty()) {
+                    Toast.makeText(this@CustomerHomeActivity, "Can't get location. Try again", Toast.LENGTH_SHORT).show()
+
+                } else {
+                    val address: String =
+                        addresses[0].getAddressLine(0) // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+                    AppGlobal.showToast(address, this@CustomerHomeActivity)
+                    mCurrentLocation = address
+                    txtToolbarName.text = mCurrentLocation
+                    AppGlobal.writeString(
+                        this@CustomerHomeActivity,
+                        AppGlobal.customerAddress,
+                        mCurrentLocation
+                    )
+                }
             }
             catch (e:IOException){
                 when{
@@ -623,7 +634,7 @@ class CustomerHomeActivity : AppCompatActivity(), NavigationView.OnNavigationIte
             .commit()
     }
 
-    private fun replaceNewFragment(fragment: Fragment?) {
+     fun replaceNewFragment(fragment: Fragment?) {
         val transaction = supportFragmentManager.beginTransaction()
         transaction.setCustomAnimations(
             android.R.anim.slide_in_left,
@@ -788,7 +799,7 @@ class CustomerHomeActivity : AppCompatActivity(), NavigationView.OnNavigationIte
 
                 setToolbarTitle(
                     "Verify Invoice",
-                    VerifyInvoiceFragment(),
+                    RestaurantListInvoiceFragment(),
                     false,
                     View.GONE,
                     false,

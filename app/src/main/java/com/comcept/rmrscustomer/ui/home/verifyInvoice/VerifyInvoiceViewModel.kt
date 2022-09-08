@@ -5,6 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import com.comcept.rmrscustomer.data_class.updatepassword.UpdatePassword
 import com.comcept.rmrscustomer.data_class.updatepassword.UpdatePasswordResponse
+import com.comcept.rmrscustomer.data_class.verifyInvoice.RestaurantListResponse
 import com.comcept.rmrscustomer.data_class.verifyInvoice.VerifyInvoice
 import com.comcept.rmrscustomer.data_class.verifyInvoice.VerifyInvoiceResponse
 import com.comcept.rmrscustomer.repository.Response
@@ -22,4 +23,8 @@ class VerifyInvoiceViewModel(application: Application) : AndroidViewModel(applic
         return verifyInvoiceRepository.getInvoiceResponseLiveData(verifyInvoice)
     }
 
+
+    fun getRestaurantList():LiveData<Response<RestaurantListResponse>>{
+        return verifyInvoiceRepository.getRestaurantListResponseLiveData()
+    }
 }

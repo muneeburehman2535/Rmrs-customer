@@ -38,7 +38,7 @@ class TabsAdapter (manager: FragmentManager, var context: Activity, var totalTab
             if (isNem){
 
                 if (menuList[index].isDeal){
-                    if (tabList[0]=="Deals"&&position==0){
+                    if (tabList[1]=="Deals"&&position==1){
                         updatedMenuList.add(menuList[index])
                     }
                 }
@@ -57,7 +57,7 @@ class TabsAdapter (manager: FragmentManager, var context: Activity, var totalTab
             }
             else{
                 if (menuList[index].isDeal){
-                    if (tabList[0]=="Deals"){
+                    if (tabList[1]=="Deals"){
                         updatedMenuList.add(menuList[index])
                     }
                 }

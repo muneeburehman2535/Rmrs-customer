@@ -1,0 +1,36 @@
+#
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  EXCEPTION_STACK_OVERFLOW (0xc00000fd) at pc=0x00007ffedfb5b443, pid=10024, tid=12524
+#
+# JRE version: OpenJDK Runtime Environment (11.0.12+7) (build 11.0.12+7-b1504.28-7817840)
+# Java VM: OpenJDK 64-Bit Server VM (11.0.12+7-b1504.28-7817840, mixed mode, tiered, compressed oops, g1 gc, windows-amd64)
+# Problematic frame:
+# V  [jvm.dll+0x37b443]
+#
+# No core dump will be written. Minidumps are not enabled by default on client versions of Windows
+#
+# If you would like to submit a bug report, please visit:
+#   https://bugreport.java.com/bugreport/crash.jsp
+#
+
+---------------  S U M M A R Y ------------
+
+Command Line: --add-opens=java.base/java.util=ALL-UNNAMED --add-opens=java.base/java.lang=ALL-UNNAMED --add-opens=java.base/java.lang.invoke=ALL-UNNAMED --add-opens=java.prefs/java.util.prefs=ALL-UNNAMED -Xmx1024m -Dfile.encoding=windows-1252 -Duser.country=US -Duser.language=en -Duser.variant org.gradle.launcher.daemon.bootstrap.GradleDaemon 6.7.1
+
+Host: Intel(R) Core(TM) i5-4310U CPU @ 2.00GHz, 4 cores, 15G,  Windows 10 , 64 bit Build 19041 (10.0.19041.1889)
+Time: Mon Sep  5 09:38:32 2022 Pakistan Standard Time elapsed time: 7.256540 seconds (0d 0h 0m 7s)
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x0000020d64f82000):  JavaThread "jar transforms Thread 13" [_thread_in_vm, id=12524, stack(0x00000094cf300000,0x00000094cf400000)]
+
+Stack: [0x00000094cf300000,0x00000094cf400000],  sp=0x00000094cf3ff670,  free space=1021k
+Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
+V  [jvm.dll+0x37b443]
+V  [jvm.dll+0x5fbc12]
+V  [jvm.dll+0x37bdfa]
+V  [jvm.dll+0x37c087]
+V  [jvm.dll+0x3eb75d]
+V  [jvm.dll+0x6f9b7f]
+V  [jvm.dll+0x6f26a5]
